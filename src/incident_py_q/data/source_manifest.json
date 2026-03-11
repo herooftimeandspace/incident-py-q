@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-03-11T19:00:00.086690+00:00",
+  "sources": {
+    "apihub_postman": {
+      "required": false,
+      "type": "http_json",
+      "url": "https://apihub.incidentiq.com/api/collections/113361/SVzuZgQd?environment=113361-6b078173-b028-454f-aacc-54ee069a6fa1&segregateAuth=true&versionTag=latest"
+    },
+    "stoplight": {
+      "controller_uri_regex": "^/controllers/[^/]+\\.json$",
+      "endpoint": "https://incidentiq.stoplight.io/graphql",
+      "project_slug": "v1",
+      "required": true,
+      "type": "graphql",
+      "workspace_slug": "incidentiq"
+    }
+  }
+}

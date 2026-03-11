@@ -1,0 +1,29 @@
+site_name: incident-py-q
+site_description: Contract-driven Python SDK for Incident IQ
+site_url: https://example.github.io/incident-py-q/
+repo_url: https://github.com/example/incident-py-q
+repo_name: example/incident-py-q
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - SDK Usage: sdk-usage.md
+  - Schema & Validation: schema-validation.md
+  - Logging & Runtime: runtime-logging.md
+  - API Reference: api-reference.md
+  - Project Docs: project-docs.md
+  - Changelog: changelog.md

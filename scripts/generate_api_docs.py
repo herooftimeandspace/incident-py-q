@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""Generate pdoc HTML API reference into the MkDocs source tree."""
+
+from __future__ import annotations
+
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+def main() -> int:
+    docs_api_dir = Path("docs/api")
+    if docs_api_dir.exists():
+        shutil.rmtree(docs_api_dir)
+    docs_api_dir.mkdir(parents=True, exist_ok=True)
+
+    cmd = [
+        sys.executable,
+        "-m",
+        "pdoc",
+        "--output-directory",
+        str(docs_api_dir),
+        "incident_py_q",
+    ]
+    completed = subprocess.run(cmd, check=False)
+    return completed.returncode
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+

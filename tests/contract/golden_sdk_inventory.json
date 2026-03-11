@@ -1,0 +1,1213 @@
+[
+  {
+    "method": "POST",
+    "name": "queue_notification",
+    "namespace": "alerts",
+    "operation_id": "Alerts_QueueNotification",
+    "path": "/alerts/new"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_coverage",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditPolicyCoverage",
+    "path": "/analytics/assets/by-audit-policy-coverage"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_schedule_status",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditPolicyScheduleStatus",
+    "path": "/analytics/assets/by-audit-policy-schedule-status/{AssetAuditPolicyScheduleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_status",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditPolicyStatus",
+    "path": "/analytics/assets/by-audit-policy-status/{AssetAuditPolicyId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_status",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditStatus",
+    "path": "/analytics/assets/by-audit-status"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_verification_location",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByVerificationLocation",
+    "path": "/analytics/assets/by-verification-location"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_verification_type",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByVerificationType",
+    "path": "/analytics/assets/by-verification-type"
+  },
+  {
+    "method": "GET",
+    "name": "get_report",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReport",
+    "path": "/analytics/reports/{ReportId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_report_elements",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReportElements",
+    "path": "/analytics/reports/elements/{ReportId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_report_queries",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReportQueries",
+    "path": "/analytics/reports/queries/{ReportId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_reports",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReports",
+    "path": "/analytics/reports"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_AddManufacturerToSite",
+    "path": "/assets/manufacturers/{ManufacturerId}/site"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site2",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_AddManufacturerToSite2",
+    "path": "/assets/manufacturers/{ManufacturerId}/site/{IncludeAllModels}"
+  },
+  {
+    "method": "POST",
+    "name": "add_user_favorite_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_AddUserFavoriteAsset",
+    "path": "/assets/favorites/{AssetId}/{UserId}"
+  },
+  {
+    "method": "POST",
+    "name": "create_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_CreateAssetStatusType",
+    "path": "/assets/status/types/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_DeleteAsset",
+    "path": "/assets/{AssetId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_funding_type",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_DeleteAssetFundingType",
+    "path": "/assets/funding/types/{AssetFundingTypeId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_DeleteAssetStatusType",
+    "path": "/assets/status/types/{AssetStatusTypeId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_manufacturer",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_DeleteManufacturer",
+    "path": "/assets/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAsset",
+    "path": "/assets/{AssetId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_activities",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetActivities",
+    "path": "/assets/{AssetId}/activities"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_favorites",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetFavorites",
+    "path": "/assets/favorites/{UserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_favorites2",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetFavorites2",
+    "path": "/assets/favorites/{UserId}/{All}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_funding_type",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_GetAssetFundingType",
+    "path": "/assets/funding/types/{AssetFundingTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_funding_types",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_GetAssetFundingTypes",
+    "path": "/assets/funding/types"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_funding_types2",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_GetAssetFundingTypes2",
+    "path": "/assets/funding/types"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_GetAssetStatusType",
+    "path": "/assets/status/types/{AssetStatusTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_status_types",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_GetAssetStatusTypes",
+    "path": "/assets/status/types"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_status_types2",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_GetAssetStatusTypes2",
+    "path": "/assets/status/types"
+  },
+  {
+    "method": "POST",
+    "name": "get_assets",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssets",
+    "path": "/assets"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByAssetStatusType",
+    "path": "/assets/assetstatustype/{AssetStatusTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_asset_tag",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByAssetTag",
+    "path": "/assets/assettag/{AssetTag}"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_location_room",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByLocationRoom",
+    "path": "/assets/rooms/{LocationRoomId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_serial",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsBySerial",
+    "path": "/assets/serial/{Serial}"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_storage_unit_number",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByStorageUnitNumber",
+    "path": "/assets/storageunit/{LocationId}/{StorageUnitNumber}"
+  },
+  {
+    "method": "POST",
+    "name": "get_assets_count",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsCount",
+    "path": "/assets/count"
+  },
+  {
+    "method": "GET",
+    "name": "get_global_manufacturers",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_GetGlobalManufacturers",
+    "path": "/assets/manufacturers/global"
+  },
+  {
+    "method": "POST",
+    "name": "get_global_manufacturers2",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_GetGlobalManufacturers2",
+    "path": "/assets/manufacturers/global"
+  },
+  {
+    "method": "GET",
+    "name": "get_manufacturer",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_GetManufacturer",
+    "path": "/assets/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_spare_assets_by_asset_tag",
+    "namespace": "assets",
+    "operation_id": "Asset_GetSpareAssetsByAssetTag",
+    "path": "/assets/spares/assettag/{AssetTag}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_assets",
+    "namespace": "assets",
+    "operation_id": "Asset_GetUserAssets",
+    "path": "/assets/for/{UserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_assets2",
+    "namespace": "assets",
+    "operation_id": "Asset_GetUserAssets2",
+    "path": "/assets/for/{UserId}/{All}"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_manufacturer_from_site",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_RemoveManufacturerFromSite",
+    "path": "/assets/manufacturers/{ManufacturerId}/site"
+  },
+  {
+    "method": "POST",
+    "name": "remove_user_favorite_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_RemoveUserFavoriteAsset",
+    "path": "/assets/favorites/remove/{AssetId}/{UserId}"
+  },
+  {
+    "method": "GET",
+    "name": "search_assets_by_asset_tag",
+    "namespace": "assets",
+    "operation_id": "Asset_SearchAssetsByAssetTag",
+    "path": "/assets/assettag/search/{AssetTag}"
+  },
+  {
+    "method": "GET",
+    "name": "search_assets_by_serial",
+    "namespace": "assets",
+    "operation_id": "Asset_SearchAssetsBySerial",
+    "path": "/assets/serial/search/{Serial}"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_UpdateAsset",
+    "path": "/assets/{AssetId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_funding_type",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_UpdateAssetFundingType",
+    "path": "/assets/funding/types/{AssetFundingTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_UpdateAssetStatusType",
+    "path": "/assets/status/types/{AssetStatusTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_manufacturer",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_UpdateManufacturer",
+    "path": "/assets/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_field",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_DeleteCustomField",
+    "path": "/custom-fields/{CustomFieldId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_field_type",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_DeleteCustomFieldType",
+    "path": "/custom-fields/types/{CustomFieldTypeId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_fields",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_DeleteCustomFields",
+    "path": "/custom-fields"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomField",
+    "path": "/custom-fields/{CustomFieldId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_type",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldType",
+    "path": "/custom-fields/types/{CustomFieldTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_types",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldTypes",
+    "path": "/custom-fields/types"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_field_types2",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldTypes2",
+    "path": "/custom-fields/types"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_values_for_asset",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldValuesForAsset",
+    "path": "/custom-fields/values/for/asset/{AssetId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_values_for_ticket",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldValuesForTicket",
+    "path": "/custom-fields/values/for/ticket/{TicketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_values_for_user",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldValuesForUser",
+    "path": "/custom-fields/values/for/user/{UserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_fields",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFields",
+    "path": "/custom-fields"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields2",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFields2",
+    "path": "/custom-fields"
+  },
+  {
+    "method": "POST",
+    "name": "update_custom_field",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_UpdateCustomField",
+    "path": "/custom-fields/{CustomFieldId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_custom_field_type",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_UpdateCustomFieldType",
+    "path": "/custom-fields/types/{CustomFieldTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "submit_form",
+    "namespace": "forms",
+    "operation_id": "Form_SubmitForm",
+    "path": "/forms/submit"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_issue",
+    "namespace": "issues",
+    "operation_id": "Issue_DeleteIssue",
+    "path": "/issues/{IssueId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_issue_type",
+    "namespace": "issues",
+    "operation_id": "Issue_DeleteIssueType",
+    "path": "/issues/types/{IssueTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_available_issues",
+    "namespace": "issues",
+    "operation_id": "Issue_GetAvailableIssues",
+    "path": "/issues/site"
+  },
+  {
+    "method": "GET",
+    "name": "get_issue",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssue",
+    "path": "/issues/{IssueId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_issue_type",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssueType",
+    "path": "/issues/types/{IssueTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_issue_types",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssueTypes",
+    "path": "/issues/types"
+  },
+  {
+    "method": "GET",
+    "name": "get_issue_types_simple",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssueTypesSimple",
+    "path": "/issues/types"
+  },
+  {
+    "method": "POST",
+    "name": "update_issue",
+    "namespace": "issues",
+    "operation_id": "Issue_UpdateIssue",
+    "path": "/issues/{IssueId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_issue_type",
+    "namespace": "issues",
+    "operation_id": "Issue_UpdateIssueType",
+    "path": "/issues/types/{IssueTypeId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_location",
+    "namespace": "locations",
+    "operation_id": "Location_DeleteLocation",
+    "path": "/locations/{LocationId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_location_room",
+    "namespace": "locations",
+    "operation_id": "Location_DeleteLocationRoom",
+    "path": "/locations/rooms/{LocationRoomId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_all_location_rooms",
+    "namespace": "locations",
+    "operation_id": "Location_GetAllLocationRooms",
+    "path": "/locations/rooms"
+  },
+  {
+    "method": "GET",
+    "name": "get_location",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocation",
+    "path": "/locations/{LocationId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_room",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationRoom",
+    "path": "/locations/rooms/{LocationRoomId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_rooms",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationRooms",
+    "path": "/locations/{LocationId}/rooms"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_type",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationType",
+    "path": "/locations/types/{LocationTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_types",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationTypes",
+    "path": "/locations/types"
+  },
+  {
+    "method": "GET",
+    "name": "get_locations",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocations",
+    "path": "/locations/all"
+  },
+  {
+    "method": "POST",
+    "name": "update_location",
+    "namespace": "locations",
+    "operation_id": "Location_UpdateLocation",
+    "path": "/locations/{LocationId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_location_room",
+    "namespace": "locations",
+    "operation_id": "Location_UpdateLocationRoom",
+    "path": "/locations/rooms/{LocationRoomId}"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site3",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_AddManufacturerToSite3",
+    "path": "/manufacturers/{ManufacturerId}/site"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site4",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_AddManufacturerToSite4",
+    "path": "/manufacturers/{ManufacturerId}/site/{IncludeAllModels}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_manufacturer2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_DeleteManufacturer2",
+    "path": "/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_global_manufacturers3",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_GetGlobalManufacturers3",
+    "path": "/manufacturers/global"
+  },
+  {
+    "method": "POST",
+    "name": "get_global_manufacturers4",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_GetGlobalManufacturers4",
+    "path": "/manufacturers/global"
+  },
+  {
+    "method": "GET",
+    "name": "get_manufacturer2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_GetManufacturer2",
+    "path": "/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_manufacturer_from_site2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_RemoveManufacturerFromSite2",
+    "path": "/manufacturers/{ManufacturerId}/site"
+  },
+  {
+    "method": "POST",
+    "name": "update_manufacturer2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_UpdateManufacturer2",
+    "path": "/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_metric",
+    "namespace": "metrics",
+    "operation_id": "Sla_DeleteMetric",
+    "path": "/metrics/{MetricId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_metric_type",
+    "namespace": "metrics",
+    "operation_id": "Sla_DeleteMetricType",
+    "path": "/metrics/types/{MetricTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_metric",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetric",
+    "path": "/metrics/{MetricId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_metric_type",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetricType",
+    "path": "/metrics/types/{MetricTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_metric_types",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetricTypes",
+    "path": "/metrics/types"
+  },
+  {
+    "method": "GET",
+    "name": "get_metrics",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetrics",
+    "path": "/metrics"
+  },
+  {
+    "method": "GET",
+    "name": "get_metrics_for_sla",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetricsForSla",
+    "path": "/metrics/for/sla/{SlaId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_metric",
+    "namespace": "metrics",
+    "operation_id": "Sla_UpdateMetric",
+    "path": "/metrics/{MetricId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_metric_type",
+    "namespace": "metrics",
+    "operation_id": "Sla_UpdateMetricType",
+    "path": "/metrics/types/{MetricTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_metrics_for_sla",
+    "namespace": "metrics",
+    "operation_id": "Sla_UpdateMetricsForSla",
+    "path": "/metrics/for/sla/{SlaId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_notifications",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetNotifications",
+    "path": "/notifications"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_emails",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetTicketEmails",
+    "path": "/notifications/emails/for/ticket/{TicketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_unarchived_notifications",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetUnarchivedNotifications",
+    "path": "/notifications/unarchived"
+  },
+  {
+    "method": "GET",
+    "name": "get_unread_notifications",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetUnreadNotifications",
+    "path": "/notifications/unread"
+  },
+  {
+    "method": "POST",
+    "name": "mark_all_notifications_archived",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkAllNotificationsArchived",
+    "path": "/notifications/all-archive"
+  },
+  {
+    "method": "POST",
+    "name": "mark_all_notifications_read",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkAllNotificationsRead",
+    "path": "/notifications/all-read"
+  },
+  {
+    "method": "POST",
+    "name": "mark_notification_archived",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkNotificationArchived",
+    "path": "/notifications/{NotificationId}/archive"
+  },
+  {
+    "method": "POST",
+    "name": "mark_notification_read",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkNotificationRead",
+    "path": "/notifications/{NotificationId}/read"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_part",
+    "namespace": "parts",
+    "operation_id": "Part_DeletePart",
+    "path": "/parts/{PartId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_part_supplier",
+    "namespace": "parts",
+    "operation_id": "Part_DeletePartSupplier",
+    "path": "/parts/suppliers/{PartSupplierId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_part",
+    "namespace": "parts",
+    "operation_id": "Part_GetPart",
+    "path": "/parts/{PartId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_part_supplier",
+    "namespace": "parts",
+    "operation_id": "Part_GetPartSupplier",
+    "path": "/parts/suppliers/{PartSupplierId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_part_suppliers",
+    "namespace": "parts",
+    "operation_id": "Part_GetPartSuppliers",
+    "path": "/parts/suppliers"
+  },
+  {
+    "method": "GET",
+    "name": "get_parts",
+    "namespace": "parts",
+    "operation_id": "Part_GetParts",
+    "path": "/parts"
+  },
+  {
+    "method": "POST",
+    "name": "update_part",
+    "namespace": "parts",
+    "operation_id": "Part_UpdatePart",
+    "path": "/parts/{PartId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_part_supplier",
+    "namespace": "parts",
+    "operation_id": "Part_UpdatePartSupplier",
+    "path": "/parts/suppliers/{PartSupplierId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_purchase_order",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_DeletePurchaseOrder",
+    "path": "/purchaseorders/{PurchaseOrderId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_purchase_order",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_GetPurchaseOrder",
+    "path": "/purchaseorders/{PurchaseOrderId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_purchase_orders",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_GetPurchaseOrders",
+    "path": "/purchaseorders"
+  },
+  {
+    "method": "POST",
+    "name": "update_purchase_order",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_UpdatePurchaseOrder",
+    "path": "/purchaseorders/{PurchaseOrderId}"
+  },
+  {
+    "method": "POST",
+    "name": "activate_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_ActivateSla",
+    "path": "/slas/{SlaId}/activate"
+  },
+  {
+    "method": "POST",
+    "name": "deactivate_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_DeactivateSla",
+    "path": "/slas/{SlaId}/deactivate"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_DeleteSla",
+    "path": "/slas/{SlaId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_GetSla",
+    "path": "/slas/{SlaId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_slas",
+    "namespace": "slas",
+    "operation_id": "Sla_GetSlas",
+    "path": "/slas"
+  },
+  {
+    "method": "POST",
+    "name": "update_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_UpdateSla",
+    "path": "/slas/{SlaId}"
+  },
+  {
+    "method": "POST",
+    "name": "assign_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_AssignTicket",
+    "path": "/tickets/{TicketId}/sla"
+  },
+  {
+    "method": "POST",
+    "name": "cancel_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CancelTicket",
+    "path": "/tickets/{TicketId}/cancel"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_issue",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ChangeTicketIssue",
+    "path": "/tickets/{TicketId}/issue"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_to_requestor_responded",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ChangeTicketToRequestorResponded",
+    "path": "/tickets/{TicketId}/status/requestor-responded"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_to_waiting_on_requestor",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ChangeTicketToWaitingOnRequestor",
+    "path": "/tickets/{TicketId}/status/waiting-on-requestor"
+  },
+  {
+    "method": "POST",
+    "name": "close_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CloseTicket",
+    "path": "/tickets/{TicketId}/close"
+  },
+  {
+    "method": "POST",
+    "name": "confirm_ticket_issue",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ConfirmTicketIssue",
+    "path": "/tickets/{TicketId}/confirm-issue"
+  },
+  {
+    "method": "POST",
+    "name": "copy_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CopyTicket",
+    "path": "/tickets/{TicketId}/copy"
+  },
+  {
+    "method": "POST",
+    "name": "create_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CreateTicket",
+    "path": "/tickets/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_DeleteTicket",
+    "path": "/tickets/{TicketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicket",
+    "path": "/tickets/{TicketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_assets",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicketAssets",
+    "path": "/tickets/{TicketId}/assets"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_sla",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicketSla",
+    "path": "/tickets/{TicketId}/sla"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_statuses",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicketStatuses",
+    "path": "/tickets/statuses"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_as_duplicate",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketAsDuplicate",
+    "path": "/tickets/{TicketId}/mark-as-duplicate/{OriginalTicketId}"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_not_sensitive",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketNotSensitive",
+    "path": "/tickets/{TicketId}/mark-not-sensitive"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_not_urgent",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketNotUrgent",
+    "path": "/tickets/{TicketId}/mark-not-urgent"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_sensitive",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketSensitive",
+    "path": "/tickets/{TicketId}/mark-sensitive"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_urgent",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketUrgent",
+    "path": "/tickets/{TicketId}/mark-urgent"
+  },
+  {
+    "method": "POST",
+    "name": "un_assign_ticket_from_team",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnAssignTicketFromTeam",
+    "path": "/tickets/{TicketId}/unassign/team"
+  },
+  {
+    "method": "POST",
+    "name": "un_assign_ticket_from_user",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnAssignTicketFromUser",
+    "path": "/tickets/{TicketId}/unassign/user"
+  },
+  {
+    "method": "POST",
+    "name": "un_assign_ticket_sla",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnAssignTicketSla",
+    "path": "/tickets/{TicketId}/unassign-sla"
+  },
+  {
+    "method": "POST",
+    "name": "un_confirm_ticket_issue",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnConfirmTicketIssue",
+    "path": "/tickets/{TicketId}/unconfirm-issue"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UndeleteTicket",
+    "path": "/tickets/{TicketId}/undelete"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicket",
+    "path": "/tickets/{TicketId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_assets",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicketAssets",
+    "path": "/tickets/{TicketId}/assets"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_custom_fields",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicketCustomFields",
+    "path": "/tickets/{TicketId}/custom-fields"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_subject",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicketSubject",
+    "path": "/tickets/{TicketId}/subject"
+  },
+  {
+    "method": "POST",
+    "name": "create_local_user",
+    "namespace": "users",
+    "operation_id": "User_CreateLocalUser",
+    "path": "/users/local/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_user",
+    "namespace": "users",
+    "operation_id": "User_DeleteUser",
+    "path": "/users/{UserId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_user_view",
+    "namespace": "users",
+    "operation_id": "View_DeleteUserView",
+    "path": "/users/views/{ViewId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_agents",
+    "namespace": "users",
+    "operation_id": "User_GetAgents",
+    "path": "/users/agents"
+  },
+  {
+    "method": "GET",
+    "name": "get_agents_legacy",
+    "namespace": "users",
+    "operation_id": "User_GetAgentsLegacy",
+    "path": "/users/agents"
+  },
+  {
+    "method": "GET",
+    "name": "get_user",
+    "namespace": "users",
+    "operation_id": "User_GetUser",
+    "path": "/users/{UserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_view",
+    "namespace": "users",
+    "operation_id": "View_GetUserView",
+    "path": "/users/views/{ViewId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_views",
+    "namespace": "users",
+    "operation_id": "View_GetUserViews",
+    "path": "/users/views"
+  },
+  {
+    "method": "POST",
+    "name": "get_users",
+    "namespace": "users",
+    "operation_id": "User_GetUsers",
+    "path": "/users"
+  },
+  {
+    "method": "POST",
+    "name": "get_users_for_view",
+    "namespace": "users",
+    "operation_id": "User_GetUsersForView",
+    "path": "/users/view/{ViewId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_legacy",
+    "namespace": "users",
+    "operation_id": "User_GetUsersLegacy",
+    "path": "/users"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_per_grade",
+    "namespace": "users",
+    "operation_id": "User_GetUsersPerGrade",
+    "path": "/users/stats/grades"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_per_location",
+    "namespace": "users",
+    "operation_id": "User_GetUsersPerLocation",
+    "path": "/users/stats/locations"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_with_location_permission",
+    "namespace": "users",
+    "operation_id": "User_GetUsersWithLocationPermission",
+    "path": "/users/location/{LocationId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_user",
+    "namespace": "users",
+    "operation_id": "User_UpdateUser",
+    "path": "/users/{UserId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_user_view",
+    "namespace": "users",
+    "operation_id": "View_UpdateUserView",
+    "path": "/users/views/{ViewId}"
+  }
+]
