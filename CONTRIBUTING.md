@@ -17,8 +17,8 @@ Run all required checks before opening a pull request:
 ```bash
 ruff check .
 mypy src tests scripts
-pytest -m "not integration"
-python -m pip wheel --no-deps --wheel-dir dist .
+pytest --cov=incident_py_q --cov-report=xml -m "not integration"
+python -m pip wheel --no-deps --no-build-isolation --wheel-dir dist .
 python scripts/build_docs.py
 ```
 
@@ -36,7 +36,7 @@ To refresh bundled upstream contracts:
 ```bash
 python scripts/sync_schemas.py
 python scripts/update_sdk_inventory.py
-pytest -m "not integration"
+pytest --cov=incident_py_q --cov-report=xml -m "not integration"
 ```
 
 If schema updates change generated SDK method inventory, the golden snapshot file at

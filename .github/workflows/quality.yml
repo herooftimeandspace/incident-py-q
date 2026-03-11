@@ -2,7 +2,7 @@ name: quality
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "staging", "dev"]
   pull_request:
 
 jobs:
@@ -28,8 +28,17 @@ jobs:
       - name: Mypy
         run: mypy src tests scripts
 
-      - name: Tests (non-integration)
-        run: pytest -m "not integration"
+      - name: Tests (non-integration) with coverage
+        run: pytest --cov=incident_py_q --cov-report=xml --cov-report=term-missing -m "not integration"
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./coverage.xml
+          fail_ci_if_error: false
+          flags: pytest
+          name: pytest-${{ github.ref_name }}
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build package wheel
         run: python -m pip wheel --no-deps --no-build-isolation --wheel-dir dist .

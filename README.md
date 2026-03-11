@@ -1,5 +1,15 @@
 # incident-py-q
 
+[![Pytest main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=main&label=pytest%20main)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Amain)
+[![Pytest staging](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=staging&label=pytest%20staging)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Astaging)
+[![Pytest dev](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=dev&label=pytest%20dev)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Adev)
+[![Coverage main](https://img.shields.io/codecov/c/github/example/incident-py-q/main?label=coverage%20main)](https://app.codecov.io/gh/example/incident-py-q/tree/main)
+[![Coverage staging](https://img.shields.io/codecov/c/github/example/incident-py-q/staging?label=coverage%20staging)](https://app.codecov.io/gh/example/incident-py-q/tree/staging)
+[![Coverage dev](https://img.shields.io/codecov/c/github/example/incident-py-q/dev?label=coverage%20dev)](https://app.codecov.io/gh/example/incident-py-q/tree/dev)
+[![Docs main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=docs%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
+[![Pages main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=pages%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
+[![License repo](https://img.shields.io/github/license/example/incident-py-q?label=license%20repo)](LICENSE)
+
 Contract-driven Incident IQ Python SDK (distribution: `incident-py-q`, import: `incident_py_q`).
 
 The package ships:
@@ -101,7 +111,7 @@ payload = client.request(
 ```bash
 ruff check .
 mypy src tests scripts
-pytest -m "not integration"
+pytest --cov=incident_py_q --cov-report=xml -m "not integration"
 pytest -m integration
 python -m pip wheel --no-deps --wheel-dir dist .
 python scripts/build_docs.py
