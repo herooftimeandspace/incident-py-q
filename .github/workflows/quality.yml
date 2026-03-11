@@ -5,6 +5,9 @@ on:
     branches: ["main", "staging", "dev"]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   quality:
     runs-on: ubuntu-latest
@@ -31,14 +34,86 @@ jobs:
       - name: Tests (non-integration) with coverage
         run: pytest --cov=incident_py_q --cov-report=xml --cov-report=term-missing -m "not integration"
 
-      - name: Upload coverage report
-        uses: codecov/codecov-action@v5
-        with:
-          files: ./coverage.xml
-          fail_ci_if_error: false
-          flags: pytest
-          name: pytest-${{ github.ref_name }}
-          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Build coverage badge payload
+        if: github.event_name == 'push'
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from xml.etree import ElementTree
+
+          branch = os.environ["GITHUB_REF_NAME"]
+          root = ElementTree.parse("coverage.xml").getroot()
+          line_rate = float(root.attrib.get("line-rate", "0"))
+          percent = round(line_rate * 100, 2)
+
+          if percent >= 90:
+              color = "brightgreen"
+          elif percent >= 80:
+              color = "green"
+          elif percent >= 70:
+              color = "yellowgreen"
+          elif percent >= 60:
+              color = "yellow"
+          elif percent >= 50:
+              color = "orange"
+          else:
+              color = "red"
+
+          payload = {
+              "schemaVersion": 1,
+              "label": f"coverage {branch}",
+              "message": f"{percent:.2f}%",
+              "color": color,
+          }
+
+          with open("coverage-badge.json", "w", encoding="utf-8") as handle:
+              json.dump(payload, handle, indent=2, sort_keys=True)
+              handle.write("\n")
+          PY
+
+      - name: Publish branch coverage badge JSON to badges branch
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          GH_BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --heads "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges | grep -q .; then
+            echo "Using existing badges branch."
+            git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+          else
+            echo "Badges branch not found yet; initializing it now."
+            git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+            cd badges-work
+            git checkout --orphan badges
+            git rm -rf .
+            mkdir -p branch-coverage
+            touch branch-coverage/.gitkeep
+            echo "# branch coverage badge payloads" > README.md
+            git add README.md branch-coverage/.gitkeep
+            git commit -m "Initialize badges branch"
+            git push origin badges
+            cd ..
+            rm -rf badges-work
+            git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+          fi
+
+          mkdir -p "badges-work/branch-coverage/${GH_BRANCH}"
+          cp coverage-badge.json "badges-work/branch-coverage/${GH_BRANCH}/coverage.json"
+
+          cd badges-work
+          git add "branch-coverage/${GH_BRANCH}/coverage.json"
+          if git diff --cached --quiet; then
+            echo "No coverage badge changes to publish."
+            exit 0
+          fi
+
+          git commit -m "Update coverage badge for ${GH_BRANCH} [skip ci]"
+          git push origin badges
 
       - name: Build package wheel
         run: python -m pip wheel --no-deps --no-build-isolation --wheel-dir dist .

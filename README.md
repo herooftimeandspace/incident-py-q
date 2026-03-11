@@ -3,14 +3,16 @@
 [![Pytest main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=main&label=pytest%20main)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Amain)
 [![Pytest staging](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=staging&label=pytest%20staging)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Astaging)
 [![Pytest dev](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=dev&label=pytest%20dev)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Adev)
-[![Coverage main](https://img.shields.io/codecov/c/github/example/incident-py-q/main?label=coverage%20main)](https://app.codecov.io/gh/example/incident-py-q/tree/main)
-[![Coverage staging](https://img.shields.io/codecov/c/github/example/incident-py-q/staging?label=coverage%20staging)](https://app.codecov.io/gh/example/incident-py-q/tree/staging)
-[![Coverage dev](https://img.shields.io/codecov/c/github/example/incident-py-q/dev?label=coverage%20dev)](https://app.codecov.io/gh/example/incident-py-q/tree/dev)
+[![Coverage main](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fmain%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/main/coverage.json)
+[![Coverage staging](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fstaging%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/staging/coverage.json)
+[![Coverage dev](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fdev%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/dev/coverage.json)
 [![Docs main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=docs%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
 [![Pages main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=pages%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
 [![License repo](https://img.shields.io/github/license/example/incident-py-q?label=license%20repo)](LICENSE)
 
 Contract-driven Incident IQ Python SDK (distribution: `incident-py-q`, import: `incident_py_q`).
+
+Coverage badges are published by CI to a dedicated `badges` branch (`branch-coverage/<branch>/coverage.json`) so protected branches (`main`, `staging`, `dev`) never require bot commits for badge refreshes.
 
 The package ships:
 - sync and async clients (`Client`, `AsyncClient`)
