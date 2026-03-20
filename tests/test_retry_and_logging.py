@@ -30,3 +30,19 @@ def test_header_redaction() -> None:
     assert redacted["Authorization"] == "***REDACTED***"
     assert redacted["Cookie"] == "***REDACTED***"
     assert redacted["Client"] == "ApiClient"
+
+
+def test_header_redaction_is_case_insensitive_and_preserves_custom_headers() -> None:
+    headers = {
+        "authorization": "Bearer token",
+        "X-API-KEY": "secret",
+        "Custom": "value",
+    }
+    redacted = redact_headers(headers)
+    assert redacted["authorization"] == "***REDACTED***"
+    assert redacted["X-API-KEY"] == "***REDACTED***"
+    assert redacted["Custom"] == "value"
+
+
+def test_header_redaction_returns_empty_mapping_for_none() -> None:
+    assert redact_headers(None) == {}

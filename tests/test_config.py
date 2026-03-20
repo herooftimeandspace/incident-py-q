@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -81,3 +82,48 @@ def test_build_authorization_value() -> None:
     assert build_authorization_value("abc", "bearer") == "Bearer abc"
     assert build_authorization_value("Bearer abc", "bearer") == "Bearer abc"
     assert build_authorization_value("Raw token", "raw") == "Raw token"
+
+
+def _build_valid_config(**overrides: Any) -> ClientConfig:
+    base = {
+        "base_url": "https://tenant.example/api/v1",
+        "api_token": "token-123",
+        "client_header": "ApiClient",
+    }
+    base.update(overrides)
+    return ClientConfig(**base)
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "http://tenant.example/api/v1",
+        "https://tenant.example/api/v1?query=value",
+        "https://tenant.example/api/v1#section",
+        "https://user:pass@tenant.example/api/v1",
+    ],
+)
+def test_client_config_rejects_insecure_base_url(value: str) -> None:
+    with pytest.raises(ConfigurationError):
+        _build_valid_config(base_url=value)
+
+
+def test_client_config_normalizes_trailing_slash() -> None:
+    config = _build_valid_config(base_url="https://tenant.example/api/v1/")
+    assert config.base_url == "https://tenant.example/api/v1"
+
+
+def test_client_config_rejects_invalid_timeouts_and_backoff() -> None:
+    with pytest.raises(ConfigurationError):
+        _build_valid_config(timeout=0)
+    with pytest.raises(ConfigurationError):
+        _build_valid_config(max_retries=-1)
+    with pytest.raises(ConfigurationError):
+        _build_valid_config(backoff_base=0)
+
+
+def test_client_config_rejects_header_control_characters() -> None:
+    with pytest.raises(ConfigurationError):
+        _build_valid_config(client_header="Api\nClient")
+    with pytest.raises(ConfigurationError):
+        _build_valid_config(site_id="site\r\n42")

@@ -54,6 +54,12 @@ Runtime environment variables:
 - `INCIDENTIQ_CLIENT_HEADER` (optional, default `ApiClient`)
 - `INCIDENTIQ_AUTH_MODE` (optional, default `bearer`, supported: `bearer`, `raw`)
 
+Security hardening rules:
+- `INCIDENTIQ_BASE_URL` must use `https`
+- base URLs with embedded credentials, query strings, or fragments are rejected
+- `client_header` and `site_id` values cannot contain CR/LF characters
+- timeout and retry tuning values must stay within safe positive/non-negative bounds
+
 Integration/smoke environment variables:
 - `INCIDENTIQ_TEST_BASE_URL` (required for integration tests)
 - `INCIDENTIQ_TEST_API_TOKEN` (required for integration tests)
@@ -113,7 +119,8 @@ payload = client.request(
 ```bash
 ruff check .
 mypy src tests scripts
-pytest --cov=incident_py_q --cov-report=xml -m "not integration"
+pip-audit
+pytest --cov=incident_py_q --cov-report=xml --cov-fail-under=95 -m "not integration"
 pytest -m integration
 python -m pip wheel --no-deps --wheel-dir dist .
 python scripts/build_docs.py

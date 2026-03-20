@@ -54,3 +54,29 @@ def test_registry_detects_definition_collisions(tiny_swagger_document: dict[str,
 
     with pytest.raises(ValueError):
         build_schema_registry([tiny_swagger_document, other_document])
+
+
+def test_registry_inventory_match_miss_and_generated_operation_ids() -> None:
+    registry = build_schema_registry(
+        [
+            {
+                "swagger": "2.0",
+                "info": {"title": "Root Controller", "version": "1.0.0"},
+                "paths": {
+                    "/": {
+                        "parameters": [{"name": "ignored", "in": "cookie", "type": "string"}],
+                        "get": {
+                            "responses": {"200": {"schema": {"type": "object"}}},
+                        },
+                    }
+                },
+                "definitions": {},
+            }
+        ]
+    )
+
+    assert registry.match_operation("POST", "/") is None
+    inventory = registry.inventory()
+    assert inventory[0]["namespace"] == "root"
+    assert inventory[0]["operation_id"].startswith("Root Controller_get_")
+    assert inventory[0]["python_method"] == "get"

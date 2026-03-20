@@ -14,15 +14,18 @@ from incident_py_q.schema.registry import SchemaRegistry
 
 
 def _build_client(tiny_registry: SchemaRegistry, **kwargs: Any) -> Client:
+    config: dict[str, Any] = {
+        "base_url": "https://tenant.example/api/v1",
+        "api_token": "token-123",
+        "site_id": "site-42",
+        "client_header": "ApiClient",
+        "max_retries": 1,
+        "backoff_base": 0.01,
+        "registry": tiny_registry,
+    }
+    config.update(kwargs)
     return Client(
-        base_url="https://tenant.example/api/v1",
-        api_token="token-123",
-        site_id="site-42",
-        client_header="ApiClient",
-        max_retries=1,
-        backoff_base=0.0,
-        registry=tiny_registry,
-        **kwargs,
+        **config,
     )
 
 
@@ -97,6 +100,32 @@ def test_request_raises_on_schema_validation_failure(tiny_registry: SchemaRegist
     client.close()
 
 
+def test_request_retries_on_transport_error(
+    tiny_registry: SchemaRegistry, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    client = _build_client(tiny_registry)
+    monkeypatch.setattr("incident_py_q.client.time.sleep", lambda _: None)
+    request = httpx.Request("GET", "https://tenant.example/api/v1/things/abc")
+
+    attempts: list[Exception | httpx.Response] = [
+        httpx.ConnectTimeout("network"),
+        httpx.Response(200, json={"id": "abc", "name": "Desk"}, request=request),
+    ]
+
+    def fake_request(*args: Any, **kwargs: Any) -> httpx.Response:
+        result = attempts.pop(0)
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    monkeypatch.setattr(client._http, "request", fake_request)
+    payload = client.request("GET", "/things/{ThingId}", path_params={"ThingId": "abc"})
+    client.close()
+
+    assert payload == {"id": "abc", "name": "Desk"}
+    assert not attempts
+
+
 def test_request_raises_for_missing_path_params(tiny_registry: SchemaRegistry) -> None:
     client = _build_client(tiny_registry)
     with pytest.raises(ValueError):
@@ -112,3 +141,20 @@ def test_invalid_auth_mode_raises_configuration_error(tiny_registry: SchemaRegis
             auth_mode="basic",
             registry=tiny_registry,
         )
+
+
+def test_request_raises_transport_error_after_retry_exhaustion(
+    tiny_registry: SchemaRegistry, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    client = _build_client(tiny_registry, max_retries=0)
+    monkeypatch.setattr("incident_py_q.client.time.sleep", lambda _: None)
+
+    def fake_request(*args: Any, **kwargs: Any) -> httpx.Response:
+        raise httpx.ConnectError("network down")
+
+    monkeypatch.setattr(client._http, "request", fake_request)
+
+    with pytest.raises(httpx.ConnectError):
+        client.request("GET", "/things/{ThingId}", path_params={"ThingId": "abc"})
+
+    client.close()

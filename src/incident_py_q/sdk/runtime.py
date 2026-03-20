@@ -114,7 +114,10 @@ class OperationMethod:
 
     def raw(self, **kwargs: Any) -> dict[str, Any] | list[Any] | None:
         bound = self.__signature__.bind(**kwargs)
-        validated = self.request_model.model_validate(bound.arguments)
+        request_arguments = {
+            key: value for key, value in bound.arguments.items() if key != "timeout"
+        }
+        validated = self.request_model.model_validate(request_arguments)
         request = _to_request_components(validated=validated, bindings=self.bindings)
         timeout = bound.arguments.get("timeout")
         return self._client._request_from_operation(self.operation, timeout=timeout, **request)
@@ -179,7 +182,10 @@ class AsyncOperationMethod:
 
     async def raw(self, **kwargs: Any) -> dict[str, Any] | list[Any] | None:
         bound = self.__signature__.bind(**kwargs)
-        validated = self.request_model.model_validate(bound.arguments)
+        request_arguments = {
+            key: value for key, value in bound.arguments.items() if key != "timeout"
+        }
+        validated = self.request_model.model_validate(request_arguments)
         request = _to_request_components(validated=validated, bindings=self.bindings)
         timeout = bound.arguments.get("timeout")
         return await self._client._request_from_operation(self.operation, timeout=timeout, **request)

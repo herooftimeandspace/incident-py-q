@@ -5,9 +5,14 @@ on:
   schedule:
     - cron: "0 12 * * 1"
 
+permissions:
+  contents: read
+
 jobs:
   integration:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       INCIDENTIQ_TEST_BASE_URL: ${{ secrets.INCIDENTIQ_TEST_BASE_URL }}
       INCIDENTIQ_TEST_API_TOKEN: ${{ secrets.INCIDENTIQ_TEST_API_TOKEN }}
@@ -16,10 +21,10 @@ jobs:
       INCIDENTIQ_TEST_AUTH_MODE: ${{ secrets.INCIDENTIQ_TEST_AUTH_MODE }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5  # TODO: pin to specific SHA for reproducibility
         with:
           python-version: "3.14"
 

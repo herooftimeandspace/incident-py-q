@@ -16,6 +16,11 @@ def test_to_snake_case_normalizes_common_shapes() -> None:
     assert to_snake_case("class") == "class_"
 
 
+def test_to_snake_case_falls_back_for_empty_like_values() -> None:
+    assert to_snake_case("") == "value"
+    assert to_snake_case("$$$") == "value"
+
+
 def test_render_path_substitutes_and_escapes() -> None:
     rendered = render_path("/things/{ThingId}", {"ThingId": "abc/123"})
     assert rendered == "/things/abc%2F123"
