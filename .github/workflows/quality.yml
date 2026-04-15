@@ -115,8 +115,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
           GH_BRANCH: ${{ github.ref_name }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           if git ls-remote --heads "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges | grep -q .; then
             echo "Using existing badges branch."
