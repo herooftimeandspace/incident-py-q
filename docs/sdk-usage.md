@@ -2,6 +2,8 @@
 
 The SDK surface is generated from bundled operation contracts.
 
+Full generated method and route documentation lives under the SDK reference pages.
+
 ## Namespace Pattern
 
 ```python
@@ -14,6 +16,7 @@ print(client.tickets.list_methods())
 Common shape:
 - `client.<namespace>.<method>(...)` returns typed Pydantic models when representable.
 - `client.<namespace>.<method>.raw(...)` returns validated JSON payloads.
+- `client.<namespace>.list_methods()` enumerates the generated runtime surface for that namespace.
 
 ## Request Signatures
 

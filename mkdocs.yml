@@ -22,6 +22,23 @@ nav:
   - Home: index.md
   - Getting Started: getting-started.md
   - SDK Usage: sdk-usage.md
+  - SDK Reference:
+      - Overview: sdk-reference/index.md
+      - Alerts: sdk-reference/alerts.md
+      - Analytics: sdk-reference/analytics.md
+      - Assets: sdk-reference/assets.md
+      - Custom Fields: sdk-reference/custom_fields.md
+      - Forms: sdk-reference/forms.md
+      - Issues: sdk-reference/issues.md
+      - Locations: sdk-reference/locations.md
+      - Manufacturers: sdk-reference/manufacturers.md
+      - Metrics: sdk-reference/metrics.md
+      - Notifications: sdk-reference/notifications.md
+      - Parts: sdk-reference/parts.md
+      - Purchase Orders: sdk-reference/purchaseorders.md
+      - SLAs: sdk-reference/slas.md
+      - Tickets: sdk-reference/tickets.md
+      - Users: sdk-reference/users.md
   - Schema & Validation: schema-validation.md
   - Logging & Runtime: runtime-logging.md
   - API Reference: api-reference.md

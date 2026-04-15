@@ -9,6 +9,8 @@ from jsonschema import validators
 from incident_py_q import Client
 from incident_py_q.schema.loader import load_stoplight_documents
 from incident_py_q.schema.registry import build_schema_registry
+from incident_py_q.sdk.docs import render_client_stub
+from incident_py_q.sdk.runtime import build_sdk_metadata
 
 
 def test_bundled_registry_has_expected_shape() -> None:
@@ -65,3 +67,24 @@ def test_namespace_methods_have_callable_runtime_surface() -> None:
                 assert callable(method)
     finally:
         client.close()
+
+
+def test_sdk_metadata_maps_all_operations_once() -> None:
+    registry = build_schema_registry(load_stoplight_documents())
+
+    metadata = build_sdk_metadata(registry)
+
+    operation_ids = {op.operation_id for op in registry.operations}
+    metadata_ids = {entry.operation.operation_id for entry in metadata}
+    assert operation_ids == metadata_ids
+    assert len(metadata) == len(registry.operations)
+
+
+def test_generated_client_stub_mentions_each_operation_once() -> None:
+    registry = build_schema_registry(load_stoplight_documents())
+
+    stub = render_client_stub(registry)
+    stub_lines = stub.splitlines()
+
+    for operation in registry.operations:
+        assert stub_lines.count(f"# OperationId: {operation.operation_id}") == 1

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build API docs with pdoc and then build the MkDocs site."""
+"""Build API docs, generated SDK reference docs, and then the MkDocs site."""
 
 from __future__ import annotations
 
@@ -15,6 +15,8 @@ def _run(cmd: list[str]) -> int:
 def main() -> int:
     if _run([sys.executable, "scripts/generate_api_docs.py"]) != 0:
         return 1
+    if _run([sys.executable, "scripts/generate_sdk_reference.py"]) != 0:
+        return 1
     if _run([sys.executable, "-m", "mkdocs", "build", "--strict"]) != 0:
         return 1
     return 0
@@ -22,4 +24,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

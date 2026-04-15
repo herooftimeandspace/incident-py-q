@@ -51,6 +51,7 @@ where = ["src"]
 [tool.setuptools.package-data]
 incident_py_q = [
   "py.typed",
+  "*.pyi",
   "data/**/*.json",
   "data/**/*.md",
   "data/**/*.yml",
