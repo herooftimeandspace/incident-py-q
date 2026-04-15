@@ -5,9 +5,12 @@ from __future__ import annotations
 import importlib.util
 import sys
 from pathlib import Path
+from types import ModuleType
+
+import pytest
 
 
-def _load_build_docs_module():
+def _load_build_docs_module() -> ModuleType:
     script_path = Path("scripts/build_docs.py")
     spec = importlib.util.spec_from_file_location("build_docs_script", script_path)
     if spec is None or spec.loader is None:
@@ -17,7 +20,9 @@ def _load_build_docs_module():
     return module
 
 
-def test_build_docs_runs_sdk_reference_generation_before_mkdocs(monkeypatch) -> None:
+def test_build_docs_runs_sdk_reference_generation_before_mkdocs(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     module = _load_build_docs_module()
     commands: list[list[str]] = []
 
@@ -35,7 +40,9 @@ def test_build_docs_runs_sdk_reference_generation_before_mkdocs(monkeypatch) -> 
     ]
 
 
-def test_build_docs_stops_when_sdk_reference_generation_fails(monkeypatch) -> None:
+def test_build_docs_stops_when_sdk_reference_generation_fails(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     module = _load_build_docs_module()
     commands: list[list[str]] = []
 

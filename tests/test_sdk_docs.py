@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.sdk.docs import (
     render_client_stub,
     render_namespace_reference,
@@ -13,7 +14,9 @@ from incident_py_q.sdk.docs import (
 from incident_py_q.sdk.runtime import build_sdk_metadata, format_operation_docstring
 
 
-def test_build_sdk_metadata_and_docstring_include_runtime_details(tiny_registry) -> None:
+def test_build_sdk_metadata_and_docstring_include_runtime_details(
+    tiny_registry: SchemaRegistry,
+) -> None:
     metadata = build_sdk_metadata(tiny_registry)
     get_things = next(method for method in metadata if method.name == "get_things")
 
@@ -29,7 +32,7 @@ def test_build_sdk_metadata_and_docstring_include_runtime_details(tiny_registry)
 
 
 def test_render_namespace_reference_orders_parameters_and_documents_aliases(
-    tiny_registry,
+    tiny_registry: SchemaRegistry,
 ) -> None:
     metadata = build_sdk_metadata(tiny_registry)
     methods = tuple(method for method in metadata if method.namespace == "things")
@@ -44,7 +47,7 @@ def test_render_namespace_reference_orders_parameters_and_documents_aliases(
     assert "client.things.get_things.iter_pages(start_page=1, page_size=100, max_pages=None, timeout=None)" in page
 
 
-def test_render_sdk_index_lists_namespaces(tiny_registry) -> None:
+def test_render_sdk_index_lists_namespaces(tiny_registry: SchemaRegistry) -> None:
     metadata = build_sdk_metadata(tiny_registry)
 
     index = render_sdk_index(metadata)
@@ -54,7 +57,7 @@ def test_render_sdk_index_lists_namespaces(tiny_registry) -> None:
 
 
 def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
-    tiny_registry,
+    tiny_registry: SchemaRegistry,
 ) -> None:
     stub = render_client_stub(tiny_registry)
 
@@ -62,7 +65,7 @@ def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
     assert "class AsyncThingsNamespace(AsyncNamespace):" in stub
     assert "get_things: _ThingsGetThingsMethod" in stub
     assert "list: _ThingsGetThingsMethod" in stub
-    assert "async def __call__(self, *, page: int = None, page_size: int = None, timeout: float | None = None) -> ThingList: ..." in stub
+    assert "async def __call__(self, *, page: int | None = None, page_size: int | None = None, timeout: float | None = None) -> ThingList: ..." in stub
     assert "def iter_pages(self, *, start_page: int = 1, page_size: int = 100, max_pages: int | None = None) -> list[_JSONPayload]: ..." in stub
     assert "things: ThingsNamespace" in stub
     assert "things: AsyncThingsNamespace" in stub
@@ -70,7 +73,7 @@ def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
 
 
 def test_write_sdk_reference_artifacts_writes_markdown_and_stub_files(
-    tiny_registry,
+    tiny_registry: SchemaRegistry,
     tmp_path: Path,
 ) -> None:
     docs_root = tmp_path / "docs" / "sdk-reference"

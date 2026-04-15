@@ -14,9 +14,9 @@ from incident_py_q.sdk.runtime import (
     AsyncOperationMethod,
     Namespace,
     OperationMethod,
-    _Binding,
     _annotation_for_parameter,
     _attach_aliases,
+    _Binding,
     _build_request_model,
     _build_response_model,
     _build_signature,
@@ -164,7 +164,8 @@ def test_build_request_and_response_models_cover_fallbacks() -> None:
     bindings = [_Binding("thing_id", "ThingId", "path", True, str)]
 
     request_model = _build_request_model(operation, bindings)
-    assert request_model.model_validate({"thing_id": "abc"}).thing_id == "abc"
+    validated = request_model.model_validate({"thing_id": "abc"})
+    assert validated.model_dump()["thing_id"] == "abc"
 
     preferred = _build_response_model(
         OperationSpec(
@@ -308,6 +309,7 @@ def test_operation_method_and_async_operation_method_dispatch_requests() -> None
         typed = await async_method(thing_id="xyz", payload={"id": "xyz"})
         raw = await async_method.raw(thing_id="xyz", payload={"id": "xyz"})
         assert typed.model_dump() == {"id": "xyz"}
+        assert isinstance(raw, dict)
         return raw
 
     raw_payload = asyncio.run(run())
@@ -342,7 +344,7 @@ def test_operation_method_validation_rejects_extra_fields() -> None:
         response_model=None,
     )
 
-    with pytest.raises(Exception):
+    with pytest.raises(TypeError):
         method.raw(thing_id="abc", unexpected=True)
 
 

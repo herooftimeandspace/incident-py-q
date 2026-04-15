@@ -3,20 +3,20 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SRC_ROOT = PROJECT_ROOT / "src"
-if str(SRC_ROOT) not in sys.path:
-    sys.path.insert(0, str(SRC_ROOT))
-
-from incident_py_q.schema.loader import load_stoplight_documents
-from incident_py_q.schema.registry import build_schema_registry
-from incident_py_q.sdk.docs import write_sdk_reference_artifacts
+from pathlib import Path
 
 
 def main() -> int:
+    project_root = Path(__file__).resolve().parents[1]
+    src_root = project_root / "src"
+    if str(src_root) not in sys.path:
+        sys.path.insert(0, str(src_root))
+
+    from incident_py_q.schema.loader import load_stoplight_documents
+    from incident_py_q.schema.registry import build_schema_registry
+    from incident_py_q.sdk.docs import write_sdk_reference_artifacts
+
     registry = build_schema_registry(load_stoplight_documents())
     docs_root = Path("docs/sdk-reference")
     package_root = Path("src/incident_py_q")

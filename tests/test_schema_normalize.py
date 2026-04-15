@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+from typing import Any, cast
+
 from incident_py_q.schema.normalize import normalize_swagger_document
 
 
 def test_normalize_swagger_document_converts_nullable_string_fields() -> None:
-    source = {
+    source: dict[str, Any] = {
         "definitions": {
             "Thing": {
                 "type": "object",
@@ -22,33 +24,38 @@ def test_normalize_swagger_document_converts_nullable_string_fields() -> None:
 
 
 def test_normalize_swagger_document_rewrites_nullable_refs_and_preserves_description() -> None:
-    normalized = normalize_swagger_document(
-        {
-            "paths": {
-                "/things": {
-                    "get": {
-                        "responses": {
-                            "200": {
-                                "schema": {
-                                    "$ref": "#/definitions/Thing",
-                                    "x-nullable": True,
-                                    "description": "nullable thing",
-                                }
+    source: dict[str, Any] = {
+        "paths": {
+            "/things": {
+                "get": {
+                    "responses": {
+                        "200": {
+                            "schema": {
+                                "$ref": "#/definitions/Thing",
+                                "x-nullable": True,
+                                "description": "nullable thing",
                             }
                         }
                     }
                 }
             }
         }
-    )
+    }
 
-    schema = normalized["paths"]["/things"]["get"]["responses"]["200"]["schema"]
+    normalized = normalize_swagger_document(source)
+
+    schema = cast(
+        dict[str, Any],
+        normalized["paths"]["/things"]["get"]["responses"]["200"]["schema"],
+    )
     assert schema["anyOf"] == [{"$ref": "#/definitions/Thing"}, {"type": "null"}]
     assert schema["description"] == "nullable thing"
 
 
 def test_normalize_swagger_document_leaves_non_nullable_values_unchanged() -> None:
-    source = {"definitions": {"Thing": {"type": "object", "properties": {"count": {"type": "integer"}}}}}
+    source: dict[str, Any] = {
+        "definitions": {"Thing": {"type": "object", "properties": {"count": {"type": "integer"}}}}
+    }
 
     normalized = normalize_swagger_document(source)
 

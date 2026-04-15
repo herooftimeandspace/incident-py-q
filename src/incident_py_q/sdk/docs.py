@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections import defaultdict
 from pathlib import Path
-from typing import Any
 
 from incident_py_q.schema.registry import SchemaRegistry
 
@@ -161,6 +160,10 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         "from .sdk.runtime import AsyncNamespace, Namespace",
         "",
         "_JSONPayload = dict[str, Any] | list[Any] | None",
+        "",
+        "def _build_url(base_url: str, rendered_path: str) -> str: ...",
+        "def _merge_headers(config: ClientConfig, headers: Mapping[str, str] | None) -> dict[str, str]: ...",
+        "def _decode_payload(response: httpx.Response) -> _JSONPayload: ...",
         "",
     ]
 
@@ -359,9 +362,9 @@ def _render_client_class_stub(
         "        registry: SchemaRegistry | None = None,",
         f"        http_client: {http_client_type} = None,",
         "    ) -> None: ...",
-        f"    @classmethod",
+        "    @classmethod",
         f"    def from_env(cls) -> {class_name}: ...",
-        f"    @classmethod",
+        "    @classmethod",
         f"    def from_test_env(cls) -> {class_name}: ...",
         "    @property",
         "    def config(self) -> ClientConfig: ...",
@@ -369,11 +372,7 @@ def _render_client_class_stub(
         "    def __getattr__(self, name: str) -> Any: ...",
         f"    {close_prefix}def close(self) -> None: ...",
         f"    {context_prefix}def {enter_name}(self) -> {class_name}: ...",
-        (
-            f"    {context_prefix}def {exit_name}(self, *_: Any) -> None: ..."
-            if not async_mode
-            else f"    {context_prefix}def {exit_name}(self, *_: Any) -> None: ..."
-        ),
+        f"    {context_prefix}def {exit_name}(self, *_: Any) -> None: ...",
         "    "
         + request_prefix
         + "def request("
@@ -435,8 +434,11 @@ def _stub_param_entries(
     for parameter in method.parameters:
         if exclude_pagination and _is_pagination_parameter(parameter):
             continue
+        annotation = parameter.annotation_display
+        if not parameter.required:
+            annotation = _optional_stub_annotation(annotation)
         default = "" if parameter.required else " = None"
-        entries.append(f"{parameter.python_name}: {parameter.annotation_display}{default}")
+        entries.append(f"{parameter.python_name}: {annotation}{default}")
     if include_timeout:
         entries.append("timeout: float | None = None")
     return entries
@@ -458,6 +460,12 @@ def _to_pascal_case(value: str) -> str:
 
 def _is_pagination_parameter(parameter: SDKParameterMetadata) -> bool:
     return parameter.python_name in {"page", "page_number", "page_size", "s", "p", "limit"}
+
+
+def _optional_stub_annotation(annotation: str) -> str:
+    if "None" in annotation:
+        return annotation
+    return f"{annotation} | None"
 
 
 def _escape_table(value: str) -> str:

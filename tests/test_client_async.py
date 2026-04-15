@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any
+from typing import Any, cast
 
 import httpx
 import pytest
@@ -112,7 +112,7 @@ def test_async_request_from_operation_uses_rendered_path(tiny_registry: SchemaRe
         return httpx.Response(200, json={"id": "abc", "name": "Desk"}, request=request)
 
     async def run() -> dict[str, Any] | list[Any] | None:
-        client._http.request = fake_request  # type: ignore[method-assign]
+        client._http.request = fake_request
         payload = await client._request_from_operation(
             operation,
             path_params={"ThingId": "abc"},
@@ -122,7 +122,7 @@ def test_async_request_from_operation_uses_rendered_path(tiny_registry: SchemaRe
             timeout=None,
         )
         await client.close()
-        return payload
+        return cast(dict[str, Any] | list[Any] | None, payload)
 
     payload = asyncio.run(run())
     assert payload == {"id": "abc", "name": "Desk"}

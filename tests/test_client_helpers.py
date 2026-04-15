@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+from typing import Any, cast
 
 import httpx
 import pytest
@@ -15,20 +16,31 @@ from incident_py_q.client import (
     _merge_headers,
 )
 from incident_py_q.config import ClientConfig
+from incident_py_q.exceptions import ConfigurationError
 from incident_py_q.schema.registry import SchemaRegistry
 
 
 def _make_config(**overrides: object) -> ClientConfig:
-    values: dict[str, object] = {
-        "base_url": "https://tenant.example/api/v1",
-        "api_token": "token-123",
-        "client_header": "ApiClient",
-        "site_id": "site-42",
-        "max_retries": 1,
-        "backoff_base": 0.01,
-    }
-    values.update(overrides)
-    return ClientConfig(**values)
+    base_url = cast(str, overrides.get("base_url", "https://tenant.example/api/v1"))
+    api_token = cast(str, overrides.get("api_token", "token-123"))
+    client_header = cast(str, overrides.get("client_header", "ApiClient"))
+    site_id = cast(str | None, overrides.get("site_id", "site-42"))
+    auth_mode = cast(str, overrides.get("auth_mode", "bearer"))
+    timeout = cast(float, overrides.get("timeout", 30.0))
+    validate_responses = cast(bool, overrides.get("validate_responses", True))
+    max_retries = cast(int, overrides.get("max_retries", 1))
+    backoff_base = cast(float, overrides.get("backoff_base", 0.01))
+    return ClientConfig(
+        base_url=base_url,
+        api_token=api_token,
+        client_header=client_header,
+        site_id=site_id,
+        auth_mode=cast(Any, auth_mode),
+        timeout=timeout,
+        validate_responses=validate_responses,
+        max_retries=max_retries,
+        backoff_base=backoff_base,
+    )
 
 
 def test_build_url_joins_relative_paths() -> None:
@@ -146,7 +158,7 @@ def test_client_getattr_raises_for_unknown_namespace(tiny_registry: SchemaRegist
 
 
 def test_client_requires_credentials_when_no_config_is_provided() -> None:
-    with pytest.raises(Exception):
+    with pytest.raises(ConfigurationError):
         Client(base_url=None, api_token=None)
 
 
