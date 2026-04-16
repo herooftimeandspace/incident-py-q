@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
         uses: actions/setup-python@v5  # TODO: pin to specific SHA for reproducibility
