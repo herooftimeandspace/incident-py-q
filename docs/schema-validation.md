@@ -13,6 +13,7 @@ Bundled assets live under:
 - `src/incident_py_q/data/postman/`
 - `src/incident_py_q/data/source_manifest.json`
 - `src/incident_py_q/data/app_schemas.json`
+- `src/incident_py_q/data/silver_inventory.json`
 
 ## Runtime Validation Flow
 
@@ -24,14 +25,15 @@ Bundled assets live under:
 3. Validate JSON payload with `jsonschema`.
 4. Raise `SchemaValidationError` (`ValueError`) on mismatch.
 
-Undocumented app-path endpoints under `client.apps.*` use the same runtime validation approach with the bundled app schema set.
+Golden routes under `client.<namespace>.*` validate against Stoplight contracts. Silver routes under `client.silver.*` are intentionally kept separate because Stoplight does not publish contracts for them. The typed app helpers under `client.silver.apps.*` and the legacy alias `client.apps.*` use the bundled app schema set where dedicated Silver schemas exist.
 
 ## Schema Sync Workflow
 
 ```bash
 python scripts/sync_schemas.py
 python scripts/update_sdk_inventory.py
-python scripts/extract_har_app_inventory.py <intune.har> <mosyle.har> <google.har>
+python scripts/update_silver_inventory.py demo.incidentiq.com.har
+python scripts/extract_har_app_inventory.py demo.incidentiq.com.har
 ```
 
-The sync script is manifest-driven and supports continue-on-error with required-source failure exit behavior.
+`update_sdk_inventory.py` refreshes the Golden Stoplight inventory. `update_silver_inventory.py` classifies HAR traffic into Golden, Silver, and discarded routes, writes the bundled Silver inventory, refreshes the merged SDK inventory snapshot, and updates the legacy app-path fixture used by contract tests.

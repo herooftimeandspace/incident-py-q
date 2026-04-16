@@ -1,8 +1,10 @@
-# `metrics` Namespace
+# `metrics` Golden Namespace
 
 Sync client access: `client.metrics`
 
 Async client access: `client.metrics` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -16,6 +18,8 @@ Async client access: `client.metrics` with `await` on method calls.
 ## Methods
 
 ### `delete_metric`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_DeleteMetric`
 
@@ -51,6 +55,8 @@ DELETE /api/v1.0/metrics/2c6101d2-1ac8-4320-b234-74f51a3b2e58
 
 ### `delete_metric_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_DeleteMetricType`
 
 - Sync: `client.metrics.delete_metric_type(metric_type_id=..., timeout=None)`
@@ -83,6 +89,8 @@ DELETE /api/v1.0/metrics/types/67a39334-d778-487c-95ae-07a776ed8201
 ---
 
 ### `get_metric`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_GetMetric`
 
@@ -119,6 +127,8 @@ GET /api/v1.0/metrics/2c6101d2-1ac8-4320-b234-74f51a3b2e58
 
 ### `get_metric_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_GetMetricType`
 
 - Sync: `client.metrics.get_metric_type(metric_type_id=..., r=..., timeout=None)`
@@ -153,6 +163,8 @@ GET /api/v1.0/metrics/types/67a39334-d778-487c-95ae-07a776ed8201
 
 ### `get_metric_types`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_GetMetricTypes`
 
 - Sync: `client.metrics.get_metric_types(r=..., timeout=None)`
@@ -185,6 +197,8 @@ GET /api/v1.0/metrics/types
 ---
 
 ### `get_metrics`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_GetMetrics`
 
@@ -220,6 +234,8 @@ GET /api/v1.0/metrics/
 
 ### `get_metrics_for_sla`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_GetMetricsForSla`
 
 - Sync: `client.metrics.get_metrics_for_sla(sla_id=..., r=..., timeout=None)`
@@ -254,6 +270,8 @@ GET /api/v1.0/metrics/for/sla/bd64e104-4c83-4744-a888-eeb760c03bfe
 
 ### `update_metric`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_UpdateMetric`
 
 - Sync: `client.metrics.update_metric(metric_id=..., item=..., timeout=None)`
@@ -283,6 +301,8 @@ No contract summary provided.
 
 ### `update_metric_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_UpdateMetricType`
 
 - Sync: `client.metrics.update_metric_type(metric_type_id=..., item=..., timeout=None)`
@@ -310,6 +330,8 @@ No contract summary provided.
 ---
 
 ### `update_metrics_for_sla`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_UpdateMetricsForSla`
 

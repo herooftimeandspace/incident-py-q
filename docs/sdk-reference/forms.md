@@ -1,12 +1,16 @@
-# `forms` Namespace
+# `forms` Golden Namespace
 
 Sync client access: `client.forms`
 
 Async client access: `client.forms` with `await` on method calls.
 
+These methods are Golden because they come from bundled Stoplight controller contracts.
+
 ## Methods
 
 ### `submit_form`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Form_SubmitForm`
 

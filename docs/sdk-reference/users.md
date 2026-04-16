@@ -1,8 +1,10 @@
-# `users` Namespace
+# `users` Golden Namespace
 
 Sync client access: `client.users`
 
 Async client access: `client.users` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -16,6 +18,8 @@ Async client access: `client.users` with `await` on method calls.
 ## Methods
 
 ### `create_local_user`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_CreateLocalUser`
 
@@ -76,6 +80,8 @@ POST /api/v1.0/users/local/new
 
 ### `delete_user`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `User_DeleteUser`
 
 - Sync: `client.users.delete_user(user_id=..., timeout=None)`
@@ -104,6 +110,8 @@ No contract summary provided.
 
 ### `delete_user_view`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `View_DeleteUserView`
 
 - Sync: `client.users.delete_user_view(view_id=..., timeout=None)`
@@ -130,6 +138,8 @@ No contract summary provided.
 ---
 
 ### `get_agents`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_GetAgents`
 
@@ -164,6 +174,8 @@ POST /api/v1.0/users/agents
 
 ### `get_agents_legacy`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `User_GetAgentsLegacy`
 
 - Sync: `client.users.get_agents_legacy(timeout=None)`
@@ -188,6 +200,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_user`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_GetUser`
 
@@ -223,6 +237,8 @@ GET /api/v1.0/users/0b92ee98-edef-4423-9e15-98fe5726c1af
 
 ### `get_user_view`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `View_GetUserView`
 
 - Sync: `client.users.get_user_view(view_id=..., timeout=None)`
@@ -256,6 +272,8 @@ GET /api/v1.0/users/views/{ViewId:guid}
 
 ### `get_user_views`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `View_GetUserViews`
 
 - Sync: `client.users.get_user_views(timeout=None)`
@@ -286,6 +304,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_users`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_GetUsers`
 
@@ -319,6 +339,8 @@ POST /api/v1.0/users
 ---
 
 ### `get_users_for_view`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_GetUsersForView`
 
@@ -354,6 +376,8 @@ POST /api/v1.0/users/view/4e6817c9-86b5-4810-84d8-ae99dfb6ba81
 
 ### `get_users_legacy`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `User_GetUsersLegacy`
 
 - Sync: `client.users.get_users_legacy(timeout=None)`
@@ -379,6 +403,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_users_per_grade`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_GetUsersPerGrade`
 
@@ -411,6 +437,8 @@ This operation does not define request parameters.
 
 ### `get_users_per_location`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `User_GetUsersPerLocation`
 
 - Sync: `client.users.get_users_per_location(timeout=None)`
@@ -441,6 +469,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_users_with_location_permission`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_GetUsersWithLocationPermission`
 
@@ -474,6 +504,8 @@ GET /api/v1.0/users/location/1e997655-cbce-4cc3-85a6-5420aa9c6206
 ---
 
 ### `update_user`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `User_UpdateUser`
 
@@ -535,6 +567,8 @@ UpdateUserRequest: {
 ---
 
 ### `update_user_view`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `View_UpdateUserView`
 

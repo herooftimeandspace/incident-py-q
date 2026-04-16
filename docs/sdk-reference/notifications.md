@@ -1,8 +1,10 @@
-# `notifications` Namespace
+# `notifications` Golden Namespace
 
 Sync client access: `client.notifications`
 
 Async client access: `client.notifications` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -13,6 +15,8 @@ Async client access: `client.notifications` with `await` on method calls.
 ## Methods
 
 ### `get_notifications`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Notification_GetNotifications`
 
@@ -53,6 +57,8 @@ POST /api/v1.0/notifications
 
 ### `get_ticket_emails`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Notification_GetTicketEmails`
 
 - Sync: `client.notifications.get_ticket_emails(ticket_id=..., timeout=None)`
@@ -86,6 +92,8 @@ GET /api/v1.0/notifications/emails/for/ticket/ac6cece8-e4f4-e511-a789-005056bb00
 
 ### `get_unarchived_notifications`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Notification_GetUnarchivedNotifications`
 
 - Sync: `client.notifications.get_unarchived_notifications(timeout=None)`
@@ -116,6 +124,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_unread_notifications`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Notification_GetUnreadNotifications`
 
@@ -148,6 +158,8 @@ This operation does not define request parameters.
 
 ### `mark_all_notifications_archived`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Notification_MarkAllNotificationsArchived`
 
 - Sync: `client.notifications.mark_all_notifications_archived(timeout=None)`
@@ -179,6 +191,8 @@ This operation does not define request parameters.
 
 ### `mark_all_notifications_read`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Notification_MarkAllNotificationsRead`
 
 - Sync: `client.notifications.mark_all_notifications_read(timeout=None)`
@@ -209,6 +223,8 @@ This operation does not define request parameters.
 ---
 
 ### `mark_notification_archived`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Notification_MarkNotificationArchived`
 
@@ -242,6 +258,8 @@ POST /api/v1.0/notifications/ac6cece8-e4f4-e511-a789-005056bb000e/archive
 ---
 
 ### `mark_notification_read`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Notification_MarkNotificationRead`
 

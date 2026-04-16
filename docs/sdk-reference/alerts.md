@@ -1,8 +1,10 @@
-# `alerts` Namespace
+# `alerts` Golden Namespace
 
 Sync client access: `client.alerts`
 
 Async client access: `client.alerts` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -13,6 +15,8 @@ Async client access: `client.alerts` with `await` on method calls.
 ## Methods
 
 ### `queue_notification`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Alerts_QueueNotification`
 

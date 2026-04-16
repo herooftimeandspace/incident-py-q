@@ -1,12 +1,16 @@
-# `analytics` Namespace
+# `analytics` Golden Namespace
 
 Sync client access: `client.analytics`
 
 Async client access: `client.analytics` with `await` on method calls.
 
+These methods are Golden because they come from bundled Stoplight controller contracts.
+
 ## Methods
 
 ### `get_asset_counts_by_audit_policy_coverage`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Analytics_GetAssetCountsByAuditPolicyCoverage`
 
@@ -38,6 +42,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_asset_counts_by_audit_policy_schedule_status`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Analytics_GetAssetCountsByAuditPolicyScheduleStatus`
 
@@ -72,6 +78,8 @@ GET /api/v1.0/analytics/assets/by-audit-schedule-status/ac6cece8-e4f4-e511-a789-
 
 ### `get_asset_counts_by_audit_policy_status`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Analytics_GetAssetCountsByAuditPolicyStatus`
 
 - Sync: `client.analytics.get_asset_counts_by_audit_policy_status(asset_audit_policy_id=..., timeout=None)`
@@ -105,6 +113,8 @@ GET /api/v1.0/analytics/assets/by-audit-status/ac6cece8-e4f4-e511-a789-005056bb0
 
 ### `get_asset_counts_by_audit_status`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Analytics_GetAssetCountsByAuditStatus`
 
 - Sync: `client.analytics.get_asset_counts_by_audit_status(timeout=None)`
@@ -135,6 +145,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_asset_counts_by_verification_location`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Analytics_GetAssetCountsByVerificationLocation`
 
@@ -167,6 +179,8 @@ This operation does not define request parameters.
 
 ### `get_asset_counts_by_verification_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Analytics_GetAssetCountsByVerificationType`
 
 - Sync: `client.analytics.get_asset_counts_by_verification_type(timeout=None)`
@@ -197,6 +211,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_report`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Analytics_GetReport`
 
@@ -231,6 +247,8 @@ GET /api/v1.0/analytics/reports/ac6cece8-e4f4-e511-a789-005056bb000e
 
 ### `get_report_elements`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Analytics_GetReportElements`
 
 - Sync: `client.analytics.get_report_elements(report_id=..., timeout=None)`
@@ -264,6 +282,8 @@ GET /api/v1.0/analytics/reports/elements/ac6cece8-e4f4-e511-a789-005056bb000e
 
 ### `get_report_queries`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Analytics_GetReportQueries`
 
 - Sync: `client.analytics.get_report_queries(report_id=..., timeout=None)`
@@ -296,6 +316,8 @@ GET /api/v1.0/analytics/reports/queries/ac6cece8-e4f4-e511-a789-005056bb000e
 ---
 
 ### `get_reports`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Analytics_GetReports`
 

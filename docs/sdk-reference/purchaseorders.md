@@ -1,8 +1,10 @@
-# `purchaseorders` Namespace
+# `purchaseorders` Golden Namespace
 
 Sync client access: `client.purchaseorders`
 
 Async client access: `client.purchaseorders` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -16,6 +18,8 @@ Async client access: `client.purchaseorders` with `await` on method calls.
 ## Methods
 
 ### `delete_purchase_order`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Part_DeletePurchaseOrder`
 
@@ -51,6 +55,8 @@ DELETE /api/v1.0/purchaseorders/b199f092-e1a9-418b-8eef-f6e44e273539
 
 ### `get_purchase_order`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Part_GetPurchaseOrder`
 
 - Sync: `client.purchaseorders.get_purchase_order(purchase_order_id=..., timeout=None)`
@@ -85,6 +91,8 @@ GET /api/v1.0/purchaseorders/b199f092-e1a9-418b-8eef-f6e44e273539
 
 ### `get_purchase_orders`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Part_GetPurchaseOrders`
 
 - Sync: `client.purchaseorders.get_purchase_orders(timeout=None)`
@@ -116,6 +124,8 @@ This operation does not define request parameters.
 ---
 
 ### `update_purchase_order`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Part_UpdatePurchaseOrder`
 
