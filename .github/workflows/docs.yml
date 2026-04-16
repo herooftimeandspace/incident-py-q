@@ -2,7 +2,9 @@ name: docs
 
 on:
   push:
-    branches: ["main", "staging", "dev"]
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -16,7 +18,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  docs-build:
+    name: docs-build
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -35,18 +38,78 @@ jobs:
           python -m pip install -e '.[dev]'
 
       - name: Configure Pages
+        if: github.event_name == 'push'
         uses: actions/configure-pages@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Build docs site
         run: python scripts/build_docs.py
 
       - name: Upload Pages artifact
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v5  # TODO: pin to specific SHA for reproducibility
         with:
           path: site
 
+  publish-badges:
+    needs: docs-build
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+
+      - name: Build docs status badge payload
+        run: |
+          python scripts/build_badge_json.py status \
+            --conclusion "${{ needs.docs-build.result }}" \
+            --label "main docs" \
+            --output docs-status.json
+
+      - name: Publish docs badge JSON to badges branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --heads "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges | grep -q .; then
+            git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+          else
+            git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+            cd badges-work
+            git checkout --orphan badges
+            git rm -rf .
+            mkdir -p branch-coverage branch-status
+            touch branch-coverage/.gitkeep branch-status/.gitkeep
+            echo "# branch badge payloads" > README.md
+            git add README.md branch-coverage/.gitkeep branch-status/.gitkeep
+            git commit -m "Initialize badges branch"
+            git push origin badges
+            cd ..
+            rm -rf badges-work
+            git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+          fi
+
+          mkdir -p "badges-work/branch-status/main"
+          cp docs-status.json "badges-work/branch-status/main/docs.json"
+
+          cd badges-work
+          git add "branch-status/main/docs.json"
+          if git diff --cached --quiet; then
+            echo "No docs badge changes to publish."
+            exit 0
+          fi
+
+          git commit -m "Update docs badge for main [skip ci]"
+          git push origin badges
+
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.docs-build.result == 'success'
     permissions:
       pages: write
       id-token: write
@@ -55,7 +118,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: docs-build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
