@@ -85,5 +85,5 @@ def tiny_config() -> ClientConfig:
         timeout=10.0,
         validate_responses=True,
         max_retries=1,
-        backoff_base=0.0,
+        backoff_base=0.01,
     )

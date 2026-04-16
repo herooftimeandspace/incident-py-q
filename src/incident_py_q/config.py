@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal, cast
+from urllib.parse import ParseResult, urlparse, urlunparse
 
 from .exceptions import ConfigurationError
 
@@ -41,6 +42,43 @@ def _env_get(env: dict[str, str], key: str) -> str | None:
     return stripped if stripped else None
 
 
+def _normalize_base_url(base_url: str) -> str:
+    parsed = urlparse(base_url)
+    if parsed.scheme.lower() != "https":
+        raise ConfigurationError("base_url must use https.")
+    if not parsed.netloc:
+        raise ConfigurationError("base_url must include a network location.")
+    if parsed.username or parsed.password:
+        raise ConfigurationError("base_url must not contain credentials.")
+    if parsed.query or parsed.fragment:
+        raise ConfigurationError("base_url must not include query parameters or fragments.")
+    normalized_path = parsed.path.rstrip("/")
+    sanitized: ParseResult = parsed._replace(path=normalized_path)
+    return urlunparse(sanitized)
+
+
+def _validate_timeout(timeout: float) -> None:
+    if timeout <= 0:
+        raise ConfigurationError("timeout must be greater than zero.")
+
+
+def _validate_max_retries(max_retries: int) -> None:
+    if max_retries < 0:
+        raise ConfigurationError("max_retries must be zero or positive.")
+
+
+def _validate_backoff_base(backoff_base: float) -> None:
+    if backoff_base <= 0:
+        raise ConfigurationError("backoff_base must be greater than zero.")
+
+
+def _validate_header_value(value: str | None, field_name: str) -> None:
+    if value is None:
+        return
+    if "\r" in value or "\n" in value:
+        raise ConfigurationError(f"{field_name} must not contain CR or LF characters.")
+
+
 @dataclass(slots=True, frozen=True)
 class ClientConfig:
     """Normalized runtime configuration for sync and async Incident IQ clients."""
@@ -54,6 +92,15 @@ class ClientConfig:
     validate_responses: bool = True
     max_retries: int = 2
     backoff_base: float = 0.25
+
+    def __post_init__(self) -> None:
+        normalized = _normalize_base_url(self.base_url)
+        object.__setattr__(self, "base_url", normalized)
+        _validate_timeout(self.timeout)
+        _validate_max_retries(self.max_retries)
+        _validate_backoff_base(self.backoff_base)
+        _validate_header_value(self.client_header, "client_header")
+        _validate_header_value(self.site_id, "site_id")
 
     @classmethod
     def from_env(
@@ -98,7 +145,7 @@ class ClientConfig:
         resolved_auth_mode = cast(AuthMode, auth_mode)
 
         return cls(
-            base_url=base_url.rstrip("/"),
+            base_url=base_url,
             api_token=api_token,
             site_id=site_id,
             client_header=client_header,
