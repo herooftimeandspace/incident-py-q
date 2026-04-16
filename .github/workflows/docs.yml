@@ -35,7 +35,7 @@ jobs:
           python -m pip install -e '.[dev]'
 
       - name: Configure Pages
-        uses: actions/configure-pages@v5  # TODO: pin to specific SHA for reproducibility
+        uses: actions/configure-pages@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Build docs site
         run: python scripts/build_docs.py
