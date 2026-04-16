@@ -19,6 +19,7 @@ def test_from_env_runtime_values() -> None:
             "INCIDENTIQ_SITE_ID": "site-1",
             "INCIDENTIQ_CLIENT_HEADER": "CustomClient",
             "INCIDENTIQ_AUTH_MODE": "raw",
+            "INCIDENTIQ_APP_HEADERS_JSON": "{\"apptoken\":\"app-token\"}",
         }
     )
 
@@ -27,6 +28,7 @@ def test_from_env_runtime_values() -> None:
     assert config.site_id == "site-1"
     assert config.client_header == "CustomClient"
     assert config.auth_mode == "raw"
+    assert config.app_headers == {"apptoken": "app-token"}
 
 
 def test_from_env_test_prefix() -> None:
@@ -84,6 +86,17 @@ def test_from_env_rejects_unknown_auth_mode() -> None:
         )
 
 
+def test_from_env_rejects_invalid_app_headers_json() -> None:
+    with pytest.raises(ConfigurationError):
+        ClientConfig.from_env(
+            env={
+                "INCIDENTIQ_BASE_URL": "https://tenant.example",
+                "INCIDENTIQ_API_TOKEN": "token",
+                "INCIDENTIQ_APP_HEADERS_JSON": "not-json",
+            }
+        )
+
+
 def test_build_authorization_value() -> None:
     assert build_authorization_value("abc", "bearer") == "Bearer abc"
     assert build_authorization_value("Bearer abc", "bearer") == "Bearer abc"
@@ -96,6 +109,7 @@ def _build_valid_config(**overrides: Any) -> ClientConfig:
     client_header = cast(str, overrides.get("client_header", "ApiClient"))
     site_id = cast(str | None, overrides.get("site_id"))
     auth_mode = cast(str, overrides.get("auth_mode", "bearer"))
+    app_headers = cast(dict[str, str] | None, overrides.get("app_headers"))
     timeout = cast(float, overrides.get("timeout", 30.0))
     validate_responses = cast(bool, overrides.get("validate_responses", True))
     max_retries = cast(int, overrides.get("max_retries", 2))
@@ -106,6 +120,7 @@ def _build_valid_config(**overrides: Any) -> ClientConfig:
         site_id=site_id,
         client_header=client_header,
         auth_mode=cast(Any, auth_mode),
+        app_headers=app_headers,
         timeout=timeout,
         validate_responses=validate_responses,
         max_retries=max_retries,
@@ -146,3 +161,8 @@ def test_client_config_rejects_header_control_characters() -> None:
         _build_valid_config(client_header="Api\nClient")
     with pytest.raises(ConfigurationError):
         _build_valid_config(site_id="site\r\n42")
+
+
+def test_client_config_rejects_invalid_app_header_values() -> None:
+    with pytest.raises(ConfigurationError):
+        _build_valid_config(app_headers={"apptoken": "bad\nvalue"})

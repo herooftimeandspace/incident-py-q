@@ -6,6 +6,7 @@ Use these pages to discover the dynamic namespace methods available on `Client` 
 
 | Namespace | Canonical Methods | Page |
 | --- | ---: | --- |
+| `apps` | 18 | [`client.apps`](apps.md) |
 | `alerts` | 1 | [`client.alerts`](alerts.md) |
 | `analytics` | 10 | [`client.analytics`](analytics.md) |
 | `assets` | 39 | [`client.assets`](assets.md) |

@@ -12,6 +12,7 @@ Bundled assets live under:
 - `src/incident_py_q/data/stoplight/controllers/`
 - `src/incident_py_q/data/postman/`
 - `src/incident_py_q/data/source_manifest.json`
+- `src/incident_py_q/data/app_schemas.json`
 
 ## Runtime Validation Flow
 
@@ -23,11 +24,14 @@ Bundled assets live under:
 3. Validate JSON payload with `jsonschema`.
 4. Raise `SchemaValidationError` (`ValueError`) on mismatch.
 
+Undocumented app-path endpoints under `client.apps.*` use the same runtime validation approach with the bundled app schema set.
+
 ## Schema Sync Workflow
 
 ```bash
 python scripts/sync_schemas.py
 python scripts/update_sdk_inventory.py
+python scripts/extract_har_app_inventory.py <intune.har> <mosyle.har> <google.har>
 ```
 
 The sync script is manifest-driven and supports continue-on-error with required-source failure exit behavior.

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.sdk.docs import (
+    render_apps_reference,
     render_client_stub,
     render_namespace_reference,
     render_sdk_index,
@@ -53,6 +54,7 @@ def test_render_sdk_index_lists_namespaces(tiny_registry: SchemaRegistry) -> Non
     index = render_sdk_index(metadata)
 
     assert "# SDK Reference" in index
+    assert "[`client.apps`](apps.md)" in index
     assert "[`client.things`](things.md)" in index
 
 
@@ -69,7 +71,18 @@ def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
     assert "def iter_pages(self, *, start_page: int = 1, page_size: int = 100, max_pages: int | None = None) -> list[_JSONPayload]: ..." in stub
     assert "things: ThingsNamespace" in stub
     assert "things: AsyncThingsNamespace" in stub
+    assert "apps: AppsNamespace" in stub
+    assert "apps: AsyncAppsNamespace" in stub
     assert stub.count("# OperationId: Things_GetThings") == 1
+
+
+def test_render_apps_reference_documents_app_runtime_surface() -> None:
+    page = render_apps_reference()
+
+    assert "# `apps` Namespace" in page
+    assert "client.apps.microsoft_intune.lookup_asset" in page
+    assert "POST /apps/microsoftIntune/api/microsoftIntune/data/assets/lookup" in page
+    assert "Utility helper (no HTTP request)" in page
 
 
 def test_write_sdk_reference_artifacts_writes_markdown_and_stub_files(
@@ -86,6 +99,7 @@ def test_write_sdk_reference_artifacts_writes_markdown_and_stub_files(
     )
 
     assert (docs_root / "index.md").exists()
+    assert (docs_root / "apps.md").exists()
     assert (docs_root / "things.md").exists()
     assert (package_root / "client.pyi").exists()
     assert (package_root / "__init__.pyi").exists()

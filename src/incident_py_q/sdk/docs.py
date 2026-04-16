@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import defaultdict
 from pathlib import Path
 
+from incident_py_q.apps import AppMethodMetadata, AppParameterMetadata, build_app_method_metadata
 from incident_py_q.schema.registry import SchemaRegistry
 
 from .runtime import SDKMethodMetadata, SDKParameterMetadata, build_sdk_metadata
@@ -13,6 +14,7 @@ from .runtime import SDKMethodMetadata, SDKParameterMetadata, build_sdk_metadata
 def render_sdk_index(metadata: tuple[SDKMethodMetadata, ...]) -> str:
     """Render the SDK reference landing page."""
     grouped = _group_metadata(metadata)
+    app_methods = build_app_method_metadata()
     lines = [
         "# SDK Reference",
         "",
@@ -24,12 +26,102 @@ def render_sdk_index(metadata: tuple[SDKMethodMetadata, ...]) -> str:
         "| Namespace | Canonical Methods | Page |",
         "| --- | ---: | --- |",
     ]
+    lines.append(
+        f"| `apps` | {len(app_methods)} | [`client.apps`](apps.md) |"
+    )
     for namespace, methods in grouped.items():
         lines.append(
             f"| `{namespace}` | {len(methods)} | "
             f"[`client.{namespace}`]({namespace}.md) |"
         )
     return "\n".join(lines) + "\n"
+
+
+def render_apps_reference(methods: tuple[AppMethodMetadata, ...] | None = None) -> str:
+    """Render the manual app-path reference page."""
+    app_methods = methods or build_app_method_metadata()
+    grouped: dict[str, list[AppMethodMetadata]] = defaultdict(list)
+    labels: dict[str, str] = {}
+    for method in app_methods:
+        grouped[method.service_name].append(method)
+        labels[method.service_name] = method.service_label
+
+    lines = [
+        "# `apps` Namespace",
+        "",
+        "Sync client access: `client.apps`",
+        "",
+        "Async client access: `client.apps` with `await` for async service methods.",
+        "",
+        "These methods cover the HAR-derived app-path APIs that are not part of the "
+        "schema-driven controller SDK surface.",
+        "",
+        "| Service | Methods | Access Path |",
+        "| --- | ---: | --- |",
+    ]
+    for service_name, methods_for_service in grouped.items():
+        lines.append(
+            f"| `{service_name}` | {len(methods_for_service)} | "
+            f"`client.apps.{service_name}` |"
+        )
+    lines.append("")
+
+    for service_name, methods_for_service in grouped.items():
+        lines.extend(
+            [
+                f"## `{service_name}`",
+                "",
+                f"{labels[service_name]} service available at `client.apps.{service_name}`.",
+                "",
+            ]
+        )
+        for method in methods_for_service:
+            lines.extend(
+                [
+                    f"### `{method.method_name}`",
+                    "",
+                    f"- Sync: `{method.sync_call}`",
+                    f"- Async: `{method.async_call}`",
+                ]
+            )
+            if method.http_method and method.route:
+                lines.append(f"- HTTP route: `{method.http_method} {method.route}`")
+            else:
+                lines.append("- HTTP route: Utility helper (no HTTP request)")
+            lines.extend(["", method.summary, ""])
+            if method.description and method.description != method.summary:
+                lines.extend([method.description, ""])
+            if method.parameters:
+                lines.extend(
+                    [
+                        "#### Parameters",
+                        "",
+                        "| Python Arg | API Name | In | Required | Type | Description |",
+                        "| --- | --- | --- | --- | --- | --- |",
+                    ]
+                )
+                for parameter in method.parameters:
+                    lines.append(_render_app_parameter_row(parameter))
+                lines.append("")
+            else:
+                lines.extend(["#### Parameters", "", "This method does not define parameters.", ""])
+            lines.extend(
+                [
+                    "#### Returns",
+                    "",
+                    f"- Typed call return: `{method.typed_return}`",
+                    f"- Raw payload return: `{method.raw_return}`",
+                ]
+            )
+            if method.response_model:
+                lines.append(f"- Response model: `{method.response_model}`")
+            elif method.response_schema:
+                lines.append(f"- Response schema: `{method.response_schema}`")
+            else:
+                lines.append("- Response model: Method-specific Python object")
+            lines.extend(["", "---", ""])
+
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def render_namespace_reference(namespace: str, methods: tuple[SDKMethodMetadata, ...]) -> str:
@@ -155,6 +247,7 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         "import httpx",
         "from pydantic import BaseModel",
         "",
+        "from .apps import AppsNamespace, AsyncAppsNamespace",
         "from .config import ClientConfig",
         "from .schema.registry import SchemaRegistry",
         "from .sdk.runtime import AsyncNamespace, Namespace",
@@ -163,6 +256,7 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         "",
         "def _build_url(base_url: str, rendered_path: str) -> str: ...",
         "def _merge_headers(config: ClientConfig, headers: Mapping[str, str] | None) -> dict[str, str]: ...",
+        "def _normalize_app_headers(app_headers: Mapping[str, str] | None) -> dict[str, str] | None: ...",
         "def _decode_payload(response: httpx.Response) -> _JSONPayload: ...",
         "",
     ]
@@ -217,6 +311,7 @@ def write_sdk_reference_artifacts(
         existing.unlink()
 
     (docs_root / "index.md").write_text(render_sdk_index(metadata), encoding="utf-8")
+    (docs_root / "apps.md").write_text(render_apps_reference(), encoding="utf-8")
     for namespace, methods in grouped.items():
         (docs_root / f"{namespace}.md").write_text(
             render_namespace_reference(namespace, methods),
@@ -247,6 +342,14 @@ def _render_parameter_row(parameter: SDKParameterMetadata) -> str:
         f"| `{parameter.python_name}` | `{parameter.api_name}` | `{parameter.location}` | "
         f"`{'yes' if parameter.required else 'no'}` | `{parameter.annotation_display}` | "
         f"`{_escape_inline(schema_or_model)}` | {_escape_table(description)} |"
+    )
+
+
+def _render_app_parameter_row(parameter: AppParameterMetadata) -> str:
+    return (
+        f"| `{parameter.python_name}` | `{parameter.api_name}` | `{parameter.location}` | "
+        f"`{'yes' if parameter.required else 'no'}` | `{parameter.type_display}` | "
+        f"{_escape_table(parameter.description)} |"
     )
 
 
@@ -354,6 +457,7 @@ def _render_client_class_stub(
         "        site_id: str | None = None,",
         "        client_header: str = 'ApiClient',",
         "        auth_mode: str = 'bearer',",
+        "        app_headers: Mapping[str, str] | None = None,",
         "        timeout: float = 30.0,",
         "        validate_responses: bool = True,",
         "        max_retries: int = 2,",
@@ -386,6 +490,7 @@ def _render_client_class_stub(
         lines.append(
             f"    {namespace}: {_namespace_class_name(namespace, async_mode=async_mode)}"
         )
+    lines.append(f"    apps: {'AsyncAppsNamespace' if async_mode else 'AppsNamespace'}")
     return lines
 
 

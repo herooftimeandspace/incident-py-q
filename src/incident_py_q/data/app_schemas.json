@@ -1,0 +1,92 @@
+{
+  "registry_response": {
+    "type": "object",
+    "required": ["Items", "ItemCount", "StatusCode"],
+    "properties": {
+      "Items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["AppId", "Name", "IsActive"],
+          "properties": {
+            "AppId": { "type": "string" },
+            "Name": { "type": "string" },
+            "IsActive": { "type": "boolean" },
+            "Settings": { "type": "object" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "ItemCount": { "type": "integer" },
+      "StatusCode": { "type": "integer" }
+    },
+    "additionalProperties": true
+  },
+  "intune_lookup_request": {
+    "type": "object",
+    "required": ["AssetId", "SerialNumber"],
+    "properties": {
+      "AssetId": { "type": "string" },
+      "AssetTag": { "type": ["string", "null"] },
+      "SerialNumber": { "type": "string" }
+    },
+    "additionalProperties": false
+  },
+  "mosyle_lookup_request": {
+    "type": "object",
+    "required": ["AssetId", "SerialNumber"],
+    "properties": {
+      "AssetId": { "type": "string" },
+      "AssetTag": { "type": ["string", "null"] },
+      "SerialNumber": { "type": "string" }
+    },
+    "additionalProperties": false
+  },
+  "google_lookup_request": {
+    "type": "object",
+    "required": ["AssetId", "SerialNumber", "Skip", "Limit"],
+    "properties": {
+      "AssetId": { "type": "string" },
+      "AssetTag": { "type": ["string", "null"] },
+      "SerialNumber": { "type": "string" },
+      "Query": { "type": ["string", "null"] },
+      "Skip": { "type": "integer" },
+      "Limit": { "type": "integer" }
+    },
+    "additionalProperties": false
+  },
+  "lookup_response": {
+    "type": "object",
+    "required": ["ExternalId", "SerialNumber", "CustomFields"],
+    "properties": {
+      "ExternalId": { "type": "string" },
+      "SerialNumber": { "type": "string" },
+      "AssetTag": { "type": ["string", "null"] },
+      "CustomFields": { "type": "object" }
+    },
+    "additionalProperties": true
+  },
+  "remote_actions_response": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "required": ["Key", "PermissionKey"],
+      "properties": {
+        "Key": { "type": "string" },
+        "PermissionKey": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "google_sync_options_response": {
+    "type": "object",
+    "required": ["Id", "CreateAssets", "UpdateAssets", "DeleteAssets"],
+    "properties": {
+      "Id": { "type": "string" },
+      "CreateAssets": { "type": "boolean" },
+      "UpdateAssets": { "type": "boolean" },
+      "DeleteAssets": { "type": "boolean" }
+    },
+    "additionalProperties": true
+  }
+}

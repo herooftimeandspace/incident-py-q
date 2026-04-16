@@ -18,6 +18,7 @@ Runtime:
 - `INCIDENTIQ_SITE_ID` (optional)
 - `INCIDENTIQ_CLIENT_HEADER` (optional, default `ApiClient`)
 - `INCIDENTIQ_AUTH_MODE` (optional, default `bearer`)
+- `INCIDENTIQ_APP_HEADERS_JSON` (optional JSON object string for app-path calls)
 
 Integration smoke tests:
 - `INCIDENTIQ_TEST_BASE_URL`
@@ -25,6 +26,11 @@ Integration smoke tests:
 - `INCIDENTIQ_TEST_SITE_ID` (optional)
 - `INCIDENTIQ_TEST_CLIENT_HEADER` (optional)
 - `INCIDENTIQ_TEST_AUTH_MODE` (optional)
+- `INCIDENTIQ_TEST_APP_HEADERS_JSON` (optional JSON object string)
+- Optional app lookup smoke identifiers:
+  - `INCIDENTIQ_TEST_INTUNE_ASSET_ID` / `INCIDENTIQ_TEST_INTUNE_ASSET_SERIAL` / `INCIDENTIQ_TEST_INTUNE_ASSET_TAG`
+  - `INCIDENTIQ_TEST_MOSYLE_ASSET_ID` / `INCIDENTIQ_TEST_MOSYLE_ASSET_SERIAL` / `INCIDENTIQ_TEST_MOSYLE_ASSET_TAG`
+  - `INCIDENTIQ_TEST_GOOGLE_DEVICE_ASSET_ID` / `INCIDENTIQ_TEST_GOOGLE_DEVICE_ASSET_SERIAL` / `INCIDENTIQ_TEST_GOOGLE_DEVICE_ASSET_TAG`
 
 ## Sync Client
 
@@ -48,4 +54,16 @@ async def main() -> None:
         print(users)
 
 asyncio.run(main())
+```
+
+## App-Path Namespace
+
+The undocumented app integrations are exposed under `client.apps`:
+
+```python
+apps = client.apps.registry.list_apps()
+intune = client.apps.microsoft_intune.lookup_asset(
+    asset_id="asset-guid",
+    serial_number="SER123",
+)
 ```
