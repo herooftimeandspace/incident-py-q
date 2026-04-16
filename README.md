@@ -1,18 +1,19 @@
 # incident-py-q
 
-[![Pytest main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=main&label=pytest%20main)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Amain)
-[![Pytest staging](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=staging&label=pytest%20staging)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Astaging)
-[![Pytest dev](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=dev&label=pytest%20dev)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Adev)
-[![Coverage main](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fmain%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/main/coverage.json)
-[![Coverage staging](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fstaging%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/staging/coverage.json)
-[![Coverage dev](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fdev%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/dev/coverage.json)
-[![Docs main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=docs%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
-[![Pages main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=pages%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
-[![License repo](https://img.shields.io/github/license/example/incident-py-q?label=license%20repo)](LICENSE)
+[![Dev unit](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fdev%2Funit.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/quality.yml?query=branch%3Adev)
+[![Dev coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fdev%2Fcoverage.json)](https://raw.githubusercontent.com/herooftimeandspace/incident-py-q/badges/branch-coverage/dev/coverage.json)
+[![Staging unit](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fstaging%2Funit.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/quality.yml?query=branch%3Astaging)
+[![Staging integration](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fstaging%2Fintegration.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/integration.yml?query=branch%3Astaging)
+[![Staging coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fstaging%2Fcoverage.json)](https://raw.githubusercontent.com/herooftimeandspace/incident-py-q/badges/branch-coverage/staging/coverage.json)
+[![Main unit](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fmain%2Funit.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/quality.yml?query=branch%3Amain)
+[![Main integration](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fmain%2Fintegration.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/integration.yml?query=branch%3Amain)
+[![Main docs](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fmain%2Fdocs.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
+[![Main coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fmain%2Fcoverage.json)](https://raw.githubusercontent.com/herooftimeandspace/incident-py-q/badges/branch-coverage/main/coverage.json)
+[![License repo](https://img.shields.io/github/license/herooftimeandspace/incident-py-q?label=license%20repo)](LICENSE)
 
 Contract-driven Incident IQ Python SDK (distribution: `incident-py-q`, import: `incident_py_q`).
 
-Coverage badges are published by CI to a dedicated `badges` branch (`branch-coverage/<branch>/coverage.json`) so protected branches (`main`, `staging`, `dev`) never require bot commits for badge refreshes.
+Coverage and phase-status badges are published by CI to a dedicated `badges` branch so protected branches (`main`, `staging`, `dev`) never require bot commits for badge refreshes.
 
 The package ships:
 - sync and async clients (`Client`, `AsyncClient`)
@@ -162,6 +163,7 @@ Bundled source tree:
 - The package follows semantic versioning.
 - `incident_py_q.__version__` matches package metadata version.
 - Generated SDK surface is semver-significant and protected by golden tests.
+- Promotion into `main` requires exactly one release label: `semver:patch`, `semver:minor`, or `semver:major`.
 
 ## Documentation
 
