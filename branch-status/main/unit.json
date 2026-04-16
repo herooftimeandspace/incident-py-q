@@ -1,6 +1,6 @@
 {
   "color": "brightgreen",
-  "label": "coverage main",
-  "message": "95.85%",
+  "label": "main unit",
+  "message": "passing",
   "schemaVersion": 1
 }
