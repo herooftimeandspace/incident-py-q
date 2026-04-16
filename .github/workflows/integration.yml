@@ -16,6 +16,8 @@ jobs:
   integration:
     name: integration
     runs-on: ubuntu-latest
+    environment:
+      name: integration-tests
     permissions:
       contents: read
     env:
