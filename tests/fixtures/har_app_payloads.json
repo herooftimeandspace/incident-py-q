@@ -1,0 +1,96 @@
+{
+  "intune_lookup_request": {
+    "AssetId": "a1e26a50-72d1-44cb-aace-7bb84671350e",
+    "AssetTag": "7TD9GX3",
+    "SerialNumber": "7TD9GX3"
+  },
+  "intune_lookup_response": {
+    "ExternalId": "intune-123",
+    "SerialNumber": "7TD9GX3",
+    "AssetTag": "7TD9GX3",
+    "CustomFields": {
+      "ManagedDeviceOwnerType": "Company",
+      "DeviceName": "7TD9GX3"
+    }
+  },
+  "mosyle_lookup_request": {
+    "AssetId": "5371a340-e4fd-4517-9422-13463bf2a8fe",
+    "AssetTag": "C02FQ7V5Q05P",
+    "SerialNumber": "C02FQ7V5Q05P"
+  },
+  "mosyle_lookup_response": {
+    "ExternalId": "mosyle-123",
+    "SerialNumber": "C02FQ7V5Q05P",
+    "AssetTag": "",
+    "CustomFields": {
+      "BuildVersion": "14.4"
+    }
+  },
+  "google_lookup_request": {
+    "AssetId": "71ccf5ed-f247-41b7-8c8b-db80edda07a8",
+    "AssetTag": null,
+    "SerialNumber": "NXEF2AA0025140B4DA7600",
+    "Query": null,
+    "Skip": 0,
+    "Limit": 1
+  },
+  "google_lookup_response": {
+    "ExternalId": "google-123",
+    "SerialNumber": "NXEF2AA0025140B4DA7600",
+    "AssetTag": "010342",
+    "CustomFields": {
+      "OrgUnitPath": "/Students",
+      "Model": "Acer Chromebook"
+    }
+  },
+  "remote_actions_response": [
+    {
+      "Key": "WipeDevice",
+      "PermissionKey": "app.mosylemanager.write.device.wipe"
+    }
+  ],
+  "google_sync_options_response": {
+    "Id": "google-sync-1",
+    "CreateAssets": true,
+    "UpdateAssets": true,
+    "DeleteAssets": false
+  },
+  "registry_response": {
+    "ItemCount": 4,
+    "StatusCode": 200,
+    "Items": [
+      {
+        "AppId": "microsoftIntune",
+        "Name": "Microsoft Intune",
+        "IsActive": true,
+        "Settings": {
+          "ProvidesAssetData": true
+        }
+      },
+      {
+        "AppId": "mosyleManager",
+        "Name": "Mosyle Manager",
+        "IsActive": true,
+        "Settings": {
+          "ProvidesAssetData": true
+        }
+      },
+      {
+        "AppId": "googleDeviceData",
+        "Name": "Google Devices",
+        "IsActive": true,
+        "Settings": {
+          "ProvidesAssetData": true
+        }
+      },
+      {
+        "AppId": "googleSso",
+        "Name": "Google SSO",
+        "IsActive": true,
+        "Settings": {
+          "ProvidesUserData": true
+        }
+      }
+    ]
+  }
+}

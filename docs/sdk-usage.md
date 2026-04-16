@@ -17,6 +17,7 @@ Common shape:
 - `client.<namespace>.<method>(...)` returns typed Pydantic models when representable.
 - `client.<namespace>.<method>.raw(...)` returns validated JSON payloads.
 - `client.<namespace>.list_methods()` enumerates the generated runtime surface for that namespace.
+- `client.apps.<service>.*` exposes the HAR-derived app-path runtime.
 
 ## Request Signatures
 
@@ -39,5 +40,16 @@ payload = client.request(
     "GET",
     "/users/{UserId}",
     path_params={"UserId": "00000000-0000-0000-0000-000000000000"},
+)
+```
+
+## App-Path Examples
+
+```python
+registry = client.apps.registry.list_apps()
+actions = client.apps.microsoft_intune.list_remote_actions()
+lookup = client.apps.google_device_data.lookup_asset(
+    asset_id="asset-guid",
+    serial_number="SER123",
 )
 ```

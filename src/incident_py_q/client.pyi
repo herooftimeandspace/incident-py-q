@@ -6,6 +6,7 @@ from typing import Any, Protocol
 import httpx
 from pydantic import BaseModel
 
+from .apps import AppsNamespace, AsyncAppsNamespace
 from .config import ClientConfig
 from .schema.registry import SchemaRegistry
 from .sdk.runtime import AsyncNamespace, Namespace
@@ -14,6 +15,7 @@ _JSONPayload = dict[str, Any] | list[Any] | None
 
 def _build_url(base_url: str, rendered_path: str) -> str: ...
 def _merge_headers(config: ClientConfig, headers: Mapping[str, str] | None) -> dict[str, str]: ...
+def _normalize_app_headers(app_headers: Mapping[str, str] | None) -> dict[str, str] | None: ...
 def _decode_payload(response: httpx.Response) -> _JSONPayload: ...
 
 class ActionResponse(BaseModel):
@@ -2622,6 +2624,7 @@ class Client:
         site_id: str | None = None,
         client_header: str = 'ApiClient',
         auth_mode: str = 'bearer',
+        app_headers: Mapping[str, str] | None = None,
         timeout: float = 30.0,
         validate_responses: bool = True,
         max_retries: int = 2,
@@ -2657,6 +2660,7 @@ class Client:
     slas: SlasNamespace
     tickets: TicketsNamespace
     users: UsersNamespace
+    apps: AppsNamespace
 
 class AsyncClient:
     def __init__(
@@ -2667,6 +2671,7 @@ class AsyncClient:
         site_id: str | None = None,
         client_header: str = 'ApiClient',
         auth_mode: str = 'bearer',
+        app_headers: Mapping[str, str] | None = None,
         timeout: float = 30.0,
         validate_responses: bool = True,
         max_retries: int = 2,
@@ -2702,3 +2707,4 @@ class AsyncClient:
     slas: AsyncSlasNamespace
     tickets: AsyncTicketsNamespace
     users: AsyncUsersNamespace
+    apps: AsyncAppsNamespace

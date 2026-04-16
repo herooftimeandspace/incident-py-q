@@ -13,6 +13,7 @@ from urllib.parse import urljoin
 import httpx
 
 from ._utils import render_path
+from .apps import AppsNamespace, AsyncAppsNamespace
 from .config import AuthMode, ClientConfig, build_authorization_value
 from .exceptions import ConfigurationError
 from .logging_utils import redact_headers
@@ -39,6 +40,7 @@ class Client:
         site_id: str | None = None,
         client_header: str = "ApiClient",
         auth_mode: str = "bearer",
+        app_headers: Mapping[str, str] | None = None,
         timeout: float = 30.0,
         validate_responses: bool = True,
         max_retries: int = 2,
@@ -62,6 +64,7 @@ class Client:
                 site_id=site_id,
                 client_header=client_header,
                 auth_mode=resolved_auth_mode,
+                app_headers=_normalize_app_headers(app_headers),
                 timeout=timeout,
                 validate_responses=validate_responses,
                 max_retries=max_retries,
@@ -77,6 +80,7 @@ class Client:
         self._sdk: SDKArtifacts = build_sdk(client=self, registry=self._registry, async_mode=False)
         for namespace_name, namespace_obj in self._sdk.namespaces.items():
             setattr(self, namespace_name, namespace_obj)
+        self.apps = AppsNamespace(self)
 
     @classmethod
     def from_env(cls) -> Client:
@@ -269,6 +273,7 @@ class AsyncClient:
         site_id: str | None = None,
         client_header: str = "ApiClient",
         auth_mode: str = "bearer",
+        app_headers: Mapping[str, str] | None = None,
         timeout: float = 30.0,
         validate_responses: bool = True,
         max_retries: int = 2,
@@ -292,6 +297,7 @@ class AsyncClient:
                 site_id=site_id,
                 client_header=client_header,
                 auth_mode=resolved_auth_mode,
+                app_headers=_normalize_app_headers(app_headers),
                 timeout=timeout,
                 validate_responses=validate_responses,
                 max_retries=max_retries,
@@ -307,6 +313,7 @@ class AsyncClient:
         self._sdk: SDKArtifacts = build_sdk(client=self, registry=self._registry, async_mode=True)
         for namespace_name, namespace_obj in self._sdk.namespaces.items():
             setattr(self, namespace_name, namespace_obj)
+        self.apps = AsyncAppsNamespace(self)
 
     @classmethod
     def from_env(cls) -> AsyncClient:
@@ -513,6 +520,17 @@ def _merge_headers(config: ClientConfig, headers: Mapping[str, str] | None) -> d
     if headers:
         merged.update(headers)
     return merged
+
+
+def _normalize_app_headers(app_headers: Mapping[str, str] | None) -> dict[str, str] | None:
+    if app_headers is None:
+        return None
+    normalized: dict[str, str] = {}
+    for key, value in app_headers.items():
+        if not isinstance(key, str) or not isinstance(value, str):
+            raise ConfigurationError("app_headers must be a mapping of string keys to string values.")
+        normalized[key] = value
+    return normalized or None
 
 
 def _decode_payload(response: httpx.Response) -> dict[str, Any] | list[Any] | None:

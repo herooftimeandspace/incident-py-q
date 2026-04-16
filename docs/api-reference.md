@@ -5,6 +5,9 @@ Static package API pages are generated with `pdoc`.
 Runtime-generated namespace methods such as `client.tickets.get_ticket(...)` are
 documented separately under the generated SDK reference pages.
 
+The manual app-path runtime under `client.apps.*` is documented on the generated
+[`apps` namespace page](sdk-reference/apps.md).
+
 Build locally:
 
 ```bash

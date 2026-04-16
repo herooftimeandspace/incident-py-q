@@ -1,6 +1,6 @@
 """Schema loading, registry, and validation helpers."""
 
-from .loader import load_postman_collection, load_stoplight_documents
+from .loader import load_app_schemas, load_postman_collection, load_stoplight_documents
 from .registry import OperationSpec, ParameterSpec, SchemaRegistry, build_schema_registry
 from .validator import ResponseSchemaValidator
 
@@ -10,6 +10,7 @@ __all__ = [
     "ResponseSchemaValidator",
     "SchemaRegistry",
     "build_schema_registry",
+    "load_app_schemas",
     "load_postman_collection",
     "load_stoplight_documents",
 ]

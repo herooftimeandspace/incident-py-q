@@ -53,6 +53,7 @@ Runtime environment variables:
 - `INCIDENTIQ_SITE_ID` (optional)
 - `INCIDENTIQ_CLIENT_HEADER` (optional, default `ApiClient`)
 - `INCIDENTIQ_AUTH_MODE` (optional, default `bearer`, supported: `bearer`, `raw`)
+- `INCIDENTIQ_APP_HEADERS_JSON` (optional JSON object string for app-path calls)
 
 Security hardening rules:
 - `INCIDENTIQ_BASE_URL` must use `https`
@@ -66,6 +67,8 @@ Integration/smoke environment variables:
 - `INCIDENTIQ_TEST_SITE_ID` (optional)
 - `INCIDENTIQ_TEST_CLIENT_HEADER` (optional, default `ApiClient`)
 - `INCIDENTIQ_TEST_AUTH_MODE` (optional, default `bearer`)
+- `INCIDENTIQ_TEST_APP_HEADERS_JSON` (optional JSON object string for app-path integration calls)
+- optional app lookup smoke identifiers for Intune, Mosyle, and Google Device Data
 
 ## SDK-First Quick Start
 
@@ -108,11 +111,23 @@ payload = client.request(
 )
 ```
 
+Undocumented app-path APIs:
+
+```python
+apps = client.apps.registry.list_apps()
+intune_lookup = client.apps.microsoft_intune.lookup_asset(
+    asset_id="asset-guid",
+    serial_number="SER123",
+)
+google_actions = client.apps.google_device_data.list_remote_actions()
+```
+
 ## Validation Strategy
 
 - Runtime uses bundled schemas only, never network fetches during requests.
 - Success JSON responses are validated against operation response schema.
 - Schema violations raise `ValueError` (`SchemaValidationError` subtype).
+- App-path calls under `client.apps.*` are validated against bundled HAR-derived schemas.
 
 ## Development Commands
 
@@ -133,12 +148,14 @@ Refresh bundled contracts from official upstream sources:
 ```bash
 python scripts/sync_schemas.py
 python scripts/update_sdk_inventory.py
+python scripts/extract_har_app_inventory.py <intune.har> <mosyle.har> <google.har>
 ```
 
 Bundled source tree:
 - `src/incident_py_q/data/stoplight/controllers/*.json` (primary)
 - `src/incident_py_q/data/postman/collection.json` (secondary)
 - `src/incident_py_q/data/source_manifest.json` (source manifest)
+- `src/incident_py_q/data/app_schemas.json` (HAR-derived app-path schemas)
 
 ## Versioning and Stability
 

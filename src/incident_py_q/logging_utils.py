@@ -4,7 +4,16 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-SENSITIVE_HEADER_NAMES = {"authorization", "x-api-key", "cookie", "set-cookie"}
+SENSITIVE_HEADER_NAMES = {
+    "authorization",
+    "x-api-key",
+    "cookie",
+    "set-cookie",
+    "apptoken",
+    "usertoken",
+    "sessionid",
+    "x-xsrf-token",
+}
 
 
 def redact_headers(headers: Mapping[str, str] | None) -> dict[str, str]:
@@ -18,4 +27,3 @@ def redact_headers(headers: Mapping[str, str] | None) -> dict[str, str]:
         else:
             redacted[key] = value
     return redacted
-

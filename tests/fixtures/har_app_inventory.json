@@ -1,0 +1,563 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1.0/app-registry/apps/false",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/advancedDeployment/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/advancedDeployment/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/announcements/api/simpleAnnouncements/announcement/search",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/announcements/web/lib/web-notice-banner/web-notice-banner.html",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/announcements/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/announcements/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/approvalWorkflows/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/engineStarter/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/assets/get-google-device",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200,
+      204
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions",
+    "sources": [
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/sync/options",
+    "sources": [
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/web/lib/asset-details/asset-details.html",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleSso/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleSso/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/guestTicketing/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/marketing/api/user/campaigns",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/marketing/web/lib/announcement-message/announcement-message.html",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/marketing/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/marketing/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/assets/lookup",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200,
+      204
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/img/microsoft-intune-app-logo.jpg",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/web/lib/asset-details/asset-details.html",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/mosyleManager/api/mosyleManager/data/assets/lookup",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200,
+      204
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions",
+    "sources": [
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/mosyleManager/img/mosyle-manager-app-logo.png",
+    "sources": [
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/mosyleManager/web/lib/asset-details/asset-details.html",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/mosyleManager/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/mosyleManager/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsFeeTracker/api/data/line-item-types/search",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsFeeTracker/api/data/line-items/search",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsFeeTracker/api/sync/options",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsFeeTracker/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/remoteChrome/dist/remoteChrome.min.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/remoteChrome/dist/remoteChrome.min.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/screenRecording/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/sparePoolManagement/web/lib/web-asset-details-bar/asset-details-bar.html",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/sparePoolManagement/web/lib/web-asset-details-open-ticket/asset-details-open-ticket.html",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/sparePoolManagement/web/min/web.css",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/sparePoolManagement/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/subtickets/web/min/web.js",
+    "sources": [
+      "wusd-org.incidentiq.com-intune.har",
+      "wusd-org.incidentiq.com-mosyle.har",
+      "wusd-org.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  }
+]

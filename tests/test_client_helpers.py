@@ -14,6 +14,7 @@ from incident_py_q.client import (
     _build_url,
     _decode_payload,
     _merge_headers,
+    _normalize_app_headers,
 )
 from incident_py_q.config import ClientConfig
 from incident_py_q.exceptions import ConfigurationError
@@ -73,6 +74,16 @@ def test_merge_headers_supports_raw_auth_and_missing_site_id() -> None:
     assert "SiteId" not in headers
 
 
+def test_normalize_app_headers_accepts_string_mapping() -> None:
+    assert _normalize_app_headers({"apptoken": "value"}) == {"apptoken": "value"}
+    assert _normalize_app_headers(None) is None
+
+
+def test_normalize_app_headers_rejects_non_string_values() -> None:
+    with pytest.raises(ConfigurationError):
+        _normalize_app_headers({"apptoken": cast(Any, 123)})
+
+
 def test_decode_payload_handles_no_content_and_empty_body() -> None:
     no_content = httpx.Response(204, request=httpx.Request("GET", "https://tenant.example/no-content"))
     empty = httpx.Response(200, content=b"", request=httpx.Request("GET", "https://tenant.example/empty"))
@@ -106,6 +117,7 @@ def test_client_from_env_builds_normalized_config(
     monkeypatch.setenv("INCIDENTIQ_API_TOKEN", "env-token")
     monkeypatch.setenv("INCIDENTIQ_SITE_ID", "site-env")
     monkeypatch.setenv("INCIDENTIQ_CLIENT_HEADER", "EnvClient")
+    monkeypatch.setenv("INCIDENTIQ_APP_HEADERS_JSON", "{\"apptoken\": \"app-token\"}")
 
     client = Client.from_env()
     try:
@@ -113,6 +125,7 @@ def test_client_from_env_builds_normalized_config(
         assert client.config.api_token == "env-token"
         assert client.config.site_id == "site-env"
         assert client.config.client_header == "EnvClient"
+        assert client.config.app_headers == {"apptoken": "app-token"}
         assert isinstance(client._registry, SchemaRegistry)
     finally:
         client.close()
