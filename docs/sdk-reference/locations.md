@@ -1,8 +1,10 @@
-# `locations` Namespace
+# `locations` Golden Namespace
 
 Sync client access: `client.locations`
 
 Async client access: `client.locations` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -15,6 +17,8 @@ Async client access: `client.locations` with `await` on method calls.
 ## Methods
 
 ### `delete_location`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Location_DeleteLocation`
 
@@ -50,6 +54,8 @@ DELETE /api/v1.0/locations/d344d88d-d201-4c52-8d23-4371fa7179bb
 
 ### `delete_location_room`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Location_DeleteLocationRoom`
 
 - Sync: `client.locations.delete_location_room(location_room_id=..., timeout=None)`
@@ -83,6 +89,8 @@ DELETE /api/v1.0/locations/rooms/dba9553e-c473-4863-b99f-2c5c54c73a1b
 
 ### `get_all_location_rooms`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Location_GetAllLocationRooms`
 
 - Sync: `client.locations.get_all_location_rooms(timeout=None)`
@@ -113,6 +121,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_location`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Location_GetLocation`
 
@@ -148,6 +158,8 @@ GET /api/v1.0/locations/4fc0dc90-c40a-4012-b4e2-224ca02bdfb7
 
 ### `get_location_room`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Location_GetLocationRoom`
 
 - Sync: `client.locations.get_location_room(location_room_id=..., timeout=None)`
@@ -180,6 +192,8 @@ GET /api/v1.0/locations/rooms/6983376d-8906-4c3b-95de-f252a11d9164
 ---
 
 ### `get_location_rooms`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Location_GetLocationRooms`
 
@@ -214,6 +228,8 @@ GET /api/v1.0/locations/4fc0dc90-c40a-4012-b4e2-224ca02bdfb7/rooms
 
 ### `get_location_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Location_GetLocationType`
 
 - Sync: `client.locations.get_location_type(location_type_id=..., timeout=None)`
@@ -247,6 +263,8 @@ GET /api/v1.0/locations/types/27c81cbe-fdc4-4d7f-9c1c-e0311de5f882
 
 ### `get_location_types`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Location_GetLocationTypes`
 
 - Sync: `client.locations.get_location_types(timeout=None)`
@@ -277,6 +295,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_locations`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Location_GetLocations`
 
@@ -309,6 +329,8 @@ This operation does not define request parameters.
 
 ### `update_location`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Location_UpdateLocation`
 
 - Sync: `client.locations.update_location(location_id=..., location=..., timeout=None)`
@@ -337,6 +359,8 @@ No contract summary provided.
 ---
 
 ### `update_location_room`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Location_UpdateLocationRoom`
 

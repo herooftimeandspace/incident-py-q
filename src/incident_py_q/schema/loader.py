@@ -30,3 +30,17 @@ def load_source_manifest() -> dict[str, Any]:
     path = files("incident_py_q").joinpath("data/source_manifest.json")
     loaded = json.loads(path.read_text(encoding="utf-8"))
     return cast(dict[str, Any], loaded)
+
+
+def load_app_schemas() -> dict[str, Any]:
+    """Load bundled undocumented app-path JSON schemas."""
+    path = files("incident_py_q").joinpath("data/app_schemas.json")
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], loaded)
+
+
+def load_silver_inventory() -> dict[str, Any]:
+    """Load bundled HAR-derived Silver inventory metadata."""
+    path = files("incident_py_q").joinpath("data/silver_inventory.json")
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], loaded)

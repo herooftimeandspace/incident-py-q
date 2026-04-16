@@ -1,8 +1,10 @@
-# `tickets` Namespace
+# `tickets` Golden Namespace
 
 Sync client access: `client.tickets`
 
 Async client access: `client.tickets` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -16,6 +18,8 @@ Async client access: `client.tickets` with `await` on method calls.
 ## Methods
 
 ### `assign_ticket`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_AssignTicket`
 
@@ -44,6 +48,8 @@ No contract summary provided.
 ---
 
 ### `cancel_ticket`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_CancelTicket`
 
@@ -92,6 +98,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/cancel
 
 ### `change_ticket_issue`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_ChangeTicketIssue`
 
 - Sync: `client.tickets.change_ticket_issue(ticket_id=..., request=..., timeout=None)`
@@ -130,6 +138,8 @@ POST /api/v1.0/tickets/EDE88D85-D6E4-E711-80C3-0003FF685BE7/issue
 
 ### `change_ticket_to_requestor_responded`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_ChangeTicketToRequestorResponded`
 
 - Sync: `client.tickets.change_ticket_to_requestor_responded(ticket_id=..., timeout=None)`
@@ -163,6 +173,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/status/requestor-res
 
 ### `change_ticket_to_waiting_on_requestor`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_ChangeTicketToWaitingOnRequestor`
 
 - Sync: `client.tickets.change_ticket_to_waiting_on_requestor(ticket_id=..., timeout=None)`
@@ -195,6 +207,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/status/waiting-on-re
 ---
 
 ### `close_ticket`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_CloseTicket`
 
@@ -243,6 +257,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/close
 
 ### `confirm_ticket_issue`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_ConfirmTicketIssue`
 
 - Sync: `client.tickets.confirm_ticket_issue(ticket_id=..., timeout=None)`
@@ -274,6 +290,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/confirm-issue
 ---
 
 ### `copy_ticket`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_CopyTicket`
 
@@ -319,6 +337,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/copy
 ---
 
 ### `create_ticket`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_CreateTicket`
 
@@ -407,6 +427,8 @@ POST /api/v1.0/tickets/new
 
 ### `delete_ticket`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_DeleteTicket`
 
 - Sync: `client.tickets.delete_ticket(ticket_id=..., timeout=None)`
@@ -441,6 +463,8 @@ DELETE /api/v1.0/tickets/9F326CEF-8390-4707-BA2F-EBD7A397AD65
 
 ### `get_ticket`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_GetTicket`
 
 - Sync: `client.tickets.get_ticket(ticket_id=..., timeout=None)`
@@ -468,6 +492,8 @@ No contract summary provided.
 ---
 
 ### `get_ticket_assets`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_GetTicketAssets`
 
@@ -502,6 +528,8 @@ GET /api/v1.0/tickets/ac6cece8-e4f4-e511-a789-005056bb000e/assets
 
 ### `get_ticket_sla`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_GetTicketSla`
 
 - Sync: `client.tickets.get_ticket_sla(ticket_id=..., timeout=None)`
@@ -535,6 +563,8 @@ GET /api/v1.0/tickets/ac6cece8-e4f4-e511-a789-005056bb000e/sla
 
 ### `get_ticket_statuses`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_GetTicketStatuses`
 
 - Sync: `client.tickets.get_ticket_statuses(timeout=None)`
@@ -566,6 +596,8 @@ This operation does not define request parameters.
 
 ### `mark_ticket_as_duplicate`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_MarkTicketAsDuplicate`
 
 - Sync: `client.tickets.mark_ticket_as_duplicate(ticket_id=..., original_ticket_id=..., timeout=None)`
@@ -594,6 +626,8 @@ No contract summary provided.
 
 ### `mark_ticket_not_sensitive`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_MarkTicketNotSensitive`
 
 - Sync: `client.tickets.mark_ticket_not_sensitive(ticket_id=..., timeout=None)`
@@ -620,6 +654,8 @@ No contract summary provided.
 ---
 
 ### `mark_ticket_not_urgent`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_MarkTicketNotUrgent`
 
@@ -648,6 +684,8 @@ No contract summary provided.
 
 ### `mark_ticket_sensitive`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_MarkTicketSensitive`
 
 - Sync: `client.tickets.mark_ticket_sensitive(ticket_id=..., timeout=None)`
@@ -674,6 +712,8 @@ No contract summary provided.
 ---
 
 ### `mark_ticket_urgent`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_MarkTicketUrgent`
 
@@ -702,6 +742,8 @@ No contract summary provided.
 
 ### `un_assign_ticket_from_team`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_UnAssignTicketFromTeam`
 
 - Sync: `client.tickets.un_assign_ticket_from_team(ticket_id=..., timeout=None)`
@@ -729,6 +771,8 @@ No contract summary provided.
 
 ### `un_assign_ticket_from_user`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_UnAssignTicketFromUser`
 
 - Sync: `client.tickets.un_assign_ticket_from_user(ticket_id=..., timeout=None)`
@@ -755,6 +799,8 @@ No contract summary provided.
 ---
 
 ### `un_assign_ticket_sla`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_UnAssignTicketSla`
 
@@ -789,6 +835,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/unassign-sla
 
 ### `un_confirm_ticket_issue`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_UnConfirmTicketIssue`
 
 - Sync: `client.tickets.un_confirm_ticket_issue(ticket_id=..., timeout=None)`
@@ -822,6 +870,8 @@ POST /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/unconfirm-issue
 
 ### `undelete_ticket`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_UndeleteTicket`
 
 - Sync: `client.tickets.undelete_ticket(ticket_id=..., timeout=None)`
@@ -854,6 +904,8 @@ PUT /api/v1.0/tickets/c8aef633-a009-48b1-9187-15621defbba8/undelete
 ---
 
 ### `update_ticket`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_UpdateTicket`
 
@@ -943,6 +995,8 @@ POST /api/v1.0/tickets/ac6cece8-e4f4-e511-a789-005056bb000e
 
 ### `update_ticket_assets`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Ticket_UpdateTicketAssets`
 
 - Sync: `client.tickets.update_ticket_assets(ticket_id=..., assets=..., timeout=None)`
@@ -981,6 +1035,8 @@ POST /api/v1.0/tickets/ac6cece8-e4f4-e511-a789-005056bb000e
 ---
 
 ### `update_ticket_custom_fields`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_UpdateTicketCustomFields`
 
@@ -1038,6 +1094,8 @@ POST /api/v1.0/tickets/ac6cece8-e4f4-e511-a789-005056bb000e
 ---
 
 ### `update_ticket_subject`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Ticket_UpdateTicketSubject`
 

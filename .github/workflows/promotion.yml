@@ -1,0 +1,113 @@
+name: promotion
+
+on:
+  workflow_run:
+    workflows: ["quality", "integration"]
+    types: [completed]
+
+permissions:
+  contents: read
+  checks: read
+  pull-requests: write
+
+jobs:
+  promote-dev-to-staging:
+    if: github.event.workflow_run.name == 'quality' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or refresh dev to staging promotion PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          GH_SHA: ${{ github.event.workflow_run.head_sha }}
+          GH_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          set -euo pipefail
+
+          existing_pr="$(gh pr list --repo "${GH_REPO}" --base staging --head dev --state open --json number --jq '.[0].number')"
+          title="Promote dev to staging"
+          body="$(printf '%s\n' \
+            'Automated promotion PR from dev to staging.' \
+            '' \
+            "Source commit: ${GH_SHA}" \
+            "Source workflow: ${GH_URL}")"
+
+          if [ -n "${existing_pr}" ]; then
+            gh pr edit "${existing_pr}" --repo "${GH_REPO}" --title "${title}" --body "${body}"
+            exit 0
+          fi
+
+          gh pr create \
+            --repo "${GH_REPO}" \
+            --base staging \
+            --head dev \
+            --title "${title}" \
+            --body "${body}"
+
+  promote-staging-to-main:
+    if: github.event.workflow_run.name == 'integration' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for unit check on staging commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          GH_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+
+          for _attempt in $(seq 1 20); do
+            conclusion="$(gh api "repos/${GH_REPO}/commits/${GH_SHA}/check-runs" --jq '.check_runs[] | select(.name=="unit") | .conclusion' | head -n 1 || true)"
+            if [ "${conclusion}" = "success" ]; then
+              exit 0
+            fi
+            if [ -n "${conclusion}" ] && [ "${conclusion}" != "null" ]; then
+              echo "Unit check concluded with ${conclusion}; staging promotion will not open."
+              exit 1
+            fi
+            sleep 15
+          done
+
+          echo "Timed out waiting for the unit check on ${GH_SHA}."
+          exit 1
+
+      - name: Create or refresh staging to main promotion PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          GH_SHA: ${{ github.event.workflow_run.head_sha }}
+          GH_URL: ${{ github.event.workflow_run.html_url }}
+          GH_PROMOTION_REF: promote/staging-to-main
+        run: |
+          set -euo pipefail
+
+          # main has no direct-push bypass, so promotion happens through a disposable branch
+          # that can carry the release-prep version bump before the PR is merged.
+          if gh api "repos/${GH_REPO}/git/ref/heads/${GH_PROMOTION_REF}" >/dev/null 2>&1; then
+            gh api "repos/${GH_REPO}/git/refs/heads/${GH_PROMOTION_REF}" -X PATCH -f sha="${GH_SHA}" -F force=true >/dev/null
+          else
+            gh api "repos/${GH_REPO}/git/refs" -X POST -f ref="refs/heads/${GH_PROMOTION_REF}" -f sha="${GH_SHA}" >/dev/null
+          fi
+
+          existing_pr="$(gh pr list --repo "${GH_REPO}" --base main --head "${GH_PROMOTION_REF}" --state open --json number --jq '.[0].number')"
+          title="Promote staging to main"
+          body="$(printf '%s\n' \
+            'Automated promotion PR from staging to main.' \
+            '' \
+            "Source commit: ${GH_SHA}" \
+            "Source workflow: ${GH_URL}" \
+            '' \
+            'This PR must carry exactly one release label: semver:patch, semver:minor, or semver:major.' \
+            "The release-prep workflow rewrites ${GH_PROMOTION_REF} from staging and applies the version bump before merge.")"
+
+          if [ -n "${existing_pr}" ]; then
+            gh pr edit "${existing_pr}" --repo "${GH_REPO}" --title "${title}" --body "${body}"
+            exit 0
+          fi
+
+          gh pr create \
+            --repo "${GH_REPO}" \
+            --base main \
+            --head "${GH_PROMOTION_REF}" \
+            --title "${title}" \
+            --body "${body}"

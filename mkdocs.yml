@@ -24,6 +24,8 @@ nav:
   - SDK Usage: sdk-usage.md
   - SDK Reference:
       - Overview: sdk-reference/index.md
+      - Silver Overview: sdk-reference/silver.md
+      - Apps: sdk-reference/apps.md
       - Alerts: sdk-reference/alerts.md
       - Analytics: sdk-reference/analytics.md
       - Assets: sdk-reference/assets.md

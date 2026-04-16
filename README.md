@@ -1,18 +1,19 @@
 # incident-py-q
 
-[![Pytest main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=main&label=pytest%20main)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Amain)
-[![Pytest staging](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=staging&label=pytest%20staging)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Astaging)
-[![Pytest dev](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/quality.yml?branch=dev&label=pytest%20dev)](https://github.com/example/incident-py-q/actions/workflows/quality.yml?query=branch%3Adev)
-[![Coverage main](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fmain%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/main/coverage.json)
-[![Coverage staging](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fstaging%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/staging/coverage.json)
-[![Coverage dev](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fexample%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fdev%2Fcoverage.json)](https://raw.githubusercontent.com/example/incident-py-q/badges/branch-coverage/dev/coverage.json)
-[![Docs main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=docs%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
-[![Pages main](https://img.shields.io/github/actions/workflow/status/example/incident-py-q/docs.yml?branch=main&label=pages%20main)](https://github.com/example/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
-[![License repo](https://img.shields.io/github/license/example/incident-py-q?label=license%20repo)](LICENSE)
+[![Dev unit](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fdev%2Funit.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/quality.yml?query=branch%3Adev)
+[![Dev coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fdev%2Fcoverage.json)](https://raw.githubusercontent.com/herooftimeandspace/incident-py-q/badges/branch-coverage/dev/coverage.json)
+[![Staging unit](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fstaging%2Funit.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/quality.yml?query=branch%3Astaging)
+[![Staging integration](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fstaging%2Fintegration.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/integration.yml?query=branch%3Astaging)
+[![Staging coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fstaging%2Fcoverage.json)](https://raw.githubusercontent.com/herooftimeandspace/incident-py-q/badges/branch-coverage/staging/coverage.json)
+[![Main unit](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fmain%2Funit.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/quality.yml?query=branch%3Amain)
+[![Main integration](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fmain%2Fintegration.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/integration.yml?query=branch%3Amain)
+[![Main docs](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-status%2Fmain%2Fdocs.json)](https://github.com/herooftimeandspace/incident-py-q/actions/workflows/docs.yml?query=branch%3Amain)
+[![Main coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fherooftimeandspace%2Fincident-py-q%2Fbadges%2Fbranch-coverage%2Fmain%2Fcoverage.json)](https://raw.githubusercontent.com/herooftimeandspace/incident-py-q/badges/branch-coverage/main/coverage.json)
+[![License repo](https://img.shields.io/github/license/herooftimeandspace/incident-py-q?label=license%20repo)](LICENSE)
 
 Contract-driven Incident IQ Python SDK (distribution: `incident-py-q`, import: `incident_py_q`).
 
-Coverage badges are published by CI to a dedicated `badges` branch (`branch-coverage/<branch>/coverage.json`) so protected branches (`main`, `staging`, `dev`) never require bot commits for badge refreshes.
+Coverage and phase-status badges are published by CI to a dedicated `badges` branch so protected branches (`main`, `staging`, `dev`) never require bot commits for badge refreshes.
 
 The package ships:
 - sync and async clients (`Client`, `AsyncClient`)
@@ -53,6 +54,7 @@ Runtime environment variables:
 - `INCIDENTIQ_SITE_ID` (optional)
 - `INCIDENTIQ_CLIENT_HEADER` (optional, default `ApiClient`)
 - `INCIDENTIQ_AUTH_MODE` (optional, default `bearer`, supported: `bearer`, `raw`)
+- `INCIDENTIQ_APP_HEADERS_JSON` (optional JSON object string for app-path calls)
 
 Security hardening rules:
 - `INCIDENTIQ_BASE_URL` must use `https`
@@ -66,6 +68,8 @@ Integration/smoke environment variables:
 - `INCIDENTIQ_TEST_SITE_ID` (optional)
 - `INCIDENTIQ_TEST_CLIENT_HEADER` (optional, default `ApiClient`)
 - `INCIDENTIQ_TEST_AUTH_MODE` (optional, default `bearer`)
+- `INCIDENTIQ_TEST_APP_HEADERS_JSON` (optional JSON object string for app-path integration calls)
+- optional app lookup smoke identifiers for Intune, Mosyle, and Google Device Data
 
 ## SDK-First Quick Start
 
@@ -108,11 +112,23 @@ payload = client.request(
 )
 ```
 
+Undocumented app-path APIs:
+
+```python
+apps = client.apps.registry.list_apps()
+intune_lookup = client.apps.microsoft_intune.lookup_asset(
+    asset_id="asset-guid",
+    serial_number="SER123",
+)
+google_actions = client.apps.google_device_data.list_remote_actions()
+```
+
 ## Validation Strategy
 
 - Runtime uses bundled schemas only, never network fetches during requests.
 - Success JSON responses are validated against operation response schema.
 - Schema violations raise `ValueError` (`SchemaValidationError` subtype).
+- App-path calls under `client.apps.*` are validated against bundled HAR-derived schemas.
 
 ## Development Commands
 
@@ -133,18 +149,21 @@ Refresh bundled contracts from official upstream sources:
 ```bash
 python scripts/sync_schemas.py
 python scripts/update_sdk_inventory.py
+python scripts/extract_har_app_inventory.py <intune.har> <mosyle.har> <google.har>
 ```
 
 Bundled source tree:
 - `src/incident_py_q/data/stoplight/controllers/*.json` (primary)
 - `src/incident_py_q/data/postman/collection.json` (secondary)
 - `src/incident_py_q/data/source_manifest.json` (source manifest)
+- `src/incident_py_q/data/app_schemas.json` (HAR-derived app-path schemas)
 
 ## Versioning and Stability
 
 - The package follows semantic versioning.
 - `incident_py_q.__version__` matches package metadata version.
 - Generated SDK surface is semver-significant and protected by golden tests.
+- Promotion into `main` requires exactly one release label: `semver:patch`, `semver:minor`, or `semver:major`.
 
 ## Documentation
 

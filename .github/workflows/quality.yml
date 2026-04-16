@@ -9,16 +9,17 @@ permissions:
   contents: read
 
 jobs:
-  quality:
+  unit:
+    name: unit
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
-        uses: actions/setup-python@v5  # TODO: pin to specific SHA for reproducibility
+        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
         with:
           python-version: "3.14"
 
@@ -42,95 +43,70 @@ jobs:
       - name: Tests (non-integration) with coverage
         run: pytest --cov=incident_py_q --cov-report=xml --cov-report=term-missing --cov-fail-under=95 -m "not integration"
 
+      - name: Build package wheel
+        run: python -m pip wheel --no-deps --no-build-isolation --wheel-dir dist .
+
       - name: Build coverage badge payload
         if: github.event_name == 'push'
         run: |
-          python - <<'PY'
-          import json
-          import os
-          from xml.etree import ElementTree
-
-          branch = os.environ["GITHUB_REF_NAME"]
-          root = ElementTree.parse("coverage.xml").getroot()
-          line_rate = float(root.attrib.get("line-rate", "0"))
-          percent = round(line_rate * 100, 2)
-
-          if percent >= 90:
-              color = "brightgreen"
-          elif percent >= 80:
-              color = "green"
-          elif percent >= 70:
-              color = "yellowgreen"
-          elif percent >= 60:
-              color = "yellow"
-          elif percent >= 50:
-              color = "orange"
-          else:
-              color = "red"
-
-          payload = {
-              "schemaVersion": 1,
-              "label": f"coverage {branch}",
-              "message": f"{percent:.2f}%",
-              "color": color,
-          }
-
-          with open("coverage-badge.json", "w", encoding="utf-8") as handle:
-              json.dump(payload, handle, indent=2, sort_keys=True)
-              handle.write("\n")
-          PY
+          python scripts/build_badge_json.py coverage \
+            --coverage-file coverage.xml \
+            --label "coverage ${GITHUB_REF_NAME}" \
+            --output coverage-badge.json
 
       - name: Upload coverage badge artifact
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/upload-artifact@v7  # TODO: pin to specific SHA for reproducibility
         with:
           name: coverage-badge
           path: coverage-badge.json
 
-      - name: Build package wheel
-        run: python -m pip wheel --no-deps --no-build-isolation --wheel-dir dist .
-
-      - name: Build docs
-        run: python scripts/build_docs.py
-
-  publish-badge:
-    needs: quality
+  publish-badges:
+    needs: unit
+    if: always() && github.event_name == 'push'
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     permissions:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Download coverage badge artifact
-        uses: actions/download-artifact@v4  # TODO: pin to specific SHA for reproducibility
+        if: needs.unit.result == 'success'
+        uses: actions/download-artifact@v8  # TODO: pin to specific SHA for reproducibility
         with:
           name: coverage-badge
           path: .
 
-      - name: Publish branch coverage badge JSON to badges branch
+      - name: Build unit status badge payload
+        run: |
+          python scripts/build_badge_json.py status \
+            --conclusion "${{ needs.unit.result }}" \
+            --label "${GITHUB_REF_NAME} unit" \
+            --output unit-status.json
+
+      - name: Publish branch badge JSON to badges branch
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           GH_BRANCH: ${{ github.ref_name }}
         run: |
+          set -euo pipefail
+
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           if git ls-remote --heads "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges | grep -q .; then
-            echo "Using existing badges branch."
             git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
           else
-            echo "Badges branch not found yet; initializing it now."
             git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
             cd badges-work
             git checkout --orphan badges
             git rm -rf .
-            mkdir -p branch-coverage
-            touch branch-coverage/.gitkeep
-            echo "# branch coverage badge payloads" > README.md
-            git add README.md branch-coverage/.gitkeep
+            mkdir -p branch-coverage branch-status
+            touch branch-coverage/.gitkeep branch-status/.gitkeep
+            echo "# branch badge payloads" > README.md
+            git add README.md branch-coverage/.gitkeep branch-status/.gitkeep
             git commit -m "Initialize badges branch"
             git push origin badges
             cd ..
@@ -138,15 +114,23 @@ jobs:
             git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
           fi
 
-          mkdir -p "badges-work/branch-coverage/${GH_BRANCH}"
-          cp coverage-badge.json "badges-work/branch-coverage/${GH_BRANCH}/coverage.json"
+          mkdir -p "badges-work/branch-status/${GH_BRANCH}"
+          cp unit-status.json "badges-work/branch-status/${GH_BRANCH}/unit.json"
+
+          if [ -f coverage-badge.json ]; then
+            mkdir -p "badges-work/branch-coverage/${GH_BRANCH}"
+            cp coverage-badge.json "badges-work/branch-coverage/${GH_BRANCH}/coverage.json"
+          fi
 
           cd badges-work
-          git add "branch-coverage/${GH_BRANCH}/coverage.json"
+          git add "branch-status/${GH_BRANCH}/unit.json"
+          if [ -f "branch-coverage/${GH_BRANCH}/coverage.json" ]; then
+            git add "branch-coverage/${GH_BRANCH}/coverage.json"
+          fi
           if git diff --cached --quiet; then
-            echo "No coverage badge changes to publish."
+            echo "No badge changes to publish."
             exit 0
           fi
 
-          git commit -m "Update coverage badge for ${GH_BRANCH} [skip ci]"
+          git commit -m "Update branch badges for ${GH_BRANCH} [skip ci]"
           git push origin badges

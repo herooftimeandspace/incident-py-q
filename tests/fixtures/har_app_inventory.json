@@ -1,0 +1,1006 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1.0/app-registry/app/{app_key}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1.0/app-registry/apps/false",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1.0/app-registry/apps/{include_hidden}",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1.0/app-registry/installed",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1.0/app-registry/site-app/{site_app_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1.0/apps/remoteBeyondTrust/db/bb6cece8-e4f4-e511-a789-005056bb000e-Status/{bb6cece8_e4f4_e511_a789_005056bb000e_statu_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1.0/apps/remoteChrome/db/bb6cece8-e4f4-e511-a789-005056bb000e-Status/{bb6cece8_e4f4_e511_a789_005056bb000e_statu_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1.0/apps/remoteTeamViewer/db/bb6cece8-e4f4-e511-a789-005056bb000e-Status/{bb6cece8_e4f4_e511_a789_005056bb000e_statu_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1.0/apps/widgets/{widget_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/api/aeriesSis/auth/oneroster/validate",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/api/aeriesSis/data/sync/history",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/aeriesSis/api/aeriesSis/data/users/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/api/aeriesSis/settings/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/api/aeriesSis/settings/options/sync",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/api/aeriesSis/sync/data/locations",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/aeriesSis/api/aeriesSis/sync/status/last",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/fileWave/api/fileWave/data/assets/lookup",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      204
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/fileWave/api/fileWave/data/assets/usage/{usage_id}/{n_883d10f1_e4a0_4268_a319_3d36d1948030_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/auth/token-check",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/assets/get-google-device",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/assets/usage/{usage_id}/{n_883d10f1_e4a0_4268_a319_3d36d1948030_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/assignment/suggestions",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      500
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/jobs/{job_id}/logs",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/models/distinct",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/sync/history",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/device/sync/push/schedule/{schedule_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "POST",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions/DeprovisionDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions/DisableDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions/WipeDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/sync/options",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "GET",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/{google_device_data_key}/status/last",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/infiniteCampus/api/infiniteCampus/settings/options/sync",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/jamf/api/jamf/data/assets/lookup",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      204
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/jamfSchool/api/jamfSchool/data/assets/lookup",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      204
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/localAssetManager/api/microsoftSccm/data/assets/lookup",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      204
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/lockNCharge2/api/bays",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      400
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/lockNCharge2/api/stations",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/lockNCharge2/api/stations/licensed",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/merakiMdm/api/merakiMdm/data/assets/lookup",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      204
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/auth/token-check",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/assets/lookup",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/assets/usage/{usage_id}/{n_883d10f1_e4a0_4268_a319_3d36d1948030_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/jobs/{job_id}/logs",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/sync/history",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/CleanWindowsDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/DeleteUserFromSharedAppleDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/DisableLostMode/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/LocateDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/LogoutSharedAppleDeviceActiveUser/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RebootDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RecoverPasscode/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RemoteLock/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RequestRemoteAssistance/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/ResetPasscode/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RetireDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/ShutDown/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/SyncDevice/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/UpdateWindowsDeviceAccount/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/WindowsDefenderScan/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/WindowsDefenderUpdateSignatures/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/Wipe/execute/{execute_id}",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/sync/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/sync/status/last",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/mosyleManager/api/mosyleManager/data/assets/lookup",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "GET",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions",
+    "sources": [
+      "manual_app_runtime"
+    ],
+    "status_codes": []
+  },
+  {
+    "method": "POST",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/ClearCommands/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "sources": [
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/RestartDevice/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "sources": [
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/ShutdownDevice/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "sources": [
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/WipeDevice/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "sources": [
+      "apple-asset-actions.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/passwordReset/api/user/{user_id}/setup",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsFeeTracker/api/data/line-item-types/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsFeeTracker/api/data/line-items/search",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsFeeTracker/api/sync/options",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsInTouch/api/data/line-item-types/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsInTouch/api/data/line-items/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsInTouch/api/sync/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsMySchoolBucks/api/data/line-item-types/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsMySchoolBucks/api/data/line-items/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsMySchoolBucks/api/sync/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsSquare/api/data/line-item-types/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsSquare/api/data/line-items/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsSquare/api/sync/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsStripe/api/data/line-item-types/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsStripe/api/data/line-items/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsStripe/api/sync/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsVanco/api/data/line-item-types/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/paymentsVanco/api/data/line-items/search",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/paymentsVanco/api/sync/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/policyAgreements/api/users/{user_id}/acceptances/including-cleared",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/sparePoolManagement/api/assets/deployments",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/sparePoolManagement/api/groups",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/sparePoolManagement/api/pool/stats/today",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/sparePoolManagement/api/ticket/{ticket_id}/pools/{pool_id}",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/trafera/api/parts",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "GET",
+    "path": "/apps/trafera/api/settings/options",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      200
+    ]
+  },
+  {
+    "method": "POST",
+    "path": "/apps/workspaceOne/api/workspaceOne/data/assets/lookup",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ],
+    "status_codes": [
+      204
+    ]
+  }
+]

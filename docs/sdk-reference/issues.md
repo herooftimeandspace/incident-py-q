@@ -1,8 +1,10 @@
-# `issues` Namespace
+# `issues` Golden Namespace
 
 Sync client access: `client.issues`
 
 Async client access: `client.issues` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -15,6 +17,8 @@ Async client access: `client.issues` with `await` on method calls.
 ## Methods
 
 ### `delete_issue`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Issue_DeleteIssue`
 
@@ -43,6 +47,8 @@ No contract summary provided.
 ---
 
 ### `delete_issue_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Issue_DeleteIssueType`
 
@@ -77,6 +83,8 @@ DELETE /api/v1.0/issues/types/{IssueTypeId:guid}
 
 ### `get_available_issues`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Issue_GetAvailableIssues`
 
 - Sync: `client.issues.get_available_issues(timeout=None)`
@@ -107,6 +115,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_issue`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Issue_GetIssue`
 
@@ -142,6 +152,8 @@ GET /api/v1.0/issues/53bf1b92-a533-4a0e-8894-059f05b38f41
 
 ### `get_issue_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Issue_GetIssueType`
 
 - Sync: `client.issues.get_issue_type(issue_type_id=..., timeout=None)`
@@ -174,6 +186,8 @@ GET /api/v1.0/issues/types/fb08be5e-0876-4204-acf1-8f6aad44797c
 ---
 
 ### `get_issue_types`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Issue_GetIssueTypes`
 
@@ -208,6 +222,8 @@ POST /api/v1.0/issues/types
 
 ### `get_issue_types_simple`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Issue_GetIssueTypesSimple`
 
 - Sync: `client.issues.get_issue_types_simple(apply_site_visibility=None, timeout=None)`
@@ -234,6 +250,8 @@ No contract summary provided.
 ---
 
 ### `update_issue`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Issue_UpdateIssue`
 
@@ -263,6 +281,8 @@ No contract summary provided.
 ---
 
 ### `update_issue_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Issue_UpdateIssueType`
 

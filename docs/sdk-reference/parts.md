@@ -1,8 +1,10 @@
-# `parts` Namespace
+# `parts` Golden Namespace
 
 Sync client access: `client.parts`
 
 Async client access: `client.parts` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -16,6 +18,8 @@ Async client access: `client.parts` with `await` on method calls.
 ## Methods
 
 ### `delete_part`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Part_DeletePart`
 
@@ -51,6 +55,8 @@ DELETE /api/v1.0/parts/c94f81dc-8fae-4e82-8014-b5e5b5e86575
 
 ### `delete_part_supplier`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Part_DeletePartSupplier`
 
 - Sync: `client.parts.delete_part_supplier(part_supplier_id=..., timeout=None)`
@@ -83,6 +89,8 @@ DELETE /api/v1.0/parts/suppliers/e67018f1-3815-449c-a09f-e66dc6b83202
 ---
 
 ### `get_part`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Part_GetPart`
 
@@ -118,6 +126,8 @@ GET /api/v1.0/parts/bbfdf941-7bbe-4cc2-a9d7-9b7fbeed2358
 
 ### `get_part_supplier`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Part_GetPartSupplier`
 
 - Sync: `client.parts.get_part_supplier(part_supplier_id=..., timeout=None)`
@@ -151,6 +161,8 @@ GET /api/v1.0/parts/suppliers/0baa50cf-2037-43a4-9b64-391737f58d41
 
 ### `get_part_suppliers`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Part_GetPartSuppliers`
 
 - Sync: `client.parts.get_part_suppliers(timeout=None)`
@@ -181,6 +193,8 @@ This operation does not define request parameters.
 ---
 
 ### `get_parts`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Part_GetParts`
 
@@ -214,6 +228,8 @@ This operation does not define request parameters.
 
 ### `update_part`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Part_UpdatePart`
 
 - Sync: `client.parts.update_part(part_id=..., part=..., timeout=None)`
@@ -242,6 +258,8 @@ No contract summary provided.
 ---
 
 ### `update_part_supplier`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Part_UpdatePartSupplier`
 
