@@ -82,7 +82,7 @@ jobs:
 
       - name: Upload coverage badge artifact
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/upload-artifact@v7  # TODO: pin to specific SHA for reproducibility
         with:
           name: coverage-badge
           path: coverage-badge.json
