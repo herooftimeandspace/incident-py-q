@@ -46,7 +46,11 @@ jobs:
 
           part="${semver_labels#semver:}"
           git fetch origin main staging "${GH_HEAD_REF}"
-          current_version="$(git show origin/main:pyproject.toml | sed -n 's/^version = \"\\([^\"]*\\)\"$/\\1/p')"
+          # Read the version from main with a TOML parser instead of shell matching. The
+          # release branch may evolve formatting over time, and release-prep must derive the
+          # current semantic version from the canonical project metadata rather than relying
+          # on a brittle line-oriented regex in bash.
+          current_version="$(python -c 'import subprocess, tomllib; print(tomllib.loads(subprocess.check_output(["'"'"'git'"'"', "'"'"'show'"'"', "'"'"'origin/main:pyproject.toml'"'"'"], text=True))["'"'"'project'"'"'"]["'"'"'version'"'"'"])')"
           desired_version="$(python scripts/bump_version.py --part "${part}" --current-version "${current_version}")"
 
           if [ "$(git log -1 --pretty=%s)" = "Prepare release v${desired_version} [skip release-prep]" ]; then

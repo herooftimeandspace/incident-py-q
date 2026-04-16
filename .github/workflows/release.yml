@@ -34,9 +34,20 @@ jobs:
 
           # release-prep has already written the semver bump onto the promotion branch, so
           # main should already contain the final release version when this workflow starts.
-          pr_number="$(gh api "repos/${GH_REPO}/commits/${GH_SHA}/pulls" --jq '.[0].number')"
-          if [ -z "${pr_number}" ]; then
-            echo "No merged pull request is associated with ${GH_SHA}."
+          # Prefer GitHub's associated-pull lookup for normal promotion merges. Keep an
+          # explicit fallback to the merge commit subject so the release job can still
+          # determine the originating PR during bootstrap or administrator-driven merges,
+          # where the commit-to-PR association may not be populated yet.
+          pr_number="$(gh api "repos/${GH_REPO}/commits/${GH_SHA}/pulls" --jq '.[0].number' 2>/dev/null || true)"
+          if [ -z "${pr_number}" ] || [ "${pr_number}" = "null" ]; then
+            merge_subject="$(git log -1 --pretty=%s)"
+            if [[ "${merge_subject}" =~ ^Merge\ pull\ request\ \#([0-9]+) ]]; then
+              pr_number="${BASH_REMATCH[1]}"
+            fi
+          fi
+
+          if [ -z "${pr_number}" ] || [ "${pr_number}" = "null" ]; then
+            echo "No merged pull request is associated with ${GH_SHA}, and the merge subject did not contain a PR number."
             exit 1
           fi
 
