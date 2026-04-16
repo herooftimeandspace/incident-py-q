@@ -1,12 +1,11 @@
 # SDK Reference
 
-Generated from bundled Incident IQ controller contracts.
+Golden methods come from bundled Stoplight controller contracts. Silver methods come from HAR-observed undocumented routes and are exposed separately so they never silently override the documented Golden surface.
 
-Use these pages to discover the dynamic namespace methods available on `Client` and `AsyncClient`.
+## Golden Namespaces
 
 | Namespace | Canonical Methods | Page |
 | --- | ---: | --- |
-| `apps` | 18 | [`client.apps`](apps.md) |
 | `alerts` | 1 | [`client.alerts`](alerts.md) |
 | `analytics` | 10 | [`client.analytics`](analytics.md) |
 | `assets` | 39 | [`client.assets`](assets.md) |
@@ -22,3 +21,10 @@ Use these pages to discover the dynamic namespace methods available on `Client` 
 | `slas` | 6 | [`client.slas`](slas.md) |
 | `tickets` | 28 | [`client.tickets`](tickets.md) |
 | `users` | 16 | [`client.users`](users.md) |
+
+## Silver Namespaces
+
+| Namespace | Methods | Page |
+| --- | ---: | --- |
+| `silver` | 178 | [`client.silver`](silver.md) |
+| `apps` legacy alias | 18 manual helpers + 86 | [`client.apps`](apps.md) |

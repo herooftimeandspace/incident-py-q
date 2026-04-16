@@ -9,9 +9,13 @@ SENSITIVE_HEADER_NAMES = {
     "x-api-key",
     "cookie",
     "set-cookie",
+    "app-token",
     "apptoken",
     "usertoken",
     "sessionid",
+    "x-app-token",
+    "x-client-id",
+    "x-client-secret",
     "x-xsrf-token",
 }
 

@@ -1,8 +1,10 @@
-# `custom_fields` Namespace
+# `custom_fields` Golden Namespace
 
 Sync client access: `client.custom_fields`
 
 Async client access: `client.custom_fields` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -17,6 +19,8 @@ Async client access: `client.custom_fields` with `await` on method calls.
 ## Methods
 
 ### `delete_custom_field`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `CustomField_DeleteCustomField`
 
@@ -52,6 +56,8 @@ DELETE /api/v1.0/custom-fields/f10f540f-2a9f-47fe-acbd-8ca82dc73e7c
 
 ### `delete_custom_field_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_DeleteCustomFieldType`
 
 - Sync: `client.custom_fields.delete_custom_field_type(custom_field_type_id=..., timeout=None)`
@@ -85,6 +91,8 @@ DELETE /api/v1.0/custom-fields/types/108d5344-012f-4380-b865-3eaa72f7c42f
 
 ### `delete_custom_fields`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_DeleteCustomFields`
 
 - Sync: `client.custom_fields.delete_custom_fields(custom_field_ids=..., timeout=None)`
@@ -111,6 +119,8 @@ No contract summary provided.
 ---
 
 ### `get_custom_field`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `CustomField_GetCustomField`
 
@@ -146,6 +156,8 @@ GET /api/v1.0/custom-fields/e60c4fe8-2236-48bb-8dd0-18a6f5b4c7ae
 
 ### `get_custom_field_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_GetCustomFieldType`
 
 - Sync: `client.custom_fields.get_custom_field_type(custom_field_type_id=..., timeout=None)`
@@ -179,6 +191,8 @@ GET /api/v1.0/custom-fields/types/108d5344-012f-4380-b865-3eaa72f7c42f
 
 ### `get_custom_field_types`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_GetCustomFieldTypes`
 
 - Sync: `client.custom_fields.get_custom_field_types(timeout=None)`
@@ -210,6 +224,8 @@ This operation does not define request parameters.
 
 ### `get_custom_field_types2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_GetCustomFieldTypes2`
 
 - Sync: `client.custom_fields.get_custom_field_types2(custom_field_types_request=..., timeout=None)`
@@ -236,6 +252,8 @@ No contract summary provided.
 ---
 
 ### `get_custom_field_values_for_asset`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `CustomField_GetCustomFieldValuesForAsset`
 
@@ -270,6 +288,8 @@ GET /api/v1.0/custom-fields/values/for/asset/4c35d2ef-2bb1-457f-b123-dea74ee826b
 
 ### `get_custom_field_values_for_ticket`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_GetCustomFieldValuesForTicket`
 
 - Sync: `client.custom_fields.get_custom_field_values_for_ticket(ticket_id=..., timeout=None)`
@@ -302,6 +322,8 @@ GET /api/v1.0/custom-fields/values/for/ticket/9933a6e3-d98b-4c5c-be04-043cf23e83
 ---
 
 ### `get_custom_field_values_for_user`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `CustomField_GetCustomFieldValuesForUser`
 
@@ -336,6 +358,8 @@ GET /api/v1.0/custom-fields/values/for/user/634d18fb-6c6e-44e6-a993-8444466910e2
 
 ### `get_custom_fields`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_GetCustomFields`
 
 - Sync: `client.custom_fields.get_custom_fields(product_filter_type=None, timeout=None)`
@@ -363,6 +387,8 @@ No contract summary provided.
 ---
 
 ### `get_custom_fields2`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `CustomField_GetCustomFields2`
 
@@ -398,6 +424,8 @@ POST /api/v1.0/custom-fields
 
 ### `update_custom_field`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `CustomField_UpdateCustomField`
 
 - Sync: `client.custom_fields.update_custom_field(custom_field_id=..., custom_field=..., timeout=None)`
@@ -426,6 +454,8 @@ No contract summary provided.
 ---
 
 ### `update_custom_field_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `CustomField_UpdateCustomFieldType`
 

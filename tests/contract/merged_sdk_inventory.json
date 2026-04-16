@@ -1,0 +1,3232 @@
+[
+  {
+    "method": "POST",
+    "name": "queue_notification",
+    "namespace": "alerts",
+    "operation_id": "Alerts_QueueNotification",
+    "path": "/alerts/new",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_coverage",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditPolicyCoverage",
+    "path": "/analytics/assets/by-audit-policy-coverage",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_schedule_status",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditPolicyScheduleStatus",
+    "path": "/analytics/assets/by-audit-policy-schedule-status/{AssetAuditPolicyScheduleId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_status",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditPolicyStatus",
+    "path": "/analytics/assets/by-audit-policy-status/{AssetAuditPolicyId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_status",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByAuditStatus",
+    "path": "/analytics/assets/by-audit-status",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_verification_location",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByVerificationLocation",
+    "path": "/analytics/assets/by-verification-location",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_verification_type",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetAssetCountsByVerificationType",
+    "path": "/analytics/assets/by-verification-type",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_report",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReport",
+    "path": "/analytics/reports/{ReportId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_report_elements",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReportElements",
+    "path": "/analytics/reports/elements/{ReportId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_report_queries",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReportQueries",
+    "path": "/analytics/reports/queries/{ReportId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_reports",
+    "namespace": "analytics",
+    "operation_id": "Analytics_GetReports",
+    "path": "/analytics/reports",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_AddManufacturerToSite",
+    "path": "/assets/manufacturers/{ManufacturerId}/site",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site2",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_AddManufacturerToSite2",
+    "path": "/assets/manufacturers/{ManufacturerId}/site/{IncludeAllModels}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "add_user_favorite_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_AddUserFavoriteAsset",
+    "path": "/assets/favorites/{AssetId}/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "create_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_CreateAssetStatusType",
+    "path": "/assets/status/types/new",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_DeleteAsset",
+    "path": "/assets/{AssetId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_funding_type",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_DeleteAssetFundingType",
+    "path": "/assets/funding/types/{AssetFundingTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_DeleteAssetStatusType",
+    "path": "/assets/status/types/{AssetStatusTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_manufacturer",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_DeleteManufacturer",
+    "path": "/assets/manufacturers/{ManufacturerId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAsset",
+    "path": "/assets/{AssetId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_activities",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetActivities",
+    "path": "/assets/{AssetId}/activities",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_favorites",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetFavorites",
+    "path": "/assets/favorites/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_favorites2",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetFavorites2",
+    "path": "/assets/favorites/{UserId}/{All}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_funding_type",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_GetAssetFundingType",
+    "path": "/assets/funding/types/{AssetFundingTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_funding_types",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_GetAssetFundingTypes",
+    "path": "/assets/funding/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_funding_types2",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_GetAssetFundingTypes2",
+    "path": "/assets/funding/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_GetAssetStatusType",
+    "path": "/assets/status/types/{AssetStatusTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_status_types",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_GetAssetStatusTypes",
+    "path": "/assets/status/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_status_types2",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_GetAssetStatusTypes2",
+    "path": "/assets/status/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_assets",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssets",
+    "path": "/assets",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByAssetStatusType",
+    "path": "/assets/assetstatustype/{AssetStatusTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_asset_tag",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByAssetTag",
+    "path": "/assets/assettag/{AssetTag}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_location_room",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByLocationRoom",
+    "path": "/assets/rooms/{LocationRoomId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_serial",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsBySerial",
+    "path": "/assets/serial/{Serial}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_assets_by_storage_unit_number",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsByStorageUnitNumber",
+    "path": "/assets/storageunit/{LocationId}/{StorageUnitNumber}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_assets_count",
+    "namespace": "assets",
+    "operation_id": "Asset_GetAssetsCount",
+    "path": "/assets/count",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_global_manufacturers",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_GetGlobalManufacturers",
+    "path": "/assets/manufacturers/global",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_global_manufacturers2",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_GetGlobalManufacturers2",
+    "path": "/assets/manufacturers/global",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_manufacturer",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_GetManufacturer",
+    "path": "/assets/manufacturers/{ManufacturerId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_spare_assets_by_asset_tag",
+    "namespace": "assets",
+    "operation_id": "Asset_GetSpareAssetsByAssetTag",
+    "path": "/assets/spares/assettag/{AssetTag}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_assets",
+    "namespace": "assets",
+    "operation_id": "Asset_GetUserAssets",
+    "path": "/assets/for/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_assets2",
+    "namespace": "assets",
+    "operation_id": "Asset_GetUserAssets2",
+    "path": "/assets/for/{UserId}/{All}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_manufacturer_from_site",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_RemoveManufacturerFromSite",
+    "path": "/assets/manufacturers/{ManufacturerId}/site",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "remove_user_favorite_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_RemoveUserFavoriteAsset",
+    "path": "/assets/favorites/remove/{AssetId}/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "search_assets_by_asset_tag",
+    "namespace": "assets",
+    "operation_id": "Asset_SearchAssetsByAssetTag",
+    "path": "/assets/assettag/search/{AssetTag}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "search_assets_by_serial",
+    "namespace": "assets",
+    "operation_id": "Asset_SearchAssetsBySerial",
+    "path": "/assets/serial/search/{Serial}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset",
+    "namespace": "assets",
+    "operation_id": "Asset_UpdateAsset",
+    "path": "/assets/{AssetId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_funding_type",
+    "namespace": "assets",
+    "operation_id": "AssetFundingType_UpdateAssetFundingType",
+    "path": "/assets/funding/types/{AssetFundingTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_status_type",
+    "namespace": "assets",
+    "operation_id": "AssetStatusType_UpdateAssetStatusType",
+    "path": "/assets/status/types/{AssetStatusTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_manufacturer",
+    "namespace": "assets",
+    "operation_id": "Manufacturer_UpdateManufacturer",
+    "path": "/assets/manufacturers/{ManufacturerId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_field",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_DeleteCustomField",
+    "path": "/custom-fields/{CustomFieldId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_field_type",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_DeleteCustomFieldType",
+    "path": "/custom-fields/types/{CustomFieldTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_fields",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_DeleteCustomFields",
+    "path": "/custom-fields",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomField",
+    "path": "/custom-fields/{CustomFieldId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_type",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldType",
+    "path": "/custom-fields/types/{CustomFieldTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_types",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldTypes",
+    "path": "/custom-fields/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_field_types2",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldTypes2",
+    "path": "/custom-fields/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_values_for_asset",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldValuesForAsset",
+    "path": "/custom-fields/values/for/asset/{AssetId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_values_for_ticket",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldValuesForTicket",
+    "path": "/custom-fields/values/for/ticket/{TicketId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_values_for_user",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFieldValuesForUser",
+    "path": "/custom-fields/values/for/user/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_fields",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFields",
+    "path": "/custom-fields",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields2",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_GetCustomFields2",
+    "path": "/custom-fields",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_custom_field",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_UpdateCustomField",
+    "path": "/custom-fields/{CustomFieldId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_custom_field_type",
+    "namespace": "custom_fields",
+    "operation_id": "CustomField_UpdateCustomFieldType",
+    "path": "/custom-fields/types/{CustomFieldTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "submit_form",
+    "namespace": "forms",
+    "operation_id": "Form_SubmitForm",
+    "path": "/forms/submit",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_issue",
+    "namespace": "issues",
+    "operation_id": "Issue_DeleteIssue",
+    "path": "/issues/{IssueId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_issue_type",
+    "namespace": "issues",
+    "operation_id": "Issue_DeleteIssueType",
+    "path": "/issues/types/{IssueTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_available_issues",
+    "namespace": "issues",
+    "operation_id": "Issue_GetAvailableIssues",
+    "path": "/issues/site",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_issue",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssue",
+    "path": "/issues/{IssueId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_issue_type",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssueType",
+    "path": "/issues/types/{IssueTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_issue_types",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssueTypes",
+    "path": "/issues/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_issue_types_simple",
+    "namespace": "issues",
+    "operation_id": "Issue_GetIssueTypesSimple",
+    "path": "/issues/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_issue",
+    "namespace": "issues",
+    "operation_id": "Issue_UpdateIssue",
+    "path": "/issues/{IssueId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_issue_type",
+    "namespace": "issues",
+    "operation_id": "Issue_UpdateIssueType",
+    "path": "/issues/types/{IssueTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_location",
+    "namespace": "locations",
+    "operation_id": "Location_DeleteLocation",
+    "path": "/locations/{LocationId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_location_room",
+    "namespace": "locations",
+    "operation_id": "Location_DeleteLocationRoom",
+    "path": "/locations/rooms/{LocationRoomId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_all_location_rooms",
+    "namespace": "locations",
+    "operation_id": "Location_GetAllLocationRooms",
+    "path": "/locations/rooms",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_location",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocation",
+    "path": "/locations/{LocationId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_room",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationRoom",
+    "path": "/locations/rooms/{LocationRoomId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_rooms",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationRooms",
+    "path": "/locations/{LocationId}/rooms",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_type",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationType",
+    "path": "/locations/types/{LocationTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_types",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocationTypes",
+    "path": "/locations/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_locations",
+    "namespace": "locations",
+    "operation_id": "Location_GetLocations",
+    "path": "/locations/all",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_location",
+    "namespace": "locations",
+    "operation_id": "Location_UpdateLocation",
+    "path": "/locations/{LocationId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_location_room",
+    "namespace": "locations",
+    "operation_id": "Location_UpdateLocationRoom",
+    "path": "/locations/rooms/{LocationRoomId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site3",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_AddManufacturerToSite3",
+    "path": "/manufacturers/{ManufacturerId}/site",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "add_manufacturer_to_site4",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_AddManufacturerToSite4",
+    "path": "/manufacturers/{ManufacturerId}/site/{IncludeAllModels}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_manufacturer2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_DeleteManufacturer2",
+    "path": "/manufacturers/{ManufacturerId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_global_manufacturers3",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_GetGlobalManufacturers3",
+    "path": "/manufacturers/global",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_global_manufacturers4",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_GetGlobalManufacturers4",
+    "path": "/manufacturers/global",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_manufacturer2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_GetManufacturer2",
+    "path": "/manufacturers/{ManufacturerId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_manufacturer_from_site2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_RemoveManufacturerFromSite2",
+    "path": "/manufacturers/{ManufacturerId}/site",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_manufacturer2",
+    "namespace": "manufacturers",
+    "operation_id": "Manufacturer_UpdateManufacturer2",
+    "path": "/manufacturers/{ManufacturerId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_metric",
+    "namespace": "metrics",
+    "operation_id": "Sla_DeleteMetric",
+    "path": "/metrics/{MetricId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_metric_type",
+    "namespace": "metrics",
+    "operation_id": "Sla_DeleteMetricType",
+    "path": "/metrics/types/{MetricTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_metric",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetric",
+    "path": "/metrics/{MetricId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_metric_type",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetricType",
+    "path": "/metrics/types/{MetricTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_metric_types",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetricTypes",
+    "path": "/metrics/types",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_metrics",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetrics",
+    "path": "/metrics",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_metrics_for_sla",
+    "namespace": "metrics",
+    "operation_id": "Sla_GetMetricsForSla",
+    "path": "/metrics/for/sla/{SlaId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_metric",
+    "namespace": "metrics",
+    "operation_id": "Sla_UpdateMetric",
+    "path": "/metrics/{MetricId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_metric_type",
+    "namespace": "metrics",
+    "operation_id": "Sla_UpdateMetricType",
+    "path": "/metrics/types/{MetricTypeId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_metrics_for_sla",
+    "namespace": "metrics",
+    "operation_id": "Sla_UpdateMetricsForSla",
+    "path": "/metrics/for/sla/{SlaId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_notifications",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetNotifications",
+    "path": "/notifications",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_emails",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetTicketEmails",
+    "path": "/notifications/emails/for/ticket/{TicketId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_unarchived_notifications",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetUnarchivedNotifications",
+    "path": "/notifications/unarchived",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_unread_notifications",
+    "namespace": "notifications",
+    "operation_id": "Notification_GetUnreadNotifications",
+    "path": "/notifications/unread",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_all_notifications_archived",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkAllNotificationsArchived",
+    "path": "/notifications/all-archive",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_all_notifications_read",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkAllNotificationsRead",
+    "path": "/notifications/all-read",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_notification_archived",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkNotificationArchived",
+    "path": "/notifications/{NotificationId}/archive",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_notification_read",
+    "namespace": "notifications",
+    "operation_id": "Notification_MarkNotificationRead",
+    "path": "/notifications/{NotificationId}/read",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_part",
+    "namespace": "parts",
+    "operation_id": "Part_DeletePart",
+    "path": "/parts/{PartId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_part_supplier",
+    "namespace": "parts",
+    "operation_id": "Part_DeletePartSupplier",
+    "path": "/parts/suppliers/{PartSupplierId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_part",
+    "namespace": "parts",
+    "operation_id": "Part_GetPart",
+    "path": "/parts/{PartId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_part_supplier",
+    "namespace": "parts",
+    "operation_id": "Part_GetPartSupplier",
+    "path": "/parts/suppliers/{PartSupplierId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_part_suppliers",
+    "namespace": "parts",
+    "operation_id": "Part_GetPartSuppliers",
+    "path": "/parts/suppliers",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_parts",
+    "namespace": "parts",
+    "operation_id": "Part_GetParts",
+    "path": "/parts",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_part",
+    "namespace": "parts",
+    "operation_id": "Part_UpdatePart",
+    "path": "/parts/{PartId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_part_supplier",
+    "namespace": "parts",
+    "operation_id": "Part_UpdatePartSupplier",
+    "path": "/parts/suppliers/{PartSupplierId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_purchase_order",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_DeletePurchaseOrder",
+    "path": "/purchaseorders/{PurchaseOrderId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_purchase_order",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_GetPurchaseOrder",
+    "path": "/purchaseorders/{PurchaseOrderId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_purchase_orders",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_GetPurchaseOrders",
+    "path": "/purchaseorders",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_purchase_order",
+    "namespace": "purchaseorders",
+    "operation_id": "Part_UpdatePurchaseOrder",
+    "path": "/purchaseorders/{PurchaseOrderId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "activate_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_ActivateSla",
+    "path": "/slas/{SlaId}/activate",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "deactivate_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_DeactivateSla",
+    "path": "/slas/{SlaId}/deactivate",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_DeleteSla",
+    "path": "/slas/{SlaId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_GetSla",
+    "path": "/slas/{SlaId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_slas",
+    "namespace": "slas",
+    "operation_id": "Sla_GetSlas",
+    "path": "/slas",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_sla",
+    "namespace": "slas",
+    "operation_id": "Sla_UpdateSla",
+    "path": "/slas/{SlaId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "assign_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_AssignTicket",
+    "path": "/tickets/{TicketId}/sla",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "cancel_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CancelTicket",
+    "path": "/tickets/{TicketId}/cancel",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_issue",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ChangeTicketIssue",
+    "path": "/tickets/{TicketId}/issue",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_to_requestor_responded",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ChangeTicketToRequestorResponded",
+    "path": "/tickets/{TicketId}/status/requestor-responded",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_to_waiting_on_requestor",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ChangeTicketToWaitingOnRequestor",
+    "path": "/tickets/{TicketId}/status/waiting-on-requestor",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "close_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CloseTicket",
+    "path": "/tickets/{TicketId}/close",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "confirm_ticket_issue",
+    "namespace": "tickets",
+    "operation_id": "Ticket_ConfirmTicketIssue",
+    "path": "/tickets/{TicketId}/confirm-issue",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "copy_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CopyTicket",
+    "path": "/tickets/{TicketId}/copy",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "create_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_CreateTicket",
+    "path": "/tickets/new",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_DeleteTicket",
+    "path": "/tickets/{TicketId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicket",
+    "path": "/tickets/{TicketId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_assets",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicketAssets",
+    "path": "/tickets/{TicketId}/assets",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_sla",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicketSla",
+    "path": "/tickets/{TicketId}/sla",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_statuses",
+    "namespace": "tickets",
+    "operation_id": "Ticket_GetTicketStatuses",
+    "path": "/tickets/statuses",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_as_duplicate",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketAsDuplicate",
+    "path": "/tickets/{TicketId}/mark-as-duplicate/{OriginalTicketId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_not_sensitive",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketNotSensitive",
+    "path": "/tickets/{TicketId}/mark-not-sensitive",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_not_urgent",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketNotUrgent",
+    "path": "/tickets/{TicketId}/mark-not-urgent",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_sensitive",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketSensitive",
+    "path": "/tickets/{TicketId}/mark-sensitive",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "mark_ticket_urgent",
+    "namespace": "tickets",
+    "operation_id": "Ticket_MarkTicketUrgent",
+    "path": "/tickets/{TicketId}/mark-urgent",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "un_assign_ticket_from_team",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnAssignTicketFromTeam",
+    "path": "/tickets/{TicketId}/unassign/team",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "un_assign_ticket_from_user",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnAssignTicketFromUser",
+    "path": "/tickets/{TicketId}/unassign/user",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "un_assign_ticket_sla",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnAssignTicketSla",
+    "path": "/tickets/{TicketId}/unassign-sla",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "un_confirm_ticket_issue",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UnConfirmTicketIssue",
+    "path": "/tickets/{TicketId}/unconfirm-issue",
+    "provenance": "golden"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UndeleteTicket",
+    "path": "/tickets/{TicketId}/undelete",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicket",
+    "path": "/tickets/{TicketId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_assets",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicketAssets",
+    "path": "/tickets/{TicketId}/assets",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_custom_fields",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicketCustomFields",
+    "path": "/tickets/{TicketId}/custom-fields",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_subject",
+    "namespace": "tickets",
+    "operation_id": "Ticket_UpdateTicketSubject",
+    "path": "/tickets/{TicketId}/subject",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "create_local_user",
+    "namespace": "users",
+    "operation_id": "User_CreateLocalUser",
+    "path": "/users/local/new",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_user",
+    "namespace": "users",
+    "operation_id": "User_DeleteUser",
+    "path": "/users/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_user_view",
+    "namespace": "users",
+    "operation_id": "View_DeleteUserView",
+    "path": "/users/views/{ViewId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_agents",
+    "namespace": "users",
+    "operation_id": "User_GetAgents",
+    "path": "/users/agents",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_agents_legacy",
+    "namespace": "users",
+    "operation_id": "User_GetAgentsLegacy",
+    "path": "/users/agents",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_user",
+    "namespace": "users",
+    "operation_id": "User_GetUser",
+    "path": "/users/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_view",
+    "namespace": "users",
+    "operation_id": "View_GetUserView",
+    "path": "/users/views/{ViewId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_views",
+    "namespace": "users",
+    "operation_id": "View_GetUserViews",
+    "path": "/users/views",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_users",
+    "namespace": "users",
+    "operation_id": "User_GetUsers",
+    "path": "/users",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "get_users_for_view",
+    "namespace": "users",
+    "operation_id": "User_GetUsersForView",
+    "path": "/users/view/{ViewId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_legacy",
+    "namespace": "users",
+    "operation_id": "User_GetUsersLegacy",
+    "path": "/users",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_per_grade",
+    "namespace": "users",
+    "operation_id": "User_GetUsersPerGrade",
+    "path": "/users/stats/grades",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_per_location",
+    "namespace": "users",
+    "operation_id": "User_GetUsersPerLocation",
+    "path": "/users/stats/locations",
+    "provenance": "golden"
+  },
+  {
+    "method": "GET",
+    "name": "get_users_with_location_permission",
+    "namespace": "users",
+    "operation_id": "User_GetUsersWithLocationPermission",
+    "path": "/users/location/{LocationId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_user",
+    "namespace": "users",
+    "operation_id": "User_UpdateUser",
+    "path": "/users/{UserId}",
+    "provenance": "golden"
+  },
+  {
+    "method": "POST",
+    "name": "update_user_view",
+    "namespace": "users",
+    "operation_id": "View_UpdateUserView",
+    "path": "/users/views/{ViewId}",
+    "provenance": "golden"
+  },
+  {
+    "http_method": "GET",
+    "name": "get_agent_current_stats",
+    "namespace": "analytics",
+    "path": "/api/v1.0/analytics/agent-current-stats",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_agent_location_stats",
+    "namespace": "analytics",
+    "path": "/api/v1.0/analytics/agent-location-stats",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_asset_summary_stats",
+    "namespace": "analytics",
+    "path": "/api/v1.0/analytics/asset/{asset_id}/summary-stats",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_requestor_summary_stats",
+    "namespace": "analytics",
+    "path": "/api/v1.0/analytics/requestor/{requestor_id}/summary-stats",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_search_v2_expression",
+    "namespace": "api",
+    "path": "/api/search/v2/expression",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_search_v2_recent_user",
+    "namespace": "api",
+    "path": "/api/search/v2/recent/user",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_app",
+    "namespace": "app_registry",
+    "path": "/api/v1.0/app-registry/app/{app_key}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_site_app",
+    "namespace": "app_registry",
+    "path": "/api/v1.0/app-registry/site-app/{site_app_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_installed",
+    "namespace": "app_registry",
+    "path": "/api/v1.0/app-registry/installed",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_auth_oneroster_validate",
+    "namespace": "apps.aeries_sis",
+    "path": "/apps/aeriesSis/api/aeriesSis/auth/oneroster/validate",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_settings_options",
+    "namespace": "apps.aeries_sis",
+    "path": "/apps/aeriesSis/api/aeriesSis/settings/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_settings_options_sync",
+    "namespace": "apps.aeries_sis",
+    "path": "/apps/aeriesSis/api/aeriesSis/settings/options/sync",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_history",
+    "namespace": "apps.aeries_sis",
+    "path": "/apps/aeriesSis/api/aeriesSis/data/sync/history",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_locations",
+    "namespace": "apps.aeries_sis",
+    "path": "/apps/aeriesSis/api/aeriesSis/sync/data/locations",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_status_last",
+    "namespace": "apps.aeries_sis",
+    "path": "/apps/aeriesSis/api/aeriesSis/sync/status/last",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_users_search",
+    "namespace": "apps.aeries_sis",
+    "path": "/apps/aeriesSis/api/aeriesSis/data/users/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_assets_usage",
+    "namespace": "apps.file_wave",
+    "path": "/apps/fileWave/api/fileWave/data/assets/usage/{usage_id}/{n_883d10f1_e4a0_4268_a319_3d36d1948030_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_assets_lookup",
+    "namespace": "apps.file_wave",
+    "path": "/apps/fileWave/api/fileWave/data/assets/lookup",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_assets_usage",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/assets/usage/{usage_id}/{n_883d10f1_e4a0_4268_a319_3d36d1948030_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_assignment_suggestions",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/assignment/suggestions",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_auth_token_check",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/auth/token-check",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_models_distinct",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/models/distinct",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_status_last",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/{google_device_data_key}/status/last",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_history",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/sync/history",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_device_sync_push_schedule",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/device/sync/push/schedule/{schedule_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_jobs_logs",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/data/jobs/{job_id}/logs",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_deprovision_device_execute",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions/DeprovisionDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_disable_device_execute",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions/DisableDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_wipe_device_execute",
+    "namespace": "apps.google_device_data",
+    "path": "/apps/googleDeviceData/api/googleDeviceData/remoteactions/WipeDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_settings_options_sync",
+    "namespace": "apps.infinite_campus",
+    "path": "/apps/infiniteCampus/api/infiniteCampus/settings/options/sync",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_assets_lookup",
+    "namespace": "apps.jamf",
+    "path": "/apps/jamf/api/jamf/data/assets/lookup",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_assets_lookup",
+    "namespace": "apps.jamf_school",
+    "path": "/apps/jamfSchool/api/jamfSchool/data/assets/lookup",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_microsoft_sccm_assets_lookup",
+    "namespace": "apps.local_asset_manager",
+    "path": "/apps/localAssetManager/api/microsoftSccm/data/assets/lookup",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_bays",
+    "namespace": "apps.lock_n_charge2",
+    "path": "/apps/lockNCharge2/api/bays",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_stations",
+    "namespace": "apps.lock_n_charge2",
+    "path": "/apps/lockNCharge2/api/stations",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_stations_licensed",
+    "namespace": "apps.lock_n_charge2",
+    "path": "/apps/lockNCharge2/api/stations/licensed",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_assets_lookup",
+    "namespace": "apps.meraki_mdm",
+    "path": "/apps/merakiMdm/api/merakiMdm/data/assets/lookup",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_assets_usage",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/assets/usage/{usage_id}/{n_883d10f1_e4a0_4268_a319_3d36d1948030_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_auth_token_check",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/auth/token-check",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_history",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/sync/history",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_options",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/sync/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_status_last",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/sync/status/last",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_jobs_logs",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/data/jobs/{job_id}/logs",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_clean_windows_device_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/CleanWindowsDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_delete_user_from_shared_apple_device_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/DeleteUserFromSharedAppleDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_disable_lost_mode_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/DisableLostMode/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_locate_device_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/LocateDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_logout_shared_apple_device_active_user_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/LogoutSharedAppleDeviceActiveUser/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_reboot_device_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RebootDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_recover_passcode_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RecoverPasscode/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_remote_lock_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RemoteLock/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_request_remote_assistance_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RequestRemoteAssistance/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_reset_passcode_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/ResetPasscode/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_retire_device_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/RetireDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_shut_down_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/ShutDown/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_sync_device_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/SyncDevice/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_update_windows_device_account_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/UpdateWindowsDeviceAccount/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_windows_defender_scan_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/WindowsDefenderScan/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_windows_defender_update_signatures_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/WindowsDefenderUpdateSignatures/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_wipe_execute",
+    "namespace": "apps.microsoft_intune",
+    "path": "/apps/microsoftIntune/api/microsoftIntune/remoteactions/Wipe/execute/{execute_id}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_clear_commands_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
+    "namespace": "apps.mosyle_manager",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/ClearCommands/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "provenance": "silver",
+    "sources": [
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_restart_device_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
+    "namespace": "apps.mosyle_manager",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/RestartDevice/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "provenance": "silver",
+    "sources": [
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_shutdown_device_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
+    "namespace": "apps.mosyle_manager",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/ShutdownDevice/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "provenance": "silver",
+    "sources": [
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_remoteactions_wipe_device_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
+    "namespace": "apps.mosyle_manager",
+    "path": "/apps/mosyleManager/api/mosyleManager/remoteactions/WipeDevice/execute/mac268D3C3F-7745-5EB1-9299-A92E984D642D",
+    "provenance": "silver",
+    "sources": [
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_user_setup",
+    "namespace": "apps.password_reset",
+    "path": "/apps/passwordReset/api/user/{user_id}/setup",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_options",
+    "namespace": "apps.payments_fee_tracker",
+    "path": "/apps/paymentsFeeTracker/api/sync/options",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_item_types_search",
+    "namespace": "apps.payments_fee_tracker",
+    "path": "/apps/paymentsFeeTracker/api/data/line-item-types/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_items_search",
+    "namespace": "apps.payments_fee_tracker",
+    "path": "/apps/paymentsFeeTracker/api/data/line-items/search",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_options",
+    "namespace": "apps.payments_in_touch",
+    "path": "/apps/paymentsInTouch/api/sync/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_item_types_search",
+    "namespace": "apps.payments_in_touch",
+    "path": "/apps/paymentsInTouch/api/data/line-item-types/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_items_search",
+    "namespace": "apps.payments_in_touch",
+    "path": "/apps/paymentsInTouch/api/data/line-items/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_options",
+    "namespace": "apps.payments_my_school_bucks",
+    "path": "/apps/paymentsMySchoolBucks/api/sync/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_item_types_search",
+    "namespace": "apps.payments_my_school_bucks",
+    "path": "/apps/paymentsMySchoolBucks/api/data/line-item-types/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_items_search",
+    "namespace": "apps.payments_my_school_bucks",
+    "path": "/apps/paymentsMySchoolBucks/api/data/line-items/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_options",
+    "namespace": "apps.payments_square",
+    "path": "/apps/paymentsSquare/api/sync/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_item_types_search",
+    "namespace": "apps.payments_square",
+    "path": "/apps/paymentsSquare/api/data/line-item-types/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_items_search",
+    "namespace": "apps.payments_square",
+    "path": "/apps/paymentsSquare/api/data/line-items/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_options",
+    "namespace": "apps.payments_stripe",
+    "path": "/apps/paymentsStripe/api/sync/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_item_types_search",
+    "namespace": "apps.payments_stripe",
+    "path": "/apps/paymentsStripe/api/data/line-item-types/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_items_search",
+    "namespace": "apps.payments_stripe",
+    "path": "/apps/paymentsStripe/api/data/line-items/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_sync_options",
+    "namespace": "apps.payments_vanco",
+    "path": "/apps/paymentsVanco/api/sync/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_item_types_search",
+    "namespace": "apps.payments_vanco",
+    "path": "/apps/paymentsVanco/api/data/line-item-types/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_line_items_search",
+    "namespace": "apps.payments_vanco",
+    "path": "/apps/paymentsVanco/api/data/line-items/search",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_users_acceptances_including_cleared",
+    "namespace": "apps.policy_agreements",
+    "path": "/apps/policyAgreements/api/users/{user_id}/acceptances/including-cleared",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_db_bb6cece8_e4f4_e511_a789_005056bb000e_statu",
+    "namespace": "apps.remote_beyond_trust",
+    "path": "/api/v1.0/apps/remoteBeyondTrust/db/bb6cece8-e4f4-e511-a789-005056bb000e-Status/{bb6cece8_e4f4_e511_a789_005056bb000e_statu_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_db_bb6cece8_e4f4_e511_a789_005056bb000e_statu",
+    "namespace": "apps.remote_chrome",
+    "path": "/api/v1.0/apps/remoteChrome/db/bb6cece8-e4f4-e511-a789-005056bb000e-Status/{bb6cece8_e4f4_e511_a789_005056bb000e_statu_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_db_bb6cece8_e4f4_e511_a789_005056bb000e_statu",
+    "namespace": "apps.remote_team_viewer",
+    "path": "/api/v1.0/apps/remoteTeamViewer/db/bb6cece8-e4f4-e511-a789-005056bb000e-Status/{bb6cece8_e4f4_e511_a789_005056bb000e_statu_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_pool_stats_today",
+    "namespace": "apps.spare_pool_management",
+    "path": "/apps/sparePoolManagement/api/pool/stats/today",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_ticket_pool",
+    "namespace": "apps.spare_pool_management",
+    "path": "/apps/sparePoolManagement/api/ticket/{ticket_id}/pools/{pool_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_assets_deployments",
+    "namespace": "apps.spare_pool_management",
+    "path": "/apps/sparePoolManagement/api/assets/deployments",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_groups",
+    "namespace": "apps.spare_pool_management",
+    "path": "/apps/sparePoolManagement/api/groups",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_parts",
+    "namespace": "apps.trafera",
+    "path": "/apps/trafera/api/parts",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_settings_options",
+    "namespace": "apps.trafera",
+    "path": "/apps/trafera/api/settings/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_endpoint",
+    "namespace": "apps.widgets",
+    "path": "/api/v1.0/apps/widgets/{widget_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_assets_lookup",
+    "namespace": "apps.workspace_one",
+    "path": "/apps/workspaceOne/api/workspaceOne/data/assets/lookup",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_asset_by_serial",
+    "namespace": "assets",
+    "path": "/assets/serial/{serial}",
+    "provenance": "silver",
+    "sources": [
+      "synthetic_required_route"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_asset_files",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/{asset_id}/files",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_asset_verifications",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/{asset_id}/verifications",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_stats_locations",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/stats/locations",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_type",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/types/{type_id}",
+    "provenance": "silver",
+    "sources": [
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_checkouts_transactions_query_get",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/checkouts/transactions/query/get",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_policies_schedules_for_asset",
+    "namespace": "audits",
+    "path": "/api/v1.0/audits/policies/schedules/for-asset/{for_asset_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_events_key",
+    "namespace": "calendars",
+    "path": "/api/v1.0/calendars/events/key",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_events",
+    "namespace": "calendars",
+    "path": "/api/v1.0/calendars/events",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_of_filters",
+    "namespace": "categories",
+    "path": "/api/v1.0/categories/of/filters",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_of_models",
+    "namespace": "categories",
+    "path": "/api/v1.0/categories/of/models",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_for__asset",
+    "namespace": "custom_fields",
+    "path": "/api/v1.0/custom-fields/for/asset",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_for__ticket",
+    "namespace": "custom_fields",
+    "path": "/api/v1.0/custom-fields/for/ticket",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_for__user",
+    "namespace": "custom_fields",
+    "path": "/api/v1.0/custom-fields/for/user",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_test_url",
+    "namespace": "dev",
+    "path": "/api/v1.0/dev/test-url",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_types_fields_withoptions",
+    "namespace": "entities",
+    "path": "/api/v1.0/entities/types/{type_id}/fields/withoptions",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_entity",
+    "namespace": "files",
+    "path": "/api/v1.0/files/entity/{entity_id}/{n_888891ac_91aa_e711_80c2_100dffa00004_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_for__entitytype",
+    "namespace": "filters",
+    "path": "/api/v1.0/filters/for/entitytype/{entitytype_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_set",
+    "namespace": "filters",
+    "path": "/api/v1.0/filters/sets/{set_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_endpoint",
+    "namespace": "filters",
+    "path": "/api/v1.0/filters",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_available_cards",
+    "namespace": "flow_procedures",
+    "path": "/api/v1.0/flow-procedures/available/cards",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_intros_key",
+    "namespace": "help",
+    "path": "/api/v1.0/help/intros/key/{key_key}",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_job",
+    "namespace": "jobs",
+    "path": "/api/v1.0/jobs/{job_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_rates_user",
+    "namespace": "labor",
+    "path": "/api/v1.0/labor/rates/user/{user_id}/{n_61757b5f_dd31_f111_8ef2_000d3a7cb1a2_id}/{n_88df910c_91aa_e711_80c2_0004ffa00010_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_rates_user_2",
+    "namespace": "labor",
+    "path": "/api/v1.0/labor/rates/user/{user_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_types",
+    "namespace": "labor",
+    "path": "/api/v1.0/labor/types",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_my_dashboard",
+    "namespace": "layouts",
+    "path": "/api/v1.0/layouts/my/dashboard",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_assets_all",
+    "namespace": "maps",
+    "path": "/api/v1.0/maps/assets/all",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_all",
+    "namespace": "models",
+    "path": "/api/v1.0/models/all",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps_aeries_sis",
+    "namespace": "models",
+    "path": "/api/v1.0/models/apps/aeriesSis",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps_google_device_data",
+    "namespace": "models",
+    "path": "/api/v1.0/models/apps/googleDeviceData",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps_microsoft_intune",
+    "namespace": "models",
+    "path": "/api/v1.0/models/apps/microsoftIntune",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps_subtickets_for_i_t",
+    "namespace": "models",
+    "path": "/api/v1.0/models/apps/subticketsForIT",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_available_to_site",
+    "namespace": "models",
+    "path": "/api/v1.0/models/available/to/site",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_endpoint",
+    "namespace": "models",
+    "path": "/api/v1.0/models",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_ticket",
+    "namespace": "permissions",
+    "path": "/api/v1.0/permissions/ticket/{ticket_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_users_user_preview_applied_policies",
+    "namespace": "permissions_next",
+    "path": "/api/v1.0/permissions-next/users/{user_id}/user-preview-applied-policies",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_check_permission",
+    "namespace": "permissions_next",
+    "path": "/api/v1.0/permissions-next/check-permission",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_available_features",
+    "namespace": "products",
+    "path": "/api/v1.0/products/available-features",
+    "provenance": "silver",
+    "sources": [
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_actions",
+    "namespace": "resolutions",
+    "path": "/api/v1.0/resolutions/actions",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_actions_for__issue_link",
+    "namespace": "resolutions",
+    "path": "/api/v1.0/resolutions/actions/for/issue/link",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_log",
+    "namespace": "rules",
+    "path": "/api/v1.0/rules/logs/{log_id}/{n_888891ac_91aa_e711_80c2_100dffa00003_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_ids",
+    "namespace": "rules",
+    "path": "/api/v1.0/rules/ids",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_opensans_v44_memsyags126mizpba_uvwbx2vvnxbbobj2ovzyoosr4dvjwugsjz0b4gaviuwaeqbja_woff2",
+    "namespace": "s",
+    "path": "/s/opensans/v44/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVIUwaEQbjA.woff2",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_recurring",
+    "namespace": "schedules",
+    "path": "/api/v1.0/schedules/recurring",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_scan",
+    "namespace": "search",
+    "path": "/api/v1.0/search/scan",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_state",
+    "namespace": "session",
+    "path": "/api/v1.0/session/state",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps__remote_beyond_trust__remote_connection_url",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Apps.RemoteBeyondTrust.RemoteConnectionUrl",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps__remote_team_viewer__api_token",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Apps.RemoteTeamViewer.ApiToken",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps__remote_team_viewer__download_link",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Apps.RemoteTeamViewer.DownloadLink",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps__remote_team_viewer__primary_group_id",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Apps.RemoteTeamViewer.PrimaryGroupId",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_apps__sis__custom_field_mapping__enabled",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Apps.Sis.CustomFieldMapping.Enabled",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_grids__user_options",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Grids.UserOptions",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_preferred_mappings",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/preferred-mappings",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_shortcuts__recent_ids",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Shortcuts.RecentIds",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_tickets__status_lock",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Tickets.StatusLock",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_undefined",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/undefined",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_search__recent_user_searches",
+    "namespace": "settings",
+    "path": "/api/v1.0/settings/Search.RecentUserSearches",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_classes_for__user",
+    "namespace": "sis",
+    "path": "/api/v1.0/sis/classes/for/user/{user_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_deployments",
+    "namespace": "sites",
+    "path": "/api/v1.0/sites/deployments",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_roles",
+    "namespace": "sites",
+    "path": "/api/v1.0/sites/roles",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_subtask",
+    "namespace": "subtasks",
+    "path": "/api/v1.0/subtasks/{subtask_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_responses_ticket",
+    "namespace": "surveys",
+    "path": "/api/v1.0/surveys/responses/ticket/{ticket_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_endpoint",
+    "namespace": "tasks",
+    "path": "/api/v1.0/tasks",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_endpoint",
+    "namespace": "teams",
+    "path": "/api/v1.0/teams",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_for_",
+    "namespace": "teams",
+    "path": "/api/v1.0/teams/for/{for__id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_ticket_activities",
+    "namespace": "tickets",
+    "path": "/api/v1.0/tickets/{ticket_id}/activities",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_ticket_kb_articles",
+    "namespace": "tickets",
+    "path": "/api/v1.0/tickets/{ticket_id}/kb-articles",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_ticket_next_steps",
+    "namespace": "tickets",
+    "path": "/api/v1.0/tickets/{ticket_id}/next-steps",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_ticket_status",
+    "namespace": "tickets",
+    "path": "/api/v1.0/tickets/{ticket_id}/status",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_wizards_site",
+    "namespace": "tickets",
+    "path": "/api/v1.0/tickets/wizards/site/{site_id}",
+    "provenance": "silver",
+    "sources": [
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_endpoint",
+    "namespace": "tickets",
+    "path": "/api/v1.0/tickets",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_ticket_timeline",
+    "namespace": "tickets",
+    "path": "/api/v1.0/tickets/{ticket_id}/timeline",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_endpoint",
+    "namespace": "tickets_templates",
+    "path": "/api/v1.0/tickets-templates",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_my_shortcuts",
+    "namespace": "users",
+    "path": "/api/v1.0/users/my/shortcuts",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_shortcuts_available",
+    "namespace": "users",
+    "path": "/api/v1.0/users/shortcuts/available",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_simple",
+    "namespace": "users",
+    "path": "/api/v1.0/users/simple/{simple_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_user_options",
+    "namespace": "users",
+    "path": "/api/v1.0/users/{user_id}/options",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_user_relationships",
+    "namespace": "users",
+    "path": "/api/v1.0/users/{user_id}/relationships",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_user_rooms",
+    "namespace": "users",
+    "path": "/api/v1.0/users/{user_id}/rooms",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "post_is_online_list",
+    "namespace": "users",
+    "path": "/api/v1.0/users/is-online/list",
+    "provenance": "silver",
+    "sources": [
+      "Chromebook-asset-actions.har",
+      "apple-asset-actions.har",
+      "demo.incidentiq.com.har",
+      "windows-asset-intune-actions.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_view",
+    "namespace": "views",
+    "path": "/api/v1.0/views/{view_key}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_view_2",
+    "namespace": "views",
+    "path": "/api/v1.0/views/{view_id}",
+    "provenance": "silver",
+    "sources": [
+      "demo.incidentiq.com.har"
+    ]
+  }
+]

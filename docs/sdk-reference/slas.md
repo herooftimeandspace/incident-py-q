@@ -1,8 +1,10 @@
-# `slas` Namespace
+# `slas` Golden Namespace
 
 Sync client access: `client.slas`
 
 Async client access: `client.slas` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -16,6 +18,8 @@ Async client access: `client.slas` with `await` on method calls.
 ## Methods
 
 ### `activate_sla`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_ActivateSla`
 
@@ -50,6 +54,8 @@ POST /api/v1.0/slas/bd64e104-4c83-4744-a888-eeb760c03bfe/activate
 
 ### `deactivate_sla`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_DeactivateSla`
 
 - Sync: `client.slas.deactivate_sla(sla_id=..., timeout=None)`
@@ -82,6 +88,8 @@ POST /api/v1.0/slas/bd64e104-4c83-4744-a888-eeb760c03bfe/deactivate
 ---
 
 ### `delete_sla`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_DeleteSla`
 
@@ -116,6 +124,8 @@ DELETE /api/v1.0/slas/bd64e104-4c83-4744-a888-eeb760c03bfe
 ---
 
 ### `get_sla`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_GetSla`
 
@@ -152,6 +162,8 @@ GET /api/v1.0/slas/{SlaId:guid}
 
 ### `get_slas`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Sla_GetSlas`
 
 - Sync: `client.slas.get_slas(r=..., timeout=None)`
@@ -185,6 +197,8 @@ GET /api/v1.0/slas
 ---
 
 ### `update_sla`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Sla_UpdateSla`
 

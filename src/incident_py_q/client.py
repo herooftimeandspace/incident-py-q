@@ -13,7 +13,6 @@ from urllib.parse import urljoin
 import httpx
 
 from ._utils import render_path
-from .apps import AppsNamespace, AsyncAppsNamespace
 from .config import AuthMode, ClientConfig, build_authorization_value
 from .exceptions import ConfigurationError
 from .logging_utils import redact_headers
@@ -22,6 +21,12 @@ from .schema.loader import load_stoplight_documents
 from .schema.registry import OperationSpec, SchemaRegistry, build_schema_registry
 from .schema.validator import ResponseSchemaValidator
 from .sdk.runtime import SDKArtifacts, build_sdk
+from .silver.runtime import (
+    AsyncSilverAppsNamespace,
+    SilverAppsNamespace,
+    SilverArtifacts,
+    build_silver_sdk,
+)
 
 
 class Client:
@@ -80,7 +85,16 @@ class Client:
         self._sdk: SDKArtifacts = build_sdk(client=self, registry=self._registry, async_mode=False)
         for namespace_name, namespace_obj in self._sdk.namespaces.items():
             setattr(self, namespace_name, namespace_obj)
-        self.apps = AppsNamespace(self)
+        # Golden and Silver are exposed side-by-side on purpose. Golden methods come from Stoplight
+        # contracts and remain the authoritative SDK surface whenever a documented route exists.
+        # Silver methods are the explicitly undocumented supplement derived from HAR traffic, so we
+        # keep them under `client.silver` instead of letting them silently shadow Golden behavior.
+        self._silver: SilverArtifacts = build_silver_sdk(client=self, async_mode=False)
+        self.silver = self._silver.root
+        # `client.apps` is preserved as a compatibility alias because users may already depend on
+        # the original app-path runtime. The alias points at `client.silver.apps` so callers can
+        # migrate without losing behavior while still seeing that app-path APIs are Silver.
+        self.apps: SilverAppsNamespace = self.silver.apps
 
     @classmethod
     def from_env(cls) -> Client:
@@ -98,8 +112,16 @@ class Client:
         return self._config
 
     def sdk_inventory(self) -> list[dict[str, str]]:
-        """Return a stable inventory of generated SDK operations."""
+        """Return the Golden Stoplight-derived SDK inventory."""
         return list(self._sdk.inventory)
+
+    def silver_sdk_inventory(self) -> list[dict[str, Any]]:
+        """Return the explicit Silver HAR-derived SDK inventory."""
+        return list(self._silver.inventory)
+
+    def merged_sdk_inventory(self) -> list[dict[str, Any]]:
+        """Return the combined Golden and Silver SDK inventory."""
+        return [*self.sdk_inventory(), *self.silver_sdk_inventory()]
 
     def __getattr__(self, name: str) -> Any:
         namespace = self._sdk.namespaces.get(name)
@@ -313,7 +335,9 @@ class AsyncClient:
         self._sdk: SDKArtifacts = build_sdk(client=self, registry=self._registry, async_mode=True)
         for namespace_name, namespace_obj in self._sdk.namespaces.items():
             setattr(self, namespace_name, namespace_obj)
-        self.apps = AsyncAppsNamespace(self)
+        self._silver: SilverArtifacts = build_silver_sdk(client=self, async_mode=True)
+        self.silver = self._silver.root
+        self.apps: AsyncSilverAppsNamespace = self.silver.apps
 
     @classmethod
     def from_env(cls) -> AsyncClient:
@@ -331,8 +355,16 @@ class AsyncClient:
         return self._config
 
     def sdk_inventory(self) -> list[dict[str, str]]:
-        """Return a stable inventory of generated SDK operations."""
+        """Return the Golden Stoplight-derived SDK inventory."""
         return list(self._sdk.inventory)
+
+    def silver_sdk_inventory(self) -> list[dict[str, Any]]:
+        """Return the explicit Silver HAR-derived SDK inventory."""
+        return list(self._silver.inventory)
+
+    def merged_sdk_inventory(self) -> list[dict[str, Any]]:
+        """Return the combined Golden and Silver SDK inventory."""
+        return [*self.sdk_inventory(), *self.silver_sdk_inventory()]
 
     def __getattr__(self, name: str) -> Any:
         namespace = self._sdk.namespaces.get(name)

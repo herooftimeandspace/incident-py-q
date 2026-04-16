@@ -56,14 +56,17 @@ async def main() -> None:
 asyncio.run(main())
 ```
 
-## App-Path Namespace
+## Silver Namespace
 
-The undocumented app integrations are exposed under `client.apps`:
+Golden methods stay on `client.<namespace>.*`. Undocumented supplementary routes are exposed under `client.silver.*`.
+
+The legacy app-path alias still exists on `client.apps`, but the preferred explicit path is `client.silver.apps`:
 
 ```python
-apps = client.apps.registry.list_apps()
-intune = client.apps.microsoft_intune.lookup_asset(
+apps = client.silver.apps.registry.list_apps()
+intune = client.silver.apps.microsoft_intune.lookup_asset(
     asset_id="asset-guid",
     serial_number="SER123",
 )
+serial_lookup = client.silver.assets.get_asset_by_serial(serial="SER123")
 ```
