@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal, cast
@@ -88,6 +89,7 @@ class ClientConfig:
     site_id: str | None = None
     client_header: str = "ApiClient"
     auth_mode: AuthMode = "bearer"
+    app_headers: dict[str, str] | None = None
     timeout: float = 30.0
     validate_responses: bool = True
     max_retries: int = 2
@@ -101,6 +103,10 @@ class ClientConfig:
         _validate_backoff_base(self.backoff_base)
         _validate_header_value(self.client_header, "client_header")
         _validate_header_value(self.site_id, "site_id")
+        if self.app_headers is not None:
+            for key, value in self.app_headers.items():
+                _validate_header_value(key, "app_headers key")
+                _validate_header_value(value, f"app_headers[{key!r}]")
 
     @classmethod
     def from_env(
@@ -129,6 +135,7 @@ class ClientConfig:
         site_id = _env_get(merged, f"{prefix}SITE_ID")
         client_header = _env_get(merged, f"{prefix}CLIENT_HEADER") or "ApiClient"
         auth_mode = (_env_get(merged, f"{prefix}AUTH_MODE") or "bearer").lower()
+        raw_app_headers = _env_get(merged, f"{prefix}APP_HEADERS_JSON")
 
         if not base_url:
             raise ConfigurationError(
@@ -143,6 +150,7 @@ class ClientConfig:
                 f"Unsupported auth mode '{auth_mode}'. Expected 'bearer' or 'raw'."
             )
         resolved_auth_mode = cast(AuthMode, auth_mode)
+        resolved_app_headers = _parse_app_headers_json(raw_app_headers)
 
         return cls(
             base_url=base_url,
@@ -150,6 +158,7 @@ class ClientConfig:
             site_id=site_id,
             client_header=client_header,
             auth_mode=resolved_auth_mode,
+            app_headers=resolved_app_headers,
         )
 
 
@@ -164,3 +173,27 @@ def build_authorization_value(token: str, auth_mode: AuthMode) -> str:
     if token.lower().startswith("bearer "):
         return token
     return f"Bearer {token}"
+
+
+def _parse_app_headers_json(raw_value: str | None) -> dict[str, str] | None:
+    if raw_value is None:
+        return None
+
+    try:
+        parsed = json.loads(raw_value)
+    except json.JSONDecodeError as exc:
+        raise ConfigurationError(
+            "INCIDENTIQ_APP_HEADERS_JSON must contain valid JSON object text."
+        ) from exc
+
+    if not isinstance(parsed, dict):
+        raise ConfigurationError("INCIDENTIQ_APP_HEADERS_JSON must be a JSON object.")
+
+    normalized: dict[str, str] = {}
+    for key, value in parsed.items():
+        if not isinstance(key, str):
+            raise ConfigurationError("INCIDENTIQ_APP_HEADERS_JSON keys must be strings.")
+        if not isinstance(value, str):
+            raise ConfigurationError("INCIDENTIQ_APP_HEADERS_JSON values must be strings.")
+        normalized[key] = value
+    return normalized or None

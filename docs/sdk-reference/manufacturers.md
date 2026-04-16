@@ -1,8 +1,10 @@
-# `manufacturers` Namespace
+# `manufacturers` Golden Namespace
 
 Sync client access: `client.manufacturers`
 
 Async client access: `client.manufacturers` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -15,6 +17,8 @@ Async client access: `client.manufacturers` with `await` on method calls.
 ## Methods
 
 ### `add_manufacturer_to_site3`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Manufacturer_AddManufacturerToSite3`
 
@@ -50,6 +54,8 @@ POST /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site/true
 
 ### `add_manufacturer_to_site4`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_AddManufacturerToSite4`
 
 - Sync: `client.manufacturers.add_manufacturer_to_site4(manufacturer_id=..., include_all_models=..., timeout=None)`
@@ -84,6 +90,8 @@ POST /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site/true
 
 ### `delete_manufacturer2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_DeleteManufacturer2`
 
 - Sync: `client.manufacturers.delete_manufacturer2(manufacturer_id=..., timeout=None)`
@@ -111,6 +119,8 @@ No contract summary provided.
 ---
 
 ### `get_global_manufacturers3`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Manufacturer_GetGlobalManufacturers3`
 
@@ -145,6 +155,8 @@ GET /api/v1.0/manufacturers/global
 
 ### `get_global_manufacturers4`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_GetGlobalManufacturers4`
 
 - Sync: `client.manufacturers.get_global_manufacturers4(r=..., timeout=None)`
@@ -177,6 +189,8 @@ GET /api/v1.0/manufacturers/global
 ---
 
 ### `get_manufacturer2`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Manufacturer_GetManufacturer2`
 
@@ -213,6 +227,8 @@ GET /api/v1.0/parts/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site
 
 ### `remove_manufacturer_from_site2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_RemoveManufacturerFromSite2`
 
 - Sync: `client.manufacturers.remove_manufacturer_from_site2(manufacturer_id=..., timeout=None)`
@@ -245,6 +261,8 @@ DELETE /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site
 ---
 
 ### `update_manufacturer2`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Manufacturer_UpdateManufacturer2`
 

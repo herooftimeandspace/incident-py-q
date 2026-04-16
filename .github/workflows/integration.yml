@@ -1,6 +1,10 @@
 name: integration
 
 on:
+  push:
+    branches: ["staging", "main"]
+  pull_request:
+    branches: ["staging", "main"]
   workflow_dispatch:
   schedule:
     - cron: "0 12 * * 1"
@@ -10,7 +14,10 @@ permissions:
 
 jobs:
   integration:
+    name: integration
     runs-on: ubuntu-latest
+    environment:
+      name: integration-tests
     permissions:
       contents: read
     env:
@@ -21,10 +28,10 @@ jobs:
       INCIDENTIQ_TEST_AUTH_MODE: ${{ secrets.INCIDENTIQ_TEST_AUTH_MODE }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
-        uses: actions/setup-python@v5  # TODO: pin to specific SHA for reproducibility
+        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
         with:
           python-version: "3.14"
 
@@ -37,6 +44,12 @@ jobs:
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Require integration secrets on protected branch CI
+        if: steps.detect.outputs.enabled != 'true' && (github.event_name == 'push' || github.event_name == 'pull_request')
+        run: |
+          echo "Integration secrets are required for staging and main validation."
+          exit 1
+
       - name: Install dependencies
         if: steps.detect.outputs.enabled == 'true'
         run: |
@@ -48,5 +61,64 @@ jobs:
         run: pytest -m integration
 
       - name: Integration skipped
-        if: steps.detect.outputs.enabled != 'true'
+        if: steps.detect.outputs.enabled != 'true' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
         run: echo "Integration secrets are not configured; skipping live tests."
+
+  publish-badges:
+    needs: integration
+    if: always() && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+
+      - name: Build integration status badge payload
+        run: |
+          python scripts/build_badge_json.py status \
+            --conclusion "${{ needs.integration.result }}" \
+            --label "${GITHUB_REF_NAME} integration" \
+            --output integration-status.json
+
+      - name: Publish integration badge JSON to badges branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          GH_BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --heads "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges | grep -q .; then
+            git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+          else
+            git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+            cd badges-work
+            git checkout --orphan badges
+            git rm -rf .
+            mkdir -p branch-coverage branch-status
+            touch branch-coverage/.gitkeep branch-status/.gitkeep
+            echo "# branch badge payloads" > README.md
+            git add README.md branch-coverage/.gitkeep branch-status/.gitkeep
+            git commit -m "Initialize badges branch"
+            git push origin badges
+            cd ..
+            rm -rf badges-work
+            git clone --depth 1 --branch badges "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git" badges-work
+          fi
+
+          mkdir -p "badges-work/branch-status/${GH_BRANCH}"
+          cp integration-status.json "badges-work/branch-status/${GH_BRANCH}/integration.json"
+
+          cd badges-work
+          git add "branch-status/${GH_BRANCH}/integration.json"
+          if git diff --cached --quiet; then
+            echo "No integration badge changes to publish."
+            exit 0
+          fi
+
+          git commit -m "Update integration badge for ${GH_BRANCH} [skip ci]"
+          git push origin badges

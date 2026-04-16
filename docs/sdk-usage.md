@@ -1,6 +1,8 @@
 # SDK Usage
 
-The SDK surface is generated from bundled operation contracts.
+The SDK surface is split into Golden and Silver paths:
+- Golden: generated from bundled Stoplight controller contracts.
+- Silver: generated from HAR-observed undocumented routes and exposed explicitly under `client.silver`.
 
 Full generated method and route documentation lives under the SDK reference pages.
 
@@ -17,6 +19,8 @@ Common shape:
 - `client.<namespace>.<method>(...)` returns typed Pydantic models when representable.
 - `client.<namespace>.<method>.raw(...)` returns validated JSON payloads.
 - `client.<namespace>.list_methods()` enumerates the generated runtime surface for that namespace.
+- `client.silver.<namespace>.*` exposes undocumented Silver routes.
+- `client.apps.<service>.*` is the legacy alias for `client.silver.apps.<service>.*`.
 
 ## Request Signatures
 
@@ -40,4 +44,16 @@ payload = client.request(
     "/users/{UserId}",
     path_params={"UserId": "00000000-0000-0000-0000-000000000000"},
 )
+```
+
+## Silver Examples
+
+```python
+registry = client.silver.apps.registry.list_apps()
+actions = client.silver.apps.microsoft_intune.list_remote_actions()
+lookup = client.silver.apps.google_device_data.lookup_asset(
+    asset_id="asset-guid",
+    serial_number="SER123",
+)
+stats = client.silver.analytics.get_agent_current_stats()
 ```

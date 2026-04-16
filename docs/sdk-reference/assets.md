@@ -1,8 +1,10 @@
-# `assets` Namespace
+# `assets` Golden Namespace
 
 Sync client access: `client.assets`
 
 Async client access: `client.assets` with `await` on method calls.
+
+These methods are Golden because they come from bundled Stoplight controller contracts.
 
 ## Aliases
 
@@ -15,6 +17,8 @@ Async client access: `client.assets` with `await` on method calls.
 ## Methods
 
 ### `add_manufacturer_to_site`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Manufacturer_AddManufacturerToSite`
 
@@ -50,6 +54,8 @@ POST /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site/true
 
 ### `add_manufacturer_to_site2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_AddManufacturerToSite2`
 
 - Sync: `client.assets.add_manufacturer_to_site2(manufacturer_id=..., include_all_models=..., timeout=None)`
@@ -84,6 +90,8 @@ POST /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site/true
 
 ### `add_user_favorite_asset`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_AddUserFavoriteAsset`
 
 - Sync: `client.assets.add_user_favorite_asset(asset_id=..., user_id=..., timeout=None)`
@@ -117,6 +125,8 @@ POST /api/v1.0/assets/favorites/ac6cece8-e4f4-e511-a789-005056bb000e/ac6cece8-e4
 ---
 
 ### `create_asset_status_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `AssetStatusType_CreateAssetStatusType`
 
@@ -158,6 +168,8 @@ POST /api/v1.0/assets/status/types/new
 
 ### `delete_asset`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_DeleteAsset`
 
 - Sync: `client.assets.delete_asset(asset_id=..., timeout=None)`
@@ -185,6 +197,8 @@ No contract summary provided.
 ---
 
 ### `delete_asset_funding_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `AssetFundingType_DeleteAssetFundingType`
 
@@ -219,6 +233,8 @@ DELETE /api/v1.0/assets/funding/types/a443fec7-45fe-4d08-8daf-11f4dd86df79
 
 ### `delete_asset_status_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `AssetStatusType_DeleteAssetStatusType`
 
 - Sync: `client.assets.delete_asset_status_type(asset_status_type_id=..., timeout=None)`
@@ -252,6 +268,8 @@ DELETE /api/v1.0/assets/status/types/a102cced-419d-4102-aadf-461f1e96b07b
 
 ### `delete_manufacturer`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_DeleteManufacturer`
 
 - Sync: `client.assets.delete_manufacturer(manufacturer_id=..., timeout=None)`
@@ -278,6 +296,8 @@ No contract summary provided.
 ---
 
 ### `get_asset`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_GetAsset`
 
@@ -313,6 +333,8 @@ GET /api/v1.0/assets/ac6cece8-e4f4-e511-a789-005056bb000e
 
 ### `get_asset_activities`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_GetAssetActivities`
 
 - Sync: `client.assets.get_asset_activities(asset_id=..., timeout=None)`
@@ -345,6 +367,8 @@ GET /api/v1.0/assets/ac6cece8-e4f4-e511-a789-005056bb000e/activities
 ---
 
 ### `get_asset_favorites`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_GetAssetFavorites`
 
@@ -380,6 +404,8 @@ GET /api/v1.0/assets/favorites/ac6cece8-e4f4-e511-a789-005056bb000e
 
 ### `get_asset_favorites2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_GetAssetFavorites2`
 
 - Sync: `client.assets.get_asset_favorites2(user_id=..., all=..., timeout=None)`
@@ -413,6 +439,8 @@ GET /api/v1.0/assets/favorites/ac6cece8-e4f4-e511-a789-005056bb000e
 ---
 
 ### `get_asset_funding_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `AssetFundingType_GetAssetFundingType`
 
@@ -448,6 +476,8 @@ GET /api/v1.0/assets/funding/types/a443fec7-45fe-4d08-8daf-11f4dd86df79
 
 ### `get_asset_funding_types`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `AssetFundingType_GetAssetFundingTypes`
 
 - Sync: `client.assets.get_asset_funding_types(r=..., timeout=None)`
@@ -481,6 +511,8 @@ GET /api/v1.0/assets/funding/types
 
 ### `get_asset_funding_types2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `AssetFundingType_GetAssetFundingTypes2`
 
 - Sync: `client.assets.get_asset_funding_types2(r=..., timeout=None)`
@@ -513,6 +545,8 @@ GET /api/v1.0/assets/funding/types
 ---
 
 ### `get_asset_status_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `AssetStatusType_GetAssetStatusType`
 
@@ -548,6 +582,8 @@ GET /api/v1.0/assets/status/types/a102cced-419d-4102-aadf-461f1e96b07b
 
 ### `get_asset_status_types`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `AssetStatusType_GetAssetStatusTypes`
 
 - Sync: `client.assets.get_asset_status_types(r=..., timeout=None)`
@@ -581,6 +617,8 @@ GET /api/v1.0/assets/status/types
 
 ### `get_asset_status_types2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `AssetStatusType_GetAssetStatusTypes2`
 
 - Sync: `client.assets.get_asset_status_types2(r=..., timeout=None)`
@@ -613,6 +651,8 @@ GET /api/v1.0/assets/status/types
 ---
 
 ### `get_assets`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_GetAssets`
 
@@ -660,6 +700,8 @@ POST /api/v1.0/assets
 
 ### `get_assets_by_asset_status_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_GetAssetsByAssetStatusType`
 
 - Sync: `client.assets.get_assets_by_asset_status_type(asset_status_type_id=..., timeout=None)`
@@ -692,6 +734,8 @@ GET /api/v1.0/assets/assetstatustype/ac6cece8-e4f4-e511-a789-005056bb000e
 ---
 
 ### `get_assets_by_asset_tag`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_GetAssetsByAssetTag`
 
@@ -726,6 +770,8 @@ GET /api/v1.0/assets/assettag/100345
 
 ### `get_assets_by_location_room`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_GetAssetsByLocationRoom`
 
 - Sync: `client.assets.get_assets_by_location_room(location_room_id=..., timeout=None)`
@@ -758,6 +804,8 @@ GET /api/v1.0/assets/rooms/ac6cece8-e4f4-e511-a789-005056bb000e
 ---
 
 ### `get_assets_by_serial`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_GetAssetsBySerial`
 
@@ -792,6 +840,8 @@ GET /api/v1.0/assets/serial/MT500-234A1000-4300
 
 ### `get_assets_by_storage_unit_number`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_GetAssetsByStorageUnitNumber`
 
 - Sync: `client.assets.get_assets_by_storage_unit_number(location_id=..., storage_unit_number=..., timeout=None)`
@@ -825,6 +875,8 @@ GET /api/v1.0/assets/storageunit/ac6cece8-e4f4-e511-a789-005056bb000e/1050
 ---
 
 ### `get_assets_count`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_GetAssetsCount`
 
@@ -872,6 +924,8 @@ POST /api/v1.0/assets/count
 
 ### `get_global_manufacturers`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_GetGlobalManufacturers`
 
 - Sync: `client.assets.get_global_manufacturers(r=..., timeout=None)`
@@ -905,6 +959,8 @@ GET /api/v1.0/manufacturers/global
 
 ### `get_global_manufacturers2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_GetGlobalManufacturers2`
 
 - Sync: `client.assets.get_global_manufacturers2(r=..., timeout=None)`
@@ -937,6 +993,8 @@ GET /api/v1.0/manufacturers/global
 ---
 
 ### `get_manufacturer`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Manufacturer_GetManufacturer`
 
@@ -972,6 +1030,8 @@ GET /api/v1.0/parts/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site
 
 ### `get_spare_assets_by_asset_tag`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_GetSpareAssetsByAssetTag`
 
 - Sync: `client.assets.get_spare_assets_by_asset_tag(asset_tag=..., timeout=None)`
@@ -1004,6 +1064,8 @@ GET /api/v1.0/assets/assettag/search/100345
 ---
 
 ### `get_user_assets`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_GetUserAssets`
 
@@ -1039,6 +1101,8 @@ GET /api/v1.0/assets/for/ac6cece8-e4f4-e511-a789-005056bb000e
 
 ### `get_user_assets2`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_GetUserAssets2`
 
 - Sync: `client.assets.get_user_assets2(user_id=..., all=..., timeout=None)`
@@ -1073,6 +1137,8 @@ GET /api/v1.0/assets/for/ac6cece8-e4f4-e511-a789-005056bb000e
 
 ### `remove_manufacturer_from_site`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Manufacturer_RemoveManufacturerFromSite`
 
 - Sync: `client.assets.remove_manufacturer_from_site(manufacturer_id=..., timeout=None)`
@@ -1105,6 +1171,8 @@ DELETE /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site
 ---
 
 ### `remove_user_favorite_asset`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_RemoveUserFavoriteAsset`
 
@@ -1140,6 +1208,8 @@ POST /api/v1.0/assets/favorites/remove/ac6cece8-e4f4-e511-a789-005056bb000e/ac6c
 
 ### `search_assets_by_asset_tag`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_SearchAssetsByAssetTag`
 
 - Sync: `client.assets.search_assets_by_asset_tag(asset_tag=..., timeout=None)`
@@ -1172,6 +1242,8 @@ GET /api/v1.0/assets/assettag/search/100345
 ---
 
 ### `search_assets_by_serial`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Asset_SearchAssetsBySerial`
 
@@ -1206,6 +1278,8 @@ GET /api/v1.0/assets/serial/MT500-234A1000-4300
 
 ### `update_asset`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `Asset_UpdateAsset`
 
 - Sync: `client.assets.update_asset(asset_id=..., asset=..., timeout=None)`
@@ -1235,6 +1309,8 @@ No contract summary provided.
 
 ### `update_asset_funding_type`
 
+Provenance: Golden Stoplight contract
+
 Operation ID: `AssetFundingType_UpdateAssetFundingType`
 
 - Sync: `client.assets.update_asset_funding_type(asset_funding_type_id=..., item=..., timeout=None)`
@@ -1262,6 +1338,8 @@ No contract summary provided.
 ---
 
 ### `update_asset_status_type`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `AssetStatusType_UpdateAssetStatusType`
 
@@ -1302,6 +1380,8 @@ POST /api/v1.0/assets/status/types/a102cced-419d-4102-aadf-461f1e96b07b
 ---
 
 ### `update_manufacturer`
+
+Provenance: Golden Stoplight contract
 
 Operation ID: `Manufacturer_UpdateManufacturer`
 

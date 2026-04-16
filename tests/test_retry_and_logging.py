@@ -44,5 +44,19 @@ def test_header_redaction_is_case_insensitive_and_preserves_custom_headers() -> 
     assert redacted["Custom"] == "value"
 
 
+def test_header_redaction_covers_app_auth_headers() -> None:
+    headers = {
+        "apptoken": "secret",
+        "UserToken": "secret",
+        "X-XSRF-TOKEN": "secret",
+        "Custom": "value",
+    }
+    redacted = redact_headers(headers)
+    assert redacted["apptoken"] == "***REDACTED***"
+    assert redacted["UserToken"] == "***REDACTED***"
+    assert redacted["X-XSRF-TOKEN"] == "***REDACTED***"
+    assert redacted["Custom"] == "value"
+
+
 def test_header_redaction_returns_empty_mapping_for_none() -> None:
     assert redact_headers(None) == {}
