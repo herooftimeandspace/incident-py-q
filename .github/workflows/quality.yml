@@ -15,10 +15,10 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
-        uses: actions/setup-python@v5  # TODO: pin to specific SHA for reproducibility
+        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
         with:
           python-version: "3.14"
 
@@ -82,7 +82,7 @@ jobs:
 
       - name: Upload coverage badge artifact
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/upload-artifact@v7  # TODO: pin to specific SHA for reproducibility
         with:
           name: coverage-badge
           path: coverage-badge.json
@@ -101,10 +101,10 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Download coverage badge artifact
-        uses: actions/download-artifact@v4  # TODO: pin to specific SHA for reproducibility
+        uses: actions/download-artifact@v8  # TODO: pin to specific SHA for reproducibility
         with:
           name: coverage-badge
           path: .
