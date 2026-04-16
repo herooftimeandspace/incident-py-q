@@ -65,7 +65,7 @@ jobs:
           # release flow follows the canonical project metadata instead of depending on shell
           # regex extraction that can silently return an empty string.
           current_version="$(python -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])')"
-          previous_version="$(python -c 'import subprocess, tomllib; print(tomllib.loads(subprocess.check_output(["'"'"'git'"'"', "'"'"'show'"'"', "'"'"'HEAD^1:pyproject.toml'"'"'"], text=True))["'"'"'project'"'"'"]["'"'"'version'"'"'"])')"
+          previous_version="$(python -c 'import subprocess, tomllib; print(tomllib.loads(subprocess.check_output(["git", "show", "HEAD^1:pyproject.toml"], text=True))["project"]["version"])')"
           expected_version="$(python scripts/bump_version.py --part "${part}" --current-version "${previous_version}")"
 
           if [ "${current_version}" != "${expected_version}" ]; then
