@@ -9,7 +9,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 _CSS_REWRITES: tuple[tuple[str, str], ...] = (
     (
         "[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}",

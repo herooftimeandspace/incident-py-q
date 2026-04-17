@@ -25,18 +25,21 @@ python -m pip install -e '.[dev]'
 Run all required checks before opening a pull request:
 
 ```bash
-ruff check .
-mypy src tests scripts
-pytest --cov=incident_py_q --cov-report=xml -m "not integration"
-python -m pip wheel --no-deps --no-build-isolation --wheel-dir dist .
-python scripts/build_docs.py
+python scripts/run_local_ci.py --target dev
 ```
 
-Integration tests are optional locally and require live tenant credentials:
+Use the branch target that matches the branch you are promoting into:
 
 ```bash
-pytest -m integration
+python scripts/run_local_ci.py --target dev
+python scripts/run_local_ci.py --target staging
+python scripts/run_local_ci.py --target main
 ```
+
+- `dev` mirrors the `unit` workflow gate.
+- `staging` mirrors `unit` plus `integration`.
+- `main` mirrors `unit`, `integration`, and `docs-build`.
+- `staging` and `main` require live integration credentials locally, just like protected-branch CI.
 
 ## Release Labels and Mainline Releases
 
