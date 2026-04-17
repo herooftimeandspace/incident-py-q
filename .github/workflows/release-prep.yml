@@ -58,6 +58,8 @@ jobs:
             exit 0
           fi
 
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Rebuild the promotion branch from main, then merge staging into it before applying
           # the next version bump. That keeps prior release-prep commits in branch history, so
           # versioned files do not conflict with earlier mainline release commits each time a
@@ -70,8 +72,6 @@ jobs:
             exit 1
           fi
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pyproject.toml src/incident_py_q/version.py
           git commit -m "Prepare release v${new_version} [skip release-prep]"
           git push origin HEAD:"${GH_HEAD_REF}" --force
