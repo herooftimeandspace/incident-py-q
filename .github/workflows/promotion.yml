@@ -17,13 +17,25 @@ jobs:
     steps:
       - name: Create or refresh dev to staging promotion PR
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_API_TOKEN: ${{ github.token }}
+          GH_PR_TOKEN: ${{ secrets.PROMOTION_PR_TOKEN }}
           GH_REPO: ${{ github.repository }}
           GH_SHA: ${{ github.event.workflow_run.head_sha }}
           GH_URL: ${{ github.event.workflow_run.html_url }}
         run: |
           set -euo pipefail
 
+          # PRs created with github.token do not reliably fan back out into pull_request
+          # workflows, which leaves the promotion PR blocked on missing required checks.
+          # Use a dedicated secret-backed token for PR creation/editing so GitHub treats the
+          # promotion PR like a normal user/app-authored PR and triggers integration/docs
+          # validation on the PR head.
+          if [ -z "${GH_PR_TOKEN}" ]; then
+            echo "PROMOTION_PR_TOKEN is required so auto-created promotion PRs trigger downstream pull_request workflows."
+            exit 1
+          fi
+
+          export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base staging --head dev --state open --json number --jq '.[0].number')"
           title="Promote dev to staging"
           body="$(printf '%s\n' \
@@ -73,7 +85,8 @@ jobs:
 
       - name: Create or refresh staging to main promotion PR
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_API_TOKEN: ${{ github.token }}
+          GH_PR_TOKEN: ${{ secrets.PROMOTION_PR_TOKEN }}
           GH_REPO: ${{ github.repository }}
           GH_SHA: ${{ github.event.workflow_run.head_sha }}
           GH_URL: ${{ github.event.workflow_run.html_url }}
@@ -81,14 +94,21 @@ jobs:
         run: |
           set -euo pipefail
 
+          if [ -z "${GH_PR_TOKEN}" ]; then
+            echo "PROMOTION_PR_TOKEN is required so auto-created promotion PRs trigger downstream pull_request workflows."
+            exit 1
+          fi
+
           # main has no direct-push bypass, so promotion happens through a disposable branch
           # that can carry the release-prep version bump before the PR is merged.
+          export GH_TOKEN="${GH_API_TOKEN}"
           if gh api "repos/${GH_REPO}/git/ref/heads/${GH_PROMOTION_REF}" >/dev/null 2>&1; then
             gh api "repos/${GH_REPO}/git/refs/heads/${GH_PROMOTION_REF}" -X PATCH -f sha="${GH_SHA}" -F force=true >/dev/null
           else
             gh api "repos/${GH_REPO}/git/refs" -X POST -f ref="refs/heads/${GH_PROMOTION_REF}" -f sha="${GH_SHA}" >/dev/null
           fi
 
+          export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base main --head "${GH_PROMOTION_REF}" --state open --json number --jq '.[0].number')"
           title="Promote staging to main"
           body="$(printf '%s\n' \

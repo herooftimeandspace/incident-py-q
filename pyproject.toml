@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "incident-py-q"
-version = "0.2.0"
+version = "0.2.1"
 description = "Contract-driven Python SDK for the Incident IQ API."
 readme = "README.md"
 requires-python = ">=3.14"
