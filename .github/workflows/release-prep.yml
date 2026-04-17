@@ -58,9 +58,12 @@ jobs:
             exit 0
           fi
 
-          # The promotion branch is always rebuilt from staging so the version bump is the only
-          # release-specific delta carried into main.
-          git reset --hard origin/staging
+          # Rebuild the promotion branch from main, then merge staging into it before applying
+          # the next version bump. That keeps prior release-prep commits in branch history, so
+          # versioned files do not conflict with earlier mainline release commits each time a
+          # new staging -> main promotion branch is prepared.
+          git reset --hard origin/main
+          git merge --no-edit origin/staging
           new_version="$(python scripts/bump_version.py --part "${part}" --write)"
           if [ "${new_version}" != "${desired_version}" ]; then
             echo "Prepared version ${new_version} did not match expected ${desired_version}."
