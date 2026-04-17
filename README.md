@@ -133,14 +133,15 @@ google_actions = client.apps.google_device_data.list_remote_actions()
 ## Development Commands
 
 ```bash
-ruff check .
-mypy src tests scripts
-pip-audit
-pytest --cov=incident_py_q --cov-report=xml --cov-fail-under=95 -m "not integration"
-pytest -m integration
-python -m pip wheel --no-deps --wheel-dir dist .
-python scripts/build_docs.py
+python scripts/run_local_ci.py --target dev
+python scripts/run_local_ci.py --target staging
+python scripts/run_local_ci.py --target main
 ```
+
+Branch targets map directly to the GitHub Actions gates:
+- `dev`: audit, Ruff, mypy, non-integration tests with coverage, and wheel build
+- `staging`: everything in `dev`, plus live integration tests
+- `main`: everything in `staging`, plus docs generation
 
 ## Schema Sync
 
