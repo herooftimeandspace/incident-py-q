@@ -53,7 +53,16 @@ jobs:
           current_version="$(python -c 'import subprocess, tomllib; print(tomllib.loads(subprocess.check_output(["git", "show", "origin/main:pyproject.toml"], text=True))["project"]["version"])')"
           desired_version="$(python scripts/bump_version.py --part "${part}" --current-version "${current_version}")"
 
-          if [ "$(git log -1 --pretty=%s)" = "Prepare release v${desired_version} [skip release-prep]" ]; then
+          existing_head_version="$(python -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["version"])')"
+
+          # A synchronize event can arrive after release-prep has already rewritten the branch,
+          # for example when a human pushes a no-op commit solely to retrigger required PR
+          # checks on the prepared promotion head. In that case, rewriting the branch again is
+          # counterproductive because the force-push detaches unit/integration/docs runs from
+          # the new PR head. If the current branch already carries the desired version and also
+          # contains the latest staging tip, treat it as fully prepared and exit without
+          # another reset/merge/push cycle.
+          if [ "${existing_head_version}" = "${desired_version}" ] && git merge-base --is-ancestor origin/staging HEAD; then
             echo "Promotion branch already prepared for v${desired_version}."
             exit 0
           fi
