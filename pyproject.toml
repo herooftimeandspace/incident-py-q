@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "incident-py-q"
-version = "0.1.1"
+version = "0.2.0"
 description = "Contract-driven Python SDK for the Incident IQ API."
 readme = "README.md"
 requires-python = ">=3.14"
@@ -29,6 +29,7 @@ dev = [
   "setuptools>=69.0",
   "pytest>=8.0.0",
   "pytest-cov>=5.0.0",
+  "pip-audit>=2.7.0",
   "respx>=0.21.0",
   "ruff>=0.6.0",
   "mypy>=1.10.0",
