@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import httpx
 import pytest
@@ -17,7 +17,7 @@ from incident_py_q.schema.registry import SchemaRegistry
 
 def _load_asset_serial_payload() -> dict[str, Any]:
     fixture_path = Path(__file__).parent / "fixtures" / "asset_serial_live_response.json"
-    return json.loads(fixture_path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], json.loads(fixture_path.read_text(encoding="utf-8")))
 
 
 def _build_client(tiny_registry: SchemaRegistry, **kwargs: Any) -> Client:
