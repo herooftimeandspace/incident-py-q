@@ -161,6 +161,7 @@ Bundled source tree:
 - `incident_py_q.__version__` matches package metadata version.
 - Generated SDK surface is semver-significant and protected by golden tests.
 - Promotion into `main` requires exactly one release label: `semver:patch`, `semver:minor`, or `semver:major`.
+- Promotion workflows propagate the source PR's semver label when one is present and otherwise default the promotion PR to `semver:patch`.
 
 ## Documentation
 
