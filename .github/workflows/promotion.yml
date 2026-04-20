@@ -45,6 +45,7 @@ jobs:
             exit 1
           fi
 
+          git fetch origin staging
           resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref dev)"
           export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base staging --head dev --state open --json number --jq '.[0].number')"
@@ -63,6 +64,11 @@ jobs:
               fi
             done
             gh pr edit "${existing_pr}" --repo "${GH_REPO}" --add-label "${resolved_label}"
+            exit 0
+          fi
+
+          if [ "$(git rev-list --count origin/staging..HEAD)" = "0" ]; then
+            echo "No commits between staging and dev; skipping dev -> staging promotion PR."
             exit 0
           fi
 
@@ -127,7 +133,14 @@ jobs:
             exit 1
           fi
 
+          git fetch origin main
           resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref staging)"
+
+          if [ "$(git rev-list --count origin/main..HEAD)" = "0" ]; then
+            echo "No commits between main and staging; skipping staging -> main promotion PR."
+            exit 0
+          fi
+
           # main has no direct-push bypass, so promotion happens through a disposable branch
           # that can carry the release-prep version bump before the PR is merged.
           export GH_TOKEN="${GH_API_TOKEN}"
