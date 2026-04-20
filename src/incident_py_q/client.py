@@ -21,12 +21,15 @@ from .schema.loader import load_stoplight_documents
 from .schema.registry import OperationSpec, SchemaRegistry, build_schema_registry
 from .schema.validator import ResponseSchemaValidator
 from .sdk.runtime import SDKArtifacts, build_sdk
+from .silver.inventory import SilverMethodMetadata
 from .silver.runtime import (
     AsyncSilverAppsNamespace,
     SilverAppsNamespace,
     SilverArtifacts,
+    _absolute_silver_url,
     build_silver_sdk,
 )
+from .silver.validation import SilverResponseSchemaValidator
 
 
 class Client:
@@ -79,6 +82,7 @@ class Client:
         self._config = config
         self._registry = registry or build_schema_registry(load_stoplight_documents())
         self._response_validator = ResponseSchemaValidator(self._registry)
+        self._silver_response_validator = SilverResponseSchemaValidator(self._registry)
         self._http = http_client or httpx.Client(timeout=config.timeout)
         self._logger = logging.getLogger("incident_py_q.client")
 
@@ -163,6 +167,45 @@ class Client:
             timeout=timeout,
         )
 
+    # Silver exists so we can expose HAR-derived live routes without pretending those routes are
+    # first-class published contracts. That distinction matters here because this particular asset
+    # serial lookup is one of the cases where the live API is useful in practice, but the Stoplight
+    # contract that powers Golden validation is stricter than what the tenant actually returns. The
+    # business decision is to keep Golden strict, because Golden is still our source of truth for
+    # documented behavior and is the surface that should continue to reveal upstream contract drift.
+    # Silver, by contrast, is our explicitly inferred compatibility surface for live traffic. This
+    # hook lets Silver opt into a narrowly-scoped relaxed validator for a known drifted route
+    # without weakening Golden behavior or teaching the rest of the SDK that the relaxed shape is
+    # universally correct. If IncidentIQ fixes the published contract or changes the live payload,
+    # this hook is the seam where we should remove or revisit the workaround.
+    def request_silver(
+        self,
+        metadata: SilverMethodMetadata,
+        *,
+        path_params: Mapping[str, Any] | None = None,
+        params: Mapping[str, Any] | None = None,
+        json: Any | None = None,
+        headers: Mapping[str, str] | None = None,
+        timeout: float | None = None,
+    ) -> dict[str, Any] | list[Any] | None:
+        """Send a Silver request with Silver-only validation overrides when configured."""
+        rendered_path = render_path(
+            _absolute_silver_url(self._config.base_url, metadata.route),
+            dict(path_params) if path_params else None,
+        )
+        operation_path = render_path(metadata.route, dict(path_params) if path_params else None)
+        operation = self._registry.match_operation(metadata.http_method, operation_path)
+        return self._request_with_operation(
+            method=metadata.http_method,
+            rendered_path=rendered_path,
+            operation=operation,
+            params=dict(params) if params else None,
+            json_body=json,
+            headers=dict(headers) if headers else None,
+            timeout=timeout,
+            silver_route=metadata.route,
+        )
+
     def _request_from_operation(
         self,
         operation: OperationSpec,
@@ -194,6 +237,7 @@ class Client:
         json_body: Any | None,
         headers: dict[str, str] | None,
         timeout: float | None,
+        silver_route: str | None = None,
     ) -> dict[str, Any] | list[Any] | None:
         method_upper = method.upper()
         url = _build_url(self._config.base_url, rendered_path)
@@ -233,16 +277,21 @@ class Client:
 
                 response.raise_for_status()
                 payload = _decode_payload(response)
-                if (
-                    payload is not None
-                    and self._config.validate_responses
-                    and operation is not None
-                ):
-                    self._response_validator.validate(
-                        operation,
-                        status_code=response.status_code,
-                        payload=payload,
-                    )
+                if payload is not None and self._config.validate_responses:
+                    silver_validated = False
+                    if silver_route is not None:
+                        silver_validated = self._silver_response_validator.validate_if_override(
+                            method=method_upper,
+                            route=silver_route,
+                            status_code=response.status_code,
+                            payload=payload,
+                        )
+                    if not silver_validated and operation is not None:
+                        self._response_validator.validate(
+                            operation,
+                            status_code=response.status_code,
+                            payload=payload,
+                        )
 
                 self._logger.debug(
                     "incidentiq.request.success",
@@ -329,6 +378,7 @@ class AsyncClient:
         self._config = config
         self._registry = registry or build_schema_registry(load_stoplight_documents())
         self._response_validator = ResponseSchemaValidator(self._registry)
+        self._silver_response_validator = SilverResponseSchemaValidator(self._registry)
         self._http = http_client or httpx.AsyncClient(timeout=config.timeout)
         self._logger = logging.getLogger("incident_py_q.client")
 
@@ -406,6 +456,45 @@ class AsyncClient:
             timeout=timeout,
         )
 
+    # Silver exists so we can expose HAR-derived live routes without pretending those routes are
+    # first-class published contracts. That distinction matters here because this particular asset
+    # serial lookup is one of the cases where the live API is useful in practice, but the Stoplight
+    # contract that powers Golden validation is stricter than what the tenant actually returns. The
+    # business decision is to keep Golden strict, because Golden is still our source of truth for
+    # documented behavior and is the surface that should continue to reveal upstream contract drift.
+    # Silver, by contrast, is our explicitly inferred compatibility surface for live traffic. This
+    # hook lets Silver opt into a narrowly-scoped relaxed validator for a known drifted route
+    # without weakening Golden behavior or teaching the rest of the SDK that the relaxed shape is
+    # universally correct. If IncidentIQ fixes the published contract or changes the live payload,
+    # this hook is the seam where we should remove or revisit the workaround.
+    async def request_silver(
+        self,
+        metadata: SilverMethodMetadata,
+        *,
+        path_params: Mapping[str, Any] | None = None,
+        params: Mapping[str, Any] | None = None,
+        json: Any | None = None,
+        headers: Mapping[str, str] | None = None,
+        timeout: float | None = None,
+    ) -> dict[str, Any] | list[Any] | None:
+        """Send a Silver request with Silver-only validation overrides when configured."""
+        rendered_path = render_path(
+            _absolute_silver_url(self._config.base_url, metadata.route),
+            dict(path_params) if path_params else None,
+        )
+        operation_path = render_path(metadata.route, dict(path_params) if path_params else None)
+        operation = self._registry.match_operation(metadata.http_method, operation_path)
+        return await self._request_with_operation(
+            method=metadata.http_method,
+            rendered_path=rendered_path,
+            operation=operation,
+            params=dict(params) if params else None,
+            json_body=json,
+            headers=dict(headers) if headers else None,
+            timeout=timeout,
+            silver_route=metadata.route,
+        )
+
     async def _request_from_operation(
         self,
         operation: OperationSpec,
@@ -437,6 +526,7 @@ class AsyncClient:
         json_body: Any | None,
         headers: dict[str, str] | None,
         timeout: float | None,
+        silver_route: str | None = None,
     ) -> dict[str, Any] | list[Any] | None:
         method_upper = method.upper()
         url = _build_url(self._config.base_url, rendered_path)
@@ -476,16 +566,21 @@ class AsyncClient:
 
                 response.raise_for_status()
                 payload = _decode_payload(response)
-                if (
-                    payload is not None
-                    and self._config.validate_responses
-                    and operation is not None
-                ):
-                    self._response_validator.validate(
-                        operation,
-                        status_code=response.status_code,
-                        payload=payload,
-                    )
+                if payload is not None and self._config.validate_responses:
+                    silver_validated = False
+                    if silver_route is not None:
+                        silver_validated = self._silver_response_validator.validate_if_override(
+                            method=method_upper,
+                            route=silver_route,
+                            status_code=response.status_code,
+                            payload=payload,
+                        )
+                    if not silver_validated and operation is not None:
+                        self._response_validator.validate(
+                            operation,
+                            status_code=response.status_code,
+                            payload=payload,
+                        )
 
                 self._logger.debug(
                     "incidentiq.request.success",

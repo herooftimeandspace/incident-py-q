@@ -239,8 +239,19 @@ def test_async_runtime_helper_and_namespace_merge() -> None:
             )
 
         async def request(self, method: str, path: str, **kwargs: Any) -> dict[str, Any]:
-            captured["method"] = method
-            captured["path"] = path
+            captured["request_method"] = method
+            captured["request_path"] = path
+            captured["request_kwargs"] = kwargs
+            return {"ok": True}
+
+        async def request_silver(
+            self,
+            metadata: SilverMethodMetadata,
+            **kwargs: Any,
+        ) -> dict[str, Any]:
+            captured["metadata"] = metadata
+            captured["method"] = metadata.http_method
+            captured["path"] = metadata.route
             captured["kwargs"] = kwargs
             return {"ok": True}
 
@@ -263,7 +274,7 @@ def test_async_runtime_helper_and_namespace_merge() -> None:
     )
     method = AsyncSilverOperationMethod(client=AsyncClientStub(), metadata=metadata)
     assert asyncio.run(method(widget_id="abc", json_body={"ok": True})) == {"ok": True}
-    assert captured["path"] == "https://tenant.example/api/v1.0/apps/widgets/{widget_id}"
+    assert captured["path"] == "/api/v1.0/apps/widgets/{widget_id}"
     assert captured["kwargs"]["path_params"] == {"widget_id": "abc"}
     assert captured["kwargs"]["headers"] == {"X-App-Token": "secret"}
 
@@ -277,6 +288,7 @@ def test_async_runtime_helper_and_namespace_merge() -> None:
         client=SimpleNamespace(
             config=ClientConfig(base_url="https://tenant.example/api/v1", api_token="token"),
             request=None,
+            request_silver=None,
         ),
     )
     assert isinstance(namespace, AsyncSilverAppsNamespace)

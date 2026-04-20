@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  checks: read
 
 jobs:
   unit:
@@ -14,36 +15,66 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      checks: read
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
         with:
           python-version: "3.14"
 
+      - name: Verify authoritative dev push unit check
+        if: github.event_name == 'pull_request' && github.base_ref == 'staging' && github.head_ref == 'dev'
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          check_id="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${PR_HEAD_SHA}/check-runs" \
+            --jq '.check_runs[] | select(.name=="unit" and .status=="completed" and .conclusion=="success") | .id' \
+            | head -n 1 || true)"
+
+          if [ -z "${check_id}" ]; then
+            echo "No successful authoritative unit check was found for dev SHA ${PR_HEAD_SHA}."
+            exit 1
+          fi
+
+          echo "Authoritative dev push unit check ${check_id} already succeeded for ${PR_HEAD_SHA}."
+
       - name: Install dependencies
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e '.[dev]'
 
       - name: Install pip-audit
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         run: python -m pip install pip-audit
 
       - name: Pip Audit
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         run: pip-audit
 
       - name: Ruff
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         run: ruff check .
 
       - name: Mypy
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         run: mypy src tests scripts
 
       - name: Tests (non-integration) with coverage
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         run: pytest --cov=incident_py_q --cov-report=xml --cov-report=term-missing --cov-fail-under=95 -m "not integration"
 
       - name: Build package wheel
+        if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
         run: python -m pip wheel --no-deps --no-build-isolation --wheel-dir dist .
 
       - name: Build coverage badge payload
