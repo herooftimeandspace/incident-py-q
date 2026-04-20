@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
+      GH_PR_TOKEN: ${{ secrets.PROMOTION_PR_TOKEN }}
       GH_REPO: ${{ github.repository }}
       GH_HEAD_REF: ${{ github.event.pull_request.head.ref }}
       GH_PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -34,6 +35,11 @@ jobs:
       - name: Prepare version bump on promotion branch
         run: |
           set -euo pipefail
+
+          if [ -z "${GH_PR_TOKEN}" ]; then
+            echo "PROMOTION_PR_TOKEN is required so release-prep pushes retrigger downstream pull_request workflows."
+            exit 1
+          fi
 
           labels="$(gh pr view "${GH_PR_NUMBER}" --repo "${GH_REPO}" --json labels --jq '.labels[].name')"
           semver_labels="$(printf '%s\n' "${labels}" | grep '^semver:' || true)"
@@ -101,4 +107,4 @@ jobs:
 
           git add pyproject.toml src/incident_py_q/version.py
           git commit -m "Prepare release v${new_version} [skip release-prep]"
-          git push origin HEAD:"${GH_HEAD_REF}" --force
+          git push "https://x-access-token:${GH_PR_TOKEN}@github.com/${GH_REPO}.git" HEAD:"${GH_HEAD_REF}" --force
