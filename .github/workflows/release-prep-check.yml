@@ -1,0 +1,68 @@
+name: release-prep
+
+on:
+  pull_request:
+    branches: ["main"]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  release-prep:
+    name: release-prep
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'promote/staging-to-main'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      GH_PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - name: Checkout promotion branch
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
+        with:
+          python-version: "3.14"
+
+      - name: Verify prepared promotion branch
+        run: |
+          set -euo pipefail
+
+          labels="$(gh pr view "${GH_PR_NUMBER}" --repo "${GH_REPO}" --json labels --jq '.labels[].name')"
+          semver_labels="$(printf '%s\n' "${labels}" | grep '^semver:' || true)"
+          semver_count="$(printf '%s\n' "${semver_labels}" | sed '/^$/d' | wc -l | tr -d ' ')"
+
+          if [ "${semver_count}" != "1" ]; then
+            echo "Expected exactly one semver label on PR #${GH_PR_NUMBER}; found ${semver_count}."
+            exit 1
+          fi
+
+          part="${semver_labels#semver:}"
+          git fetch origin main staging
+          current_version="$(python -c 'import subprocess, tomllib; print(tomllib.loads(subprocess.check_output(["git", "show", "origin/main:pyproject.toml"], text=True))["project"]["version"])')"
+          desired_version="$(python scripts/bump_version.py --part "${part}" --current-version "${current_version}")"
+          prepared_version="$(python -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])')"
+          prepared_module_version="$(python -c 'import pathlib, re; match = re.search(r"""(?m)^__version__ = "([^"]+)"$""", pathlib.Path("src/incident_py_q/version.py").read_text(encoding="utf-8")); print(match.group(1) if match else "")')"
+
+          if [ "${prepared_version}" != "${desired_version}" ]; then
+            echo "Expected prepared pyproject version ${desired_version}, found ${prepared_version}."
+            exit 1
+          fi
+
+          if [ "${prepared_module_version}" != "${desired_version}" ]; then
+            echo "Expected prepared module version ${desired_version}, found ${prepared_module_version}."
+            exit 1
+          fi
+
+          if ! git merge-base --is-ancestor origin/staging HEAD; then
+            echo "Prepared promotion head does not contain the latest staging tip."
+            exit 1
+          fi
+
+          echo "Promotion branch is fully prepared for v${desired_version}."

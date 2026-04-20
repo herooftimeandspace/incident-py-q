@@ -16,6 +16,8 @@ python -m pip install -e '.[dev]'
 - Merge reviewed work into `dev` after the `unit` check passes.
 - GitHub Actions opens a promotion PR from `dev` to `staging` after green pushes on `dev`.
 - Merge `dev -> staging` only after `unit` and `integration` both pass.
+  On the auto-generated promotion PR, `unit` is a proxy check that confirms the already-green
+  `dev` push validation for the same head SHA instead of rerunning the full unit workflow.
 - GitHub Actions opens a promotion PR from `staging` to `main` after green pushes on `staging`.
 - Merge `staging -> main` only after `unit`, `integration`, `docs-build`, and `release-prep` pass.
 - `dev` allows the repository owner to bypass the PR gate when necessary. `staging` and `main` do not.
@@ -47,7 +49,8 @@ python scripts/run_local_ci.py --target main
   - `semver:patch`
   - `semver:minor`
   - `semver:major`
-- The `release-prep` workflow applies the version bump on the promotion branch before the PR is merged into `main`.
+- The `prepare-release-promotion` workflow rewrites the promotion branch with the release version bump before merge.
+- The required `release-prep` check is non-mutating and verifies that the final promotion PR head is already prepared.
 - After the PR merges into `main`, GitHub Actions:
   - tags the release as `vX.Y.Z`
   - creates a GitHub Release

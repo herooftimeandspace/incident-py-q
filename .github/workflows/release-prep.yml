@@ -1,4 +1,4 @@
-name: release-prep
+name: prepare-release-promotion
 
 on:
   pull_request_target:
@@ -10,8 +10,8 @@ permissions:
   pull-requests: read
 
 jobs:
-  release-prep:
-    name: release-prep
+  prepare-release-promotion:
+    name: prepare-release-promotion
     if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'promote/staging-to-main'
     runs-on: ubuntu-latest
     env:
@@ -52,22 +52,11 @@ jobs:
 
           part="${semver_labels#semver:}"
           git fetch origin main staging "${GH_HEAD_REF}"
-          # Read the version from main with a TOML parser instead of shell matching. The
-          # release branch may evolve formatting over time, and release-prep must derive the
-          # current semantic version from the canonical project metadata rather than relying
-          # on a brittle line-oriented regex in bash.
           current_version="$(python -c 'import subprocess, tomllib; print(tomllib.loads(subprocess.check_output(["git", "show", "origin/main:pyproject.toml"], text=True))["project"]["version"])')"
           desired_version="$(python scripts/bump_version.py --part "${part}" --current-version "${current_version}")"
 
-          existing_head_version="$(python -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["version"])')"
+          existing_head_version="$(python -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])')"
 
-          # A synchronize event can arrive after release-prep has already rewritten the branch,
-          # for example when a human pushes a no-op commit solely to retrigger required PR
-          # checks on the prepared promotion head. In that case, rewriting the branch again is
-          # counterproductive because the force-push detaches unit/integration/docs runs from
-          # the new PR head. If the current branch already carries the desired version and also
-          # contains the latest staging tip, treat it as fully prepared and exit without
-          # another reset/merge/push cycle.
           if [ "${existing_head_version}" = "${desired_version}" ] && git merge-base --is-ancestor origin/staging HEAD; then
             echo "Promotion branch already prepared for v${desired_version}."
             exit 0
@@ -75,18 +64,8 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Rebuild the promotion branch from main, then merge staging into it before applying
-          # the next version bump. That keeps prior release-prep commits in branch history, so
-          # versioned files do not conflict with earlier mainline release commits each time a
-          # new staging -> main promotion branch is prepared.
           git reset --hard origin/main
           if ! git merge --no-commit --no-ff origin/staging; then
-            # release-prep runs from main via pull_request_target, so main's copy of this
-            # workflow is the contractual source of truth for how promotions are prepared.
-            # When staging still contains an older bootstrap copy of release-prep.yml, prefer
-            # main's version for this one file so the promotion branch can be regenerated using
-            # the latest documented release behavior. Any other unresolved conflict still means
-            # the promotion branch needs manual intervention rather than an automatic override.
             if git ls-files -u -- .github/workflows/release-prep.yml | grep -q .; then
               git checkout --ours .github/workflows/release-prep.yml
               git add .github/workflows/release-prep.yml
@@ -99,6 +78,7 @@ jobs:
               exit 1
             fi
           fi
+
           new_version="$(python scripts/bump_version.py --part "${part}" --write)"
           if [ "${new_version}" != "${desired_version}" ]; then
             echo "Prepared version ${new_version} did not match expected ${desired_version}."
@@ -106,5 +86,5 @@ jobs:
           fi
 
           git add pyproject.toml src/incident_py_q/version.py
-          git commit -m "Prepare release v${new_version} [skip release-prep]"
+          git commit -m "Prepare release v${new_version} [skip prepare-release-promotion]"
           git push "https://x-access-token:${GH_PR_TOKEN}@github.com/${GH_REPO}.git" HEAD:"${GH_HEAD_REF}" --force
