@@ -4,12 +4,27 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
-from incident_py_q.release_semver import resolve_promotion_semver_label
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+MODULE_PATH = PROJECT_ROOT / "src" / "incident_py_q" / "release_semver.py"
+
+
+def _load_release_semver_helper() -> Any:
+    spec = importlib.util.spec_from_file_location("release_semver_helper", MODULE_PATH)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Could not load semver helper from {MODULE_PATH}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+resolve_promotion_semver_label = _load_release_semver_helper().resolve_promotion_semver_label
 
 
 def _gh_json(*args: str) -> Any:
