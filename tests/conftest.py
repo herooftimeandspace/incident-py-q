@@ -7,6 +7,7 @@ from typing import Any
 import pytest
 
 from incident_py_q.config import ClientConfig
+from incident_py_q.schema.loader import load_stoplight_documents
 from incident_py_q.schema.registry import SchemaRegistry, build_schema_registry
 
 
@@ -71,6 +72,12 @@ def tiny_swagger_document() -> dict[str, Any]:
 def tiny_registry(tiny_swagger_document: dict[str, Any]) -> SchemaRegistry:
     """Registry built from the tiny Swagger fixture."""
     return build_schema_registry([tiny_swagger_document])
+
+
+@pytest.fixture(scope="session")
+def bundled_registry() -> SchemaRegistry:
+    """Registry built from the bundled Stoplight controller set."""
+    return build_schema_registry(load_stoplight_documents())
 
 
 @pytest.fixture()

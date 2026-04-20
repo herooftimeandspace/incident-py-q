@@ -15,6 +15,16 @@ jobs:
     if: github.event.workflow_run.name == 'quality' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'dev'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
+        with:
+          python-version: "3.14"
+
       - name: Create or refresh dev to staging promotion PR
         env:
           GH_API_TOKEN: ${{ github.token }}
@@ -35,6 +45,8 @@ jobs:
             exit 1
           fi
 
+          git fetch origin staging
+          resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref dev)"
           export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base staging --head dev --state open --json number --jq '.[0].number')"
           title="Promote dev to staging"
@@ -46,6 +58,17 @@ jobs:
 
           if [ -n "${existing_pr}" ]; then
             gh pr edit "${existing_pr}" --repo "${GH_REPO}" --title "${title}" --body "${body}"
+            for label in semver:patch semver:minor semver:major; do
+              if [ "${label}" != "${resolved_label}" ]; then
+                gh pr edit "${existing_pr}" --repo "${GH_REPO}" --remove-label "${label}" >/dev/null 2>&1 || true
+              fi
+            done
+            gh pr edit "${existing_pr}" --repo "${GH_REPO}" --add-label "${resolved_label}"
+            exit 0
+          fi
+
+          if [ "$(git rev-list --count origin/staging..HEAD)" = "0" ]; then
+            echo "No commits between staging and dev; skipping dev -> staging promotion PR."
             exit 0
           fi
 
@@ -54,12 +77,23 @@ jobs:
             --base staging \
             --head dev \
             --title "${title}" \
-            --body "${body}"
+            --body "${body}" \
+            --label "${resolved_label}"
 
   promote-staging-to-main:
     if: github.event.workflow_run.name == 'integration' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'staging'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
+        with:
+          python-version: "3.14"
+
       - name: Wait for unit check on staging commit
         env:
           GH_TOKEN: ${{ github.token }}
@@ -99,6 +133,14 @@ jobs:
             exit 1
           fi
 
+          git fetch origin main
+          resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref staging)"
+
+          if [ "$(git rev-list --count origin/main..HEAD)" = "0" ]; then
+            echo "No commits between main and staging; skipping staging -> main promotion PR."
+            exit 0
+          fi
+
           # main has no direct-push bypass, so promotion happens through a disposable branch
           # that can carry the release-prep version bump before the PR is merged.
           export GH_TOKEN="${GH_API_TOKEN}"
@@ -122,6 +164,12 @@ jobs:
 
           if [ -n "${existing_pr}" ]; then
             gh pr edit "${existing_pr}" --repo "${GH_REPO}" --title "${title}" --body "${body}"
+            for label in semver:patch semver:minor semver:major; do
+              if [ "${label}" != "${resolved_label}" ]; then
+                gh pr edit "${existing_pr}" --repo "${GH_REPO}" --remove-label "${label}" >/dev/null 2>&1 || true
+              fi
+            done
+            gh pr edit "${existing_pr}" --repo "${GH_REPO}" --add-label "${resolved_label}"
             exit 0
           fi
 
@@ -130,4 +178,5 @@ jobs:
             --base main \
             --head "${GH_PROMOTION_REF}" \
             --title "${title}" \
-            --body "${body}"
+            --body "${body}" \
+            --label "${resolved_label}"
