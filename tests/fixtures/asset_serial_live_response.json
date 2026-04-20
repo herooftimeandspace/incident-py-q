@@ -1,0 +1,164 @@
+{
+  "ItemCount": 1,
+  "Items": [
+    {
+      "AssetId": "999aa57a-c5c8-45fe-b8f3-0ddf08ce23ad",
+      "SiteId": "899c51eb-5da3-430e-beba-3c3b223e3a45",
+      "Site": {
+        "SiteId": "899c51eb-5da3-430e-beba-3c3b223e3a45",
+        "ProductId": "00000000-0000-0000-0000-000000000000",
+        "CreatedDate": "0001-01-01T00:00:00",
+        "Name": "Windsor Unified School District",
+        "OffsetInMinutesFromUtc": 0,
+        "WorkMinutesPerDay": 0,
+        "DbClusterIndex": 0,
+        "PreviousDbClusterIndex": 0,
+        "StatusTypeId": "00000000-0000-0000-0000-000000000000",
+        "WorkHoursStartUtc": "00:00:00",
+        "WorkHoursEndUtc": "00:00:00",
+        "SystemUserId": "00000000-0000-0000-0000-000000000000",
+        "AnonymousUserId": "00000000-0000-0000-0000-000000000000",
+        "IsSandbox": false
+      },
+      "ProductId": "88df910c-91aa-e711-80c2-0004ffa00010",
+      "CreatedDate": "2024-05-30T10:40:00.227",
+      "ModifiedDate": "2025-10-07T15:21:00.017",
+      "AssetTypeId": "2a1561e5-34ff-4fcf-87de-2a146f0e1c01",
+      "AssetTypeName": "Devices",
+      "AssetInventoryTypeId": "646443ba-8d0b-4dfa-b3c4-16afd540064d",
+      "AssetInventoryTypeName": "Serialized",
+      "IsDeleted": false,
+      "StatusTypeId": "83a10b14-c3a9-4f3b-b104-da83276f9101",
+      "Status": {
+        "AssetStatusTypeId": "83a10b14-c3a9-4f3b-b104-da83276f9101",
+        "Scope": "All",
+        "Name": "In Service",
+        "IsRetired": false,
+        "SupportsNSAs": false
+      },
+      "AssetTag": "4825670226C6",
+      "SerialNumber": "4825670226C6",
+      "Name": "Polycom VVX250",
+      "CanOwnerManage": false,
+      "CanSubmitTicket": false,
+      "IsFavorite": false,
+      "ModelId": "c6d13c13-4a77-f406-2b40-d4d3685f7e87",
+      "Model": {
+        "ModelId": "c6d13c13-4a77-f406-2b40-d4d3685f7e87",
+        "Scope": "All",
+        "Name": "Polycom VVX250",
+        "ModelName": "VVX250",
+        "AssetTypeId": "2a1561e5-34ff-4fcf-87de-2a146f0e1c01",
+        "ManufacturerId": "86094d78-6c36-4ffb-8b84-501788e34bd0",
+        "Manufacturer": {
+          "ManufacturerId": "86094d78-6c36-4ffb-8b84-501788e34bd0",
+          "Scope": "All",
+          "Name": "Polycom",
+          "EsoIsVisible": true
+        },
+        "CategoryId": "4dc6be98-4f39-e611-bf3b-005056bb000e",
+        "Category": {
+          "Scope": "All",
+          "CategoryId": "4dc6be98-4f39-e611-bf3b-005056bb000e",
+          "Level": 0,
+          "SortOrder": 0,
+          "CategoryTypeId": "00000000-0000-0000-0000-000000000000",
+          "Name": "Desk Phones",
+          "Icon": "fa fa-phone"
+        },
+        "ImageId": "9ecd23cd-7133-4d41-b1b9-1372f952e6ed",
+        "CreatedDate": "0001-01-01T00:00:00",
+        "ModifiedDate": "0001-01-01T00:00:00",
+        "EsoIsVisible": true,
+        "IsGenericModel": false
+      },
+      "PreviousOwnerId": "8d355c58-1ba0-4aec-81d9-48d2da55a75c",
+      "PreviousOwner": {
+        "UserId": "8d355c58-1ba0-4aec-81d9-48d2da55a75c",
+        "SiteId": "00000000-0000-0000-0000-000000000000",
+        "Name": "Jaime Hamilton",
+        "FullName": "Jaime Hamilton",
+        "Initials": "JH",
+        "FirstName": "Jaime",
+        "LastName": "Hamilton",
+        "LocationId": "f12ca8b4-190e-ef11-96f5-000d3a0e23bd",
+        "RoleId": "6d5fee76-e05e-43c0-b8e9-b8447746e502",
+        "RoleName": "Faculty",
+        "SchoolIdNumber": "4694",
+        "Email": "jhamilton@wusd.org",
+        "Username": "jhamilton@wusd.org",
+        "Grade": "07",
+        "IsOnline": false,
+        "IsEmailVerified": false
+      },
+      "LocationId": "f12ca8b4-190e-ef11-96f5-000d3a0e23bd",
+      "Location": {
+        "Name": "Windsor Middle School",
+        "LocationId": "f12ca8b4-190e-ef11-96f5-000d3a0e23bd",
+        "SiteId": "00000000-0000-0000-0000-000000000000",
+        "AddressId": "00000000-0000-0000-0000-000000000000",
+        "LocationTypeId": "16469164-bce0-42b1-be1c-49861087c403",
+        "LocationType": {
+          "LocationTypeId": "16469164-bce0-42b1-be1c-49861087c403",
+          "Name": "Middle School",
+          "CreatedDate": "0001-01-01T00:00:00",
+          "ModifiedDate": "0001-01-01T00:00:00",
+          "IsDeleted": false,
+          "Scope": "All"
+        },
+        "LocationStatusTypeId": "00000000-0000-0000-0000-000000000000",
+        "IsReservable": false,
+        "IsDeleted": false,
+        "CreatedDate": "0001-01-01T00:00:00",
+        "ModifiedDate": "0001-01-01T00:00:00"
+      },
+      "LocationRoomId": "8bbac9ee-5108-4f11-9c86-cd62608e4344",
+      "LocationRoom": {
+        "SiteId": "00000000-0000-0000-0000-000000000000",
+        "LocationRoomId": "8bbac9ee-5108-4f11-9c86-cd62608e4344",
+        "Name": "Room H110",
+        "NameFormatted": "Room H110",
+        "Icon": "fa fa-door-open",
+        "LocationId": "00000000-0000-0000-0000-000000000000",
+        "LocationRoomTypeId": "00000000-0000-0000-0000-000000000000",
+        "LocationRoomStatusTypeId": "00000000-0000-0000-0000-000000000000",
+        "Description": "F107",
+        "IsAvailable": false,
+        "IsExternallyAvailable": false,
+        "IsDeleted": false,
+        "CreatedDate": "0001-01-01T00:00:00",
+        "ModifiedDate": "0001-01-01T00:00:00"
+      },
+      "Notes": "WMS-F107-PH01",
+      "HasOpenTickets": false,
+      "OpenTickets": 0,
+      "CustomFieldValues": [
+        {
+          "CustomFieldTypeId": "833ee909-0476-496d-905f-1e24769b28ba",
+          "EditorTypeId": 1,
+          "Value": "48-25-67-02-26-C6",
+          "IsHidden": false
+        }
+      ],
+      "Vendor": "Poly",
+      "AssetAuditPolicyStatusSortOrder": 0,
+      "LastVerificationSuccessful": false,
+      "TotalCost": {
+        "AssetId": "999aa57a-c5c8-45fe-b8f3-0ddf08ce23ad"
+      },
+      "CategoryId": "4dc6be98-4f39-e611-bf3b-005056bb000e",
+      "ImageId": "9ecd23cd-7133-4d41-b1b9-1372f952e6ed",
+      "LinkedAssetIds": []
+    }
+  ],
+  "UserToken": "5f4ddd6e-a14e-ef11-991a-000d3a0f4b20",
+  "RequestDate": "2026-04-17T00:44:31.1863295Z",
+  "ExecutionTime": 47.5998,
+  "StatusCode": 200,
+  "ServerName": "spark-assets-788995fbb5-l7rnc",
+  "ProcessId": 1,
+  "Properties": {},
+  "Metadata": {
+    "QueryEngineSource": "I"
+  }
+}
