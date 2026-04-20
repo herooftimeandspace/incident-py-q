@@ -24,10 +24,9 @@ class _SyncRequestClient(Protocol):
     @property
     def config(self) -> ClientConfig: ...
 
-    def request(
+    def request_silver(
         self,
-        method: str,
-        path: str,
+        metadata: SilverMethodMetadata,
         *,
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
@@ -41,10 +40,9 @@ class _AsyncRequestClient(Protocol):
     @property
     def config(self) -> ClientConfig: ...
 
-    async def request(
+    async def request_silver(
         self,
-        method: str,
-        path: str,
+        metadata: SilverMethodMetadata,
         *,
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
@@ -232,9 +230,8 @@ class SilverOperationMethod:
         bound = self.__signature__.bind(**kwargs)
         timeout = bound.arguments.pop("timeout", None)
         path_params, query_params, json_body = _split_request_arguments(self.metadata, bound.arguments)
-        return self._client.request(
-            self.metadata.http_method,
-            _absolute_silver_url(self._client.config.base_url, self.metadata.route),
+        return self._client.request_silver(
+            self.metadata,
             path_params=path_params or None,
             params=query_params or None,
             json=json_body,
@@ -260,9 +257,8 @@ class AsyncSilverOperationMethod:
         bound = self.__signature__.bind(**kwargs)
         timeout = bound.arguments.pop("timeout", None)
         path_params, query_params, json_body = _split_request_arguments(self.metadata, bound.arguments)
-        return await self._client.request(
-            self.metadata.http_method,
-            _absolute_silver_url(self._client.config.base_url, self.metadata.route),
+        return await self._client.request_silver(
+            self.metadata,
             path_params=path_params or None,
             params=query_params or None,
             json=json_body,

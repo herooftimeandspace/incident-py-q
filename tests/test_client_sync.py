@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Any
 
 import httpx
@@ -11,6 +13,11 @@ import respx
 from incident_py_q.client import Client
 from incident_py_q.exceptions import ConfigurationError, SchemaValidationError
 from incident_py_q.schema.registry import SchemaRegistry
+
+
+def _load_asset_serial_payload() -> dict[str, Any]:
+    fixture_path = Path(__file__).parent / "fixtures" / "asset_serial_live_response.json"
+    return json.loads(fixture_path.read_text(encoding="utf-8"))
 
 
 def _build_client(tiny_registry: SchemaRegistry, **kwargs: Any) -> Client:
@@ -158,3 +165,44 @@ def test_request_raises_transport_error_after_retry_exhaustion(
         client.request("GET", "/things/{ThingId}", path_params={"ThingId": "abc"})
 
     client.close()
+
+
+@respx.mock
+def test_golden_asset_serial_lookup_stays_strict(
+    bundled_registry: SchemaRegistry,
+) -> None:
+    payload = _load_asset_serial_payload()
+    respx.get("https://tenant.example/api/v1/assets/serial/4825670226C6").mock(
+        return_value=httpx.Response(200, json=payload)
+    )
+
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=bundled_registry,
+    )
+    try:
+        with pytest.raises(SchemaValidationError):
+            client.assets.get_assets_by_serial(serial="4825670226C6")
+    finally:
+        client.close()
+
+
+@respx.mock
+def test_silver_asset_serial_lookup_accepts_relaxed_live_payload(
+    bundled_registry: SchemaRegistry,
+) -> None:
+    payload = _load_asset_serial_payload()
+    respx.get("https://tenant.example/api/v1/assets/serial/4825670226C6").mock(
+        return_value=httpx.Response(200, json=payload)
+    )
+
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=bundled_registry,
+    )
+    try:
+        assert client.silver.assets.get_asset_by_serial(serial="4825670226C6") == payload
+    finally:
+        client.close()
