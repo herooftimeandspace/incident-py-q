@@ -3948,6 +3948,43 @@
     {
       "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
+      "method_name": "post_profile_picture",
+      "namespace_path": [
+        "profiles"
+      ],
+      "parameters": [
+        {
+          "api_name": "user_id",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "location": "path",
+          "python_name": "user_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "File",
+          "description": "Multipart file field inferred from HAR observations for this undocumented Silver route. Pass a local file path and the SDK uploads it as form-data.",
+          "location": "file",
+          "python_name": "file",
+          "required": true,
+          "type_display": "str | PathLike[str]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/profiles/{user_id}/picture",
+      "sources": [
+        "iiq-profile-picture.har"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "HAR-derived undocumented POST route for `client.silver.profiles`.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "http_method": "POST",
       "method_name": "post_actions",
       "namespace_path": [
         "resolutions"

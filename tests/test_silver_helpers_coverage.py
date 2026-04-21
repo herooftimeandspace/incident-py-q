@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from os import PathLike
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -124,8 +125,8 @@ def test_inventory_private_helpers_cover_branch_cases(
 
     variable_positions = _build_variable_position_map(
         [
-            _ObservedRequest("GET", "/api/v1.0/app-registry/app/googleDeviceData", "/app-registry/app/googleDeviceData", "a.har", 200, {}, None),
-            _ObservedRequest("GET", "/api/v1.0/app-registry/app/microsoftIntune", "/app-registry/app/microsoftIntune", "a.har", 200, {}, None),
+            _ObservedRequest("GET", "/api/v1.0/app-registry/app/googleDeviceData", "/app-registry/app/googleDeviceData", "a.har", 200, {}, (), None),
+            _ObservedRequest("GET", "/api/v1.0/app-registry/app/microsoftIntune", "/app-registry/app/microsoftIntune", "a.har", 200, {}, (), None),
         ]
     )
     assert _template_raw_path(
@@ -135,19 +136,19 @@ def test_inventory_private_helpers_cover_branch_cases(
     ) == "/api/v1.0/app-registry/app/{app_key}"
 
     body_text_params = _build_body_parameters(
-        [_ObservedRequest("POST", "/x", "/x", "a.har", 200, {}, "text-body")]
+        [_ObservedRequest("POST", "/x", "/x", "a.har", 200, {}, (), "text-body")]
     )
     assert body_text_params[0].python_name == "json_body"
 
     complex_body_params = _build_body_parameters(
-        [_ObservedRequest("POST", "/x", "/x", "a.har", 200, {}, {"Entity": {"Id": "1"}})]
+        [_ObservedRequest("POST", "/x", "/x", "a.har", 200, {}, (), {"Entity": {"Id": "1"}})]
     )
     assert complex_body_params[0].type_display == "Mapping[str, Any]"
 
     simple_query_params = _build_query_parameters(
         [
-            _ObservedRequest("GET", "/x", "/x", "a.har", 200, {"limit": "10"}, None),
-            _ObservedRequest("GET", "/x", "/x", "a.har", 200, {"limit": "20"}, None),
+            _ObservedRequest("GET", "/x", "/x", "a.har", 200, {"limit": "10"}, (), None),
+            _ObservedRequest("GET", "/x", "/x", "a.har", 200, {"limit": "20"}, (), None),
         ]
     )
     assert simple_query_params[0].python_name == "limit"
@@ -189,6 +190,9 @@ def test_runtime_helper_branches() -> None:
     assert _annotation_for_parameter(
         SilverParameterMetadata("value", "value", "query", False, "Mapping[str, Any]", "body")
     ) is Any
+    assert _annotation_for_parameter(
+        SilverParameterMetadata("file", "File", "file", True, "str | PathLike[str]", "file")
+    ) == str | PathLike[str]
 
     config = ClientConfig(base_url="https://tenant.example/api/v1", api_token="token", app_headers={"X-App-Token": "secret"})
     metadata = SilverMethodMetadata(
@@ -210,13 +214,14 @@ def test_runtime_helper_branches() -> None:
         uses_app_headers=True,
     )
     assert _silver_headers(config, metadata) == {"X-App-Token": "secret"}
-    path_params, query_params, json_body = _split_request_arguments(
+    path_params, query_params, json_body, files = _split_request_arguments(
         metadata,
         {"widget_id": "abc", "expand": "full", "json_body": {"ok": True}},
     )
     assert path_params == {"widget_id": "abc"}
     assert query_params == {"expand": "full"}
     assert json_body == {"ok": True}
+    assert files == {}
 
     namespace = SilverNamespaceBase("root")
     namespace._register_method("ping", lambda: None)

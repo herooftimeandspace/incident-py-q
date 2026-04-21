@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import inspect
+import mimetypes
 from collections.abc import Mapping
 from dataclasses import dataclass
+from os import PathLike
+from pathlib import Path
 from typing import Any, Protocol
 from urllib.parse import urlsplit
 
@@ -18,6 +21,7 @@ from incident_py_q.config import ClientConfig
 from .inventory import SilverMethodMetadata, SilverParameterMetadata, load_silver_inventory
 
 JSONPayload = dict[str, Any] | list[Any] | None
+PreparedFiles = dict[str, tuple[str, Any, str]]
 
 
 class _SyncRequestClient(Protocol):
@@ -32,6 +36,7 @@ class _SyncRequestClient(Protocol):
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> JSONPayload: ...
@@ -43,6 +48,7 @@ class _SyncRequestClient(Protocol):
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> JSONPayload: ...
@@ -60,6 +66,7 @@ class _AsyncRequestClient(Protocol):
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> JSONPayload: ...
@@ -71,6 +78,7 @@ class _AsyncRequestClient(Protocol):
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> JSONPayload: ...
@@ -116,6 +124,8 @@ def _annotation_for_parameter(parameter: SilverParameterMetadata) -> Any:
         return float
     if normalized in {"str", "str|None"}:
         return str
+    if "PathLike[" in parameter.type_display or "PathLike" in normalized:
+        return str | PathLike[str]
     return Any
 
 
@@ -253,15 +263,23 @@ class SilverOperationMethod:
     def raw(self, **kwargs: Any) -> JSONPayload:
         bound = self.__signature__.bind(**kwargs)
         timeout = bound.arguments.pop("timeout", None)
-        path_params, query_params, json_body = _split_request_arguments(self.metadata, bound.arguments)
-        return self._client.request_silver(
-            self.metadata,
-            path_params=path_params or None,
-            params=query_params or None,
-            json=json_body,
-            headers=_silver_headers(self._client.config, self.metadata),
-            timeout=timeout,
+        path_params, query_params, json_body, file_params = _split_request_arguments(
+            self.metadata, bound.arguments
         )
+        files, opened_handles = _coerce_file_uploads(file_params)
+        try:
+            return self._client.request_silver(
+                self.metadata,
+                path_params=path_params or None,
+                params=query_params or None,
+                json=json_body,
+                files=files or None,
+                headers=_silver_headers(self._client.config, self.metadata),
+                timeout=timeout,
+            )
+        finally:
+            for handle in opened_handles:
+                handle.close()
 
 
 class AsyncSilverOperationMethod:
@@ -280,15 +298,23 @@ class AsyncSilverOperationMethod:
     async def raw(self, **kwargs: Any) -> JSONPayload:
         bound = self.__signature__.bind(**kwargs)
         timeout = bound.arguments.pop("timeout", None)
-        path_params, query_params, json_body = _split_request_arguments(self.metadata, bound.arguments)
-        return await self._client.request_silver(
-            self.metadata,
-            path_params=path_params or None,
-            params=query_params or None,
-            json=json_body,
-            headers=_silver_headers(self._client.config, self.metadata),
-            timeout=timeout,
+        path_params, query_params, json_body, file_params = _split_request_arguments(
+            self.metadata, bound.arguments
         )
+        files, opened_handles = _coerce_file_uploads(file_params)
+        try:
+            return await self._client.request_silver(
+                self.metadata,
+                path_params=path_params or None,
+                params=query_params or None,
+                json=json_body,
+                files=files or None,
+                headers=_silver_headers(self._client.config, self.metadata),
+                timeout=timeout,
+            )
+        finally:
+            for handle in opened_handles:
+                handle.close()
 
 
 def build_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
@@ -398,10 +424,11 @@ def _ensure_namespace(
 def _split_request_arguments(
     metadata: SilverMethodMetadata,
     arguments: Mapping[str, Any],
-) -> tuple[dict[str, Any], dict[str, Any], Any | None]:
+) -> tuple[dict[str, Any], dict[str, Any], Any | None, dict[str, Any]]:
     path_params: dict[str, Any] = {}
     query_params: dict[str, Any] = {}
     json_body: Any | None = None
+    files: dict[str, Any] = {}
 
     for parameter in metadata.parameters:
         value = arguments.get(parameter.python_name)
@@ -418,5 +445,27 @@ def _split_request_arguments(
                 if not isinstance(json_body, dict):
                     json_body = {}
                 json_body[parameter.api_name] = value
+        elif parameter.location == "file":
+            files[parameter.api_name] = value
 
-    return path_params, query_params, json_body
+    return path_params, query_params, json_body, files
+
+
+def _coerce_file_uploads(file_params: Mapping[str, Any]) -> tuple[PreparedFiles, list[Any]]:
+    prepared: PreparedFiles = {}
+    opened_handles: list[Any] = []
+    for field_name, value in file_params.items():
+        if isinstance(value, str):
+            path = Path(value)
+        elif isinstance(value, PathLike):
+            path = Path(value)
+        else:
+            raise TypeError(
+                f"Silver file parameter '{field_name}' must be a str or PathLike path, "
+                f"got {type(value).__name__}."
+            )
+        handle = path.open("rb")
+        opened_handles.append(handle)
+        content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+        prepared[field_name] = (path.name, handle, content_type)
+    return prepared, opened_handles

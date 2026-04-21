@@ -76,6 +76,10 @@ def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
     assert "silver: AsyncSilverRootNamespace" in stub
     assert "apps: SilverAppsNamespace" in stub
     assert "apps: AsyncSilverAppsNamespace" in stub
+    assert "from os import PathLike" in stub
+    assert "def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None" in stub
+    assert "def post_profile_picture(self, *, user_id: str = ..., file: str | PathLike[str] = ..., timeout: float | None = None) -> _JSONPayload: ..." in stub
+    assert "post_my_picture" not in stub
     assert stub.count("# OperationId: Things_GetThings") == 1
 
 
@@ -105,6 +109,7 @@ def test_write_sdk_reference_artifacts_writes_markdown_and_stub_files(
     assert (docs_root / "index.md").exists()
     assert (docs_root / "apps.md").exists()
     assert (docs_root / "silver.md").exists()
+    assert (docs_root / "silver-profiles.md").exists()
     assert (docs_root / "things.md").exists()
     assert (package_root / "client.pyi").exists()
     assert (package_root / "__init__.pyi").exists()

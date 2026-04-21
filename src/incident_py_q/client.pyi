@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from os import PathLike
 from typing import Any, Protocol
 
 import httpx
@@ -17,6 +18,7 @@ from .apps.models import (
 from .config import ClientConfig
 from .schema.registry import SchemaRegistry
 from .sdk.runtime import AsyncNamespace, Namespace
+from .silver import SilverMethodMetadata
 
 _JSONPayload = dict[str, Any] | list[Any] | None
 
@@ -3218,6 +3220,14 @@ class AsyncSilverProductsNamespace:
     def list_methods(self) -> list[str]: ...
     async def get_available_features(self, *, timeout: float | None = None) -> _JSONPayload: ...
 
+class SilverProfilesNamespace:
+    def list_methods(self) -> list[str]: ...
+    def post_profile_picture(self, *, user_id: str = ..., file: str | PathLike[str] = ..., timeout: float | None = None) -> _JSONPayload: ...
+
+class AsyncSilverProfilesNamespace:
+    def list_methods(self) -> list[str]: ...
+    async def post_profile_picture(self, *, user_id: str = ..., file: str | PathLike[str] = ..., timeout: float | None = None) -> _JSONPayload: ...
+
 class SilverResolutionsNamespace:
     def list_methods(self) -> list[str]: ...
     def post_actions(self, *, s: int = ..., site_scope: str = ..., timeout: float | None = None) -> _JSONPayload: ...
@@ -3466,6 +3476,7 @@ class SilverRootNamespace:
     permissions: SilverPermissionsNamespace
     permissions_next: SilverPermissionsNextNamespace
     products: SilverProductsNamespace
+    profiles: SilverProfilesNamespace
     resolutions: SilverResolutionsNamespace
     rules: SilverRulesNamespace
     s: SilverSNamespace
@@ -3542,6 +3553,7 @@ class AsyncSilverRootNamespace:
     permissions: AsyncSilverPermissionsNamespace
     permissions_next: AsyncSilverPermissionsNextNamespace
     products: AsyncSilverProductsNamespace
+    profiles: AsyncSilverProfilesNamespace
     resolutions: AsyncSilverResolutionsNamespace
     rules: AsyncSilverRulesNamespace
     s: AsyncSilverSNamespace
@@ -3591,7 +3603,8 @@ class Client:
     def close(self) -> None: ...
     def __enter__(self) -> Client: ...
     def __exit__(self, *_: Any) -> None: ...
-    def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, headers: Mapping[str, str] | None = None, timeout: float | None = None) -> _JSONPayload: ...
+    def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None, headers: Mapping[str, str] | None = None, timeout: float | None = None) -> _JSONPayload: ...
+    def request_silver(self, metadata: SilverMethodMetadata, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None, headers: Mapping[str, str] | None = None, timeout: float | None = None) -> _JSONPayload: ...
     alerts: AlertsNamespace
     analytics: AnalyticsNamespace
     assets: AssetsNamespace
@@ -3641,7 +3654,8 @@ class AsyncClient:
     async def close(self) -> None: ...
     async def __aenter__(self) -> AsyncClient: ...
     async def __aexit__(self, *_: Any) -> None: ...
-    async def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, headers: Mapping[str, str] | None = None, timeout: float | None = None) -> _JSONPayload: ...
+    async def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None, headers: Mapping[str, str] | None = None, timeout: float | None = None) -> _JSONPayload: ...
+    async def request_silver(self, metadata: SilverMethodMetadata, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None, headers: Mapping[str, str] | None = None, timeout: float | None = None) -> _JSONPayload: ...
     alerts: AsyncAlertsNamespace
     analytics: AsyncAnalyticsNamespace
     assets: AsyncAssetsNamespace
