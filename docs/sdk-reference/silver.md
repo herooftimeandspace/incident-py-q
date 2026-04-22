@@ -31,6 +31,7 @@ Silver routes are undocumented APIs observed in tenant HAR traffic. The SDK expo
 | `permissions` | 1 | [`client.silver.permissions`](silver-permissions.md) |
 | `permissions_next` | 2 | [`client.silver.permissions_next`](silver-permissions_next.md) |
 | `products` | 1 | [`client.silver.products`](silver-products.md) |
+| `profiles` | 1 | [`client.silver.profiles`](silver-profiles.md) |
 | `resolutions` | 2 | [`client.silver.resolutions`](silver-resolutions.md) |
 | `rules` | 2 | [`client.silver.rules`](silver-rules.md) |
 | `s` | 1 | [`client.silver.s`](silver-s.md) |

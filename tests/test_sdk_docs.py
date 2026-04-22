@@ -10,9 +10,11 @@ from incident_py_q.sdk.docs import (
     render_client_stub,
     render_namespace_reference,
     render_sdk_index,
+    render_silver_namespace_reference,
     write_sdk_reference_artifacts,
 )
 from incident_py_q.sdk.runtime import build_sdk_metadata, format_operation_docstring
+from incident_py_q.silver import build_silver_metadata
 
 
 def test_build_sdk_metadata_and_docstring_include_runtime_details(
@@ -76,6 +78,10 @@ def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
     assert "silver: AsyncSilverRootNamespace" in stub
     assert "apps: SilverAppsNamespace" in stub
     assert "apps: AsyncSilverAppsNamespace" in stub
+    assert "from os import PathLike" in stub
+    assert "def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None" in stub
+    assert "def post_profile_picture(self, *, user_id: str = ..., file: str | PathLike[str] = ..., timeout: float | None = None) -> _JSONPayload: ..." in stub
+    assert "post_my_picture" not in stub
     assert stub.count("# OperationId: Things_GetThings") == 1
 
 
@@ -105,6 +111,17 @@ def test_write_sdk_reference_artifacts_writes_markdown_and_stub_files(
     assert (docs_root / "index.md").exists()
     assert (docs_root / "apps.md").exists()
     assert (docs_root / "silver.md").exists()
+    assert (docs_root / "silver-profiles.md").exists()
     assert (docs_root / "things.md").exists()
     assert (package_root / "client.pyi").exists()
     assert (package_root / "__init__.pyi").exists()
+
+
+def test_render_silver_profiles_reference_documents_png_normalization() -> None:
+    metadata = build_silver_metadata()
+    profiles = tuple(method for method in metadata if method.namespace == "profiles")
+
+    page = render_silver_namespace_reference(("profiles",), profiles)
+
+    assert "converts it to PNG" in page
+    assert "uploads a PNG no larger than 1 MB" in page

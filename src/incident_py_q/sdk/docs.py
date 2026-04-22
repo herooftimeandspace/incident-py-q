@@ -263,6 +263,7 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         "from __future__ import annotations",
         "",
         "from collections.abc import Mapping, Sequence",
+        "from os import PathLike",
         "from typing import Any, Protocol",
         "",
         "import httpx",
@@ -279,6 +280,7 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         "from .config import ClientConfig",
         "from .schema.registry import SchemaRegistry",
         "from .sdk.runtime import AsyncNamespace, Namespace",
+        "from .silver import SilverMethodMetadata",
         "",
         "_JSONPayload = dict[str, Any] | list[Any] | None",
         "",
@@ -827,7 +829,16 @@ def _render_client_class_stub(
         + "def request("
         "self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, "
         "params: Mapping[str, Any] | None = None, json: Any | None = None, "
-        "headers: Mapping[str, str] | None = None, timeout: float | None = None"
+        "files: Mapping[str, Any] | None = None, headers: Mapping[str, str] | None = None, "
+        "timeout: float | None = None"
+        ") -> _JSONPayload: ...",
+        "    "
+        + request_prefix
+        + "def request_silver("
+        "self, metadata: SilverMethodMetadata, *, path_params: Mapping[str, Any] | None = None, "
+        "params: Mapping[str, Any] | None = None, json: Any | None = None, "
+        "files: Mapping[str, Any] | None = None, headers: Mapping[str, str] | None = None, "
+        "timeout: float | None = None"
         ") -> _JSONPayload: ...",
     ]
     for namespace in grouped:
