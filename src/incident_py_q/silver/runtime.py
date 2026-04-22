@@ -457,9 +457,7 @@ def _coerce_file_uploads(file_params: Mapping[str, Any]) -> tuple[PreparedFiles,
     prepared: PreparedFiles = {}
     opened_handles: list[Any] = []
     for field_name, value in file_params.items():
-        if isinstance(value, str):
-            path = Path(value)
-        elif isinstance(value, PathLike):
+        if isinstance(value, (str, PathLike)):
             path = Path(value)
         else:
             raise TypeError(

@@ -9,12 +9,12 @@ from incident_py_q.sdk.docs import (
     render_apps_reference,
     render_client_stub,
     render_namespace_reference,
-    render_silver_namespace_reference,
     render_sdk_index,
+    render_silver_namespace_reference,
     write_sdk_reference_artifacts,
 )
-from incident_py_q.silver import build_silver_metadata
 from incident_py_q.sdk.runtime import build_sdk_metadata, format_operation_docstring
+from incident_py_q.silver import build_silver_metadata
 
 
 def test_build_sdk_metadata_and_docstring_include_runtime_details(
