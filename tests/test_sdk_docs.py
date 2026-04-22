@@ -9,9 +9,11 @@ from incident_py_q.sdk.docs import (
     render_apps_reference,
     render_client_stub,
     render_namespace_reference,
+    render_silver_namespace_reference,
     render_sdk_index,
     write_sdk_reference_artifacts,
 )
+from incident_py_q.silver import build_silver_metadata
 from incident_py_q.sdk.runtime import build_sdk_metadata, format_operation_docstring
 
 
@@ -113,3 +115,13 @@ def test_write_sdk_reference_artifacts_writes_markdown_and_stub_files(
     assert (docs_root / "things.md").exists()
     assert (package_root / "client.pyi").exists()
     assert (package_root / "__init__.pyi").exists()
+
+
+def test_render_silver_profiles_reference_documents_png_normalization() -> None:
+    metadata = build_silver_metadata()
+    profiles = tuple(method for method in metadata if method.namespace == "profiles")
+
+    page = render_silver_namespace_reference(("profiles",), profiles)
+
+    assert "converts it to PNG" in page
+    assert "uploads a PNG no larger than 1 MB" in page

@@ -3,14 +3,17 @@
 from __future__ import annotations
 
 import asyncio
+from io import BytesIO
 from pathlib import Path
 from typing import Any
 
 import httpx
 import pytest
 import respx
+from PIL import Image
 
 from incident_py_q import AsyncClient, Client
+from incident_py_q.media import prepare_png_upload
 from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.silver.inventory import SilverMethodMetadata, SilverParameterMetadata
 
@@ -55,6 +58,16 @@ def _stub_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
             uses_app_headers=True,
         ),
     )
+
+
+def _write_test_image(
+    path: Path,
+    *,
+    image_format: str,
+    size: tuple[int, int] = (24, 24),
+    color: tuple[int, int, int] = (12, 34, 56),
+) -> None:
+    Image.new("RGB", size, color=color).save(path, format=image_format)
 
 
 @respx.mock
@@ -135,7 +148,7 @@ def test_client_silver_profile_picture_upload_uses_multipart_file(
         return_value=httpx.Response(200, json={"ok": True})
     )
     upload_path = tmp_path / "avatar.png"
-    upload_path.write_bytes(b"png-bytes")
+    _write_test_image(upload_path, image_format="PNG")
 
     client = Client(
         base_url="https://tenant.example/api/v1",
@@ -155,6 +168,7 @@ def test_client_silver_profile_picture_upload_uses_multipart_file(
     assert "multipart/form-data" in request.headers["content-type"]
     assert b'name="File"' in request.content
     assert b'filename="avatar.png"' in request.content
+    assert b"image/png" in request.content
 
 
 @respx.mock
@@ -203,7 +217,7 @@ def test_async_client_silver_profile_picture_upload_uses_multipart_file(
         return_value=httpx.Response(200, json={"ok": True})
     )
     upload_path = tmp_path / "avatar.jpg"
-    upload_path.write_bytes(b"jpg-bytes")
+    _write_test_image(upload_path, image_format="JPEG")
 
     async def run() -> None:
         client = AsyncClient(
@@ -225,4 +239,45 @@ def test_async_client_silver_profile_picture_upload_uses_multipart_file(
     request = route.calls[0].request
     assert "multipart/form-data" in request.headers["content-type"]
     assert b'name="File"' in request.content
-    assert b'filename="avatar.jpg"' in request.content
+    assert b'filename="avatar.png"' in request.content
+    assert b"image/png" in request.content
+
+
+def test_prepare_png_upload_converts_non_png_inputs(tmp_path: Path) -> None:
+    upload_path = tmp_path / "avatar.jpg"
+    _write_test_image(upload_path, image_format="JPEG")
+
+    filename, payload, content_type = prepare_png_upload(upload_path)
+
+    assert filename == "avatar.png"
+    assert content_type == "image/png"
+    with Image.open(BytesIO(payload)) as image:
+        assert image.format == "PNG"
+
+
+def test_prepare_png_upload_downscales_large_images(tmp_path: Path) -> None:
+    upload_path = tmp_path / "oversized.png"
+    Image.effect_noise((1024, 1024), 100).convert("L").save(upload_path, format="PNG")
+
+    filename, payload, content_type = prepare_png_upload(upload_path, max_bytes=40_000)
+
+    assert filename == "oversized.png"
+    assert content_type == "image/png"
+    assert len(payload) <= 40_000
+    with Image.open(BytesIO(payload)) as image:
+        assert image.format == "PNG"
+        assert image.size[0] < 1024
+        assert image.size[1] < 1024
+
+
+def test_prepare_png_upload_rejects_non_images(tmp_path: Path) -> None:
+    upload_path = tmp_path / "avatar.txt"
+    upload_path.write_text("not-an-image", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="requires an image file"):
+        prepare_png_upload(upload_path)
+
+
+def test_prepare_png_upload_raises_for_missing_path(tmp_path: Path) -> None:
+    with pytest.raises(FileNotFoundError):
+        prepare_png_upload(tmp_path / "missing.png")

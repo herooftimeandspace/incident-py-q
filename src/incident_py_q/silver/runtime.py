@@ -17,11 +17,13 @@ from incident_py_q.apps import (
     build_app_method_metadata,
 )
 from incident_py_q.config import ClientConfig
+from incident_py_q.media import prepare_png_upload
 
 from .inventory import SilverMethodMetadata, SilverParameterMetadata, load_silver_inventory
 
 JSONPayload = dict[str, Any] | list[Any] | None
 PreparedFiles = dict[str, tuple[str, Any, str]]
+_PROFILE_PICTURE_UPLOAD = ("POST", "/api/v1.0/profiles/{user_id}/picture")
 
 
 class _SyncRequestClient(Protocol):
@@ -266,7 +268,7 @@ class SilverOperationMethod:
         path_params, query_params, json_body, file_params = _split_request_arguments(
             self.metadata, bound.arguments
         )
-        files, opened_handles = _coerce_file_uploads(file_params)
+        files, opened_handles = _prepare_silver_file_uploads(self.metadata, file_params)
         try:
             return self._client.request_silver(
                 self.metadata,
@@ -301,7 +303,7 @@ class AsyncSilverOperationMethod:
         path_params, query_params, json_body, file_params = _split_request_arguments(
             self.metadata, bound.arguments
         )
-        files, opened_handles = _coerce_file_uploads(file_params)
+        files, opened_handles = _prepare_silver_file_uploads(self.metadata, file_params)
         try:
             return await self._client.request_silver(
                 self.metadata,
@@ -469,3 +471,28 @@ def _coerce_file_uploads(file_params: Mapping[str, Any]) -> tuple[PreparedFiles,
         content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
         prepared[field_name] = (path.name, handle, content_type)
     return prepared, opened_handles
+
+
+def _prepare_silver_file_uploads(
+    metadata: SilverMethodMetadata,
+    file_params: Mapping[str, Any],
+) -> tuple[PreparedFiles, list[Any]]:
+    if _is_profile_picture_upload(metadata):
+        return _coerce_profile_picture_uploads(file_params), []
+    return _coerce_file_uploads(file_params)
+
+
+def _is_profile_picture_upload(metadata: SilverMethodMetadata) -> bool:
+    return (metadata.http_method.upper(), metadata.route) == _PROFILE_PICTURE_UPLOAD
+
+
+def _coerce_profile_picture_uploads(file_params: Mapping[str, Any]) -> PreparedFiles:
+    prepared: PreparedFiles = {}
+    for field_name, value in file_params.items():
+        if not isinstance(value, (str, PathLike)):
+            raise TypeError(
+                f"Silver file parameter '{field_name}' must be a str or PathLike path, "
+                f"got {type(value).__name__}."
+            )
+        prepared[field_name] = prepare_png_upload(value)
+    return prepared

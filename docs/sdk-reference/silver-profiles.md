@@ -20,14 +20,14 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.profiles`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The SDK normalizes the supplied image to PNG and downscales it as needed so the uploaded PNG payload stays at or below 1 MB.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
 | `user_id` | `user_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
-| `file` | `File` | `file` | `yes` | `str | PathLike[str]` | Multipart file field inferred from HAR observations for this undocumented Silver route. Pass a local file path and the SDK uploads it as form-data. |
+| `file` | `File` | `file` | `yes` | `str | PathLike[str]` | Multipart image field inferred from HAR observations for this undocumented Silver route. Pass a local image path and the SDK converts it to PNG, downscales it if needed, and uploads a PNG no larger than 1 MB. |
 
 #### Returns
 
