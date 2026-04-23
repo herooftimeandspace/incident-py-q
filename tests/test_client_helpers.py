@@ -175,6 +175,24 @@ def test_client_requires_credentials_when_no_config_is_provided() -> None:
         Client(base_url=None, api_token=None)
 
 
+def test_request_rejects_json_and_files_together(tiny_registry: SchemaRegistry) -> None:
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        with pytest.raises(ValueError, match="json and files cannot be used together"):
+            client.request(
+                "POST",
+                "/upload",
+                json={"ok": True},
+                files={"File": ("avatar.png", b"data", "image/png")},
+            )
+    finally:
+        client.close()
+
+
 def test_async_client_from_env_and_context_manager(
     tiny_registry: SchemaRegistry, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -214,6 +232,27 @@ def test_async_client_from_test_env_and_missing_namespace(
             assert client.config.api_token == "test-token"
             with pytest.raises(AttributeError):
                 _ = client.unknown_namespace
+        finally:
+            await client.close()
+
+    asyncio.run(run())
+
+
+def test_async_request_rejects_json_and_files_together(tiny_registry: SchemaRegistry) -> None:
+    async def run() -> None:
+        client = AsyncClient(
+            base_url="https://tenant.example/api/v1",
+            api_token="token-123",
+            registry=tiny_registry,
+        )
+        try:
+            with pytest.raises(ValueError, match="json and files cannot be used together"):
+                await client.request(
+                    "POST",
+                    "/upload",
+                    json={"ok": True},
+                    files={"File": ("avatar.png", b"data", "image/png")},
+                )
         finally:
             await client.close()
 

@@ -26,6 +26,8 @@ def test_silver_inventory_has_required_route_and_no_golden_overlap() -> None:
     golden_pairs = {(entry["method"], entry["path"]) for entry in golden_inventory}
 
     assert ("GET", "/assets/serial/{serial}") in silver_pairs
+    assert ("POST", "/profiles/{user_id}/picture") in silver_pairs
+    assert ("POST", "/profiles/my/picture") not in silver_pairs
     assert silver_pairs.isdisjoint(golden_pairs)
 
 

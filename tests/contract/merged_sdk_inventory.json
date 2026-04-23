@@ -2780,6 +2780,16 @@
   },
   {
     "http_method": "POST",
+    "name": "post_profile_picture",
+    "namespace": "profiles",
+    "path": "/api/v1.0/profiles/{user_id}/picture",
+    "provenance": "silver",
+    "sources": [
+      "iiq-profile-picture.har"
+    ]
+  },
+  {
+    "http_method": "POST",
     "name": "post_actions",
     "namespace": "resolutions",
     "path": "/api/v1.0/resolutions/actions",
