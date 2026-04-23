@@ -8,12 +8,17 @@ from pathlib import Path
 from incident_py_q.apps import AppMethodMetadata, AppParameterMetadata, build_app_method_metadata
 from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.silver import (
+    SilverManualMethodMetadata,
+    SilverManualParameterMetadata,
     SilverMethodMetadata,
     SilverParameterMetadata,
+    build_manual_silver_method_metadata,
     build_silver_metadata,
 )
 
 from .runtime import SDKMethodMetadata, SDKParameterMetadata, build_sdk_metadata
+
+_PROFILE_PICTURE_ROUTE = ("POST", "/api/v1.0/profiles/{user_id}/picture")
 
 
 def render_sdk_index(
@@ -23,6 +28,7 @@ def render_sdk_index(
     """Render the SDK reference landing page."""
     grouped = _group_metadata(metadata)
     silver = silver_metadata or build_silver_metadata()
+    silver_manual = build_manual_silver_method_metadata()
     silver_grouped = _group_silver_metadata(silver)
     app_methods = build_app_method_metadata()
     lines = [
@@ -49,7 +55,7 @@ def render_sdk_index(
             "",
             "| Namespace | Methods | Page |",
             "| --- | ---: | --- |",
-            f"| `silver` | {len(silver)} | [`client.silver`](silver.md) |",
+            f"| `silver` | {len(silver) + len(silver_manual)} | [`client.silver`](silver.md) |",
             (
                 f"| `apps` legacy alias | {len(app_methods)} manual helpers + "
                 f"{len(silver_grouped.get(('apps',), ())) + sum(len(methods) for path, methods in silver_grouped.items() if path[:1] == ('apps',) and len(path) > 1)} "
@@ -193,9 +199,12 @@ def render_silver_overview(metadata: tuple[SilverMethodMetadata, ...] | None = N
     """Render the Silver overview page."""
     silver = metadata or build_silver_metadata()
     grouped = _group_silver_metadata(silver)
+    manual_grouped = _group_manual_silver_methods(build_manual_silver_method_metadata())
     top_level: defaultdict[str, int] = defaultdict(int)
     for namespace_path, silver_methods in grouped.items():
         top_level[namespace_path[0]] += len(silver_methods)
+    for namespace_path, manual_methods in manual_grouped.items():
+        top_level[namespace_path[0]] += len(manual_methods)
     lines = [
         "# `silver` Namespace",
         "",
@@ -219,9 +228,16 @@ def render_silver_overview(metadata: tuple[SilverMethodMetadata, ...] | None = N
 def render_silver_namespace_reference(
     namespace_path: tuple[str, ...],
     methods: tuple[SilverMethodMetadata, ...],
+    manual_methods: tuple[SilverManualMethodMetadata, ...] | None = None,
 ) -> str:
     """Render one generic Silver namespace page."""
     namespace_display = ".".join(namespace_path)
+    silver_manual = manual_methods
+    if silver_manual is None:
+        silver_manual = _group_manual_silver_methods(build_manual_silver_method_metadata()).get(
+            namespace_path,
+            (),
+        )
     lines = [
         f"# `silver.{namespace_display}` Namespace",
         "",
@@ -229,14 +245,18 @@ def render_silver_namespace_reference(
         "",
         f"Async client access: `client.silver.{namespace_display}` with `await` on method calls.",
         "",
-        "These methods are Silver because Stoplight does not publish Golden contracts for them. "
-        "They remain separate so undocumented behavior never overrides the documented SDK surface.",
+        "These methods are Silver because Stoplight does not publish direct Golden contracts for "
+        "them, or because the SDK intentionally wraps a narrower Silver workflow around existing "
+        "Golden operations. They remain separate so undocumented or convenience behavior never "
+        "overrides the documented SDK surface.",
         "",
         "## Methods",
         "",
     ]
     for method in methods:
         lines.extend(_render_silver_method(method))
+    for method in silver_manual:
+        lines.extend(_render_manual_silver_method(method))
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -245,7 +265,9 @@ def render_client_stub(registry: SchemaRegistry) -> str:
     metadata = build_sdk_metadata(registry)
     grouped = _group_metadata(metadata)
     silver_metadata = build_silver_metadata()
+    silver_manual_methods = build_manual_silver_method_metadata()
     silver_grouped = _group_silver_metadata(silver_metadata)
+    manual_silver_grouped = _group_manual_silver_methods(silver_manual_methods)
     app_methods = build_app_method_metadata()
     manual_app_grouped = _group_manual_app_methods(app_methods)
     model_names = sorted(
@@ -258,6 +280,7 @@ def render_client_stub(registry: SchemaRegistry) -> str:
             ]
             if model_name
         }
+        | {method.response_model for method in silver_manual_methods if method.response_model}
     )
     lines = [
         "from __future__ import annotations",
@@ -326,21 +349,65 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         )
         lines.append("")
 
-    for namespace_path, silver_methods in sorted(silver_grouped.items()):
+    for namespace_path in sorted(set(silver_grouped) | set(manual_silver_grouped)):
+        silver_methods = silver_grouped.get(namespace_path, ())
+        manual_methods = manual_silver_grouped.get(namespace_path, ())
         if namespace_path[:1] == ("apps",) and len(namespace_path) == 2 and namespace_path[1] in manual_app_grouped:
             continue
-        lines.extend(_render_silver_namespace_stub(namespace_path, silver_methods, async_mode=False))
+        lines.extend(
+            _render_silver_namespace_stub(
+                namespace_path,
+                silver_methods,
+                manual_methods,
+                async_mode=False,
+            )
+        )
         lines.append("")
-        lines.extend(_render_silver_namespace_stub(namespace_path, silver_methods, async_mode=True))
+        lines.extend(
+            _render_silver_namespace_stub(
+                namespace_path,
+                silver_methods,
+                manual_methods,
+                async_mode=True,
+            )
+        )
         lines.append("")
 
-    lines.extend(_render_silver_root_stub(silver_grouped, manual_app_grouped, async_mode=False))
+    lines.extend(
+        _render_silver_root_stub(
+            silver_grouped,
+            manual_app_grouped,
+            manual_silver_grouped,
+            async_mode=False,
+        )
+    )
     lines.append("")
-    lines.extend(_render_silver_root_stub(silver_grouped, manual_app_grouped, async_mode=True))
+    lines.extend(
+        _render_silver_root_stub(
+            silver_grouped,
+            manual_app_grouped,
+            manual_silver_grouped,
+            async_mode=True,
+        )
+    )
     lines.append("")
-    lines.extend(_render_client_class_stub(grouped, silver_grouped, manual_app_grouped, async_mode=False))
+    lines.extend(
+        _render_client_class_stub(
+            grouped,
+            silver_grouped,
+            manual_app_grouped,
+            async_mode=False,
+        )
+    )
     lines.append("")
-    lines.extend(_render_client_class_stub(grouped, silver_grouped, manual_app_grouped, async_mode=True))
+    lines.extend(
+        _render_client_class_stub(
+            grouped,
+            silver_grouped,
+            manual_app_grouped,
+            async_mode=True,
+        )
+    )
     lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -368,6 +435,7 @@ def write_sdk_reference_artifacts(
     metadata = build_sdk_metadata(registry)
     grouped = _group_metadata(metadata)
     silver_metadata = build_silver_metadata()
+    silver_manual_grouped = _group_manual_silver_methods(build_manual_silver_method_metadata())
     silver_grouped = _group_silver_metadata(silver_metadata)
 
     docs_root.mkdir(parents=True, exist_ok=True)
@@ -388,12 +456,17 @@ def write_sdk_reference_artifacts(
             render_namespace_reference(namespace, methods),
             encoding="utf-8",
         )
-    for namespace_path, silver_methods in silver_grouped.items():
+    for namespace_path in sorted(set(silver_grouped) | set(silver_manual_grouped)):
+        silver_methods = silver_grouped.get(namespace_path, ())
         if namespace_path[:1] == ("apps",):
             continue
         page_name = f"silver-{namespace_path[0]}.md"
         (docs_root / page_name).write_text(
-            render_silver_namespace_reference(namespace_path, silver_methods),
+            render_silver_namespace_reference(
+                namespace_path,
+                silver_methods,
+                silver_manual_grouped.get(namespace_path, ()),
+            ),
             encoding="utf-8",
         )
 
@@ -438,6 +511,18 @@ def _group_manual_app_methods(
     }
 
 
+def _group_manual_silver_methods(
+    metadata: tuple[SilverManualMethodMetadata, ...],
+) -> dict[tuple[str, ...], tuple[SilverManualMethodMetadata, ...]]:
+    grouped: dict[tuple[str, ...], list[SilverManualMethodMetadata]] = defaultdict(list)
+    for method in metadata:
+        grouped[method.namespace_path].append(method)
+    return {
+        namespace_path: tuple(sorted(methods, key=lambda item: item.method_name))
+        for namespace_path, methods in sorted(grouped.items())
+    }
+
+
 def _render_golden_parameters(method: SDKMethodMetadata) -> list[str]:
     if not method.parameters:
         return ["#### Parameters", "", "This operation does not define request parameters.", ""]
@@ -479,6 +564,23 @@ def _render_golden_returns(method: SDKMethodMetadata) -> list[str]:
 
 
 def _render_silver_method(method: SilverMethodMetadata) -> list[str]:
+    instructional_notes: list[str] = []
+    example_lines: list[str] = []
+    if _is_profile_picture_upload(method):
+        instructional_notes = [
+            "The SDK prepares the avatar locally before upload because the HAR showed the file upload and a later rendered image fetch, but not a separate persisted crop API. That is why `post_profile_picture(...)` center-crops non-square images, converts the image to PNG inside the method, and enforces the 1 MB size cap before any bytes are sent.",
+            "",
+            "The upload call can optionally validate tenant readback with `wait_for_consistency=True`. This is opt-in because some tenants accept the write first and update `PhotoId` a moment later. Use the validation knobs when your workflow needs confirmation that the new picture is visible through user readback before you continue.",
+            "",
+        ]
+        example_lines = [
+            "#### Examples",
+            "",
+            "- Fast path: `client.silver.profiles.post_profile_picture(user_id=..., file=..., timeout=None)`",
+            "- Validated path: `client.silver.profiles.post_profile_picture(user_id=..., file=..., wait_for_consistency=True, consistency_timeout=10.0, consistency_poll_interval=1.0, timeout=None)`",
+            "- Async validated path: `await client.silver.profiles.post_profile_picture(user_id=..., file=..., wait_for_consistency=True, consistency_timeout=10.0, consistency_poll_interval=1.0, timeout=None)`",
+            "",
+        ]
     lines = [
         f"### `{method.method_name}`",
         "",
@@ -498,6 +600,7 @@ def _render_silver_method(method: SilverMethodMetadata) -> list[str]:
         "",
         method.description,
         "",
+        *instructional_notes,
     ]
     if method.parameters:
         lines.extend(
@@ -515,6 +618,7 @@ def _render_silver_method(method: SilverMethodMetadata) -> list[str]:
         lines.extend(["#### Parameters", "", "This Silver route does not define inferred parameters.", ""])
     lines.extend(
         [
+            *example_lines,
             "#### Returns",
             "",
             f"- Typed call return: `{method.typed_return}`",
@@ -579,6 +683,61 @@ def _render_manual_app_method(method: AppMethodMetadata) -> list[str]:
     return lines
 
 
+def _render_manual_silver_method(method: SilverManualMethodMetadata) -> list[str]:
+    example_lines: list[str] = []
+    if method.namespace_path == ("profiles",) and method.method_name == "remove_profile_picture":
+        example_lines = [
+            "#### Examples",
+            "",
+            "- Fast path: `client.silver.profiles.remove_profile_picture(user_id=..., timeout=None)`",
+            "- Validated path: `client.silver.profiles.remove_profile_picture(user_id=..., wait_for_consistency=True, consistency_timeout=10.0, consistency_poll_interval=1.0, timeout=None)`",
+            "- Async validated path: `await client.silver.profiles.remove_profile_picture(user_id=..., wait_for_consistency=True, consistency_timeout=10.0, consistency_poll_interval=1.0, timeout=None)`",
+            "",
+        ]
+    lines = [
+        f"### `{method.method_name}`",
+        "",
+        "Provenance: Silver manual helper",
+        "",
+        f"- Sync: `client.silver.{method.namespace}.{method.method_name}{_manual_silver_signature_suffix(method)}`",
+        f"- Async: `await client.silver.{method.namespace}.{method.method_name}{_manual_silver_signature_suffix(method)}`",
+        "- Raw payload: No public `.raw(...)`; `.raw(...)` is used only as an internal fallback if the typed Golden route path cannot carry the required payload shape.",
+    ]
+    if method.backing_routes:
+        lines.append(f"- Backing routes: {', '.join(f'`{route}`' for route in method.backing_routes)}")
+    else:
+        lines.append("- Backing routes: Manual helper logic only")
+    lines.extend(["", method.summary, ""])
+    if method.description and method.description != method.summary:
+        lines.extend([method.description, ""])
+    lines.extend(example_lines)
+    lines.extend(
+        [
+            "#### Parameters",
+            "",
+            "| Python Arg | API Name | In | Required | Type | Description |",
+            "| --- | --- | --- | --- | --- | --- |",
+        ]
+    )
+    for parameter in method.parameters:
+        lines.append(_render_manual_silver_parameter_row(parameter))
+    lines.extend(
+        [
+            "",
+            "#### Returns",
+            "",
+            f"- Typed call return: `{method.typed_return}`",
+            f"- Internal raw fallback return: `{method.raw_return}`",
+        ]
+    )
+    if method.response_model:
+        lines.append(f"- Response model: `{method.response_model}`")
+    else:
+        lines.append("- Response model: Method-specific Python object")
+    lines.extend(["", "---", ""])
+    return lines
+
+
 def _render_parameter_row(parameter: SDKParameterMetadata) -> str:
     schema_or_model = parameter.model_name or parameter.schema_ref or "-"
     description = parameter.description or "-"
@@ -598,6 +757,14 @@ def _render_app_parameter_row(parameter: AppParameterMetadata) -> str:
 
 
 def _render_silver_parameter_row(parameter: SilverParameterMetadata) -> str:
+    return (
+        f"| `{parameter.python_name}` | `{parameter.api_name}` | `{parameter.location}` | "
+        f"`{'yes' if parameter.required else 'no'}` | `{parameter.type_display}` | "
+        f"{_escape_table(parameter.description)} |"
+    )
+
+
+def _render_manual_silver_parameter_row(parameter: SilverManualParameterMetadata) -> str:
     return (
         f"| `{parameter.python_name}` | `{parameter.api_name}` | `{parameter.location}` | "
         f"`{'yes' if parameter.required else 'no'}` | `{parameter.type_display}` | "
@@ -629,6 +796,22 @@ def _silver_raw_call_example(method: SilverMethodMetadata) -> str:
     return f"client.silver.{method.namespace}.{method.method_name}.raw{_silver_signature_suffix(method)}"
 
 
+def _manual_silver_signature_suffix(method: SilverManualMethodMetadata) -> str:
+    parts = []
+    for parameter in method.parameters:
+        if parameter.python_name == "wait_for_consistency":
+            placeholder = "False"
+        elif parameter.python_name == "consistency_timeout":
+            placeholder = "10.0"
+        elif parameter.python_name == "consistency_poll_interval":
+            placeholder = "1.0"
+        else:
+            placeholder = "..." if parameter.required else "None"
+        parts.append(f"{parameter.python_name}={placeholder}")
+    parts.append("timeout=None")
+    return f"({', '.join(parts)})"
+
+
 def _iter_pages_call_example(method: SDKMethodMetadata) -> str:
     args = _render_call_arguments(method, exclude_pagination=True)
     extra = "start_page=1, page_size=100, max_pages=None"
@@ -646,8 +829,20 @@ def _silver_signature_suffix(method: SilverMethodMetadata) -> str:
     for parameter in method.parameters:
         placeholder = "..." if parameter.required else "None"
         parts.append(f"{parameter.python_name}={placeholder}")
+    if _is_profile_picture_upload(method):
+        parts.extend(
+            [
+                "wait_for_consistency=False",
+                "consistency_timeout=10.0",
+                "consistency_poll_interval=1.0",
+            ]
+        )
     parts.append("timeout=None")
     return f"({', '.join(parts)})"
+
+
+def _is_profile_picture_upload(method: SilverMethodMetadata) -> bool:
+    return (method.http_method, method.route) == _PROFILE_PICTURE_ROUTE
 
 
 def _render_call_arguments(method: SDKMethodMetadata, *, exclude_pagination: bool) -> str:
@@ -727,6 +922,7 @@ def _render_manual_app_service_stub(
 def _render_silver_namespace_stub(
     namespace_path: tuple[str, ...],
     methods: tuple[SilverMethodMetadata, ...],
+    manual_methods: tuple[SilverManualMethodMetadata, ...],
     *,
     async_mode: bool,
 ) -> list[str]:
@@ -736,12 +932,17 @@ def _render_silver_namespace_stub(
         lines.append(
             f"    {'async ' if async_mode else ''}def {method.method_name}{_silver_stub_signature(method)}: ..."
         )
+    for method in manual_methods:
+        lines.append(
+            f"    {'async ' if async_mode else ''}def {method.method_name}{_manual_silver_stub_signature(method)}: ..."
+        )
     return lines
 
 
 def _render_silver_root_stub(
     silver_grouped: dict[tuple[str, ...], tuple[SilverMethodMetadata, ...]],
     manual_app_grouped: dict[str, tuple[AppMethodMetadata, ...]],
+    manual_silver_grouped: dict[tuple[str, ...], tuple[SilverManualMethodMetadata, ...]],
     *,
     async_mode: bool,
 ) -> list[str]:
@@ -767,7 +968,10 @@ def _render_silver_root_stub(
             f"    apps: {apps_class_name}",
         ]
     )
-    top_level = {namespace_path[0] for namespace_path in silver_grouped if namespace_path[0] != "apps"}
+    top_level = (
+        {namespace_path[0] for namespace_path in silver_grouped if namespace_path[0] != "apps"}
+        | {namespace_path[0] for namespace_path in manual_silver_grouped if namespace_path[0] != "apps"}
+    )
     for namespace in sorted(top_level):
         lines.append(
             f"    {namespace}: {_silver_namespace_class_name((namespace,), async_mode=async_mode)}"
@@ -861,8 +1065,38 @@ def _silver_stub_signature(method: SilverMethodMetadata) -> str:
         type_display = parameter.type_display if parameter.required else f"{parameter.type_display} | None"
         default = "..." if parameter.required else "None"
         params.append(f"{parameter.python_name}: {type_display} = {default}")
+    if _is_profile_picture_upload(method):
+        params.extend(
+            [
+                "wait_for_consistency: bool = False",
+                "consistency_timeout: float = 10.0",
+                "consistency_poll_interval: float = 1.0",
+            ]
+        )
     params.append("timeout: float | None = None")
     return f"({', '.join(params)}) -> _JSONPayload"
+
+
+def _manual_silver_stub_signature(method: SilverManualMethodMetadata) -> str:
+    params = ["self", "*"]
+    for parameter in method.parameters:
+        if parameter.python_name == "wait_for_consistency":
+            type_display = "bool"
+            default = "False"
+        elif parameter.python_name == "consistency_timeout":
+            type_display = "float"
+            default = "10.0"
+        elif parameter.python_name == "consistency_poll_interval":
+            type_display = "float"
+            default = "1.0"
+        else:
+            type_display = (
+                parameter.type_display if parameter.required else f"{parameter.type_display} | None"
+            )
+            default = "..." if parameter.required else "None"
+        params.append(f"{parameter.python_name}: {type_display} = {default}")
+    params.append("timeout: float | None = None")
+    return f"({', '.join(params)}) -> {method.typed_return}"
 
 
 def _manual_app_signature(method: AppMethodMetadata, *, async_mode: bool) -> str:

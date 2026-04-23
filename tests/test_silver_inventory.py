@@ -126,3 +126,33 @@ def test_extract_silver_inventory_supports_generic_profile_picture_upload(
         "path",
         "file",
     ]
+
+
+def test_extract_silver_inventory_keeps_remove_profile_picture_on_golden_surface(
+    bundled_registry: SchemaRegistry,
+    tmp_path: Path,
+) -> None:
+    har_path = tmp_path / "remove-profile-picture.har"
+    har_payload = {
+        "log": {
+            "entries": [
+                {
+                    "request": {
+                        "method": "POST",
+                        "url": "https://tenant.example/api/v1.0/users/61757b5f-dd31-f111-8ef2-000d3a7cb1a2",
+                        "postData": {
+                            "mimeType": "application/json",
+                            "text": json.dumps({"UserId": "61757b5f-dd31-f111-8ef2-000d3a7cb1a2", "PhotoId": None}),
+                        },
+                    },
+                    "response": {"status": 200},
+                }
+            ]
+        }
+    }
+    har_path.write_text(json.dumps(har_payload), encoding="utf-8")
+
+    silver = extract_silver_inventory(har_files=[har_path], registry=bundled_registry)
+
+    routes = {(method.http_method, method.route) for method in silver}
+    assert ("POST", "/api/v1.0/users/{user_id}") not in routes
