@@ -16,7 +16,7 @@ from incident_py_q._utils import to_snake_case
 from incident_py_q.apps import build_app_method_metadata
 from incident_py_q.schema.registry import SchemaRegistry
 
-SilverParameterLocation = Literal["path", "query", "body"]
+SilverParameterLocation = Literal["path", "query", "body", "file"]
 JSONPayload = dict[str, Any] | list[Any] | None
 
 _UUID_RE = re.compile(
@@ -58,6 +58,9 @@ _DISCARD_PREFIXES = (
 )
 _NOISY_METHOD_TOKENS = {"api", "app", "data"}
 _MANUAL_APP_ROUTE_PREFIXES = ("/apps/", "/api/v1.0/apps/", "/api/v1.0/app-registry/")
+_SUPPRESSED_SILVER_ROUTES = {
+    ("POST", "/profiles/my/picture"),
+}
 _PARAMETER_HINTS = {
     "app",
     "asset",
@@ -132,6 +135,7 @@ class _ObservedRequest:
     source: str
     status_code: int | None
     query: dict[str, str]
+    file_fields: tuple[str, ...]
     body: Any | None
 
 
@@ -246,6 +250,7 @@ def extract_silver_inventory(
             and _template_raw_path(item.raw_path, item.normalized_path, variable_positions) == aggregate.route
         ]
         aggregate.parameters.extend(_build_query_parameters(matching_items))
+        aggregate.parameters.extend(_build_file_parameters(matching_items))
         aggregate.parameters.extend(_build_body_parameters(matching_items))
 
     extracted = [
@@ -405,6 +410,8 @@ def _load_observed_requests(
             parsed_url = urlparse(url)
             raw_path = parsed_url.path or "/"
             normalized_path = _normalize_for_matching(raw_path)
+            if (method.upper(), normalized_path) in _SUPPRESSED_SILVER_ROUTES:
+                continue
             if registry.match_operation(method, normalized_path):
                 continue
             if _is_discarded_candidate(raw_path=raw_path, normalized_path=normalized_path):
@@ -419,6 +426,7 @@ def _load_observed_requests(
                     source=har_path.name,
                     status_code=status_code if isinstance(status_code, int) else None,
                     query=dict(parse_qsl(parsed_url.query, keep_blank_values=True)),
+                    file_fields=_extract_multipart_file_fields(request),
                     body=_parse_request_body(request),
                 )
             )
@@ -610,6 +618,34 @@ def _build_query_parameters(observed_items: Sequence[_ObservedRequest]) -> list[
     return parameters
 
 
+def _build_file_parameters(observed_items: Sequence[_ObservedRequest]) -> list[SilverParameterMetadata]:
+    presence: dict[str, int] = defaultdict(int)
+    for item in observed_items:
+        for api_name in item.file_fields:
+            presence[api_name] += 1
+
+    if not presence:
+        return []
+
+    total = len(observed_items)
+    parameters: list[SilverParameterMetadata] = []
+    for api_name in sorted(presence):
+        parameters.append(
+            SilverParameterMetadata(
+                python_name="file" if api_name == "File" else to_snake_case(api_name),
+                api_name=api_name,
+                location="file",
+                required=presence[api_name] == total,
+                type_display="str | PathLike[str]",
+                description=(
+                    "Multipart file field inferred from HAR observations for this undocumented "
+                    "Silver route. Pass a local file path and the SDK uploads it as form-data."
+                ),
+            )
+        )
+    return parameters
+
+
 def _build_body_parameters(observed_items: Sequence[_ObservedRequest]) -> list[SilverParameterMetadata]:
     bodies = [item.body for item in observed_items if item.body is not None]
     if not bodies:
@@ -741,6 +777,9 @@ def _parse_request_body(request: Mapping[str, Any]) -> Any | None:
     post_data = request.get("postData")
     if not isinstance(post_data, Mapping):
         return None
+    mime_type = post_data.get("mimeType")
+    if isinstance(mime_type, str) and mime_type.lower().startswith("multipart/form-data"):
+        return None
     body_text = post_data.get("text")
     if not isinstance(body_text, str) or not body_text.strip():
         return None
@@ -748,6 +787,28 @@ def _parse_request_body(request: Mapping[str, Any]) -> Any | None:
         return json.loads(body_text)
     except json.JSONDecodeError:
         return body_text
+
+
+def _extract_multipart_file_fields(request: Mapping[str, Any]) -> tuple[str, ...]:
+    post_data = request.get("postData")
+    if not isinstance(post_data, Mapping):
+        return ()
+    mime_type = post_data.get("mimeType")
+    if not isinstance(mime_type, str) or not mime_type.lower().startswith("multipart/form-data"):
+        return ()
+    params = post_data.get("params")
+    if not isinstance(params, list):
+        return ()
+
+    file_fields: list[str] = []
+    for parameter in params:
+        if not isinstance(parameter, Mapping):
+            continue
+        name = parameter.get("name")
+        value = parameter.get("value")
+        if isinstance(name, str) and value == "(binary)":
+            file_fields.append(name)
+    return tuple(sorted(dict.fromkeys(file_fields)))
 
 
 def _is_discarded_candidate(*, raw_path: str, normalized_path: str) -> bool:
@@ -795,6 +856,13 @@ def _path_parameter_name(
     position: int,
     values: Sequence[str],
 ) -> str:
+    if (
+        len(segments) >= 3
+        and position == 1
+        and segments[0] == "profiles"
+        and segments[2] == "picture"
+    ):
+        return "user_id"
     previous = next((segments[index] for index in range(position - 1, -1, -1) if not segments[index].startswith("{")), "")
     next_segment = next(
         (segments[index] for index in range(position + 1, len(segments)) if not segments[index].startswith("{")),

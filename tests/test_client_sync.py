@@ -63,6 +63,27 @@ def test_request_raises_for_http_errors(tiny_registry: SchemaRegistry) -> None:
 
 
 @respx.mock
+def test_request_supports_multipart_files(tiny_registry: SchemaRegistry) -> None:
+    route = respx.post("https://tenant.example/api/v1/upload").mock(
+        return_value=httpx.Response(200, json={"ok": True})
+    )
+    client = _build_client(tiny_registry)
+    payload = client.request(
+        "POST",
+        "/upload",
+        files={"File": ("avatar.png", b"png-bytes", "image/png")},
+    )
+    client.close()
+
+    assert payload == {"ok": True}
+    assert route.call_count == 1
+    request = route.calls[0].request
+    assert "multipart/form-data" in request.headers["content-type"]
+    assert b'name="File"' in request.content
+    assert b'filename="avatar.png"' in request.content
+
+
+@respx.mock
 def test_request_retries_on_idempotent_retryable_status(
     tiny_registry: SchemaRegistry, monkeypatch: pytest.MonkeyPatch
 ) -> None:

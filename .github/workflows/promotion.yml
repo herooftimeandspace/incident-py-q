@@ -46,6 +46,10 @@ jobs:
           fi
 
           git fetch origin staging
+          # The resolver shells out to gh, which reads GH_TOKEN/GITHUB_TOKEN.
+          # Establish API auth before label resolution, then switch to the PR
+          # authoring token only for create/edit operations below.
+          export GH_TOKEN="${GH_API_TOKEN}"
           resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref dev)"
           export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base staging --head dev --state open --json number --jq '.[0].number')"
@@ -134,6 +138,10 @@ jobs:
           fi
 
           git fetch origin main
+          # The resolver shells out to gh, which reads GH_TOKEN/GITHUB_TOKEN.
+          # Establish API auth before label resolution, then switch to the PR
+          # authoring token only for create/edit operations below.
+          export GH_TOKEN="${GH_API_TOKEN}"
           resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref staging)"
 
           if [ "$(git rev-list --count origin/main..HEAD)" = "0" ]; then

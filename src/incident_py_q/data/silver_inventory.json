@@ -1,7 +1,7 @@
 {
   "endpoints": [
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. It accepts common local raster image formats including JPG/JPEG, PNG, GIF, WEBP, and BMP. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "GET",
       "method_name": "get_agent_current_stats",
       "namespace_path": [
@@ -21,7 +21,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "GET",
       "method_name": "get_agent_location_stats",
       "namespace_path": [
@@ -3946,7 +3946,44 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
+      "http_method": "POST",
+      "method_name": "post_profile_picture",
+      "namespace_path": [
+        "profiles"
+      ],
+      "parameters": [
+        {
+          "api_name": "user_id",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "location": "path",
+          "python_name": "user_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "File",
+          "description": "Multipart image field inferred from HAR observations for this undocumented Silver route. Pass a local image path in a common raster format such as JPG/JPEG, PNG, GIF, WEBP, or BMP and the SDK uses the largest centered square crop for non-square inputs, converts it inside `client.silver.profiles.post_profile_picture(...)` to PNG, downscales it if needed, and uploads a PNG no larger than 1 MB.",
+          "location": "file",
+          "python_name": "file",
+          "required": true,
+          "type_display": "str | PathLike[str]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/profiles/{user_id}/picture",
+      "sources": [
+        "iiq-profile-picture.har"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "HAR-derived undocumented POST route for `client.silver.profiles`.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The SDK normalizes the supplied image to PNG and downscales it as needed so the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "POST",
       "method_name": "post_actions",
       "namespace_path": [
