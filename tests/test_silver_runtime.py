@@ -15,8 +15,10 @@ import respx
 from PIL import Image
 
 from incident_py_q import AsyncClient, Client
+from incident_py_q.config import ClientConfig
 from incident_py_q.media import prepare_png_upload
 from incident_py_q.schema.registry import SchemaRegistry
+from incident_py_q.silver import runtime as silver_runtime
 from incident_py_q.silver.inventory import SilverMethodMetadata, SilverParameterMetadata
 
 
@@ -150,8 +152,21 @@ class _RequestRecorder:
         raise AssertionError(f"unexpected request call {method} {path}")
 
 
+class _AsyncRequestRecorder(_RequestRecorder):
+    async def __call__(self, method: str, path: str, **kwargs: Any) -> Any:
+        return super().__call__(method, path, **kwargs)
+
+
 def _client_any(client: Any) -> Any:
     return cast(Any, client)
+
+
+class _ClosableHandle:
+    def __init__(self) -> None:
+        self.closed = False
+
+    def close(self) -> None:
+        self.closed = True
 
 
 def _profile_picture_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
@@ -467,6 +482,70 @@ def test_prepare_png_upload_rejects_non_images(tmp_path: Path) -> None:
 def test_prepare_png_upload_raises_for_missing_path(tmp_path: Path) -> None:
     with pytest.raises(FileNotFoundError):
         prepare_png_upload(tmp_path / "missing.png")
+
+
+def test_prepare_png_upload_raises_for_oserror(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    upload_path = tmp_path / "broken.png"
+    upload_path.write_bytes(b"broken")
+
+    def _raise_oserror(_: Path) -> Any:
+        raise OSError("cannot-read")
+
+    monkeypatch.setattr("incident_py_q.media.png.Image.open", _raise_oserror)
+
+    with pytest.raises(ValueError, match="Could not read image data"):
+        prepare_png_upload(upload_path)
+
+
+def test_prepare_png_upload_converts_palette_image_with_transparency(tmp_path: Path) -> None:
+    upload_path = tmp_path / "transparent_palette.png"
+    image = Image.new("P", (8, 8))
+    image.putpalette([0, 0, 0, 255, 0, 0] + [0, 0, 0] * 254)
+    image.info["transparency"] = 0
+    image.save(upload_path, format="PNG")
+
+    _, payload, content_type = prepare_png_upload(upload_path)
+
+    assert content_type == "image/png"
+    with Image.open(BytesIO(payload)) as normalized:
+        assert normalized.mode == "RGBA"
+
+
+def test_prepare_png_upload_converts_non_rgb_modes(tmp_path: Path) -> None:
+    upload_path = tmp_path / "cmyk_source.tiff"
+    Image.new("CMYK", (8, 8), color=(0, 128, 128, 0)).save(upload_path, format="TIFF")
+
+    _, payload, content_type = prepare_png_upload(upload_path)
+
+    assert content_type == "image/png"
+    with Image.open(BytesIO(payload)) as normalized:
+        assert normalized.mode == "RGB"
+
+
+def test_encode_png_under_limit_raises_when_one_pixel_cannot_shrink(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr("incident_py_q.media.png._encode_png", lambda image: b"x" * 8)
+    from incident_py_q.media import png as png_module
+
+    with pytest.raises(ValueError, match="could not be reduced"):
+        png_module._encode_png_under_limit(Image.new("RGB", (1, 1)), max_bytes=4)
+
+
+def test_encode_png_under_limit_forces_progress_when_resize_rounds_to_same_size(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from incident_py_q.media import png as png_module
+
+    payload_sizes = iter([b"x" * 10, b"x"])
+
+    monkeypatch.setattr("incident_py_q.media.png._encode_png", lambda image: next(payload_sizes))
+    monkeypatch.setattr("incident_py_q.media.png._MAX_RESIZE_RATIO", 1.0)
+    monkeypatch.setattr("incident_py_q.media.png._RESIZE_SAFETY_FACTOR", 1.0)
+
+    payload = png_module._encode_png_under_limit(Image.new("RGB", (1, 2)), max_bytes=9)
+
+    assert payload == b"x"
 
 
 def test_client_silver_remove_profile_picture_uses_minimal_safe_payload(
@@ -821,3 +900,226 @@ def test_client_silver_profile_picture_upload_raises_timeout_when_photo_id_does_
             )
     finally:
         client.close()
+
+
+def test_request_profile_picture_upload_sync_closes_handles(monkeypatch: pytest.MonkeyPatch) -> None:
+    metadata = _profile_picture_silver_metadata()[0]
+    handle = _ClosableHandle()
+    captured: dict[str, Any] = {}
+
+    class _SyncClientStub:
+        def __init__(self) -> None:
+            self.config = ClientConfig(base_url="https://tenant.example/api/v1", api_token="token-123")
+            self.users: Any = None
+
+        def request(self, method: str, path: str, **kwargs: Any) -> Any:
+            raise AssertionError("request should not be called in this test")
+
+        def request_silver(self, metadata: Any, **kwargs: Any) -> dict[str, Any]:
+            captured["kwargs"] = kwargs
+            return {"ok": True}
+
+    monkeypatch.setattr(
+        "incident_py_q.silver.runtime._prepare_silver_file_uploads",
+        lambda metadata, file_params: ({"File": ("avatar.png", b"png", "image/png")}, [handle]),
+    )
+
+    assert silver_runtime._request_profile_picture_upload_sync(
+        cast(Any, _SyncClientStub()),
+        metadata,
+        user_id="user-123",
+        file="avatar.jpg",
+        timeout=5.0,
+    ) == {"ok": True}
+    assert captured["kwargs"]["path_params"] == {"user_id": "user-123"}
+    assert handle.closed is True
+
+
+def test_build_remove_profile_picture_payload_rejects_wrong_user_id() -> None:
+    with pytest.raises(ValueError, match="returned a different UserId"):
+        silver_runtime._build_remove_profile_picture_payload(
+            user_id="expected-user",
+            user_item=_full_user_item(),
+        )
+
+
+def test_build_remove_profile_picture_payload_defaults_site_payload_to_empty_mapping() -> None:
+    user_item = dict(_full_user_item())
+    user_item["UserId"] = "user-123"
+    user_item.pop("ProductId")
+    user_item["Site"] = "not-a-mapping"
+
+    payload = silver_runtime._build_remove_profile_picture_payload(
+        user_id="user-123",
+        user_item=user_item,
+    )
+
+    assert payload["ProductId"] == "00000000-0000-0000-0000-000000000000"
+
+
+def test_wait_for_profile_photo_state_sync_times_out() -> None:
+    request = _RequestRecorder(responses=[{"Item": {**_full_user_item(), "PhotoId": "photo-1"}}])
+    client = SimpleNamespace(
+        users=SimpleNamespace(get_user=_FakeGetUser(typed_result=None)),
+        request=request,
+    )
+
+    with pytest.raises(TimeoutError, match="did not converge"):
+        silver_runtime._wait_for_profile_photo_state_sync(
+            client,
+            user_id="user-123",
+            timeout=None,
+            consistency_timeout=0.0,
+            consistency_poll_interval=0.0,
+            predicate=lambda photo_id: photo_id is None,
+            expectation="PhotoId to become None",
+        )
+
+
+def test_client_silver_remove_profile_picture_waits_for_photo_id_to_clear_via_raw_fallback(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    user_item = _full_user_item()
+    get_user = _FakeGetUser(typed_exception=ValueError("typed route failed"), raw_result={"Item": dict(user_item)})
+    update_user = _FakeUpdateUser(raw_result={"updated": True})
+    request = _RequestRecorder(responses=["not-json", "not-json", {"Item": {**user_item, "PhotoId": None}}])
+
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=get_user, update_user=update_user)
+    client_any.request = request
+    try:
+        assert cast(
+            Any,
+            client.silver.profiles.remove_profile_picture(
+                user_id="user-123",
+                wait_for_consistency=True,
+                consistency_timeout=0.01,
+                consistency_poll_interval=0.0,
+            ),
+        ) == {"updated": True}
+    finally:
+        client.close()
+
+
+def test_async_runtime_profile_helpers_cover_direct_and_raw_fallbacks() -> None:
+    class _AsyncFakeGetUser(_FakeGetUser):
+        async def __call__(self, **kwargs: Any) -> Any:
+            return super().__call__(**kwargs)
+
+        async def raw(self, **kwargs: Any) -> Any:
+            return super().raw(**kwargs)
+
+    class _AsyncFakeUpdateUser(_FakeUpdateUser):
+        async def __call__(self, **kwargs: Any) -> Any:
+            return super().__call__(**kwargs)
+
+        async def raw(self, **kwargs: Any) -> Any:
+            return super().raw(**kwargs)
+
+    async def run() -> None:
+        user_item = _full_user_item()
+
+        direct_client = SimpleNamespace(
+            users=SimpleNamespace(
+                get_user=_AsyncFakeGetUser(typed_result=None),
+                update_user=_AsyncFakeUpdateUser(typed_exception=ValueError("typed update failed")),
+            ),
+            request=_AsyncRequestRecorder(
+                responses=[
+                    {"Item": {**{k: v for k, v in user_item.items() if k not in {"ProductId", "TrainingPercentComplete", "UpdateCustomFields"}}, "Site": {"ProductId": user_item["ProductId"]}}},
+                    {"updated": True},
+                    {"Item": {**user_item, "PhotoId": None}},
+                ]
+            ),
+        )
+
+        assert await silver_runtime._remove_profile_picture_async(
+            direct_client,
+            user_id="user-123",
+            timeout=None,
+            wait_for_consistency=True,
+            consistency_timeout=0.01,
+            consistency_poll_interval=0.0,
+        ) == {"updated": True}
+
+        raw_client = SimpleNamespace(
+            users=SimpleNamespace(
+                get_user=_AsyncFakeGetUser(
+                    typed_exception=ValueError("typed route failed"),
+                    raw_result={"Item": dict(user_item)},
+                ),
+                update_user=_AsyncFakeUpdateUser(raw_result={"updated": True}),
+            ),
+            request=_AsyncRequestRecorder(
+                responses=[
+                    "not-json",
+                    "not-json",
+                    {"Item": {**user_item, "PhotoId": None}},
+                ]
+            ),
+        )
+
+        assert await silver_runtime._remove_profile_picture_async(
+            raw_client,
+            user_id="user-123",
+            timeout=None,
+            wait_for_consistency=True,
+            consistency_timeout=0.01,
+            consistency_poll_interval=0.0,
+        ) == {"updated": True}
+
+        timed_out_client = SimpleNamespace(
+            users=SimpleNamespace(get_user=_AsyncFakeGetUser(typed_result=None)),
+            request=_AsyncRequestRecorder(responses=[{"Item": {**user_item, "PhotoId": "photo-1"}}]),
+        )
+        with pytest.raises(TimeoutError, match="did not converge"):
+            await silver_runtime._wait_for_profile_photo_state_async(
+                timed_out_client,
+                user_id="user-123",
+                timeout=None,
+                consistency_timeout=0.0,
+                consistency_poll_interval=0.0,
+                predicate=lambda photo_id: photo_id is None,
+                expectation="PhotoId to become None",
+            )
+
+        handle = _ClosableHandle()
+        captured: dict[str, Any] = {}
+
+        class _AsyncClientStub:
+            def __init__(self) -> None:
+                self.config = ClientConfig(base_url="https://tenant.example/api/v1", api_token="token-123")
+                self.users: Any = None
+
+            async def request(self, method: str, path: str, **kwargs: Any) -> Any:
+                raise AssertionError("request should not be called in this test")
+
+            async def request_silver(self, metadata: Any, **kwargs: Any) -> dict[str, Any]:
+                captured["kwargs"] = kwargs
+                return {"ok": True}
+
+        monkeypatch = pytest.MonkeyPatch()
+        monkeypatch.setattr(
+            silver_runtime,
+            "_prepare_silver_file_uploads",
+            lambda metadata, file_params: ({"File": ("avatar.png", b"png", "image/png")}, [handle]),
+        )
+        try:
+            assert await silver_runtime._request_profile_picture_upload_async(
+                cast(Any, _AsyncClientStub()),
+                _profile_picture_silver_metadata()[0],
+                user_id="user-123",
+                file="avatar.jpg",
+                timeout=5.0,
+            ) == {"ok": True}
+        finally:
+            monkeypatch.undo()
+        assert captured["kwargs"]["path_params"] == {"user_id": "user-123"}
+        assert handle.closed is True
+
+    asyncio.run(run())
