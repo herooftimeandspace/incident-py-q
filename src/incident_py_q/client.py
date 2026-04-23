@@ -151,6 +151,7 @@ class Client:
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> dict[str, Any] | list[Any] | None:
@@ -163,6 +164,7 @@ class Client:
             operation=operation,
             params=dict(params) if params else None,
             json_body=json,
+            files=dict(files) if files else None,
             headers=dict(headers) if headers else None,
             timeout=timeout,
         )
@@ -185,6 +187,7 @@ class Client:
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> dict[str, Any] | list[Any] | None:
@@ -201,6 +204,7 @@ class Client:
             operation=operation,
             params=dict(params) if params else None,
             json_body=json,
+            files=dict(files) if files else None,
             headers=dict(headers) if headers else None,
             timeout=timeout,
             silver_route=metadata.route,
@@ -213,8 +217,9 @@ class Client:
         path_params: dict[str, Any] | None,
         params: dict[str, Any] | None,
         json_body: Any | None,
-        headers: dict[str, str] | None,
-        timeout: float | None,
+        files: dict[str, Any] | None = None,
+        headers: dict[str, str] | None = None,
+        timeout: float | None = None,
     ) -> dict[str, Any] | list[Any] | None:
         rendered_path = render_path(operation.path_template, path_params)
         return self._request_with_operation(
@@ -223,6 +228,7 @@ class Client:
             operation=operation,
             params=params,
             json_body=json_body,
+            files=files,
             headers=headers,
             timeout=timeout,
         )
@@ -235,10 +241,13 @@ class Client:
         operation: OperationSpec | None,
         params: dict[str, Any] | None,
         json_body: Any | None,
-        headers: dict[str, str] | None,
-        timeout: float | None,
+        files: dict[str, Any] | None = None,
+        headers: dict[str, str] | None = None,
+        timeout: float | None = None,
         silver_route: str | None = None,
     ) -> dict[str, Any] | list[Any] | None:
+        if json_body is not None and files is not None:
+            raise ValueError("json and files cannot be used together in the same request.")
         method_upper = method.upper()
         url = _build_url(self._config.base_url, rendered_path)
         merged_headers = _merge_headers(self._config, headers)
@@ -262,6 +271,7 @@ class Client:
                     url,
                     params=params,
                     json=json_body,
+                    files=files,
                     headers=merged_headers,
                     timeout=request_timeout,
                 )
@@ -440,6 +450,7 @@ class AsyncClient:
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> dict[str, Any] | list[Any] | None:
@@ -452,6 +463,7 @@ class AsyncClient:
             operation=operation,
             params=dict(params) if params else None,
             json_body=json,
+            files=dict(files) if files else None,
             headers=dict(headers) if headers else None,
             timeout=timeout,
         )
@@ -474,6 +486,7 @@ class AsyncClient:
         path_params: Mapping[str, Any] | None = None,
         params: Mapping[str, Any] | None = None,
         json: Any | None = None,
+        files: Mapping[str, Any] | None = None,
         headers: Mapping[str, str] | None = None,
         timeout: float | None = None,
     ) -> dict[str, Any] | list[Any] | None:
@@ -490,6 +503,7 @@ class AsyncClient:
             operation=operation,
             params=dict(params) if params else None,
             json_body=json,
+            files=dict(files) if files else None,
             headers=dict(headers) if headers else None,
             timeout=timeout,
             silver_route=metadata.route,
@@ -502,8 +516,9 @@ class AsyncClient:
         path_params: dict[str, Any] | None,
         params: dict[str, Any] | None,
         json_body: Any | None,
-        headers: dict[str, str] | None,
-        timeout: float | None,
+        files: dict[str, Any] | None = None,
+        headers: dict[str, str] | None = None,
+        timeout: float | None = None,
     ) -> dict[str, Any] | list[Any] | None:
         rendered_path = render_path(operation.path_template, path_params)
         return await self._request_with_operation(
@@ -512,6 +527,7 @@ class AsyncClient:
             operation=operation,
             params=params,
             json_body=json_body,
+            files=files,
             headers=headers,
             timeout=timeout,
         )
@@ -524,10 +540,13 @@ class AsyncClient:
         operation: OperationSpec | None,
         params: dict[str, Any] | None,
         json_body: Any | None,
-        headers: dict[str, str] | None,
-        timeout: float | None,
+        files: dict[str, Any] | None = None,
+        headers: dict[str, str] | None = None,
+        timeout: float | None = None,
         silver_route: str | None = None,
     ) -> dict[str, Any] | list[Any] | None:
+        if json_body is not None and files is not None:
+            raise ValueError("json and files cannot be used together in the same request.")
         method_upper = method.upper()
         url = _build_url(self._config.base_url, rendered_path)
         merged_headers = _merge_headers(self._config, headers)
@@ -551,6 +570,7 @@ class AsyncClient:
                     url,
                     params=params,
                     json=json_body,
+                    files=files,
                     headers=merged_headers,
                     timeout=request_timeout,
                 )

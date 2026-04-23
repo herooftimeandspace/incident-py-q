@@ -37,6 +37,19 @@ def _gh_json(*args: str) -> Any:
     return json.loads(result.stdout)
 
 
+def _associated_pulls(repo: str, sha: str, *, default_label: str) -> Any:
+    try:
+        return _gh_json("api", f"repos/{repo}/commits/{sha}/pulls")
+    except subprocess.CalledProcessError as exc:
+        stderr = exc.stderr.strip() if exc.stderr else f"gh exited with status {exc.returncode}"
+        print(
+            f"Could not resolve pull requests associated with {sha}; "
+            f"defaulting to {default_label}. Reason: {stderr}",
+            file=sys.stderr,
+        )
+        return []
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", required=True)
@@ -45,7 +58,7 @@ def main() -> int:
     parser.add_argument("--default-label", default="semver:patch")
     args = parser.parse_args()
 
-    pulls = _gh_json("api", f"repos/{args.repo}/commits/{args.sha}/pulls")
+    pulls = _associated_pulls(args.repo, args.sha, default_label=args.default_label)
     pr_number, label = resolve_promotion_semver_label(
         pulls,
         base_ref=args.base_ref,
