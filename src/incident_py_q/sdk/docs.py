@@ -255,8 +255,8 @@ def render_silver_namespace_reference(
     ]
     for method in methods:
         lines.extend(_render_silver_method(method))
-    for method in silver_manual:
-        lines.extend(_render_manual_silver_method(method))
+    for manual_method in silver_manual:
+        lines.extend(_render_manual_silver_method(manual_method))
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -932,9 +932,9 @@ def _render_silver_namespace_stub(
         lines.append(
             f"    {'async ' if async_mode else ''}def {method.method_name}{_silver_stub_signature(method)}: ..."
         )
-    for method in manual_methods:
+    for manual_method in manual_methods:
         lines.append(
-            f"    {'async ' if async_mode else ''}def {method.method_name}{_manual_silver_stub_signature(method)}: ..."
+            f"    {'async ' if async_mode else ''}def {manual_method.method_name}{_manual_silver_stub_signature(manual_method)}: ..."
         )
     return lines
 

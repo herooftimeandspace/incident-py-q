@@ -242,6 +242,7 @@ def test_async_runtime_helper_and_namespace_merge() -> None:
                 api_token="token",
                 app_headers={"X-App-Token": "secret"},
             )
+            self.users: Any = None
 
         async def request(self, method: str, path: str, **kwargs: Any) -> dict[str, Any]:
             captured["request_method"] = method

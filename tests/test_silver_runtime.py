@@ -7,7 +7,7 @@ import struct
 from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any
+from typing import Any, cast
 
 import httpx
 import pytest
@@ -148,6 +148,10 @@ class _RequestRecorder:
         if self.responses:
             return self.responses.pop(0)
         raise AssertionError(f"unexpected request call {method} {path}")
+
+
+def _client_any(client: Any) -> Any:
+    return cast(Any, client)
 
 
 def _profile_picture_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
@@ -477,10 +481,13 @@ def test_client_silver_remove_profile_picture_uses_minimal_safe_payload(
         api_token="token-123",
         registry=tiny_registry,
     )
-    client.users = SimpleNamespace(get_user=get_user, update_user=update_user)
-    client.request = _RequestRecorder()
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=get_user, update_user=update_user)
+    client_any.request = _RequestRecorder()
     try:
-        assert client.silver.profiles.remove_profile_picture(user_id="user-123") == {"updated": True}
+        assert cast(Any, client.silver.profiles.remove_profile_picture(user_id="user-123")) == {
+            "updated": True
+        }
     finally:
         client.close()
 
@@ -538,10 +545,13 @@ def test_client_silver_remove_profile_picture_falls_back_to_raw_only_after_typed
         api_token="token-123",
         registry=tiny_registry,
     )
-    client.users = SimpleNamespace(get_user=get_user, update_user=update_user)
-    client.request = request
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=get_user, update_user=update_user)
+    client_any.request = request
     try:
-        assert client.silver.profiles.remove_profile_picture(user_id="user-123") == {"updated": True}
+        assert cast(Any, client.silver.profiles.remove_profile_picture(user_id="user-123")) == {
+            "updated": True
+        }
     finally:
         client.close()
 
@@ -580,10 +590,14 @@ def test_async_client_silver_remove_profile_picture_uses_minimal_safe_payload(
             api_token="token-123",
             registry=tiny_registry,
         )
-        client.users = SimpleNamespace(get_user=get_user, update_user=update_user)
-        client.request = _RequestRecorder()
+        client_any = _client_any(client)
+        client_any.users = SimpleNamespace(get_user=get_user, update_user=update_user)
+        client_any.request = _RequestRecorder()
         try:
-            assert await client.silver.profiles.remove_profile_picture(user_id="user-123") == {
+            assert cast(
+                Any,
+                await client.silver.profiles.remove_profile_picture(user_id="user-123"),
+            ) == {
                 "updated": True
             }
         finally:
@@ -617,10 +631,13 @@ def test_client_silver_remove_profile_picture_falls_back_to_direct_json_route_wh
         api_token="token-123",
         registry=tiny_registry,
     )
-    client.users = SimpleNamespace(get_user=get_user, update_user=update_user)
-    client.request = request
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=get_user, update_user=update_user)
+    client_any.request = request
     try:
-        assert client.silver.profiles.remove_profile_picture(user_id="user-123") == {"updated": True}
+        assert cast(Any, client.silver.profiles.remove_profile_picture(user_id="user-123")) == {
+            "updated": True
+        }
     finally:
         client.close()
 
@@ -658,14 +675,18 @@ def test_client_silver_remove_profile_picture_waits_for_photo_id_to_clear(
         api_token="token-123",
         registry=tiny_registry,
     )
-    client.users = SimpleNamespace(get_user=get_user, update_user=update_user)
-    client.request = request
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=get_user, update_user=update_user)
+    client_any.request = request
     try:
-        assert client.silver.profiles.remove_profile_picture(
+        assert cast(
+            Any,
+            client.silver.profiles.remove_profile_picture(
             user_id="user-123",
             wait_for_consistency=True,
             consistency_timeout=0.01,
             consistency_poll_interval=0.0,
+            ),
         ) == {"updated": True}
     finally:
         client.close()
@@ -693,7 +714,8 @@ def test_client_silver_profile_picture_upload_waits_for_expected_file_id(
         api_token="token-123",
         registry=tiny_registry,
     )
-    client.users = SimpleNamespace(get_user=_FakeGetUser(typed_result=None))
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=_FakeGetUser(typed_result=None))
     request = _RequestRecorder(
         responses=[
             {"Item": {**_full_user_item(), "PhotoId": "photo-1"}},
@@ -701,7 +723,7 @@ def test_client_silver_profile_picture_upload_waits_for_expected_file_id(
             {"Item": {**_full_user_item(), "PhotoId": "photo-2"}},
         ]
     )
-    client.request = request
+    client_any.request = request
     try:
         assert client.silver.profiles.post_profile_picture(
             user_id="user-123",
@@ -737,7 +759,8 @@ def test_client_silver_profile_picture_upload_waits_for_changed_photo_id_when_re
         api_token="token-123",
         registry=tiny_registry,
     )
-    client.users = SimpleNamespace(get_user=_FakeGetUser(typed_result=None))
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=_FakeGetUser(typed_result=None))
     request = _RequestRecorder(
         responses=[
             {"Item": {**_full_user_item(), "PhotoId": "photo-1"}},
@@ -745,7 +768,7 @@ def test_client_silver_profile_picture_upload_waits_for_changed_photo_id_when_re
             {"Item": {**_full_user_item(), "PhotoId": "photo-9"}},
         ]
     )
-    client.request = request
+    client_any.request = request
     try:
         assert client.silver.profiles.post_profile_picture(
             user_id="user-123",
@@ -778,14 +801,15 @@ def test_client_silver_profile_picture_upload_raises_timeout_when_photo_id_does_
         api_token="token-123",
         registry=tiny_registry,
     )
-    client.users = SimpleNamespace(get_user=_FakeGetUser(typed_result=None))
+    client_any = _client_any(client)
+    client_any.users = SimpleNamespace(get_user=_FakeGetUser(typed_result=None))
     request = _RequestRecorder(
         responses=[
             {"Item": {**_full_user_item(), "PhotoId": "photo-1"}},
             {"Item": {**_full_user_item(), "PhotoId": "photo-1"}},
         ]
     )
-    client.request = request
+    client_any.request = request
     try:
         with pytest.raises(TimeoutError, match="did not converge"):
             client.silver.profiles.post_profile_picture(
