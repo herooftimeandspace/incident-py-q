@@ -80,7 +80,8 @@ def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
     assert "apps: AsyncSilverAppsNamespace" in stub
     assert "from os import PathLike" in stub
     assert "def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None" in stub
-    assert "def post_profile_picture(self, *, user_id: str = ..., file: str | PathLike[str] = ..., timeout: float | None = None) -> _JSONPayload: ..." in stub
+    assert "def post_profile_picture(self, *, user_id: str = ..., file: str | PathLike[str] = ..., wait_for_consistency: bool = False, consistency_timeout: float = 10.0, consistency_poll_interval: float = 1.0, timeout: float | None = None) -> _JSONPayload: ..." in stub
+    assert "def remove_profile_picture(self, *, user_id: str = ..., wait_for_consistency: bool = False, consistency_timeout: float = 10.0, consistency_poll_interval: float = 1.0, timeout: float | None = None) -> ItemUpdateResponseOfUser: ..." in stub
     assert "post_my_picture" not in stub
     assert stub.count("# OperationId: Things_GetThings") == 1
 
@@ -123,5 +124,16 @@ def test_render_silver_profiles_reference_documents_png_normalization() -> None:
 
     page = render_silver_namespace_reference(("profiles",), profiles)
 
-    assert "converts it to PNG" in page
-    assert "uploads a PNG no larger than 1 MB" in page
+    assert "JPG/JPEG" in page
+    assert "PNG, GIF, WEBP" in page
+    assert "BMP" in page
+    assert "largest centered square crop" in page
+    assert "The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`" in page
+    assert "converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG" in page
+    assert "wait_for_consistency=True" in page
+    assert "some tenants accept the write first and update `PhotoId` a moment later" in page
+    assert "uploaded PNG payload stays at or below 1 MB" in page
+    assert "### `remove_profile_picture`" in page
+    assert "No public `.raw(...)`; `.raw(...)` is used only as an internal fallback" in page
+    assert "smallest proven-safe `UpdateUserRequest`" in page
+    assert "explicit `/api/v1.0/users/{user_id}` JSON route" in page

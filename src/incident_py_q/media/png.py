@@ -18,8 +18,15 @@ def prepare_png_upload(
     source: str | PathLike[str],
     *,
     max_bytes: int = MAX_PNG_UPLOAD_BYTES,
+    crop_to_square: bool = False,
 ) -> tuple[str, bytes, str]:
-    """Convert an input image to a size-limited PNG upload payload."""
+    """Convert an input image to a size-limited PNG upload payload.
+
+    When ``crop_to_square`` is enabled, the image is first cropped to the largest
+    centered square. The profile-picture Silver route uses that mode because the
+    observed resize HAR showed only an upload and a later rendered avatar fetch,
+    not a separate persisted crop endpoint.
+    """
     path = Path(source)
     try:
         with Image.open(path) as image:
@@ -31,6 +38,9 @@ def prepare_png_upload(
         raise ValueError(f"Profile picture upload requires an image file, got {path.name!r}.") from exc
     except OSError as exc:
         raise ValueError(f"Could not read image data from {path.name!r}.") from exc
+
+    if crop_to_square:
+        normalized = _crop_to_center_square(normalized)
 
     payload = _encode_png_under_limit(normalized, max_bytes=max_bytes)
     filename = f"{path.stem}.png"
@@ -45,6 +55,18 @@ def _normalize_image_mode(image: Image.Image) -> Image.Image:
         return image.convert(target_mode)
     target_mode = "RGBA" if "transparency" in image.info else "RGB"
     return image.convert(target_mode)
+
+
+def _crop_to_center_square(image: Image.Image) -> Image.Image:
+    """Return the largest centered square crop from the source image."""
+    width, height = image.size
+    if width == height:
+        return image.copy()
+
+    side = min(width, height)
+    left = (width - side) // 2
+    top = (height - side) // 2
+    return image.crop((left, top, left + side, top + side))
 
 
 def _encode_png_under_limit(image: Image.Image, *, max_bytes: int) -> bytes:
