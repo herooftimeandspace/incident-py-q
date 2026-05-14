@@ -23,6 +23,7 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
 def _walk_and_normalize(node: Any) -> Any:
     if isinstance(node, dict):
         _normalize_nullable(node)
+        _normalize_integer_enum_flags(node)
         for value in node.values():
             _walk_and_normalize(value)
     elif isinstance(node, list):
@@ -48,6 +49,50 @@ def _normalize_nullable(schema: dict[str, Any]) -> None:
         schema["anyOf"] = any_of
         if description:
             schema["description"] = description
+
+
+def _normalize_integer_enum_flags(schema: dict[str, Any]) -> None:
+    """Relax OpenAPI enum constraints for integer bitmask extension schemas.
+
+    Swagger/OpenAPI's standard `enum` keyword describes a closed list of exact
+    values. Incident IQ also emits `x-enumFlags: true` for some integer enums,
+    which means the listed values are named bit flags rather than the full set of
+    accepted values. Runtime response validation must therefore accept composite
+    bitmasks such as `127` for a schema whose largest documented flag is `64`.
+
+    The normalized contract keeps the schema integer-shaped, preserves extension
+    metadata such as `x-enumNames`, removes the exact-value enum, and bounds the
+    value to the non-negative mask range covered by the highest documented flag.
+    This keeps ordinary integer validation useful without rejecting unnamed or
+    composite flag combinations that are valid live API behavior.
+    """
+    if schema.get("x-enumFlags") is not True:
+        return
+    if schema.get("type") != "integer":
+        return
+
+    enum_values = schema.get("enum")
+    if not isinstance(enum_values, list):
+        return
+
+    integer_values = [value for value in enum_values if type(value) is int]
+    if len(integer_values) != len(enum_values) or not integer_values:
+        return
+
+    highest_flag = max(integer_values)
+    if highest_flag < 0:
+        return
+
+    schema.pop("enum", None)
+    schema.setdefault("minimum", 0)
+    schema.setdefault("maximum", _highest_bitmask_value(highest_flag))
+
+
+def _highest_bitmask_value(highest_flag: int) -> int:
+    """Return the largest bitmask value covered by a documented flag value."""
+    if highest_flag == 0:
+        return 0
+    return (1 << highest_flag.bit_length()) - 1
 
 
 def _normalize_ticket_status_workflow_id_drift(document: dict[str, Any]) -> None:
