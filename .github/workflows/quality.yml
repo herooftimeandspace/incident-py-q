@@ -36,16 +36,56 @@ jobs:
         run: |
           set -euo pipefail
 
-          check_id="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${PR_HEAD_SHA}/check-runs" \
-            --jq '.check_runs[] | select(.name=="unit" and .status=="completed" and .conclusion=="success") | .id' \
-            | head -n 1 || true)"
+          max_attempts=30
+          sleep_seconds=10
 
-          if [ -z "${check_id}" ]; then
-            echo "No successful authoritative unit check was found for dev SHA ${PR_HEAD_SHA}."
-            exit 1
-          fi
+          # GitHub can start the dev->staging pull_request workflow before the
+          # matching dev push workflow has created or surfaced its unit check.
+          # Only the push-triggered quality workflow is authoritative here; the
+          # pull_request workflow is this guard and must not satisfy itself.
+          for attempt in $(seq 1 "${max_attempts}"); do
+            run_id="$(gh api --method GET "repos/${GITHUB_REPOSITORY}/actions/workflows/quality.yml/runs" \
+              -f event=push \
+              -f branch=dev \
+              -f head_sha="${PR_HEAD_SHA}" \
+              -F per_page=10 \
+              --jq '.workflow_runs | sort_by(.created_at) | reverse | .[0].id // empty' \
+              || true)"
 
-          echo "Authoritative dev push unit check ${check_id} already succeeded for ${PR_HEAD_SHA}."
+            if [ -n "${run_id}" ]; then
+              unit_job="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/jobs" \
+                --jq '.jobs[] | select(.name=="unit") | [.id, .status, (.conclusion // ""), .html_url] | @tsv' \
+                | head -n 1 \
+                || true)"
+
+              if [ -n "${unit_job}" ]; then
+                IFS=$'\t' read -r unit_id unit_status unit_conclusion unit_url <<< "${unit_job}"
+
+                if [ "${unit_status}" = "completed" ] && [ "${unit_conclusion}" = "success" ]; then
+                  echo "Authoritative dev push unit check ${unit_id} succeeded for ${PR_HEAD_SHA}."
+                  echo "${unit_url}"
+                  exit 0
+                fi
+
+                if [ "${unit_status}" = "completed" ]; then
+                  echo "Authoritative dev push unit check ${unit_id} concluded with ${unit_conclusion}."
+                  echo "${unit_url}"
+                  exit 1
+                fi
+
+                echo "Authoritative dev push unit check ${unit_id} is ${unit_status}; waiting (${attempt}/${max_attempts})."
+              else
+                echo "Authoritative dev push quality run ${run_id} is visible, but its unit job is not yet visible; waiting (${attempt}/${max_attempts})."
+              fi
+            else
+              echo "No authoritative dev push quality run is visible for ${PR_HEAD_SHA}; waiting (${attempt}/${max_attempts})."
+            fi
+
+            sleep "${sleep_seconds}"
+          done
+
+          echo "Timed out waiting for the authoritative dev push unit check for ${PR_HEAD_SHA}."
+          exit 1
 
       - name: Install dependencies
         if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
