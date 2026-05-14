@@ -198,3 +198,84 @@ def test_response_validation_accepts_user_site_missing_known_live_optional_field
                 ]
             },
         )
+
+
+def test_response_validation_accepts_user_missing_training_percent_complete() -> None:
+    registry = build_schema_registry(
+        [
+            {
+                "swagger": "2.0",
+                "info": {"title": "User Controller", "version": "1.0.0"},
+                "paths": {
+                    "/users": {
+                        "get": {
+                            "operationId": "User_GetUsersLegacy",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ListGetResponseOfUser"}
+                                }
+                            },
+                        }
+                    }
+                },
+                "definitions": {
+                    "ListGetResponseOfUser": {
+                        "type": "object",
+                        "required": ["Items"],
+                        "properties": {
+                            "Items": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/User"},
+                            }
+                        },
+                    },
+                    "User": {
+                        "type": "object",
+                        "required": [
+                            "UserId",
+                            "IsDeleted",
+                            "TrainingPercentComplete",
+                            "Portal",
+                        ],
+                        "properties": {
+                            "UserId": {"type": "string"},
+                            "IsDeleted": {"type": "boolean"},
+                            "TrainingPercentComplete": {"type": "integer"},
+                            "Portal": {"type": "integer"},
+                        },
+                    },
+                },
+            }
+        ]
+    )
+    operation = registry.match_operation("GET", "/users")
+    assert operation is not None
+
+    validator = ResponseSchemaValidator(registry)
+    validator.validate(
+        operation,
+        status_code=200,
+        payload={
+            "Items": [
+                {
+                    "UserId": "user-1",
+                    "IsDeleted": False,
+                    "Portal": 2,
+                }
+            ]
+        },
+    )
+
+    with pytest.raises(SchemaValidationError):
+        validator.validate(
+            operation,
+            status_code=200,
+            payload={
+                "Items": [
+                    {
+                        "UserId": "user-1",
+                        "IsDeleted": False,
+                    }
+                ]
+            },
+        )
