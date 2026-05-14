@@ -296,6 +296,87 @@ def test_client_exposes_explicit_silver_surface(
         client.close()
 
 
+@respx.mock
+def test_client_silver_current_user_assigned_tickets_uses_ui_services_queue(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    payload = {"Items": [{"TicketId": "ticket-1", "TicketStatusName": "Open"}], "ItemCount": 1}
+    route = respx.post("https://tenant.example/services/tickets/-/-/AssignedToMe_Unassigned").mock(
+        return_value=httpx.Response(200, json=payload)
+    )
+
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        assert client.silver.tickets.list_current_user_assigned_tickets(
+            page_size=25,
+            sort_by="TicketPriority",
+            sort_direction="Descending",
+        ) == payload
+    finally:
+        client.close()
+
+    assert route.call_count == 1
+    sent_params = dict(route.calls[0].request.url.params)
+    assert sent_params == {
+        "$s": "25",
+        "$o": "TicketPriority",
+        "$d": "Descending",
+    }
+
+
+def test_client_silver_current_user_assigned_tickets_rejects_invalid_sort_direction(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        with pytest.raises(ValueError, match="sort_direction"):
+            client.silver.tickets.list_current_user_assigned_tickets(
+                sort_direction="NewestFirst",
+            )
+    finally:
+        client.close()
+
+
+@respx.mock
+def test_async_client_silver_current_user_assigned_tickets_uses_ui_services_queue(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    async def run() -> None:
+        payload = {"Items": [{"TicketId": "ticket-1"}], "ItemCount": 1}
+        route = respx.post("https://tenant.example/services/tickets/-/-/AssignedToMe_Unassigned").mock(
+            return_value=httpx.Response(200, json=payload)
+        )
+
+        client = AsyncClient(
+            base_url="https://tenant.example",
+            api_token="token-123",
+            registry=tiny_registry,
+        )
+        try:
+            assert await client.silver.tickets.list_current_user_assigned_tickets(
+                page_size=10,
+            ) == payload
+        finally:
+            await client.close()
+
+        assert route.call_count == 1
+        assert dict(route.calls[0].request.url.params) == {
+            "$s": "10",
+            "$o": "TicketModifiedDate",
+            "$d": "Descending",
+        }
+
+    asyncio.run(run())
+
+
 @pytest.mark.parametrize(
     ("extension", "image_format"),
     [

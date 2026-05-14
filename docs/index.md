@@ -11,7 +11,7 @@ It combines:
 ## Design Highlights
 
 - Bearer token auth by default.
-- Tenant base URL is explicit and configurable per client instance.
+- Tenant base URL is explicit and configurable per client instance; bare tenant roots are normalized to `/api/v1.0`.
 - Runtime never downloads schema documents.
 - Integration tests use separate `INCIDENTIQ_TEST_*` variables for smoke usage.
 
@@ -21,7 +21,7 @@ It combines:
 from incident_py_q import Client
 
 client = Client(
-    base_url="https://your-tenant.incidentiq.com/api/v1",
+    base_url="https://your-tenant.incidentiq.com",
     api_token="your-token",
 )
 
