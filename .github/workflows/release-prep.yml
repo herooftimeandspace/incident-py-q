@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  checks: read
   pull-requests: read
 
 jobs:
@@ -58,7 +59,22 @@ jobs:
           existing_head_version="$(python -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])')"
 
           if [ "${existing_head_version}" = "${desired_version}" ] && git merge-base --is-ancestor origin/staging HEAD; then
-            echo "Promotion branch already prepared for v${desired_version}."
+            current_head_sha="$(git rev-parse HEAD)"
+            release_prep_check_count="$(
+              gh api "repos/${GH_REPO}/commits/${current_head_sha}/check-runs" \
+                --jq '[.check_runs[] | select(.name == "release-prep")] | length'
+            )"
+
+            if [ "${release_prep_check_count}" != "0" ]; then
+              echo "Promotion branch already prepared for v${desired_version}; release-prep already has check runs for ${current_head_sha}."
+              exit 0
+            fi
+
+            echo "Promotion branch already prepared for v${desired_version}, but ${current_head_sha} has no release-prep check run. Pushing an empty commit to retrigger required pull_request checks."
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit --allow-empty -m "Retrigger promotion PR checks [skip prepare-release-promotion]"
+            git push "https://x-access-token:${GH_PR_TOKEN}@github.com/${GH_REPO}.git" HEAD:"${GH_HEAD_REF}"
             exit 0
           fi
 
