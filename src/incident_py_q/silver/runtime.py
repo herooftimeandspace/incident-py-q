@@ -30,6 +30,8 @@ PreparedFiles = dict[str, tuple[str, Any, str]]
 _PROFILE_PICTURE_UPLOAD = ("POST", "/api/v1.0/profiles/{user_id}/picture")
 _DIRECT_USER_ROUTE = "/api/v1.0/users/{user_id}"
 _CURRENT_USER_ASSIGNED_TICKETS_ROUTE = "/services/tickets/-/-/AssignedToMe_Unassigned"
+_CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_ROUTE = "/services/tickets"
+_CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_BODY = {"Schema": "AssignedToMe_Unassigned"}
 _CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS = {
     "Client": "WebBrowser",
     "Accept": "application/json, text/plain, */*",
@@ -1035,7 +1037,11 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                 "direction parameters and does not send a mutation body. If the UI-shaped request "
                 "returns 404, the helper retries once with the caller's configured client header "
                 "for older tenants that accepted the pre-0.2.5 SDK request shape, then tries the "
-                "Postman-observed legacy sort-query spelling that uses `$s`, `o`, and `d`."
+                "Postman-observed legacy sort-query spelling that uses `$s`, `o`, and `d`. Some "
+                "tenants, including WUSD as validated for issue #73, do not expose the direct "
+                "queue route but do expose the same queue through `POST /services/tickets` with "
+                "`{\"Schema\": \"AssignedToMe_Unassigned\"}`, so that schema body is the final "
+                "read-only fallback."
             ),
             parameters=(
                 SilverManualParameterMetadata(
@@ -1070,6 +1076,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                 "POST /services/tickets/-/-/AssignedToMe_Unassigned",
                 "POST /services/tickets/-/-/AssignedToMe_Unassigned with configured Client header",
                 "POST /services/tickets/-/-/AssignedToMe_Unassigned with legacy o/d sort query",
+                "POST /services/tickets with AssignedToMe_Unassigned schema body",
             ),
         ),
     )
@@ -1319,6 +1326,28 @@ def _current_user_assigned_tickets_metadata() -> SilverMethodMetadata:
     )
 
 
+def _current_user_assigned_tickets_schema_metadata() -> SilverMethodMetadata:
+    """Return synthetic metadata for the schema-body assigned ticket queue route."""
+    return SilverMethodMetadata(
+        namespace_path=("tickets",),
+        method_name="list_current_user_assigned_tickets",
+        http_method="POST",
+        route=_CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_ROUTE,
+        parameters=(),
+        summary="Manual helper fallback for the current-user assigned ticket queue.",
+        description=(
+            "Synthetic route metadata for tenants that reject the direct "
+            "AssignedToMe_Unassigned services route but accept the same read-only queue as a "
+            "schema selector on the generic services ticket search endpoint."
+        ),
+        typed_return="dict[str, Any] | list[Any] | None",
+        raw_return="dict[str, Any] | list[Any] | None",
+        sources=("WUSD live validation for issue #73",),
+        status_codes=(200,),
+        uses_app_headers=False,
+    )
+
+
 def _build_current_user_assigned_ticket_params(
     *,
     page_size: int,
@@ -1387,13 +1416,29 @@ def _list_current_user_assigned_tickets_sync(
     except httpx.HTTPStatusError as exc:
         if exc.response.status_code != 404:
             raise
+    legacy_sort_params = _build_current_user_assigned_ticket_legacy_sort_params(
+        page_size=page_size,
+        sort_by=sort_by,
+        sort_direction=sort_direction,
+    )
+    try:
+        return client.request_silver(
+            metadata,
+            params=legacy_sort_params,
+            headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
+            timeout=timeout,
+        )
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code != 404:
+            raise
     return client.request_silver(
-        metadata,
-        params=_build_current_user_assigned_ticket_legacy_sort_params(
+        _current_user_assigned_tickets_schema_metadata(),
+        params=_build_current_user_assigned_ticket_params(
             page_size=page_size,
             sort_by=sort_by,
             sort_direction=sort_direction,
         ),
+        json=dict(_CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_BODY),
         headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
         timeout=timeout,
     )
@@ -1433,13 +1478,29 @@ async def _list_current_user_assigned_tickets_async(
     except httpx.HTTPStatusError as exc:
         if exc.response.status_code != 404:
             raise
+    legacy_sort_params = _build_current_user_assigned_ticket_legacy_sort_params(
+        page_size=page_size,
+        sort_by=sort_by,
+        sort_direction=sort_direction,
+    )
+    try:
+        return await client.request_silver(
+            metadata,
+            params=legacy_sort_params,
+            headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
+            timeout=timeout,
+        )
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code != 404:
+            raise
     return await client.request_silver(
-        metadata,
-        params=_build_current_user_assigned_ticket_legacy_sort_params(
+        _current_user_assigned_tickets_schema_metadata(),
+        params=_build_current_user_assigned_ticket_params(
             page_size=page_size,
             sort_by=sort_by,
             sort_direction=sort_direction,
         ),
+        json=dict(_CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_BODY),
         headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
         timeout=timeout,
     )

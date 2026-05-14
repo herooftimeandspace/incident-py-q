@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import struct
 from io import BytesIO
 from pathlib import Path
@@ -404,6 +405,53 @@ def test_client_silver_current_user_assigned_tickets_uses_legacy_sort_query_afte
     assert route.calls[2].request.content == b""
 
 
+@respx.mock
+def test_client_silver_current_user_assigned_tickets_uses_schema_body_after_route_404s(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    payload = {"Items": [{"TicketId": "ticket-1", "TicketStatusName": "Open"}], "ItemCount": 1}
+    direct_route = respx.post(
+        "https://tenant.example/services/tickets/-/-/AssignedToMe_Unassigned"
+    ).mock(
+        side_effect=[
+            httpx.Response(404, json={"Message": "not found"}),
+            httpx.Response(404, json={"Message": "not found"}),
+            httpx.Response(404, json={"Message": "not found"}),
+        ]
+    )
+    schema_route = respx.post("https://tenant.example/services/tickets").mock(
+        return_value=httpx.Response(200, json=payload)
+    )
+
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        assert client.silver.tickets.list_current_user_assigned_tickets(
+            page_size=25,
+            sort_by="TicketModifiedDate",
+            sort_direction="Descending",
+        ) == payload
+    finally:
+        client.close()
+
+    assert direct_route.call_count == 3
+    assert schema_route.call_count == 1
+    assert dict(schema_route.calls[0].request.url.params) == {
+        "$s": "25",
+        "$o": "TicketModifiedDate",
+        "$d": "Descending",
+    }
+    assert schema_route.calls[0].request.headers["Client"] == "WebBrowser"
+    assert schema_route.calls[0].request.headers["Accept"] == "application/json, text/plain, */*"
+    assert schema_route.calls[0].request.headers["Content-Type"] == "application/json"
+    assert json.loads(schema_route.calls[0].request.content) == {
+        "Schema": "AssignedToMe_Unassigned"
+    }
+
+
 def test_client_silver_current_user_assigned_tickets_rejects_invalid_sort_direction(
     tiny_registry: SchemaRegistry,
 ) -> None:
@@ -449,6 +497,52 @@ def test_async_client_silver_current_user_assigned_tickets_uses_ui_services_queu
             "$s": "10",
             "$o": "TicketModifiedDate",
             "$d": "Descending",
+        }
+
+    asyncio.run(run())
+
+
+@respx.mock
+def test_async_client_silver_current_user_assigned_tickets_uses_schema_body_after_route_404s(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    async def run() -> None:
+        payload = {"Items": [{"TicketId": "ticket-1"}], "ItemCount": 1}
+        direct_route = respx.post(
+            "https://tenant.example/services/tickets/-/-/AssignedToMe_Unassigned"
+        ).mock(
+            side_effect=[
+                httpx.Response(404, json={"Message": "not found"}),
+                httpx.Response(404, json={"Message": "not found"}),
+                httpx.Response(404, json={"Message": "not found"}),
+            ]
+        )
+        schema_route = respx.post("https://tenant.example/services/tickets").mock(
+            return_value=httpx.Response(200, json=payload)
+        )
+
+        client = AsyncClient(
+            base_url="https://tenant.example",
+            api_token="token-123",
+            registry=tiny_registry,
+        )
+        try:
+            assert await client.silver.tickets.list_current_user_assigned_tickets(
+                page_size=10,
+            ) == payload
+        finally:
+            await client.close()
+
+        assert direct_route.call_count == 3
+        assert schema_route.call_count == 1
+        assert dict(schema_route.calls[0].request.url.params) == {
+            "$s": "10",
+            "$o": "TicketModifiedDate",
+            "$d": "Descending",
+        }
+        assert schema_route.calls[0].request.headers["Client"] == "WebBrowser"
+        assert json.loads(schema_route.calls[0].request.content) == {
+            "Schema": "AssignedToMe_Unassigned"
         }
 
     asyncio.run(run())
