@@ -8,7 +8,7 @@ import os
 import time
 from collections.abc import Mapping
 from typing import Any, cast
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 
 import httpx
 
@@ -30,6 +30,8 @@ from .silver.runtime import (
     build_silver_sdk,
 )
 from .silver.validation import SilverResponseSchemaValidator
+
+_TENANT_ROOT_PATH_PREFIXES = ("/api/", "/services/", "/apps/", "/img/", "/s/")
 
 
 class Client:
@@ -645,6 +647,9 @@ def _build_url(base_url: str, rendered_path: str) -> str:
     if rendered_path.startswith("http://") or rendered_path.startswith("https://"):
         return rendered_path
     safe_path = rendered_path if rendered_path.startswith("/") else f"/{rendered_path}"
+    if safe_path.startswith(_TENANT_ROOT_PATH_PREFIXES):
+        parsed = urlsplit(base_url)
+        return f"{parsed.scheme}://{parsed.netloc}{safe_path}"
     return urljoin(f"{base_url}/", safe_path.lstrip("/"))
 
 

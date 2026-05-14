@@ -20,6 +20,8 @@ Runtime:
 - `INCIDENTIQ_AUTH_MODE` (optional, default `bearer`)
 - `INCIDENTIQ_APP_HEADERS_JSON` (optional JSON object string for app-path calls)
 
+`INCIDENTIQ_BASE_URL` may be either the tenant root, such as `https://your-tenant.incidentiq.com`, or an explicit API prefix such as `https://your-tenant.incidentiq.com/api/v1.0`. Bare tenant roots are normalized to `/api/v1.0` for Golden routes.
+
 Integration smoke tests:
 - `INCIDENTIQ_TEST_BASE_URL`
 - `INCIDENTIQ_TEST_API_TOKEN`
@@ -69,4 +71,5 @@ intune = client.silver.apps.microsoft_intune.lookup_asset(
     serial_number="SER123",
 )
 serial_lookup = client.silver.assets.get_asset_by_serial(serial="SER123")
+assigned = client.silver.tickets.list_current_user_assigned_tickets()
 ```

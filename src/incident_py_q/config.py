@@ -11,6 +11,7 @@ from urllib.parse import ParseResult, urlparse, urlunparse
 from .exceptions import ConfigurationError
 
 AuthMode = Literal["bearer", "raw"]
+_DEFAULT_GOLDEN_API_PREFIX = "/api/v1.0"
 
 
 def _parse_dotenv(path: Path) -> dict[str, str]:
@@ -54,6 +55,8 @@ def _normalize_base_url(base_url: str) -> str:
     if parsed.query or parsed.fragment:
         raise ConfigurationError("base_url must not include query parameters or fragments.")
     normalized_path = parsed.path.rstrip("/")
+    if not normalized_path:
+        normalized_path = _DEFAULT_GOLDEN_API_PREFIX
     sanitized: ParseResult = parsed._replace(path=normalized_path)
     return urlunparse(sanitized)
 
