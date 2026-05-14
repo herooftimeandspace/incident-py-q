@@ -62,6 +62,36 @@ def test_normalize_swagger_document_leaves_non_nullable_values_unchanged() -> No
     assert normalized == source
 
 
+def test_normalize_swagger_document_relaxes_integer_enum_flags_to_bitmask_range() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "VisibilityTypes": {
+                "description": "0 = None\n1 = Everyone\n4 = Requestor\n16 = Agent\n64 = Administrator",
+                "enum": [0, 1, 4, 16, 64],
+                "type": "integer",
+                "x-enumFlags": True,
+                "x-enumNames": ["None", "Everyone", "Requestor", "Agent", "Administrator"],
+            }
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+    visibility_types = normalized["definitions"]["VisibilityTypes"]
+
+    assert source["definitions"]["VisibilityTypes"]["enum"] == [0, 1, 4, 16, 64]
+    assert "enum" not in visibility_types
+    assert visibility_types["minimum"] == 0
+    assert visibility_types["maximum"] == 127
+    assert visibility_types["x-enumFlags"] is True
+    assert visibility_types["x-enumNames"] == [
+        "None",
+        "Everyone",
+        "Requestor",
+        "Agent",
+        "Administrator",
+    ]
+
+
 def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_id_drift() -> None:
     source: dict[str, Any] = {
         "definitions": {
