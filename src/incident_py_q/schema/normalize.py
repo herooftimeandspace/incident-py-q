@@ -12,6 +12,10 @@ _LIVE_OPTIONAL_SITE_FIELDS = {
     "EnableUsersnap",
 }
 
+_LIVE_OPTIONAL_USER_FIELDS = {
+    "TrainingPercentComplete",
+}
+
 
 def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     """Return a normalized copy of a Swagger 2.0 document.
@@ -25,6 +29,7 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     _walk_and_normalize(normalized)
     _normalize_ticket_status_workflow_id_drift(normalized)
     _normalize_site_required_field_drift(normalized)
+    _normalize_user_required_field_drift(normalized)
     return normalized
 
 
@@ -152,4 +157,29 @@ def _normalize_site_required_field_drift(document: dict[str, Any]) -> None:
         return
     site["required"] = [
         field for field in required if field not in _LIVE_OPTIONAL_SITE_FIELDS
+    ]
+
+
+def _normalize_user_required_field_drift(document: dict[str, Any]) -> None:
+    """Treat known live-optional `User` fields as optional in runtime contracts.
+
+    Incident IQ's published Stoplight controller marks `TrainingPercentComplete`
+    as required on `User`, but live `GET /users` list responses can omit it while
+    still carrying the stable identifiers, timestamps, role, status, and portal
+    fields needed by callers. The SDK keeps the property in the schema for
+    tenants that return it, but removes it from the normalized required list so
+    read-only user list calls do not fail solely because this progress metadata
+    is absent.
+    """
+    definitions = document.get("definitions")
+    if not isinstance(definitions, dict):
+        return
+    user = definitions.get("User")
+    if not isinstance(user, dict):
+        return
+    required = user.get("required")
+    if not isinstance(required, list):
+        return
+    user["required"] = [
+        field for field in required if field not in _LIVE_OPTIONAL_USER_FIELDS
     ]

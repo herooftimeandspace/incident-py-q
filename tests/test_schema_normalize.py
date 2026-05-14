@@ -171,3 +171,39 @@ def test_normalize_swagger_document_relaxes_live_site_required_field_drift() -> 
         "ProductId",
         "SystemUserId",
     ]
+
+
+def test_normalize_swagger_document_relaxes_live_user_training_progress_drift() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "User": {
+                "type": "object",
+                "required": [
+                    "UserId",
+                    "IsDeleted",
+                    "TrainingPercentComplete",
+                    "Portal",
+                ],
+                "properties": {
+                    "UserId": {"type": "string"},
+                    "IsDeleted": {"type": "boolean"},
+                    "TrainingPercentComplete": {"type": "integer"},
+                    "Portal": {"type": "integer"},
+                },
+            }
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert source["definitions"]["User"]["required"] == [
+        "UserId",
+        "IsDeleted",
+        "TrainingPercentComplete",
+        "Portal",
+    ]
+    assert normalized["definitions"]["User"]["required"] == [
+        "UserId",
+        "IsDeleted",
+        "Portal",
+    ]
