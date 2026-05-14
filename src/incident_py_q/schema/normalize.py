@@ -21,6 +21,7 @@ _LIVE_OPTIONAL_USER_CUSTOM_FIELD_VALUE_FIELDS = {
 }
 
 _LIVE_OPTIONAL_TICKET_STATUS_FIELDS = {
+    "DisplayOrder",
     "WorkflowId",
     "WorkflowStepId",
 }
@@ -126,14 +127,14 @@ def _highest_bitmask_value(highest_flag: int) -> int:
 def _normalize_ticket_status_required_field_drift(document: dict[str, Any]) -> None:
     """Treat known live-optional `TicketStatus` workflow fields as optional.
 
-    Incident IQ's bundled Stoplight controller marks `WorkflowId` and
-    `WorkflowStepId` as required on `TicketStatus`, but live
-    `GET /tickets/statuses` responses can omit both workflow identifiers while
-    still carrying the stable ticket status type identifier and human-readable
-    status metadata used by callers. The SDK keeps both upstream properties in
-    the schema so callers can read them when tenants provide them, but removes
-    only those two fields from the normalized required list so read-only status
-    lookup does not fail solely because of this known upstream drift.
+    Incident IQ's bundled Stoplight controller marks `DisplayOrder`,
+    `WorkflowId`, and `WorkflowStepId` as required on `TicketStatus`, but live
+    `GET /tickets/statuses` responses can omit ordering and workflow metadata
+    while still carrying the stable ticket status type identifier and
+    human-readable status metadata used by callers. The SDK keeps those upstream
+    properties in the schema so callers can read them when tenants provide them,
+    but removes only those fields from the normalized required list so read-only
+    status lookup does not fail solely because of this known upstream drift.
     """
     definitions = document.get("definitions")
     if not isinstance(definitions, dict):

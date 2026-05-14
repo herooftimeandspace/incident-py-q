@@ -92,6 +92,27 @@ def test_normalize_swagger_document_relaxes_integer_enum_flags_to_bitmask_range(
     ]
 
 
+def test_normalize_swagger_document_relaxes_zero_only_integer_enum_flags() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "NoFlags": {
+                "description": "0 = None",
+                "enum": [0],
+                "type": "integer",
+                "x-enumFlags": True,
+                "x-enumNames": ["None"],
+            }
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+    no_flags = normalized["definitions"]["NoFlags"]
+
+    assert "enum" not in no_flags
+    assert no_flags["minimum"] == 0
+    assert no_flags["maximum"] == 0
+
+
 def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_field_drift() -> None:
     source: dict[str, Any] = {
         "definitions": {
@@ -101,12 +122,14 @@ def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_field_dr
                     "TicketStatusTypeId",
                     "WorkflowId",
                     "WorkflowStepId",
+                    "DisplayOrder",
                     "IsClosed",
                 ],
                 "properties": {
                     "TicketStatusTypeId": {"type": "string"},
                     "WorkflowId": {"type": "string"},
                     "WorkflowStepId": {"type": "string"},
+                    "DisplayOrder": {"type": "integer"},
                     "IsClosed": {"type": "boolean"},
                 },
             }
@@ -119,12 +142,42 @@ def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_field_dr
         "TicketStatusTypeId",
         "WorkflowId",
         "WorkflowStepId",
+        "DisplayOrder",
         "IsClosed",
     ]
     assert normalized["definitions"]["TicketStatus"]["required"] == [
         "TicketStatusTypeId",
         "IsClosed",
     ]
+
+
+def test_normalize_swagger_document_ignores_ticket_status_without_required_fields() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "TicketStatus": {
+                "type": "object",
+                "properties": {
+                    "TicketStatusTypeId": {"type": "string"},
+                    "DisplayOrder": {"type": "integer"},
+                },
+            },
+            "TicketStatusWithoutList": {
+                "type": "object",
+                "required": "TicketStatusTypeId",
+                "properties": {
+                    "TicketStatusTypeId": {"type": "string"},
+                    "DisplayOrder": {"type": "integer"},
+                },
+            },
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert normalized == source
+
+    malformed_definitions: dict[str, Any] = {"definitions": []}
+    assert normalize_swagger_document(malformed_definitions) == malformed_definitions
 
 
 def test_normalize_swagger_document_relaxes_live_site_required_field_drift() -> None:
