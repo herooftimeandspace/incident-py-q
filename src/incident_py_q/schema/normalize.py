@@ -5,6 +5,13 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any
 
+_LIVE_OPTIONAL_SITE_FIELDS = {
+    "DefaultWorkflowId",
+    "DefaultWorkflowInitialStepId",
+    "EnableAnalytics",
+    "EnableUsersnap",
+}
+
 
 def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     """Return a normalized copy of a Swagger 2.0 document.
@@ -17,6 +24,7 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     normalized: dict[str, Any] = deepcopy(document)
     _walk_and_normalize(normalized)
     _normalize_ticket_status_workflow_id_drift(normalized)
+    _normalize_site_required_field_drift(normalized)
     return normalized
 
 
@@ -116,3 +124,32 @@ def _normalize_ticket_status_workflow_id_drift(document: dict[str, Any]) -> None
     if not isinstance(required, list):
         return
     ticket_status["required"] = [field for field in required if field != "WorkflowId"]
+
+
+def _normalize_site_required_field_drift(document: dict[str, Any]) -> None:
+    """Treat known live-optional `Site` fields as optional in runtime contracts.
+
+    Incident IQ's published Stoplight controllers mark several `Site` fields as
+    required even though live responses can omit them in nested payloads. This is
+    currently visible in `GET /users`, where user list items can include a
+    compact `Site` object without default workflow or analytics flags. Silver's
+    asset serial validation already accepts the same drift for `Site`; Golden
+    response validation needs the same narrow relaxation so documented read-only
+    routes do not fail solely because a nested site is compact.
+
+    The properties remain in the schema for tenants that return them. Only the
+    `required` list is relaxed, and only for the four fields observed or already
+    captured by Silver's production-shape override.
+    """
+    definitions = document.get("definitions")
+    if not isinstance(definitions, dict):
+        return
+    site = definitions.get("Site")
+    if not isinstance(site, dict):
+        return
+    required = site.get("required")
+    if not isinstance(required, list):
+        return
+    site["required"] = [
+        field for field in required if field not in _LIVE_OPTIONAL_SITE_FIELDS
+    ]
