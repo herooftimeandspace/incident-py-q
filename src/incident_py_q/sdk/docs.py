@@ -694,6 +694,15 @@ def _render_manual_silver_method(method: SilverManualMethodMetadata) -> list[str
             "- Async validated path: `await client.silver.profiles.remove_profile_picture(user_id=..., wait_for_consistency=True, consistency_timeout=10.0, consistency_poll_interval=1.0, timeout=None)`",
             "",
         ]
+    if method.namespace_path == ("tickets",) and method.method_name == "list_current_user_assigned_tickets":
+        example_lines = [
+            "#### Examples",
+            "",
+            "- Default UI queue: `client.silver.tickets.list_current_user_assigned_tickets(timeout=None)`",
+            "- Priority order: `client.silver.tickets.list_current_user_assigned_tickets(page_size=100, sort_by=\"TicketPriority\", sort_direction=\"Descending\", timeout=None)`",
+            "- Async default queue: `await client.silver.tickets.list_current_user_assigned_tickets(timeout=None)`",
+            "",
+        ]
     lines = [
         f"### `{method.method_name}`",
         "",
@@ -701,7 +710,7 @@ def _render_manual_silver_method(method: SilverManualMethodMetadata) -> list[str
         "",
         f"- Sync: `client.silver.{method.namespace}.{method.method_name}{_manual_silver_signature_suffix(method)}`",
         f"- Async: `await client.silver.{method.namespace}.{method.method_name}{_manual_silver_signature_suffix(method)}`",
-        "- Raw payload: No public `.raw(...)`; `.raw(...)` is used only as an internal fallback if the typed Golden route path cannot carry the required payload shape.",
+        f"- Raw payload: {_manual_silver_raw_payload_note(method)}",
     ]
     if method.backing_routes:
         lines.append(f"- Backing routes: {', '.join(f'`{route}`' for route in method.backing_routes)}")
@@ -727,13 +736,13 @@ def _render_manual_silver_method(method: SilverManualMethodMetadata) -> list[str
             "#### Returns",
             "",
             f"- Typed call return: `{method.typed_return}`",
-            f"- Internal raw fallback return: `{method.raw_return}`",
+            f"- {_manual_silver_return_note(method)}: `{method.raw_return}`",
         ]
     )
     if method.response_model:
         lines.append(f"- Response model: `{method.response_model}`")
     else:
-        lines.append("- Response model: Method-specific Python object")
+        lines.append("- Response model: Raw JSON payload only; this manual helper has no typed response model.")
     lines.extend(["", "---", ""])
     return lines
 
@@ -799,17 +808,77 @@ def _silver_raw_call_example(method: SilverMethodMetadata) -> str:
 def _manual_silver_signature_suffix(method: SilverManualMethodMetadata) -> str:
     parts = []
     for parameter in method.parameters:
-        if parameter.python_name == "wait_for_consistency":
-            placeholder = "False"
-        elif parameter.python_name == "consistency_timeout":
-            placeholder = "10.0"
-        elif parameter.python_name == "consistency_poll_interval":
-            placeholder = "1.0"
-        else:
-            placeholder = "..." if parameter.required else "None"
+        placeholder = _manual_silver_default_display(method, parameter)
         parts.append(f"{parameter.python_name}={placeholder}")
     parts.append("timeout=None")
     return f"({', '.join(parts)})"
+
+
+def _manual_silver_raw_payload_note(method: SilverManualMethodMetadata) -> str:
+    if method.namespace_path == ("profiles",) and method.method_name == "remove_profile_picture":
+        return (
+            "No public `.raw(...)`; `.raw(...)` is used only as an internal fallback if the typed "
+            "Golden route path cannot carry the required payload shape."
+        )
+    return "No public `.raw(...)`; the helper returns the raw JSON-compatible payload directly."
+
+
+def _manual_silver_return_note(method: SilverManualMethodMetadata) -> str:
+    if method.namespace_path == ("profiles",) and method.method_name == "remove_profile_picture":
+        return "Internal raw fallback return"
+    return "Raw payload return"
+
+
+def _manual_silver_default_display(
+    method: SilverManualMethodMetadata,
+    parameter: SilverManualParameterMetadata,
+) -> str:
+    if parameter.python_name == "wait_for_consistency":
+        return "False"
+    if parameter.python_name == "consistency_timeout":
+        return "10.0"
+    if parameter.python_name == "consistency_poll_interval":
+        return "1.0"
+    if (
+        method.namespace_path == ("tickets",)
+        and method.method_name == "list_current_user_assigned_tickets"
+    ):
+        defaults = {
+            "page_size": "100",
+            "sort_by": '"TicketModifiedDate"',
+            "sort_direction": '"Descending"',
+        }
+        default = defaults.get(parameter.python_name)
+        if default is not None:
+            return default
+    return "..." if parameter.required else "None"
+
+
+def _manual_silver_stub_type_and_default(
+    method: SilverManualMethodMetadata,
+    parameter: SilverManualParameterMetadata,
+) -> tuple[str, str]:
+    if parameter.python_name == "wait_for_consistency":
+        return "bool", "False"
+    if parameter.python_name == "consistency_timeout":
+        return "float", "10.0"
+    if parameter.python_name == "consistency_poll_interval":
+        return "float", "1.0"
+    if (
+        method.namespace_path == ("tickets",)
+        and method.method_name == "list_current_user_assigned_tickets"
+    ):
+        defaults = {
+            "page_size": "100",
+            "sort_by": "'TicketModifiedDate'",
+            "sort_direction": "'Descending'",
+        }
+        default = defaults.get(parameter.python_name)
+        if default is not None:
+            return parameter.type_display, default
+    type_display = parameter.type_display if parameter.required else f"{parameter.type_display} | None"
+    default = "..." if parameter.required else "None"
+    return type_display, default
 
 
 def _iter_pages_call_example(method: SDKMethodMetadata) -> str:
@@ -1080,20 +1149,7 @@ def _silver_stub_signature(method: SilverMethodMetadata) -> str:
 def _manual_silver_stub_signature(method: SilverManualMethodMetadata) -> str:
     params = ["self", "*"]
     for parameter in method.parameters:
-        if parameter.python_name == "wait_for_consistency":
-            type_display = "bool"
-            default = "False"
-        elif parameter.python_name == "consistency_timeout":
-            type_display = "float"
-            default = "10.0"
-        elif parameter.python_name == "consistency_poll_interval":
-            type_display = "float"
-            default = "1.0"
-        else:
-            type_display = (
-                parameter.type_display if parameter.required else f"{parameter.type_display} | None"
-            )
-            default = "..." if parameter.required else "None"
+        type_display, default = _manual_silver_stub_type_and_default(method, parameter)
         params.append(f"{parameter.python_name}: {type_display} = {default}")
     params.append("timeout: float | None = None")
     return f"({', '.join(params)}) -> {method.typed_return}"
