@@ -6,8 +6,8 @@ This example uses only SDK read paths:
 - `client.tickets.get_ticket_statuses.raw()` reads the Golden ticket status
   catalog. `.raw()` is used because the live status payload is JSON data that
   the runtime validator now accepts even when Incident IQ omits `WorkflowId`.
-- `client.silver.tickets.get_ticket_activities.raw(...)` reads recent ticket
-  activity so a report can include recent actions and comments.
+- `client.silver.tickets.get_ticket_activities(...)` reads recent ticket activity
+  so a report can include recent actions and comments.
 
 Set `INCIDENTIQ_BASE_URL` and `INCIDENTIQ_API_TOKEN` before running. A bare
 tenant root such as `https://example.incidentiq.com` is normalized to the
@@ -137,7 +137,7 @@ def build_current_user_ticket_report(client: Client, *, page_size: int = 100) ->
         ticket_id = _first_present(ticket, ("TicketId", "Id"))
         if ticket_id is None:
             continue
-        activities = client.silver.tickets.get_ticket_activities.raw(ticket_id=str(ticket_id))
+        activities = client.silver.tickets.get_ticket_activities(ticket_id=str(ticket_id))
         report_rows.append(
             {
                 "ticket_id": str(ticket_id),

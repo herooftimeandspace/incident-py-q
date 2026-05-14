@@ -7,24 +7,28 @@ from typing import Any, cast
 from examples.current_user_assigned_tickets import build_current_user_ticket_report
 
 
-class _RawEndpoint:
-    """Minimal endpoint double for SDK methods that expose a `.raw()` call."""
+class _Endpoint:
+    """Minimal endpoint double for SDK methods used by the example."""
 
     def __init__(self, payload: Any = None) -> None:
         self.payload = payload
         self.calls: list[dict[str, Any]] = []
 
-    def raw(self, **kwargs: Any) -> Any:
-        """Record the raw call and return the configured payload."""
+    def __call__(self, **kwargs: Any) -> Any:
+        """Record the direct call and return the configured payload."""
         self.calls.append(kwargs)
         return self.payload
+
+    def raw(self, **kwargs: Any) -> Any:
+        """Record the raw call and return the configured payload."""
+        return self(**kwargs)
 
 
 class _TicketStatusNamespace:
     """Fake Golden tickets namespace containing only status lookup support."""
 
     def __init__(self, status_payload: Any) -> None:
-        self.get_ticket_statuses = _RawEndpoint(status_payload)
+        self.get_ticket_statuses = _Endpoint(status_payload)
 
 
 class _SilverTicketsNamespace:
@@ -33,7 +37,7 @@ class _SilverTicketsNamespace:
     def __init__(self, queue_payload: Any, activity_payload: Any) -> None:
         self._queue_payload = queue_payload
         self.list_current_user_assigned_tickets_calls: list[dict[str, Any]] = []
-        self.get_ticket_activities = _RawEndpoint(activity_payload)
+        self.get_ticket_activities = _Endpoint(activity_payload)
 
     def list_current_user_assigned_tickets(self, **kwargs: Any) -> Any:
         """Record the queue call and return assigned ticket rows."""
