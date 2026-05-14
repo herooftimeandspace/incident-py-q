@@ -236,3 +236,26 @@ def test_normalize_swagger_document_relaxes_live_user_custom_field_value_user_id
     assert normalized["definitions"]["UserCustomFieldValue"]["required"] == [
         "CustomFieldTypeId",
     ]
+
+
+def test_normalize_swagger_document_relaxes_live_portals_zero_sentinel() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "Portals": {
+                "description": "1 = Requestor\n2 = Agent\n3 = iiQAdmin",
+                "enum": [1, 2, 3],
+                "type": "integer",
+                "x-enumNames": ["Requestor", "Agent", "iiQAdmin"],
+            }
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert source["definitions"]["Portals"]["enum"] == [1, 2, 3]
+    assert normalized["definitions"]["Portals"]["enum"] == [0, 1, 2, 3]
+    assert normalized["definitions"]["Portals"]["x-enumNames"] == [
+        "Requestor",
+        "Agent",
+        "iiQAdmin",
+    ]
