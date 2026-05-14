@@ -2,11 +2,22 @@
 
 from __future__ import annotations
 
+import json
+from copy import deepcopy
+from pathlib import Path
+from typing import Any, cast
+
 import pytest
 
 from incident_py_q.exceptions import SchemaValidationError
 from incident_py_q.schema.registry import OperationSpec, SchemaRegistry, build_schema_registry
 from incident_py_q.schema.validator import ResponseSchemaValidator
+
+
+def _load_ticket_detail_live_shape_fixtures() -> list[dict[str, Any]]:
+    """Load sanitized ticket detail payloads shaped like observed live drift."""
+    fixture_path = Path(__file__).parent / "fixtures" / "ticket_detail_live_shape_drift.json"
+    return cast(list[dict[str, Any]], json.loads(fixture_path.read_text(encoding="utf-8")))
 
 
 def test_response_validation_passes_for_valid_payload(tiny_registry: SchemaRegistry) -> None:
@@ -432,3 +443,43 @@ def test_response_validation_accepts_user_custom_field_value_missing_user_id() -
                 ]
             },
         )
+
+
+@pytest.mark.parametrize(
+    "fixture",
+    _load_ticket_detail_live_shape_fixtures(),
+    ids=lambda fixture: str(fixture["name"]),
+)
+def test_response_validation_accepts_ticket_detail_missing_known_live_optional_fields(
+    bundled_registry: SchemaRegistry,
+    fixture: dict[str, Any],
+) -> None:
+    operation = bundled_registry.match_operation(
+        "GET",
+        "/tickets/11111111-1111-1111-1111-111111111111",
+    )
+    assert operation is not None
+
+    validator = ResponseSchemaValidator(bundled_registry)
+    validator.validate(
+        operation,
+        status_code=200,
+        payload=fixture["payload"],
+    )
+
+
+def test_response_validation_still_rejects_ticket_detail_missing_core_status_fields(
+    bundled_registry: SchemaRegistry,
+) -> None:
+    operation = bundled_registry.match_operation(
+        "GET",
+        "/tickets/11111111-1111-1111-1111-111111111111",
+    )
+    assert operation is not None
+    fixture = _load_ticket_detail_live_shape_fixtures()[0]
+    payload = deepcopy(fixture["payload"])
+    del payload["Item"]["ProductId"]
+
+    validator = ResponseSchemaValidator(bundled_registry)
+    with pytest.raises(SchemaValidationError):
+        validator.validate(operation, status_code=200, payload=payload)
