@@ -20,6 +20,10 @@ _LIVE_OPTIONAL_USER_CUSTOM_FIELD_VALUE_FIELDS = {
     "UserId",
 }
 
+_LIVE_PORTALS_ENUM_VALUES = {
+    0,
+}
+
 
 def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     """Return a normalized copy of a Swagger 2.0 document.
@@ -35,6 +39,7 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     _normalize_site_required_field_drift(normalized)
     _normalize_user_required_field_drift(normalized)
     _normalize_user_custom_field_value_required_field_drift(normalized)
+    _normalize_portals_enum_drift(normalized)
     return normalized
 
 
@@ -216,3 +221,25 @@ def _normalize_user_custom_field_value_required_field_drift(
         for field in required
         if field not in _LIVE_OPTIONAL_USER_CUSTOM_FIELD_VALUE_FIELDS
     ]
+
+
+def _normalize_portals_enum_drift(document: dict[str, Any]) -> None:
+    """Allow the live `Portals` sentinel value returned by user list payloads.
+
+    The published `Portals` enum documents the named portal values `1`, `2`, and
+    `3`, but live `GET /users` list responses can use `0` as an unset or unknown
+    sentinel. The SDK preserves the named enum values and appends only this
+    observed sentinel so ordinary enum validation still rejects unrelated values.
+    """
+    definitions = document.get("definitions")
+    if not isinstance(definitions, dict):
+        return
+    portals = definitions.get("Portals")
+    if not isinstance(portals, dict):
+        return
+    enum_values = portals.get("enum")
+    if not isinstance(enum_values, list):
+        return
+    for value in sorted(_LIVE_PORTALS_ENUM_VALUES):
+        if value not in enum_values:
+            enum_values.insert(0, value)

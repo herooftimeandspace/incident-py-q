@@ -281,6 +281,69 @@ def test_response_validation_accepts_user_missing_training_percent_complete() ->
         )
 
 
+def test_response_validation_accepts_user_portal_zero_sentinel() -> None:
+    registry = build_schema_registry(
+        [
+            {
+                "swagger": "2.0",
+                "info": {"title": "User Controller", "version": "1.0.0"},
+                "paths": {
+                    "/users": {
+                        "get": {
+                            "operationId": "User_GetUsersLegacy",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ListGetResponseOfUser"}
+                                }
+                            },
+                        }
+                    }
+                },
+                "definitions": {
+                    "ListGetResponseOfUser": {
+                        "type": "object",
+                        "required": ["Items"],
+                        "properties": {
+                            "Items": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/User"},
+                            }
+                        },
+                    },
+                    "User": {
+                        "type": "object",
+                        "required": ["UserId", "Portal"],
+                        "properties": {
+                            "UserId": {"type": "string"},
+                            "Portal": {"$ref": "#/definitions/Portals"},
+                        },
+                    },
+                    "Portals": {
+                        "enum": [1, 2, 3],
+                        "type": "integer",
+                    },
+                },
+            }
+        ]
+    )
+    operation = registry.match_operation("GET", "/users")
+    assert operation is not None
+
+    validator = ResponseSchemaValidator(registry)
+    validator.validate(
+        operation,
+        status_code=200,
+        payload={"Items": [{"UserId": "user-1", "Portal": 0}]},
+    )
+
+    with pytest.raises(SchemaValidationError):
+        validator.validate(
+            operation,
+            status_code=200,
+            payload={"Items": [{"UserId": "user-1", "Portal": 4}]},
+        )
+
+
 def test_response_validation_accepts_user_custom_field_value_missing_user_id() -> None:
     registry = build_schema_registry(
         [
