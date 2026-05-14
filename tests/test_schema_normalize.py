@@ -207,3 +207,32 @@ def test_normalize_swagger_document_relaxes_live_user_training_progress_drift() 
         "IsDeleted",
         "Portal",
     ]
+
+
+def test_normalize_swagger_document_relaxes_live_user_custom_field_value_user_id_drift() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "UserCustomFieldValue": {
+                "type": "object",
+                "required": [
+                    "CustomFieldTypeId",
+                    "UserId",
+                ],
+                "properties": {
+                    "CustomFieldTypeId": {"type": "string"},
+                    "UserId": {"type": "string"},
+                    "Value": {"type": "string"},
+                },
+            }
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert source["definitions"]["UserCustomFieldValue"]["required"] == [
+        "CustomFieldTypeId",
+        "UserId",
+    ]
+    assert normalized["definitions"]["UserCustomFieldValue"]["required"] == [
+        "CustomFieldTypeId",
+    ]
