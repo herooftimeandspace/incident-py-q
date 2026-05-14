@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Any, Protocol
 from urllib.parse import urlsplit
 
+import httpx
+
 from incident_py_q.apps import (
     AppsNamespace,
     AsyncAppsNamespace,
@@ -28,6 +30,10 @@ PreparedFiles = dict[str, tuple[str, Any, str]]
 _PROFILE_PICTURE_UPLOAD = ("POST", "/api/v1.0/profiles/{user_id}/picture")
 _DIRECT_USER_ROUTE = "/api/v1.0/users/{user_id}"
 _CURRENT_USER_ASSIGNED_TICKETS_ROUTE = "/services/tickets/-/-/AssignedToMe_Unassigned"
+_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS = {
+    "Client": "WebBrowser",
+    "Accept": "application/json, text/plain, */*",
+}
 _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY = "TicketModifiedDate"
 _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION = "Descending"
 _DEFAULT_CONSISTENCY_TIMEOUT = 10.0
@@ -1023,8 +1029,11 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                 "`/services/tickets/-/-/AssignedToMe_Unassigned` route for open assigned tickets, "
                 "so the SDK exposes a narrow read-only helper around that route instead of asking "
                 "callers to construct a services URL by hand. The route uses POST for query "
-                "semantics; this helper sends only page size, sort field, and sort direction "
-                "parameters and does not send a mutation body."
+                "semantics and some tenants only expose it to the UI-style `Client: WebBrowser` "
+                "header, so the helper sends that header with page size, sort field, and sort "
+                "direction parameters and does not send a mutation body. If the UI-shaped request "
+                "returns 404, the helper retries once with the caller's configured client header "
+                "for older tenants that accepted the pre-0.2.5 SDK request shape."
             ),
             parameters=(
                 SilverManualParameterMetadata(
@@ -1055,7 +1064,10 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
             typed_return="dict[str, Any] | list[Any] | None",
             raw_return="dict[str, Any] | list[Any] | None",
             response_model=None,
-            backing_routes=("POST /services/tickets/-/-/AssignedToMe_Unassigned",),
+            backing_routes=(
+                "POST /services/tickets/-/-/AssignedToMe_Unassigned",
+                "POST /services/tickets/-/-/AssignedToMe_Unassigned with configured Client header",
+            ),
         ),
     )
 
@@ -1333,13 +1345,25 @@ def _list_current_user_assigned_tickets_sync(
     timeout: float | None,
 ) -> JSONPayload:
     """Call the read-only services route used by the web UI assigned ticket queue."""
+    metadata = _current_user_assigned_tickets_metadata()
+    params = _build_current_user_assigned_ticket_params(
+        page_size=page_size,
+        sort_by=sort_by,
+        sort_direction=sort_direction,
+    )
+    try:
+        return client.request_silver(
+            metadata,
+            params=params,
+            headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
+            timeout=timeout,
+        )
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code != 404:
+            raise
     return client.request_silver(
-        _current_user_assigned_tickets_metadata(),
-        params=_build_current_user_assigned_ticket_params(
-            page_size=page_size,
-            sort_by=sort_by,
-            sort_direction=sort_direction,
-        ),
+        metadata,
+        params=params,
         timeout=timeout,
     )
 
@@ -1353,13 +1377,25 @@ async def _list_current_user_assigned_tickets_async(
     timeout: float | None,
 ) -> JSONPayload:
     """Call the read-only services route used by the web UI assigned ticket queue."""
+    metadata = _current_user_assigned_tickets_metadata()
+    params = _build_current_user_assigned_ticket_params(
+        page_size=page_size,
+        sort_by=sort_by,
+        sort_direction=sort_direction,
+    )
+    try:
+        return await client.request_silver(
+            metadata,
+            params=params,
+            headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
+            timeout=timeout,
+        )
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code != 404:
+            raise
     return await client.request_silver(
-        _current_user_assigned_tickets_metadata(),
-        params=_build_current_user_assigned_ticket_params(
-            page_size=page_size,
-            sort_by=sort_by,
-            sort_direction=sort_direction,
-        ),
+        metadata,
+        params=params,
         timeout=timeout,
     )
 

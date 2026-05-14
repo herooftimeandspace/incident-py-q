@@ -326,6 +326,40 @@ def test_client_silver_current_user_assigned_tickets_uses_ui_services_queue(
         "$o": "TicketPriority",
         "$d": "Descending",
     }
+    assert route.calls[0].request.headers["Client"] == "WebBrowser"
+    assert route.calls[0].request.headers["Accept"] == "application/json, text/plain, */*"
+
+
+@respx.mock
+def test_client_silver_current_user_assigned_tickets_retries_configured_client_header_after_ui_404(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    payload = {"Items": [{"TicketId": "ticket-1", "TicketStatusName": "Open"}], "ItemCount": 1}
+    route = respx.post("https://tenant.example/services/tickets/-/-/AssignedToMe_Unassigned").mock(
+        side_effect=[
+            httpx.Response(404, json={"Message": "not found"}),
+            httpx.Response(200, json=payload),
+        ]
+    )
+
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        assert client.silver.tickets.list_current_user_assigned_tickets(page_size=25) == payload
+    finally:
+        client.close()
+
+    assert route.call_count == 2
+    assert route.calls[0].request.headers["Client"] == "WebBrowser"
+    assert route.calls[1].request.headers["Client"] == "ApiClient"
+    assert dict(route.calls[1].request.url.params) == {
+        "$s": "25",
+        "$o": "TicketModifiedDate",
+        "$d": "Descending",
+    }
 
 
 def test_client_silver_current_user_assigned_tickets_rejects_invalid_sort_direction(
@@ -368,6 +402,7 @@ def test_async_client_silver_current_user_assigned_tickets_uses_ui_services_queu
             await client.close()
 
         assert route.call_count == 1
+        assert route.calls[0].request.headers["Client"] == "WebBrowser"
         assert dict(route.calls[0].request.url.params) == {
             "$s": "10",
             "$o": "TicketModifiedDate",
