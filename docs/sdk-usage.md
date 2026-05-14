@@ -59,4 +59,4 @@ stats = client.silver.analytics.get_agent_current_stats()
 assigned = client.silver.tickets.list_current_user_assigned_tickets()
 ```
 
-`list_current_user_assigned_tickets(...)` uses the UI-observed read-only assigned/open queue route. It is useful when analytics or saved-view routes return zero rows while the web UI still shows current-user assigned work.
+`list_current_user_assigned_tickets(...)` uses the UI-observed read-only `AssignedToMe_Unassigned` queue route. That queue can include current-user assigned rows and unassigned rows; use `client.silver.analytics.get_agent_current_stats(...)` for the tenant's authoritative assigned-to-me and unassigned counts.

@@ -73,3 +73,8 @@ intune = client.silver.apps.microsoft_intune.lookup_asset(
 serial_lookup = client.silver.assets.get_asset_by_serial(serial="SER123")
 assigned = client.silver.tickets.list_current_user_assigned_tickets()
 ```
+
+The assigned-ticket helper wraps Incident IQ's `AssignedToMe_Unassigned` queue,
+which can include unassigned rows. For count-only dashboards, prefer
+`client.silver.analytics.get_agent_current_stats(...)` so assigned-to-me and
+unassigned totals stay separate.

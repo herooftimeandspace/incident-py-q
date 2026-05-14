@@ -469,6 +469,24 @@ def test_client_silver_current_user_assigned_tickets_rejects_invalid_sort_direct
         client.close()
 
 
+def test_client_silver_current_user_assigned_tickets_docstring_separates_queue_and_counts(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        docstring = client.silver.tickets.list_current_user_assigned_tickets.__doc__ or ""
+    finally:
+        client.close()
+
+    assert "AssignedToMe_Unassigned" in docstring
+    assert "can include both current-user assigned rows and unassigned rows" in docstring
+    assert "client.silver.analytics.get_agent_current_stats" in docstring
+
+
 @respx.mock
 def test_async_client_silver_current_user_assigned_tickets_uses_ui_services_queue(
     tiny_registry: SchemaRegistry,
