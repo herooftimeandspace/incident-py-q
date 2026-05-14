@@ -97,3 +97,104 @@ def test_response_validation_accepts_integer_enum_flag_composites() -> None:
 
     with pytest.raises(SchemaValidationError):
         validator.validate(operation, status_code=200, payload={"Visibility": 128})
+
+
+def test_response_validation_accepts_user_site_missing_known_live_optional_fields() -> None:
+    registry = build_schema_registry(
+        [
+            {
+                "swagger": "2.0",
+                "info": {"title": "User Controller", "version": "1.0.0"},
+                "paths": {
+                    "/users": {
+                        "get": {
+                            "operationId": "User_GetUsersLegacy",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ListGetResponseOfUser"}
+                                }
+                            },
+                        }
+                    }
+                },
+                "definitions": {
+                    "ListGetResponseOfUser": {
+                        "type": "object",
+                        "required": ["Items"],
+                        "properties": {
+                            "Items": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/User"},
+                            }
+                        },
+                    },
+                    "User": {
+                        "type": "object",
+                        "required": ["UserId", "Site"],
+                        "properties": {
+                            "UserId": {"type": "string"},
+                            "Site": {"$ref": "#/definitions/Site"},
+                        },
+                    },
+                    "Site": {
+                        "type": "object",
+                        "required": [
+                            "SiteId",
+                            "ProductId",
+                            "DefaultWorkflowId",
+                            "DefaultWorkflowInitialStepId",
+                            "EnableAnalytics",
+                            "EnableUsersnap",
+                            "SystemUserId",
+                        ],
+                        "properties": {
+                            "SiteId": {"type": "string"},
+                            "ProductId": {"type": "string"},
+                            "DefaultWorkflowId": {"type": "string"},
+                            "DefaultWorkflowInitialStepId": {"type": "string"},
+                            "EnableAnalytics": {"type": "boolean"},
+                            "EnableUsersnap": {"type": "boolean"},
+                            "SystemUserId": {"type": "string"},
+                        },
+                    },
+                },
+            }
+        ]
+    )
+    operation = registry.match_operation("GET", "/users")
+    assert operation is not None
+
+    validator = ResponseSchemaValidator(registry)
+    validator.validate(
+        operation,
+        status_code=200,
+        payload={
+            "Items": [
+                {
+                    "UserId": "user-1",
+                    "Site": {
+                        "SiteId": "site-1",
+                        "ProductId": "product-1",
+                        "SystemUserId": "system-user-1",
+                    },
+                }
+            ]
+        },
+    )
+
+    with pytest.raises(SchemaValidationError):
+        validator.validate(
+            operation,
+            status_code=200,
+            payload={
+                "Items": [
+                    {
+                        "UserId": "user-1",
+                        "Site": {
+                            "SiteId": "site-1",
+                            "ProductId": "product-1",
+                        },
+                    }
+                ]
+            },
+        )

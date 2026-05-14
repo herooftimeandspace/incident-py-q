@@ -126,3 +126,48 @@ def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_id_drift
         "WorkflowStepId",
         "IsClosed",
     ]
+
+
+def test_normalize_swagger_document_relaxes_live_site_required_field_drift() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "Site": {
+                "type": "object",
+                "required": [
+                    "SiteId",
+                    "ProductId",
+                    "DefaultWorkflowId",
+                    "DefaultWorkflowInitialStepId",
+                    "EnableAnalytics",
+                    "EnableUsersnap",
+                    "SystemUserId",
+                ],
+                "properties": {
+                    "SiteId": {"type": "string"},
+                    "ProductId": {"type": "string"},
+                    "DefaultWorkflowId": {"type": "string"},
+                    "DefaultWorkflowInitialStepId": {"type": "string"},
+                    "EnableAnalytics": {"type": "boolean"},
+                    "EnableUsersnap": {"type": "boolean"},
+                    "SystemUserId": {"type": "string"},
+                },
+            }
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert source["definitions"]["Site"]["required"] == [
+        "SiteId",
+        "ProductId",
+        "DefaultWorkflowId",
+        "DefaultWorkflowInitialStepId",
+        "EnableAnalytics",
+        "EnableUsersnap",
+        "SystemUserId",
+    ]
+    assert normalized["definitions"]["Site"]["required"] == [
+        "SiteId",
+        "ProductId",
+        "SystemUserId",
+    ]
