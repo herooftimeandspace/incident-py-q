@@ -55,6 +55,13 @@ def test_build_url_preserves_absolute_paths() -> None:
     assert _build_url("https://tenant.example/api/v1", absolute) == absolute
 
 
+def test_build_url_routes_static_silver_assets_from_tenant_origin() -> None:
+    assert _build_url(
+        "https://tenant.example/api/v1.0",
+        "/s/opensans/v44/font.woff2",
+    ) == "https://tenant.example/s/opensans/v44/font.woff2"
+
+
 def test_merge_headers_builds_default_auth_and_optional_headers() -> None:
     config = _make_config()
     headers = _merge_headers(config, {"X-Test": "value"})

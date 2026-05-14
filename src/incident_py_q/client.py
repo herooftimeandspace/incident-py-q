@@ -31,7 +31,7 @@ from .silver.runtime import (
 )
 from .silver.validation import SilverResponseSchemaValidator
 
-_TENANT_ROOT_PATH_PREFIXES = ("/api/", "/services/", "/apps/", "/img/")
+_TENANT_ROOT_PATH_PREFIXES = ("/api/", "/services/", "/apps/", "/img/", "/s/")
 
 
 class Client:
