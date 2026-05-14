@@ -16,6 +16,10 @@ _LIVE_OPTIONAL_USER_FIELDS = {
     "TrainingPercentComplete",
 }
 
+_LIVE_OPTIONAL_USER_CUSTOM_FIELD_VALUE_FIELDS = {
+    "UserId",
+}
+
 
 def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     """Return a normalized copy of a Swagger 2.0 document.
@@ -30,6 +34,7 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     _normalize_ticket_status_workflow_id_drift(normalized)
     _normalize_site_required_field_drift(normalized)
     _normalize_user_required_field_drift(normalized)
+    _normalize_user_custom_field_value_required_field_drift(normalized)
     return normalized
 
 
@@ -182,4 +187,32 @@ def _normalize_user_required_field_drift(document: dict[str, Any]) -> None:
         return
     user["required"] = [
         field for field in required if field not in _LIVE_OPTIONAL_USER_FIELDS
+    ]
+
+
+def _normalize_user_custom_field_value_required_field_drift(
+    document: dict[str, Any],
+) -> None:
+    """Treat known live-optional `UserCustomFieldValue` fields as optional.
+
+    Incident IQ's published schema marks `UserId` as required on
+    `UserCustomFieldValue`, but live `GET /users` list responses can embed custom
+    field values without repeating the parent user identifier. The field remains
+    available in the schema for routes that return it; normalization only relaxes
+    the required list so nested custom field values can validate when they still
+    carry their custom field type and value metadata.
+    """
+    definitions = document.get("definitions")
+    if not isinstance(definitions, dict):
+        return
+    user_custom_field_value = definitions.get("UserCustomFieldValue")
+    if not isinstance(user_custom_field_value, dict):
+        return
+    required = user_custom_field_value.get("required")
+    if not isinstance(required, list):
+        return
+    user_custom_field_value["required"] = [
+        field
+        for field in required
+        if field not in _LIVE_OPTIONAL_USER_CUSTOM_FIELD_VALUE_FIELDS
     ]

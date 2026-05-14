@@ -279,3 +279,93 @@ def test_response_validation_accepts_user_missing_training_percent_complete() ->
                 ]
             },
         )
+
+
+def test_response_validation_accepts_user_custom_field_value_missing_user_id() -> None:
+    registry = build_schema_registry(
+        [
+            {
+                "swagger": "2.0",
+                "info": {"title": "User Controller", "version": "1.0.0"},
+                "paths": {
+                    "/users": {
+                        "get": {
+                            "operationId": "User_GetUsersLegacy",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ListGetResponseOfUser"}
+                                }
+                            },
+                        }
+                    }
+                },
+                "definitions": {
+                    "ListGetResponseOfUser": {
+                        "type": "object",
+                        "required": ["Items"],
+                        "properties": {
+                            "Items": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/User"},
+                            }
+                        },
+                    },
+                    "User": {
+                        "type": "object",
+                        "required": ["UserId", "CustomFieldValues"],
+                        "properties": {
+                            "UserId": {"type": "string"},
+                            "CustomFieldValues": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/UserCustomFieldValue"},
+                            },
+                        },
+                    },
+                    "UserCustomFieldValue": {
+                        "type": "object",
+                        "required": ["CustomFieldTypeId", "UserId"],
+                        "properties": {
+                            "CustomFieldTypeId": {"type": "string"},
+                            "UserId": {"type": "string"},
+                            "Value": {"type": "string"},
+                        },
+                    },
+                },
+            }
+        ]
+    )
+    operation = registry.match_operation("GET", "/users")
+    assert operation is not None
+
+    validator = ResponseSchemaValidator(registry)
+    validator.validate(
+        operation,
+        status_code=200,
+        payload={
+            "Items": [
+                {
+                    "UserId": "user-1",
+                    "CustomFieldValues": [
+                        {
+                            "CustomFieldTypeId": "field-1",
+                            "Value": "[]",
+                        }
+                    ],
+                }
+            ]
+        },
+    )
+
+    with pytest.raises(SchemaValidationError):
+        validator.validate(
+            operation,
+            status_code=200,
+            payload={
+                "Items": [
+                    {
+                        "UserId": "user-1",
+                        "CustomFieldValues": [{"Value": "[]"}],
+                    }
+                ]
+            },
+        )
