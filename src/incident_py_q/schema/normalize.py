@@ -20,6 +20,11 @@ _LIVE_OPTIONAL_USER_CUSTOM_FIELD_VALUE_FIELDS = {
     "UserId",
 }
 
+_LIVE_OPTIONAL_TICKET_STATUS_FIELDS = {
+    "WorkflowId",
+    "WorkflowStepId",
+}
+
 _LIVE_PORTALS_ENUM_VALUES = {
     0,
 }
@@ -35,7 +40,7 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     """
     normalized: dict[str, Any] = deepcopy(document)
     _walk_and_normalize(normalized)
-    _normalize_ticket_status_workflow_id_drift(normalized)
+    _normalize_ticket_status_required_field_drift(normalized)
     _normalize_site_required_field_drift(normalized)
     _normalize_user_required_field_drift(normalized)
     _normalize_user_custom_field_value_required_field_drift(normalized)
@@ -118,15 +123,16 @@ def _highest_bitmask_value(highest_flag: int) -> int:
     return (1 << highest_flag.bit_length()) - 1
 
 
-def _normalize_ticket_status_workflow_id_drift(document: dict[str, Any]) -> None:
-    """Treat `TicketStatus.WorkflowId` as optional for live ticket status payloads.
+def _normalize_ticket_status_required_field_drift(document: dict[str, Any]) -> None:
+    """Treat known live-optional `TicketStatus` workflow fields as optional.
 
-    Incident IQ's bundled Stoplight controller marks `WorkflowId` as required on
-    `TicketStatus`, but live `GET /tickets/statuses` responses have been observed
-    without that field while still carrying stable status identifiers, workflow
-    step identifiers, and status metadata. The SDK keeps the upstream property in
-    the schema so callers can read it when tenants provide it, but removes it from
-    the required list in the normalized runtime contract so read-only status
+    Incident IQ's bundled Stoplight controller marks `WorkflowId` and
+    `WorkflowStepId` as required on `TicketStatus`, but live
+    `GET /tickets/statuses` responses can omit both workflow identifiers while
+    still carrying the stable ticket status type identifier and human-readable
+    status metadata used by callers. The SDK keeps both upstream properties in
+    the schema so callers can read them when tenants provide them, but removes
+    only those two fields from the normalized required list so read-only status
     lookup does not fail solely because of this known upstream drift.
     """
     definitions = document.get("definitions")
@@ -138,7 +144,9 @@ def _normalize_ticket_status_workflow_id_drift(document: dict[str, Any]) -> None
     required = ticket_status.get("required")
     if not isinstance(required, list):
         return
-    ticket_status["required"] = [field for field in required if field != "WorkflowId"]
+    ticket_status["required"] = [
+        field for field in required if field not in _LIVE_OPTIONAL_TICKET_STATUS_FIELDS
+    ]
 
 
 def _normalize_site_required_field_drift(document: dict[str, Any]) -> None:

@@ -92,7 +92,7 @@ def test_normalize_swagger_document_relaxes_integer_enum_flags_to_bitmask_range(
     ]
 
 
-def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_id_drift() -> None:
+def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_field_drift() -> None:
     source: dict[str, Any] = {
         "definitions": {
             "TicketStatus": {
@@ -123,7 +123,6 @@ def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_id_drift
     ]
     assert normalized["definitions"]["TicketStatus"]["required"] == [
         "TicketStatusTypeId",
-        "WorkflowStepId",
         "IsClosed",
     ]
 
