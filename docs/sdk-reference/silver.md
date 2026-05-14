@@ -45,7 +45,7 @@ Silver routes are undocumented APIs observed in tenant HAR traffic. The SDK expo
 | `surveys` | 1 | [`client.silver.surveys`](silver-surveys.md) |
 | `tasks` | 1 | [`client.silver.tasks`](silver-tasks.md) |
 | `teams` | 2 | [`client.silver.teams`](silver-teams.md) |
-| `tickets` | 7 | [`client.silver.tickets`](silver-tickets.md) |
+| `tickets` | 8 | [`client.silver.tickets`](silver-tickets.md) |
 | `tickets_templates` | 1 | [`client.silver.tickets_templates`](silver-tickets_templates.md) |
 | `users` | 7 | [`client.silver.users`](silver-users.md) |
 | `views` | 2 | [`client.silver.views`](silver-views.md) |

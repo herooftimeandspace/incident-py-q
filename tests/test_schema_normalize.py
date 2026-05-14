@@ -60,3 +60,39 @@ def test_normalize_swagger_document_leaves_non_nullable_values_unchanged() -> No
     normalized = normalize_swagger_document(source)
 
     assert normalized == source
+
+
+def test_normalize_swagger_document_relaxes_live_ticket_status_workflow_id_drift() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "TicketStatus": {
+                "type": "object",
+                "required": [
+                    "TicketStatusTypeId",
+                    "WorkflowId",
+                    "WorkflowStepId",
+                    "IsClosed",
+                ],
+                "properties": {
+                    "TicketStatusTypeId": {"type": "string"},
+                    "WorkflowId": {"type": "string"},
+                    "WorkflowStepId": {"type": "string"},
+                    "IsClosed": {"type": "boolean"},
+                },
+            }
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert source["definitions"]["TicketStatus"]["required"] == [
+        "TicketStatusTypeId",
+        "WorkflowId",
+        "WorkflowStepId",
+        "IsClosed",
+    ]
+    assert normalized["definitions"]["TicketStatus"]["required"] == [
+        "TicketStatusTypeId",
+        "WorkflowStepId",
+        "IsClosed",
+    ]

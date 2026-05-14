@@ -147,6 +147,11 @@ def test_client_config_normalizes_trailing_slash() -> None:
     assert config.base_url == "https://tenant.example/api/v1"
 
 
+def test_client_config_normalizes_tenant_root_to_golden_api_prefix() -> None:
+    config = _build_valid_config(base_url="https://tenant.example/")
+    assert config.base_url == "https://tenant.example/api/v1.0"
+
+
 def test_client_config_rejects_invalid_timeouts_and_backoff() -> None:
     with pytest.raises(ConfigurationError):
         _build_valid_config(timeout=0)

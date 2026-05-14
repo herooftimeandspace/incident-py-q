@@ -27,6 +27,9 @@ JSONPayload = dict[str, Any] | list[Any] | None
 PreparedFiles = dict[str, tuple[str, Any, str]]
 _PROFILE_PICTURE_UPLOAD = ("POST", "/api/v1.0/profiles/{user_id}/picture")
 _DIRECT_USER_ROUTE = "/api/v1.0/users/{user_id}"
+_CURRENT_USER_ASSIGNED_TICKETS_ROUTE = "/services/tickets/-/-/AssignedToMe_Unassigned"
+_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY = "TicketModifiedDate"
+_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION = "Descending"
 _DEFAULT_CONSISTENCY_TIMEOUT = 10.0
 _DEFAULT_CONSISTENCY_POLL_INTERVAL = 1.0
 _ZERO_UUID = "00000000-0000-0000-0000-000000000000"
@@ -170,7 +173,7 @@ def _tenant_origin(base_url: str) -> str:
 def _absolute_silver_url(base_url: str, path: str) -> str:
     if path.startswith("http://") or path.startswith("https://"):
         return path
-    if path.startswith("/apps/") or path.startswith("/api/v1.0/"):
+    if path.startswith(("/apps/", "/api/v1.0/", "/services/")):
         return f"{_tenant_origin(base_url)}{path}"
     return path
 
@@ -327,20 +330,46 @@ def format_manual_silver_docstring(
                 ),
             ]
         )
+    if (
+        metadata.namespace_path == ("tickets",)
+        and metadata.method_name == "list_current_user_assigned_tickets"
+    ):
+        lines.extend(
+            [
+                "",
+                "Behavior notes:",
+                (
+                    "This helper performs the same read-only ticket queue lookup observed in the "
+                    "Incident IQ web UI for open current-user assigned work. The endpoint uses POST "
+                    "for query semantics, but the helper sends only paging and sorting parameters "
+                    "and no mutation payload."
+                ),
+                (
+                    "Use this helper when `client.silver.views.get_view(...)` or analytics summaries "
+                    "return zero rows for current-user views that the UI still shows as populated."
+                ),
+            ]
+        )
     lines.extend(
         [
             "",
             "Returns:",
             f"- `{call_prefix}client.silver.{metadata.namespace}.{metadata.method_name}(...)` returns "
             f"`{metadata.typed_return}`.",
-            (
-                "- The helper does not expose a public `.raw(...)` method; `.raw(...)` is kept as an "
-                "internal fallback only if the typed Golden route path cannot carry the required "
-                "payload shape."
-            ),
+            f"- {_manual_silver_raw_return_note(metadata)}",
         ]
     )
     return "\n".join(lines)
+
+
+def _manual_silver_raw_return_note(metadata: SilverManualMethodMetadata) -> str:
+    if metadata.namespace_path == ("profiles",) and metadata.method_name == "remove_profile_picture":
+        return (
+            "The helper does not expose a public `.raw(...)` method; `.raw(...)` is kept as an "
+            "internal fallback only if the typed Golden route path cannot carry the required "
+            "payload shape."
+        )
+    return "The helper does not expose a public `.raw(...)` method."
 
 
 class SilverNamespaceBase:
@@ -797,6 +826,114 @@ class AsyncSilverRemoveProfilePictureMethod:
         )
 
 
+class SilverCurrentUserAssignedTicketsMethod:
+    """Sync Silver helper for the UI-style current-user assigned ticket queue."""
+
+    def __init__(self, *, client: _SyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
+        self._client = client
+        self.metadata = metadata
+        self.__name__ = metadata.method_name
+        self.__signature__ = inspect.Signature(
+            parameters=[
+                inspect.Parameter(
+                    "page_size",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=100,
+                    annotation=int,
+                ),
+                inspect.Parameter(
+                    "sort_by",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "sort_direction",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "timeout",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=None,
+                    annotation=float | None,
+                ),
+            ]
+        )
+        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=False)
+
+    def __call__(
+        self,
+        *,
+        page_size: int = 100,
+        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+        timeout: float | None = None,
+    ) -> JSONPayload:
+        return _list_current_user_assigned_tickets_sync(
+            self._client,
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+            timeout=timeout,
+        )
+
+
+class AsyncSilverCurrentUserAssignedTicketsMethod:
+    """Async Silver helper for the UI-style current-user assigned ticket queue."""
+
+    def __init__(self, *, client: _AsyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
+        self._client = client
+        self.metadata = metadata
+        self.__name__ = metadata.method_name
+        self.__signature__ = inspect.Signature(
+            parameters=[
+                inspect.Parameter(
+                    "page_size",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=100,
+                    annotation=int,
+                ),
+                inspect.Parameter(
+                    "sort_by",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "sort_direction",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "timeout",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=None,
+                    annotation=float | None,
+                ),
+            ]
+        )
+        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=True)
+
+    async def __call__(
+        self,
+        *,
+        page_size: int = 100,
+        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+        timeout: float | None = None,
+    ) -> JSONPayload:
+        return await _list_current_user_assigned_tickets_async(
+            self._client,
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+            timeout=timeout,
+        )
+
+
 def build_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
     """Load checked-in Silver metadata used by runtime, docs, and stubs."""
     return load_silver_inventory()
@@ -871,6 +1008,54 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                 "GET /api/v1.0/users/{user_id}",
                 "POST /api/v1.0/users/{user_id}",
             ),
+        ),
+        SilverManualMethodMetadata(
+            namespace_path=("tickets",),
+            method_name="list_current_user_assigned_tickets",
+            summary=(
+                "List the current user's UI-style assigned/open ticket queue through the "
+                "`AssignedToMe_Unassigned` services route."
+            ),
+            description=(
+                "This helper exists because tenant analytics summaries and saved-view routes can "
+                "return zero rows for current-user ticket queues even when the Incident IQ web UI "
+                "shows assigned work. The bundled Postman corpus includes the UI-observed "
+                "`/services/tickets/-/-/AssignedToMe_Unassigned` route for open assigned tickets, "
+                "so the SDK exposes a narrow read-only helper around that route instead of asking "
+                "callers to construct a services URL by hand. The route uses POST for query "
+                "semantics; this helper sends only page size, sort field, and sort direction "
+                "parameters and does not send a mutation body."
+            ),
+            parameters=(
+                SilverManualParameterMetadata(
+                    python_name="page_size",
+                    api_name="$s",
+                    location="query",
+                    required=False,
+                    type_display="int",
+                    description="Maximum number of ticket rows to return from the queue.",
+                ),
+                SilverManualParameterMetadata(
+                    python_name="sort_by",
+                    api_name="$o",
+                    location="query",
+                    required=False,
+                    type_display="str",
+                    description="Incident IQ ticket field used for ordering returned rows.",
+                ),
+                SilverManualParameterMetadata(
+                    python_name="sort_direction",
+                    api_name="$d",
+                    location="query",
+                    required=False,
+                    type_display="str",
+                    description="Sort direction, either `Ascending` or `Descending`.",
+                ),
+            ),
+            typed_return="dict[str, Any] | list[Any] | None",
+            raw_return="dict[str, Any] | list[Any] | None",
+            response_model=None,
+            backing_routes=("POST /services/tickets/-/-/AssignedToMe_Unassigned",),
         ),
     )
 
@@ -985,6 +1170,15 @@ def _build_manual_silver_method(
             if async_mode
             else SilverRemoveProfilePictureMethod(client=client, metadata=metadata)
         )
+    if (
+        metadata.namespace_path == ("tickets",)
+        and metadata.method_name == "list_current_user_assigned_tickets"
+    ):
+        return (
+            AsyncSilverCurrentUserAssignedTicketsMethod(client=client, metadata=metadata)
+            if async_mode
+            else SilverCurrentUserAssignedTicketsMethod(client=client, metadata=metadata)
+        )
     raise ValueError(f"Unsupported Silver manual helper {metadata.namespace}.{metadata.method_name!r}.")
 
 
@@ -1087,6 +1281,87 @@ def _prepare_silver_file_uploads(
     if _is_profile_picture_upload(metadata):
         return _coerce_profile_picture_uploads(file_params), []
     return _coerce_file_uploads(file_params)
+
+
+def _current_user_assigned_tickets_metadata() -> SilverMethodMetadata:
+    """Return synthetic metadata for the UI-observed assigned ticket queue route."""
+    return SilverMethodMetadata(
+        namespace_path=("tickets",),
+        method_name="list_current_user_assigned_tickets",
+        http_method="POST",
+        route=_CURRENT_USER_ASSIGNED_TICKETS_ROUTE,
+        parameters=(),
+        summary="Manual helper for the current-user assigned ticket queue.",
+        description=(
+            "Synthetic route metadata used internally by the manual helper so it can reuse the "
+            "normal Silver request path, URL normalization, headers, retries, and validation flow."
+        ),
+        typed_return="dict[str, Any] | list[Any] | None",
+        raw_return="dict[str, Any] | list[Any] | None",
+        sources=("Postman collection",),
+        status_codes=(200,),
+        uses_app_headers=False,
+    )
+
+
+def _build_current_user_assigned_ticket_params(
+    *,
+    page_size: int,
+    sort_by: str,
+    sort_direction: str,
+) -> dict[str, Any]:
+    """Build query parameters for the current-user assigned ticket queue helper."""
+    if page_size <= 0:
+        raise ValueError("page_size must be greater than zero.")
+    if not sort_by.strip():
+        raise ValueError("sort_by must not be empty.")
+    if sort_direction not in {"Ascending", "Descending"}:
+        raise ValueError("sort_direction must be either 'Ascending' or 'Descending'.")
+    return {
+        "$s": page_size,
+        "$o": sort_by,
+        "$d": sort_direction,
+    }
+
+
+def _list_current_user_assigned_tickets_sync(
+    client: _SyncRequestClient,
+    *,
+    page_size: int,
+    sort_by: str,
+    sort_direction: str,
+    timeout: float | None,
+) -> JSONPayload:
+    """Call the read-only services route used by the web UI assigned ticket queue."""
+    return client.request_silver(
+        _current_user_assigned_tickets_metadata(),
+        params=_build_current_user_assigned_ticket_params(
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+        ),
+        timeout=timeout,
+    )
+
+
+async def _list_current_user_assigned_tickets_async(
+    client: _AsyncRequestClient,
+    *,
+    page_size: int,
+    sort_by: str,
+    sort_direction: str,
+    timeout: float | None,
+) -> JSONPayload:
+    """Call the read-only services route used by the web UI assigned ticket queue."""
+    return await client.request_silver(
+        _current_user_assigned_tickets_metadata(),
+        params=_build_current_user_assigned_ticket_params(
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+        ),
+        timeout=timeout,
+    )
 
 
 def _is_profile_picture_upload(metadata: SilverMethodMetadata) -> bool:

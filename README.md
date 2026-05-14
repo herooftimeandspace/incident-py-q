@@ -42,7 +42,12 @@ Default auth mode is bearer token:
 Authorization: Bearer <token>
 ```
 
-Each client requires a tenant-specific base URL (typically including your API path prefix, such as `/api/v1`).
+Each client requires a tenant-specific base URL. You may pass either the tenant root
+(`https://your-tenant.incidentiq.com`) or an explicit API prefix such as
+`https://your-tenant.incidentiq.com/api/v1.0`. Bare tenant roots are normalized to
+`/api/v1.0` for Golden Stoplight routes. Silver routes that already include an
+absolute tenant path such as `/api/v1.0/...`, `/services/...`, or `/apps/...` are
+sent from the tenant origin so they do not accidentally inherit the Golden prefix.
 
 Runtime environment variables:
 - `INCIDENTIQ_BASE_URL` (required unless passed explicitly)
@@ -73,7 +78,7 @@ Integration/smoke environment variables:
 from incident_py_q import Client
 
 client = Client(
-    base_url="https://your-tenant.incidentiq.com/api/v1",
+    base_url="https://your-tenant.incidentiq.com",
     api_token="your-token",
 )
 
@@ -89,7 +94,7 @@ from incident_py_q import AsyncClient
 
 async def main() -> None:
     async with AsyncClient(
-        base_url="https://your-tenant.incidentiq.com/api/v1",
+        base_url="https://your-tenant.incidentiq.com",
         api_token="your-token",
     ) as client:
         payload = await client.users.get_users_legacy.raw()
@@ -118,6 +123,28 @@ intune_lookup = client.apps.microsoft_intune.lookup_asset(
 )
 google_actions = client.apps.google_device_data.list_remote_actions()
 ```
+
+Current-user assigned/open ticket queue:
+
+```python
+from incident_py_q import Client
+
+with Client.from_env() as client:
+    tickets = client.silver.tickets.list_current_user_assigned_tickets(
+        page_size=100,
+        sort_by="TicketModifiedDate",
+        sort_direction="Descending",
+    )
+    statuses = client.tickets.get_ticket_statuses.raw()
+    print(tickets, statuses)
+```
+
+`list_current_user_assigned_tickets(...)` is a read-only Silver helper around the
+UI-observed `POST /services/tickets/-/-/AssignedToMe_Unassigned` queue. Use it for
+the assigned/open work list shown in the web UI when analytics summaries or saved
+view lookups such as `AssignedToMe` return zero rows for the same account. See
+`examples/current_user_assigned_tickets.py` for a report that also fetches recent
+ticket actions and comments.
 
 ## Validation Strategy
 

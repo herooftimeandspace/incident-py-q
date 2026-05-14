@@ -20,6 +20,34 @@ def _load_asset_serial_payload() -> dict[str, Any]:
     return cast(dict[str, Any], json.loads(fixture_path.read_text(encoding="utf-8")))
 
 
+def _ticket_statuses_payload(
+    *,
+    include_workflow_id: bool = False,
+    include_workflow_step_id: bool = True,
+) -> dict[str, Any]:
+    status: dict[str, Any] = {
+        "TicketStatusTypeId": "11111111-1111-1111-1111-111111111111",
+        "IsClosed": False,
+        "IsReadonly": False,
+        "IsRequestorInputNeeded": False,
+        "DisplayOrder": 1,
+        "StatusName": "Open",
+        "StepName": "Open",
+    }
+    if include_workflow_id:
+        status["WorkflowId"] = "22222222-2222-2222-2222-222222222222"
+    if include_workflow_step_id:
+        status["WorkflowStepId"] = "33333333-3333-3333-3333-333333333333"
+    return {
+        "UserToken": "00000000-0000-0000-0000-000000000000",
+        "RequestDate": "2026-05-14T00:00:00Z",
+        "ExecutionTime": 0.01,
+        "StatusCode": 200,
+        "ProcessId": 1,
+        "Items": [status],
+    }
+
+
 def _build_client(tiny_registry: SchemaRegistry, **kwargs: Any) -> Client:
     config: dict[str, Any] = {
         "base_url": "https://tenant.example/api/v1",
@@ -225,5 +253,64 @@ def test_silver_asset_serial_lookup_accepts_relaxed_live_payload(
     )
     try:
         assert client.silver.assets.get_asset_by_serial(serial="4825670226C6") == payload
+    finally:
+        client.close()
+
+
+@respx.mock
+def test_tenant_root_base_url_reaches_golden_api_prefix(tiny_registry: SchemaRegistry) -> None:
+    route = respx.get("https://tenant.example/api/v1.0/things/abc").mock(
+        return_value=httpx.Response(200, json={"id": "abc", "name": "Desk"})
+    )
+    client = _build_client(tiny_registry, base_url="https://tenant.example")
+    try:
+        assert client.request("GET", "/things/{ThingId}", path_params={"ThingId": "abc"}) == {
+            "id": "abc",
+            "name": "Desk",
+        }
+    finally:
+        client.close()
+
+    assert route.call_count == 1
+
+
+@respx.mock
+def test_ticket_statuses_accept_live_payload_missing_workflow_id(
+    bundled_registry: SchemaRegistry,
+) -> None:
+    payload = _ticket_statuses_payload(include_workflow_id=False)
+    respx.get("https://tenant.example/api/v1.0/tickets/statuses").mock(
+        return_value=httpx.Response(200, json=payload)
+    )
+    client = Client(
+        base_url="https://tenant.example",
+        api_token="token-123",
+        registry=bundled_registry,
+    )
+    try:
+        assert client.tickets.get_ticket_statuses.raw() == payload
+    finally:
+        client.close()
+
+
+@respx.mock
+def test_ticket_statuses_still_require_workflow_step_id(
+    bundled_registry: SchemaRegistry,
+) -> None:
+    payload = _ticket_statuses_payload(
+        include_workflow_id=False,
+        include_workflow_step_id=False,
+    )
+    respx.get("https://tenant.example/api/v1.0/tickets/statuses").mock(
+        return_value=httpx.Response(200, json=payload)
+    )
+    client = Client(
+        base_url="https://tenant.example",
+        api_token="token-123",
+        registry=bundled_registry,
+    )
+    try:
+        with pytest.raises(SchemaValidationError):
+            client.tickets.get_ticket_statuses.raw()
     finally:
         client.close()
