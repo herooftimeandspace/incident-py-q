@@ -2,9 +2,23 @@
 
 from __future__ import annotations
 
+import importlib.util
+from pathlib import Path
 from typing import Any, cast
 
-from examples.current_user_assigned_tickets import build_current_user_ticket_report
+
+def _load_build_current_user_ticket_report() -> Any:
+    """Load the example module from its file path without requiring `examples` as a package."""
+    example_path = Path(__file__).resolve().parents[1] / "examples" / "current_user_assigned_tickets.py"
+    spec = importlib.util.spec_from_file_location("current_user_assigned_tickets_example", example_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"could not load example module from {example_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return cast(Any, module).build_current_user_ticket_report
+
+
+build_current_user_ticket_report = _load_build_current_user_ticket_report()
 
 
 class _Endpoint:
