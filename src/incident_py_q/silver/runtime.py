@@ -33,6 +33,7 @@ _CURRENT_USER_ASSIGNED_TICKETS_ROUTE = "/services/tickets/-/-/AssignedToMe_Unass
 _CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS = {
     "Client": "WebBrowser",
     "Accept": "application/json, text/plain, */*",
+    "Content-Type": "application/json",
 }
 _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY = "TicketModifiedDate"
 _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION = "Descending"
@@ -1033,7 +1034,8 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                 "header, so the helper sends that header with page size, sort field, and sort "
                 "direction parameters and does not send a mutation body. If the UI-shaped request "
                 "returns 404, the helper retries once with the caller's configured client header "
-                "for older tenants that accepted the pre-0.2.5 SDK request shape."
+                "for older tenants that accepted the pre-0.2.5 SDK request shape, then tries the "
+                "Postman-observed legacy sort-query spelling that uses `$s`, `o`, and `d`."
             ),
             parameters=(
                 SilverManualParameterMetadata(
@@ -1067,6 +1069,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
             backing_routes=(
                 "POST /services/tickets/-/-/AssignedToMe_Unassigned",
                 "POST /services/tickets/-/-/AssignedToMe_Unassigned with configured Client header",
+                "POST /services/tickets/-/-/AssignedToMe_Unassigned with legacy o/d sort query",
             ),
         ),
     )
@@ -1336,6 +1339,20 @@ def _build_current_user_assigned_ticket_params(
     }
 
 
+def _build_current_user_assigned_ticket_legacy_sort_params(
+    *,
+    page_size: int,
+    sort_by: str,
+    sort_direction: str,
+) -> dict[str, Any]:
+    """Build the Postman-observed assigned-ticket query variant with unprefixed sort keys."""
+    return {
+        "$s": page_size,
+        "o": sort_by,
+        "d": sort_direction,
+    }
+
+
 def _list_current_user_assigned_tickets_sync(
     client: _SyncRequestClient,
     *,
@@ -1361,9 +1378,23 @@ def _list_current_user_assigned_tickets_sync(
     except httpx.HTTPStatusError as exc:
         if exc.response.status_code != 404:
             raise
+    try:
+        return client.request_silver(
+            metadata,
+            params=params,
+            timeout=timeout,
+        )
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code != 404:
+            raise
     return client.request_silver(
         metadata,
-        params=params,
+        params=_build_current_user_assigned_ticket_legacy_sort_params(
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+        ),
+        headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
         timeout=timeout,
     )
 
@@ -1393,9 +1424,23 @@ async def _list_current_user_assigned_tickets_async(
     except httpx.HTTPStatusError as exc:
         if exc.response.status_code != 404:
             raise
+    try:
+        return await client.request_silver(
+            metadata,
+            params=params,
+            timeout=timeout,
+        )
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code != 404:
+            raise
     return await client.request_silver(
         metadata,
-        params=params,
+        params=_build_current_user_assigned_ticket_legacy_sort_params(
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+        ),
+        headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
         timeout=timeout,
     )
 
