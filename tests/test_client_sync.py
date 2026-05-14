@@ -24,16 +24,18 @@ def _ticket_statuses_payload(
     *,
     include_workflow_id: bool = False,
     include_workflow_step_id: bool = True,
+    include_display_order: bool = True,
 ) -> dict[str, Any]:
     status: dict[str, Any] = {
         "TicketStatusTypeId": "11111111-1111-1111-1111-111111111111",
         "IsClosed": False,
         "IsReadonly": False,
         "IsRequestorInputNeeded": False,
-        "DisplayOrder": 1,
         "StatusName": "Open",
         "StepName": "Open",
     }
+    if include_display_order:
+        status["DisplayOrder"] = 1
     if include_workflow_id:
         status["WorkflowId"] = "22222222-2222-2222-2222-222222222222"
     if include_workflow_step_id:
@@ -275,12 +277,13 @@ def test_tenant_root_base_url_reaches_golden_api_prefix(tiny_registry: SchemaReg
 
 
 @respx.mock
-def test_ticket_statuses_accept_live_payload_missing_workflow_ids(
+def test_ticket_statuses_accept_live_payload_missing_workflow_and_display_order(
     bundled_registry: SchemaRegistry,
 ) -> None:
     payload = _ticket_statuses_payload(
         include_workflow_id=False,
         include_workflow_step_id=False,
+        include_display_order=False,
     )
     respx.get("https://tenant.example/api/v1.0/tickets/statuses").mock(
         return_value=httpx.Response(200, json=payload)
