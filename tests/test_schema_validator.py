@@ -2,11 +2,22 @@
 
 from __future__ import annotations
 
+import json
+from copy import deepcopy
+from pathlib import Path
+from typing import Any, cast
+
 import pytest
 
 from incident_py_q.exceptions import SchemaValidationError
 from incident_py_q.schema.registry import OperationSpec, SchemaRegistry, build_schema_registry
 from incident_py_q.schema.validator import ResponseSchemaValidator
+
+
+def _load_ticket_detail_live_shape_fixtures() -> list[dict[str, Any]]:
+    """Load sanitized ticket detail payloads shaped like observed live drift."""
+    fixture_path = Path(__file__).parent / "fixtures" / "ticket_detail_live_shape_drift.json"
+    return cast(list[dict[str, Any]], json.loads(fixture_path.read_text(encoding="utf-8")))
 
 
 def test_response_validation_passes_for_valid_payload(tiny_registry: SchemaRegistry) -> None:
@@ -432,3 +443,165 @@ def test_response_validation_accepts_user_custom_field_value_missing_user_id() -
                 ]
             },
         )
+
+
+def test_ticket_detail_drift_relaxation_is_scoped_to_get_ticket_response() -> None:
+    registry = build_schema_registry(
+        [
+            {
+                "swagger": "2.0",
+                "info": {"title": "Ticket Controller", "version": "1.0.0"},
+                "paths": {
+                    "/tickets/{TicketId}": {
+                        "get": {
+                            "operationId": "Ticket_GetTicket",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ItemGetResponseOfTicket"}
+                                }
+                            },
+                        }
+                    },
+                    "/tickets": {
+                        "get": {
+                            "operationId": "Ticket_GetTickets",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ListGetResponseOfTicket"}
+                                }
+                            },
+                        }
+                    },
+                },
+                "definitions": {
+                    "ItemGetResponseOfTicket": {
+                        "type": "object",
+                        "required": ["Item"],
+                        "properties": {"Item": {"$ref": "#/definitions/Ticket"}},
+                    },
+                    "ListGetResponseOfTicket": {
+                        "type": "object",
+                        "required": ["Items"],
+                        "properties": {
+                            "Items": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/Ticket"},
+                            }
+                        },
+                    },
+                    "Ticket": {
+                        "type": "object",
+                        "required": [
+                            "TicketId",
+                            "SiteId",
+                            "ProductId",
+                            "IsTraining",
+                            "TicketNumber",
+                            "CustomFieldValues",
+                            "Tags",
+                        ],
+                        "properties": {
+                            "TicketId": {"type": "string"},
+                            "SiteId": {"type": "string"},
+                            "ProductId": {"type": "string"},
+                            "IsTraining": {"type": "boolean"},
+                            "TicketNumber": {"type": "string"},
+                            "CustomFieldValues": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/TicketCustomFieldValue"},
+                            },
+                            "Tags": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/Tag"},
+                            },
+                        },
+                    },
+                    "TicketCustomFieldValue": {
+                        "type": "object",
+                        "required": ["CustomFieldTypeId", "TicketId"],
+                        "properties": {
+                            "CustomFieldTypeId": {"type": "string"},
+                            "TicketId": {"type": "string"},
+                        },
+                    },
+                    "Tag": {
+                        "type": "object",
+                        "required": ["TagId", "SiteId", "ProductId"],
+                        "properties": {
+                            "TagId": {"type": "string"},
+                            "SiteId": {"type": "string"},
+                            "ProductId": {"type": "string"},
+                        },
+                    },
+                },
+            }
+        ]
+    )
+    detail_operation = registry.match_operation(
+        "GET",
+        "/tickets/11111111-1111-1111-1111-111111111111",
+    )
+    list_operation = registry.match_operation("GET", "/tickets")
+    assert detail_operation is not None
+    assert list_operation is not None
+
+    compact_ticket = {
+        "ProductId": "product-1",
+        "TicketNumber": "T-1",
+        "CustomFieldValues": [{"CustomFieldTypeId": "field-1"}],
+        "Tags": [{"TagId": "tag-1"}],
+    }
+
+    validator = ResponseSchemaValidator(registry)
+    validator.validate(
+        detail_operation,
+        status_code=200,
+        payload={"Item": compact_ticket},
+    )
+
+    with pytest.raises(SchemaValidationError):
+        validator.validate(
+            list_operation,
+            status_code=200,
+            payload={"Items": [compact_ticket]},
+        )
+
+
+@pytest.mark.parametrize(
+    "fixture",
+    _load_ticket_detail_live_shape_fixtures(),
+    ids=lambda fixture: str(fixture["name"]),
+)
+def test_response_validation_accepts_ticket_detail_missing_known_live_optional_fields(
+    bundled_registry: SchemaRegistry,
+    fixture: dict[str, Any],
+) -> None:
+    operation = bundled_registry.match_operation(
+        "GET",
+        "/tickets/11111111-1111-1111-1111-111111111111",
+    )
+    assert operation is not None
+
+    validator = ResponseSchemaValidator(bundled_registry)
+    validator.validate(
+        operation,
+        status_code=200,
+        payload=fixture["payload"],
+    )
+
+
+def test_response_validation_still_rejects_ticket_detail_missing_core_status_fields(
+    bundled_registry: SchemaRegistry,
+) -> None:
+    operation = bundled_registry.match_operation(
+        "GET",
+        "/tickets/11111111-1111-1111-1111-111111111111",
+    )
+    assert operation is not None
+    fixture = _load_ticket_detail_live_shape_fixtures()[0]
+    payload = deepcopy(fixture["payload"])
+    del payload["Item"]["ProductId"]
+
+    validator = ResponseSchemaValidator(bundled_registry)
+    with pytest.raises(SchemaValidationError):
+        validator.validate(operation, status_code=200, payload=payload)
