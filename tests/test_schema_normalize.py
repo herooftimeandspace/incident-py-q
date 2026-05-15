@@ -180,7 +180,7 @@ def test_normalize_swagger_document_ignores_ticket_status_without_required_field
     assert normalize_swagger_document(malformed_definitions) == malformed_definitions
 
 
-def test_normalize_swagger_document_relaxes_live_ticket_detail_identity_field_drift() -> None:
+def test_normalize_swagger_document_preserves_shared_ticket_required_fields() -> None:
     source: dict[str, Any] = {
         "definitions": {
             "Ticket": {
@@ -217,17 +217,12 @@ def test_normalize_swagger_document_relaxes_live_ticket_detail_identity_field_dr
 
     normalized = normalize_swagger_document(source)
 
-    assert source["definitions"]["Ticket"]["required"] == [
+    assert normalized["definitions"]["Ticket"]["required"] == [
         "TicketId",
         "SiteId",
         "ProductId",
         "IsDeleted",
         "IsTraining",
-        "TicketNumber",
-    ]
-    assert normalized["definitions"]["Ticket"]["required"] == [
-        "ProductId",
-        "IsDeleted",
         "TicketNumber",
     ]
     assert normalized["definitions"]["UpdateTicketRequest"]["required"] == [
@@ -238,7 +233,7 @@ def test_normalize_swagger_document_relaxes_live_ticket_detail_identity_field_dr
     ]
 
 
-def test_normalize_swagger_document_relaxes_live_ticket_nested_detail_field_drift() -> None:
+def test_normalize_swagger_document_preserves_shared_nested_ticket_required_fields() -> None:
     source: dict[str, Any] = {
         "definitions": {
             "TicketCustomFieldValue": {
@@ -272,20 +267,14 @@ def test_normalize_swagger_document_relaxes_live_ticket_nested_detail_field_drif
 
     normalized = normalize_swagger_document(source)
 
-    assert source["definitions"]["TicketCustomFieldValue"]["required"] == [
+    assert normalized["definitions"]["TicketCustomFieldValue"]["required"] == [
         "CustomFieldTypeId",
         "TicketId",
     ]
-    assert source["definitions"]["Tag"]["required"] == [
+    assert normalized["definitions"]["Tag"]["required"] == [
         "TagId",
         "SiteId",
         "ProductId",
-    ]
-    assert normalized["definitions"]["TicketCustomFieldValue"]["required"] == [
-        "CustomFieldTypeId",
-    ]
-    assert normalized["definitions"]["Tag"]["required"] == [
-        "TagId",
     ]
 
 

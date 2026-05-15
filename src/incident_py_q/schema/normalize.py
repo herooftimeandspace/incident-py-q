@@ -26,21 +26,6 @@ _LIVE_OPTIONAL_TICKET_STATUS_FIELDS = {
     "WorkflowStepId",
 }
 
-_LIVE_OPTIONAL_TICKET_DETAIL_FIELDS = {
-    "IsTraining",
-    "SiteId",
-    "TicketId",
-}
-
-_LIVE_OPTIONAL_TICKET_CUSTOM_FIELD_VALUE_FIELDS = {
-    "TicketId",
-}
-
-_LIVE_OPTIONAL_TAG_FIELDS = {
-    "ProductId",
-    "SiteId",
-}
-
 _LIVE_PORTALS_ENUM_VALUES = {
     0,
 }
@@ -57,9 +42,6 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     normalized: dict[str, Any] = deepcopy(document)
     _walk_and_normalize(normalized)
     _normalize_ticket_status_required_field_drift(normalized)
-    _normalize_ticket_detail_required_field_drift(normalized)
-    _normalize_ticket_custom_field_value_required_field_drift(normalized)
-    _normalize_tag_required_field_drift(normalized)
     _normalize_site_required_field_drift(normalized)
     _normalize_user_required_field_drift(normalized)
     _normalize_user_custom_field_value_required_field_drift(normalized)
@@ -165,86 +147,6 @@ def _normalize_ticket_status_required_field_drift(document: dict[str, Any]) -> N
         return
     ticket_status["required"] = [
         field for field in required if field not in _LIVE_OPTIONAL_TICKET_STATUS_FIELDS
-    ]
-
-
-def _normalize_ticket_detail_required_field_drift(document: dict[str, Any]) -> None:
-    """Treat known live-optional `Ticket` detail fields as optional.
-
-    Incident IQ's bundled Stoplight controller marks `TicketId`, `SiteId`, and
-    `IsTraining` as required on the `Ticket` response model. Live
-    `GET /tickets/{TicketId}` detail responses can omit any one of those fields
-    while still returning the response wrapper, ticket number, status flags,
-    timestamps, ownership identifiers, and workflow metadata needed for
-    read-only detail hydration. The path parameter continues to carry the ticket
-    identity for callers that requested a specific ticket.
-
-    The fields remain available in the schema for tenants that return them. Only
-    the normalized required list is relaxed, and only for the `Ticket` response
-    definition. Request models such as `UpdateTicketRequest` keep their upstream
-    requirements unchanged.
-    """
-    definitions = document.get("definitions")
-    if not isinstance(definitions, dict):
-        return
-    ticket = definitions.get("Ticket")
-    if not isinstance(ticket, dict):
-        return
-    required = ticket.get("required")
-    if not isinstance(required, list):
-        return
-    ticket["required"] = [
-        field for field in required if field not in _LIVE_OPTIONAL_TICKET_DETAIL_FIELDS
-    ]
-
-
-def _normalize_ticket_custom_field_value_required_field_drift(
-    document: dict[str, Any],
-) -> None:
-    """Treat parent ticket IDs as optional on nested ticket custom field values.
-
-    Live `GET /tickets/{TicketId}` detail responses can embed
-    `TicketCustomFieldValue` records without repeating the parent `TicketId`.
-    The custom field type and value metadata still describe the field value, and
-    the containing ticket detail response already identifies the requested ticket
-    through the route and response wrapper. This mirrors the existing
-    `UserCustomFieldValue` relaxation for nested user list payloads.
-    """
-    definitions = document.get("definitions")
-    if not isinstance(definitions, dict):
-        return
-    ticket_custom_field_value = definitions.get("TicketCustomFieldValue")
-    if not isinstance(ticket_custom_field_value, dict):
-        return
-    required = ticket_custom_field_value.get("required")
-    if not isinstance(required, list):
-        return
-    ticket_custom_field_value["required"] = [
-        field
-        for field in required
-        if field not in _LIVE_OPTIONAL_TICKET_CUSTOM_FIELD_VALUE_FIELDS
-    ]
-
-
-def _normalize_tag_required_field_drift(document: dict[str, Any]) -> None:
-    """Treat site/product identifiers as optional on compact nested tags.
-
-    Live ticket detail responses can include compact `Tag` entries that identify
-    the tag itself but omit tenant-scoped `SiteId` and `ProductId` values. The
-    SDK keeps those properties available when returned, but does not reject a
-    read-only ticket detail solely because nested tags use the compact shape.
-    """
-    definitions = document.get("definitions")
-    if not isinstance(definitions, dict):
-        return
-    tag = definitions.get("Tag")
-    if not isinstance(tag, dict):
-        return
-    required = tag.get("required")
-    if not isinstance(required, list):
-        return
-    tag["required"] = [
-        field for field in required if field not in _LIVE_OPTIONAL_TAG_FIELDS
     ]
 
 

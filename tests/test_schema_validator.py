@@ -445,6 +445,128 @@ def test_response_validation_accepts_user_custom_field_value_missing_user_id() -
         )
 
 
+def test_ticket_detail_drift_relaxation_is_scoped_to_get_ticket_response() -> None:
+    registry = build_schema_registry(
+        [
+            {
+                "swagger": "2.0",
+                "info": {"title": "Ticket Controller", "version": "1.0.0"},
+                "paths": {
+                    "/tickets/{TicketId}": {
+                        "get": {
+                            "operationId": "Ticket_GetTicket",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ItemGetResponseOfTicket"}
+                                }
+                            },
+                        }
+                    },
+                    "/tickets": {
+                        "get": {
+                            "operationId": "Ticket_GetTickets",
+                            "responses": {
+                                "200": {
+                                    "schema": {"$ref": "#/definitions/ListGetResponseOfTicket"}
+                                }
+                            },
+                        }
+                    },
+                },
+                "definitions": {
+                    "ItemGetResponseOfTicket": {
+                        "type": "object",
+                        "required": ["Item"],
+                        "properties": {"Item": {"$ref": "#/definitions/Ticket"}},
+                    },
+                    "ListGetResponseOfTicket": {
+                        "type": "object",
+                        "required": ["Items"],
+                        "properties": {
+                            "Items": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/Ticket"},
+                            }
+                        },
+                    },
+                    "Ticket": {
+                        "type": "object",
+                        "required": [
+                            "TicketId",
+                            "SiteId",
+                            "ProductId",
+                            "IsTraining",
+                            "TicketNumber",
+                            "CustomFieldValues",
+                            "Tags",
+                        ],
+                        "properties": {
+                            "TicketId": {"type": "string"},
+                            "SiteId": {"type": "string"},
+                            "ProductId": {"type": "string"},
+                            "IsTraining": {"type": "boolean"},
+                            "TicketNumber": {"type": "string"},
+                            "CustomFieldValues": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/TicketCustomFieldValue"},
+                            },
+                            "Tags": {
+                                "type": "array",
+                                "items": {"$ref": "#/definitions/Tag"},
+                            },
+                        },
+                    },
+                    "TicketCustomFieldValue": {
+                        "type": "object",
+                        "required": ["CustomFieldTypeId", "TicketId"],
+                        "properties": {
+                            "CustomFieldTypeId": {"type": "string"},
+                            "TicketId": {"type": "string"},
+                        },
+                    },
+                    "Tag": {
+                        "type": "object",
+                        "required": ["TagId", "SiteId", "ProductId"],
+                        "properties": {
+                            "TagId": {"type": "string"},
+                            "SiteId": {"type": "string"},
+                            "ProductId": {"type": "string"},
+                        },
+                    },
+                },
+            }
+        ]
+    )
+    detail_operation = registry.match_operation(
+        "GET",
+        "/tickets/11111111-1111-1111-1111-111111111111",
+    )
+    list_operation = registry.match_operation("GET", "/tickets")
+    assert detail_operation is not None
+    assert list_operation is not None
+
+    compact_ticket = {
+        "ProductId": "product-1",
+        "TicketNumber": "T-1",
+        "CustomFieldValues": [{"CustomFieldTypeId": "field-1"}],
+        "Tags": [{"TagId": "tag-1"}],
+    }
+
+    validator = ResponseSchemaValidator(registry)
+    validator.validate(
+        detail_operation,
+        status_code=200,
+        payload={"Item": compact_ticket},
+    )
+
+    with pytest.raises(SchemaValidationError):
+        validator.validate(
+            list_operation,
+            status_code=200,
+            payload={"Items": [compact_ticket]},
+        )
+
+
 @pytest.mark.parametrize(
     "fixture",
     _load_ticket_detail_live_shape_fixtures(),
