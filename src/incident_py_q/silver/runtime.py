@@ -348,10 +348,12 @@ def format_manual_silver_docstring(
                 "",
                 "Behavior notes:",
                 (
-                    "This helper performs the same read-only ticket queue lookup observed in the "
-                    "Incident IQ web UI for open current-user assigned work. The endpoint uses POST "
-                    "for query semantics, but the helper sends only paging and sorting parameters "
-                    "and no mutation payload."
+                    "This helper performs the read-only `AssignedToMe_Unassigned` ticket queue "
+                    "lookup observed in Incident IQ web traffic. That queue can include both "
+                    "current-user assigned rows and unassigned rows, and tenant-specific session "
+                    "resolution can make the assigned-to-me portion differ from dashboard counts. "
+                    "Use `client.silver.analytics.get_agent_current_stats(...)` when you need the "
+                    "tenant's authoritative assigned-to-me and unassigned count summary."
                 ),
                 (
                     "Use this helper when `client.silver.views.get_view(...)` or analytics summaries "
@@ -1022,14 +1024,16 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
             namespace_path=("tickets",),
             method_name="list_current_user_assigned_tickets",
             summary=(
-                "List the current user's UI-style assigned/open ticket queue through the "
-                "`AssignedToMe_Unassigned` services route."
+                "List the UI-style `AssignedToMe_Unassigned` open-ticket queue used for "
+                "assigned-to-me and unassigned work."
             ),
             description=(
-                "This helper exists because tenant analytics summaries and saved-view routes can "
-                "return zero rows for current-user ticket queues even when the Incident IQ web UI "
-                "shows assigned work. The bundled Postman corpus includes the UI-observed "
-                "`/services/tickets/-/-/AssignedToMe_Unassigned` route for open assigned tickets, "
+                "This helper exists because saved-view routes can return zero rows for "
+                "current-user ticket queues even when the Incident IQ web UI shows queue work, "
+                "while analytics summaries expose counts but not ticket rows. The bundled "
+                "Postman corpus includes the UI-observed "
+                "`/services/tickets/-/-/AssignedToMe_Unassigned` route for the combined "
+                "assigned-to-me/unassigned open queue, "
                 "so the SDK exposes a narrow read-only helper around that route instead of asking "
                 "callers to construct a services URL by hand. The route uses POST for query "
                 "semantics and some tenants only expose it to the UI-style `Client: WebBrowser` "
@@ -1038,10 +1042,13 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                 "returns 404, the helper retries once with the caller's configured client header "
                 "for older tenants that accepted the pre-0.2.5 SDK request shape, then tries the "
                 "Postman-observed legacy sort-query spelling that uses `$s`, `o`, and `d`. Some "
-                "tenants, including WUSD as validated for issue #73, do not expose the direct "
-                "queue route but do expose the same queue through `POST /services/tickets` with "
-                "`{\"Schema\": \"AssignedToMe_Unassigned\"}`, so that schema body is the final "
-                "read-only fallback."
+                "tenants, including WUSD as validated for issues #73 and #83, do not expose the "
+                "direct queue route but do expose the same queue through `POST /services/tickets` "
+                "with `{\"Schema\": \"AssignedToMe_Unassigned\"}`, so that schema body is the "
+                "final read-only fallback. On WUSD, live validation for issue #83 showed the "
+                "tenant's authoritative `client.silver.analytics.get_agent_current_stats(...)` "
+                "assigned-to-me count can differ from this queue response; use that analytics "
+                "helper for counts and this ticket helper for queue rows."
             ),
             parameters=(
                 SilverManualParameterMetadata(
