@@ -10,6 +10,7 @@ from typing import Any, cast
 import pytest
 
 from incident_py_q.exceptions import SchemaValidationError
+from incident_py_q.schema import validator as schema_validator
 from incident_py_q.schema.registry import OperationSpec, SchemaRegistry, build_schema_registry
 from incident_py_q.schema.validator import ResponseSchemaValidator
 
@@ -588,6 +589,38 @@ def test_response_validation_accepts_ticket_detail_missing_known_live_optional_f
         status_code=200,
         payload=fixture["payload"],
     )
+
+
+def test_response_validation_caches_ticket_detail_relaxed_schema(
+    bundled_registry: SchemaRegistry,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    operation = bundled_registry.match_operation(
+        "GET",
+        "/tickets/11111111-1111-1111-1111-111111111111",
+    )
+    assert operation is not None
+    fixture = _load_ticket_detail_live_shape_fixtures()[0]
+    build_count = 0
+    build_relaxed_document = schema_validator._ticket_detail_response_document
+
+    def wrapped_ticket_detail_response_document(document: dict[str, Any]) -> dict[str, Any]:
+        nonlocal build_count
+        build_count += 1
+        return build_relaxed_document(document)
+
+    monkeypatch.setattr(
+        schema_validator,
+        "_ticket_detail_response_document",
+        wrapped_ticket_detail_response_document,
+    )
+
+    validator = ResponseSchemaValidator(bundled_registry)
+
+    assert build_count == 1
+    validator.validate(operation, status_code=200, payload=fixture["payload"])
+    validator.validate(operation, status_code=200, payload=fixture["payload"])
+    assert build_count == 1
 
 
 def test_response_validation_still_rejects_ticket_detail_missing_core_status_fields(
