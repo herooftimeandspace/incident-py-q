@@ -72,4 +72,19 @@ intune = client.silver.apps.microsoft_intune.lookup_asset(
 )
 serial_lookup = client.silver.assets.get_asset_by_serial(serial="SER123")
 assigned = client.silver.tickets.list_current_user_assigned_tickets()
+agent_assigned = client.silver.tickets.list_assigned_tickets_for_agent(
+    agent_user_id="agent-guid",
+    schema="Open",
+)
 ```
+
+The assigned-ticket helper wraps Incident IQ's `AssignedToMe_Unassigned` queue,
+which can include unassigned rows. For count-only dashboards, prefer
+`client.silver.analytics.get_agent_current_stats(...)` so assigned-to-me and
+unassigned totals stay separate.
+
+When a service account is authenticated, "current user" means that service
+account. Use `list_assigned_tickets_for_agent(...)` for human-agent reports that
+must not depend on the authenticated session. The explicit-agent helper uses the
+validated `POST /services/tickets` services query with an `agent` facet filter
+and supports `schema="Open"` and `schema="All"`.
