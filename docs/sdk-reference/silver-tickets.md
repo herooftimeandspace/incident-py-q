@@ -207,6 +207,43 @@ This method is intentionally kept on the Silver surface because bundled Stopligh
 
 ---
 
+### `list_assigned_tickets_for_agent`
+
+Provenance: Silver manual helper
+
+- Sync: `client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id=..., schema="Open", page_size=100, sort_by="TicketModifiedDate", sort_direction="Descending", timeout=None)`
+- Async: `await client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id=..., schema="Open", page_size=100, sort_by="TicketModifiedDate", sort_direction="Descending", timeout=None)`
+- Raw payload: No public `.raw(...)`; the helper returns the raw JSON-compatible payload directly.
+- Backing routes: `POST /services/tickets with Schema Open/All and agent facet filter`
+
+List tickets assigned to an explicit Incident IQ agent user id.
+
+This helper exists for service-account automation where the authenticated SDK user is not the human agent whose status report is being generated. `list_current_user_assigned_tickets(...)` resolves the Incident IQ current-user queue from the active session, so a service account can see the service account's queue instead of the target agent's queue. This helper sends the validated `POST /services/tickets` read-only services query with `Schema` set to `Open` or `All` and a single `Filters` entry of `{"Facet": "agent", "Id": "<agent_user_id>"}`. The helper always sends the UI-style `Client: WebBrowser` header because that is the validated services shape for the explicit agent facet. Live validation for issue #87 showed `schema="Open"` matched the expected open-ticket UI count for the target agent. The same validation showed `schema="All"` returned one more row than the stated UI/history total, so the SDK documents `All` as the API all-schema result while the exact UI exclusion rule remains tenant/product behavior outside the checked-in contract.
+
+#### Examples
+
+- Open tickets for an agent: `client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id="agent-guid", schema="Open", page_size=100, timeout=None)`
+- All assigned-agent history: `client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id="agent-guid", schema="All", page_size=1000, timeout=None)`
+- Async open tickets: `await client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id="agent-guid", schema="Open", timeout=None)`
+
+#### Parameters
+
+| Python Arg | API Name | In | Required | Type | Description |
+| --- | --- | --- | --- | --- | --- |
+| `agent_user_id` | `Filters[0].Id` | `body` | `yes` | `str` | Incident IQ `UserId` for the agent whose assigned tickets should be returned. |
+| `schema` | `Schema` | `body` | `no` | `str` | Services ticket schema selector. Supported values are `Open` and `All`. |
+| `page_size` | `$s` | `query` | `no` | `int` | Maximum number of ticket rows to return from the services query. |
+| `sort_by` | `$o` | `query` | `no` | `str` | Incident IQ ticket field used for ordering returned rows. |
+| `sort_direction` | `$d` | `query` | `no` | `str` | Sort direction, either `Ascending` or `Descending`. |
+
+#### Returns
+
+- Typed call return: `dict[str, Any] | list[Any] | None`
+- Raw payload return: `dict[str, Any] | list[Any] | None`
+- Response model: Raw JSON payload only; this manual helper has no typed response model.
+
+---
+
 ### `list_current_user_assigned_tickets`
 
 Provenance: Silver manual helper

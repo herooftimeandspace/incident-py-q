@@ -8,7 +8,7 @@ import struct
 from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any, cast
+from typing import Any, TypedDict, cast
 
 import httpx
 import pytest
@@ -21,6 +21,13 @@ from incident_py_q.media import prepare_png_upload
 from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.silver import runtime as silver_runtime
 from incident_py_q.silver.inventory import SilverMethodMetadata, SilverParameterMetadata
+
+
+class _AssignedTicketsForAgentInvalidBodyKwargs(TypedDict):
+    """Keyword arguments used to exercise helper body validation failures."""
+
+    agent_user_id: str
+    schema: str
 
 
 def _stub_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
@@ -487,6 +494,91 @@ def test_client_silver_current_user_assigned_tickets_docstring_separates_queue_a
     assert "client.silver.analytics.get_agent_current_stats" in docstring
 
 
+@pytest.mark.parametrize("schema", ["Open", "All"])
+@respx.mock
+def test_client_silver_assigned_tickets_for_agent_uses_services_agent_filter(
+    tiny_registry: SchemaRegistry,
+    schema: str,
+) -> None:
+    payload = {"Items": [{"TicketId": "ticket-1", "AgentId": "agent-123"}], "ItemCount": 1}
+    route = respx.post("https://tenant.example/services/tickets").mock(
+        return_value=httpx.Response(200, json=payload)
+    )
+
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        assert client.silver.tickets.list_assigned_tickets_for_agent(
+            agent_user_id="agent-123",
+            schema=schema,
+            page_size=50,
+            sort_by="TicketModifiedDate",
+            sort_direction="Descending",
+        ) == payload
+    finally:
+        client.close()
+
+    assert route.call_count == 1
+    assert str(route.calls[0].request.url).startswith("https://tenant.example/services/tickets?")
+    assert dict(route.calls[0].request.url.params) == {
+        "$s": "50",
+        "$o": "TicketModifiedDate",
+        "$d": "Descending",
+    }
+    assert route.calls[0].request.headers["Client"] == "WebBrowser"
+    assert route.calls[0].request.headers["Accept"] == "application/json, text/plain, */*"
+    assert route.calls[0].request.headers["Content-Type"] == "application/json"
+    assert json.loads(route.calls[0].request.content) == {
+        "Schema": schema,
+        "Filters": [{"Facet": "agent", "Id": "agent-123"}],
+    }
+
+
+@pytest.mark.parametrize(
+    ("kwargs", "message"),
+    [
+        ({"agent_user_id": "", "schema": "Open"}, "agent_user_id"),
+        ({"agent_user_id": "agent-123", "schema": "Closed"}, "schema"),
+    ],
+)
+def test_client_silver_assigned_tickets_for_agent_rejects_invalid_body_inputs(
+    tiny_registry: SchemaRegistry,
+    kwargs: _AssignedTicketsForAgentInvalidBodyKwargs,
+    message: str,
+) -> None:
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        with pytest.raises(ValueError, match=message):
+            client.silver.tickets.list_assigned_tickets_for_agent(**kwargs)
+    finally:
+        client.close()
+
+
+def test_client_silver_assigned_tickets_for_agent_docstring_documents_service_account_use(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    client = Client(
+        base_url="https://tenant.example/api/v1",
+        api_token="token-123",
+        registry=tiny_registry,
+    )
+    try:
+        docstring = client.silver.tickets.list_assigned_tickets_for_agent.__doc__ or ""
+    finally:
+        client.close()
+
+    assert "explicit `agent_user_id`" in docstring
+    assert "service-account automation" in docstring
+    assert "`schema='All'` returns the broader assigned-agent history" in docstring
+
+
 @respx.mock
 def test_async_client_silver_current_user_assigned_tickets_uses_ui_services_queue(
     tiny_registry: SchemaRegistry,
@@ -561,6 +653,45 @@ def test_async_client_silver_current_user_assigned_tickets_uses_schema_body_afte
         assert schema_route.calls[0].request.headers["Client"] == "WebBrowser"
         assert json.loads(schema_route.calls[0].request.content) == {
             "Schema": "AssignedToMe_Unassigned"
+        }
+
+    asyncio.run(run())
+
+
+@respx.mock
+def test_async_client_silver_assigned_tickets_for_agent_uses_services_agent_filter(
+    tiny_registry: SchemaRegistry,
+) -> None:
+    async def run() -> None:
+        payload = {"Items": [{"TicketId": "ticket-1"}], "ItemCount": 1}
+        route = respx.post("https://tenant.example/services/tickets").mock(
+            return_value=httpx.Response(200, json=payload)
+        )
+
+        client = AsyncClient(
+            base_url="https://tenant.example",
+            api_token="token-123",
+            registry=tiny_registry,
+        )
+        try:
+            assert await client.silver.tickets.list_assigned_tickets_for_agent(
+                agent_user_id="agent-123",
+                schema="Open",
+                page_size=10,
+            ) == payload
+        finally:
+            await client.close()
+
+        assert route.call_count == 1
+        assert dict(route.calls[0].request.url.params) == {
+            "$s": "10",
+            "$o": "TicketModifiedDate",
+            "$d": "Descending",
+        }
+        assert route.calls[0].request.headers["Client"] == "WebBrowser"
+        assert json.loads(route.calls[0].request.content) == {
+            "Schema": "Open",
+            "Filters": [{"Facet": "agent", "Id": "agent-123"}],
         }
 
     asyncio.run(run())

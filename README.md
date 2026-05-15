@@ -135,8 +135,13 @@ with Client.from_env() as client:
         sort_by="TicketModifiedDate",
         sort_direction="Descending",
     )
+    agent_tickets = client.silver.tickets.list_assigned_tickets_for_agent(
+        agent_user_id="00000000-0000-0000-0000-000000000000",
+        schema="Open",
+        page_size=100,
+    )
     statuses = client.tickets.get_ticket_statuses.raw()
-    print(tickets, statuses)
+    print(tickets, agent_tickets, statuses)
 ```
 
 `list_current_user_assigned_tickets(...)` is a read-only Silver helper around the
@@ -148,6 +153,17 @@ and dashboard count summaries. Use
 tenant's authoritative assigned-to-me and unassigned counts, and use this helper
 when you need the queue rows. See `examples/current_user_assigned_tickets.py` for
 a report that also fetches recent ticket actions and comments.
+
+For service-account automation, use
+`client.silver.tickets.list_assigned_tickets_for_agent(...)` instead. It queries
+`POST /services/tickets` with `Schema` set to `Open` or `All` and
+`Filters=[{"Facet": "agent", "Id": agent_user_id}]`, so the target agent is
+explicit and does not depend on the authenticated SDK user's current session.
+Live validation for issue #87 showed `schema="Open"` matched the expected open
+ticket UI count. `schema="All"` returned the API's broader all-schema result,
+which was one row higher than the stated UI/history total, so treat `All` as API
+history rather than an exact UI badge count until Incident IQ publishes the UI
+exclusion rule.
 
 ## Validation Strategy
 

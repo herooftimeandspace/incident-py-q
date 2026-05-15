@@ -82,6 +82,7 @@ def test_render_client_stub_includes_namespaces_aliases_and_sync_async_methods(
     assert "def request(self, method: str, path: str, *, path_params: Mapping[str, Any] | None = None, params: Mapping[str, Any] | None = None, json: Any | None = None, files: Mapping[str, Any] | None = None" in stub
     assert "def post_profile_picture(self, *, user_id: str = ..., file: str | PathLike[str] = ..., wait_for_consistency: bool = False, consistency_timeout: float = 10.0, consistency_poll_interval: float = 1.0, timeout: float | None = None) -> _JSONPayload: ..." in stub
     assert "def remove_profile_picture(self, *, user_id: str = ..., wait_for_consistency: bool = False, consistency_timeout: float = 10.0, consistency_poll_interval: float = 1.0, timeout: float | None = None) -> ItemUpdateResponseOfUser: ..." in stub
+    assert "def list_assigned_tickets_for_agent(self, *, agent_user_id: str = ..., schema: str = 'Open', page_size: int = 100, sort_by: str = 'TicketModifiedDate', sort_direction: str = 'Descending', timeout: float | None = None) -> dict[str, Any] | list[Any] | None: ..." in stub
     assert "post_my_picture" not in stub
     assert stub.count("# OperationId: Things_GetThings") == 1
 
@@ -137,3 +138,17 @@ def test_render_silver_profiles_reference_documents_png_normalization() -> None:
     assert "No public `.raw(...)`; `.raw(...)` is used only as an internal fallback" in page
     assert "smallest proven-safe `UpdateUserRequest`" in page
     assert "explicit `/api/v1.0/users/{user_id}` JSON route" in page
+
+
+def test_render_silver_tickets_reference_documents_explicit_agent_helper() -> None:
+    metadata = build_silver_metadata()
+    tickets = tuple(method for method in metadata if method.namespace == "tickets")
+
+    page = render_silver_namespace_reference(("tickets",), tickets)
+
+    assert "### `list_assigned_tickets_for_agent`" in page
+    assert "service-account automation" in page
+    assert "`POST /services/tickets` read-only services query" in page
+    assert "`{\"Facet\": \"agent\", \"Id\": \"<agent_user_id>\"}`" in page
+    assert "Supported values are `Open` and `All`" in page
+    assert "one more row than the stated UI/history total" in page
