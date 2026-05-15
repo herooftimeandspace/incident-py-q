@@ -703,6 +703,15 @@ def _render_manual_silver_method(method: SilverManualMethodMetadata) -> list[str
             "- Async default queue: `await client.silver.tickets.list_current_user_assigned_tickets(timeout=None)`",
             "",
         ]
+    if method.namespace_path == ("tickets",) and method.method_name == "list_assigned_tickets_for_agent":
+        example_lines = [
+            "#### Examples",
+            "",
+            "- Open tickets for an agent: `client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id=\"agent-guid\", schema=\"Open\", page_size=100, timeout=None)`",
+            "- All assigned-agent history: `client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id=\"agent-guid\", schema=\"All\", page_size=1000, timeout=None)`",
+            "- Async open tickets: `await client.silver.tickets.list_assigned_tickets_for_agent(agent_user_id=\"agent-guid\", schema=\"Open\", timeout=None)`",
+            "",
+        ]
     lines = [
         f"### `{method.method_name}`",
         "",
@@ -841,9 +850,13 @@ def _manual_silver_default_display(
         return "1.0"
     if (
         method.namespace_path == ("tickets",)
-        and method.method_name == "list_current_user_assigned_tickets"
+        and method.method_name in {
+            "list_current_user_assigned_tickets",
+            "list_assigned_tickets_for_agent",
+        }
     ):
         defaults = {
+            "schema": '"Open"',
             "page_size": "100",
             "sort_by": '"TicketModifiedDate"',
             "sort_direction": '"Descending"',
@@ -866,9 +879,13 @@ def _manual_silver_stub_type_and_default(
         return "float", "1.0"
     if (
         method.namespace_path == ("tickets",)
-        and method.method_name == "list_current_user_assigned_tickets"
+        and method.method_name in {
+            "list_current_user_assigned_tickets",
+            "list_assigned_tickets_for_agent",
+        }
     ):
         defaults = {
+            "schema": "'Open'",
             "page_size": "100",
             "sort_by": "'TicketModifiedDate'",
             "sort_direction": "'Descending'",

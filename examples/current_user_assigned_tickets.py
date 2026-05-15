@@ -6,8 +6,8 @@ This example uses only SDK read paths:
 - `client.tickets.get_ticket_statuses.raw()` reads the Golden ticket status
   catalog. `.raw()` is used because the live status payload is JSON data that
   the runtime validator now accepts even when Incident IQ omits `WorkflowId`.
-- `client.silver.tickets.get_ticket_activities.raw(...)` reads recent ticket
-  activity so a report can include recent actions and comments.
+- `client.silver.tickets.get_ticket_activities(...)` reads recent ticket activity
+  so a report can include recent actions and comments.
 
 Set `INCIDENTIQ_BASE_URL` and `INCIDENTIQ_API_TOKEN` before running. A bare
 tenant root such as `https://example.incidentiq.com` is normalized to the
@@ -51,6 +51,31 @@ def _status_lookup(status_payload: Any) -> dict[str, str]:
         if status_id is not None and status_name is not None:
             lookup[str(status_id)] = str(status_name)
     return lookup
+
+
+def _ticket_status(ticket: Mapping[str, Any], statuses: Mapping[str, str]) -> str | None:
+    """Extract the queue row's display status before using the status catalog fallback.
+
+    Incident IQ queue rows can expose status data directly on the ticket row or inside a
+    nested `WorkflowStep` object. The Golden `/tickets/statuses` catalog remains useful
+    as a final fallback when the queue row only includes an identifier.
+    """
+    top_level_status = _first_present(ticket, ("TicketStatusName", "StatusName"))
+    if top_level_status is not None:
+        return str(top_level_status)
+
+    workflow_step = ticket.get("WorkflowStep")
+    if isinstance(workflow_step, Mapping):
+        nested_status = _first_present(workflow_step, ("StatusName", "StepName"))
+        if nested_status is not None:
+            return str(nested_status)
+
+    status_id = _first_present(ticket, ("TicketStatusTypeId", "WorkflowStepId", "StatusId"))
+    if status_id is None and isinstance(workflow_step, Mapping):
+        status_id = _first_present(workflow_step, ("TicketStatusTypeId", "WorkflowStepId", "StatusId"))
+    if status_id is None:
+        return None
+    return statuses.get(str(status_id))
 
 
 def _activity_items(activity_payload: Any) -> list[dict[str, Any]]:
@@ -112,17 +137,13 @@ def build_current_user_ticket_report(client: Client, *, page_size: int = 100) ->
         ticket_id = _first_present(ticket, ("TicketId", "Id"))
         if ticket_id is None:
             continue
-        activities = client.silver.tickets.get_ticket_activities.raw(ticket_id=str(ticket_id))
-        status_id = _first_present(ticket, ("TicketStatusTypeId", "WorkflowStepId", "StatusId"))
+        activities = client.silver.tickets.get_ticket_activities(ticket_id=str(ticket_id))
         report_rows.append(
             {
                 "ticket_id": str(ticket_id),
                 "ticket_number": _first_present(ticket, ("TicketNumber", "Number")),
                 "subject": _first_present(ticket, ("TicketSubject", "Subject")),
-                "status": (
-                    _first_present(ticket, ("TicketStatusName", "StatusName"))
-                    or statuses.get(str(status_id))
-                ),
+                "status": _ticket_status(ticket, statuses),
                 "priority": _first_present(ticket, ("TicketPriority", "Priority", "PriorityName")),
                 "is_urgent": bool(_first_present(ticket, ("IsUrgent", "Urgent"))),
                 "recent_actions": _recent_actions(activities),

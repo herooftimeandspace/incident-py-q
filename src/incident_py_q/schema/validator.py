@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from typing import Any
 
 from jsonschema import RefResolver, validators
@@ -10,6 +11,10 @@ from jsonschema import ValidationError as JSONSchemaValidationError
 from incident_py_q.exceptions import SchemaValidationError
 
 from .registry import OperationSpec, SchemaRegistry
+
+_LIVE_OPTIONAL_TICKET_DETAIL_FIELDS = frozenset({"IsTraining", "SiteId", "TicketId"})
+_LIVE_OPTIONAL_TICKET_CUSTOM_FIELD_VALUE_FIELDS = frozenset({"TicketId"})
+_LIVE_OPTIONAL_TAG_FIELDS = frozenset({"ProductId", "SiteId"})
 
 
 class ResponseSchemaValidator:
@@ -39,10 +44,14 @@ class ResponseSchemaValidator:
         if response_schema is None:
             return
 
-        validator = self._validator_cls(
-            response_schema,
-            resolver=self._resolver,
-        )
+        validator_cls = self._validator_cls
+        resolver = self._resolver
+        if _is_ticket_detail_response(operation):
+            detail_document = _ticket_detail_response_document(self._registry.merged_document)
+            validator_cls = validators.validator_for(detail_document)
+            resolver = RefResolver.from_schema(detail_document)
+
+        validator = validator_cls(response_schema, resolver=resolver)
 
         try:
             validator.validate(payload)
@@ -75,3 +84,59 @@ def _pick_response_schema(
             return response_schemas[candidate]
 
     return response_schemas.get("default")
+
+
+def _is_ticket_detail_response(operation: OperationSpec) -> bool:
+    """Return whether an operation validates a single ticket-detail response."""
+    return (
+        operation.method == "GET"
+        and operation.path_template == "/tickets/{TicketId}"
+        and operation.operation_id == "Ticket_GetTicket"
+    )
+
+
+def _ticket_detail_response_document(document: dict[str, Any]) -> dict[str, Any]:
+    """Return a validation document relaxed only for ticket detail responses.
+
+    Incident IQ live ``GET /tickets/{TicketId}`` payloads can omit a few fields
+    from the top-level ticket detail item and its nested custom-field/tag rows.
+    Those same shared definitions are also used by list, create, and update
+    contracts, where relaxing them globally would weaken request and non-detail
+    response validation. The copied document created here is therefore used only
+    while validating the matched ticket-detail operation.
+    """
+    detail_document = deepcopy(document)
+    definitions = detail_document.get("definitions")
+    if not isinstance(definitions, dict):
+        return detail_document
+
+    _remove_required_fields(
+        definitions,
+        "Ticket",
+        _LIVE_OPTIONAL_TICKET_DETAIL_FIELDS,
+    )
+    _remove_required_fields(
+        definitions,
+        "TicketCustomFieldValue",
+        _LIVE_OPTIONAL_TICKET_CUSTOM_FIELD_VALUE_FIELDS,
+    )
+    _remove_required_fields(
+        definitions,
+        "Tag",
+        _LIVE_OPTIONAL_TAG_FIELDS,
+    )
+    return detail_document
+
+
+def _remove_required_fields(
+    definitions: dict[str, Any],
+    definition_name: str,
+    optional_fields: frozenset[str],
+) -> None:
+    schema = definitions.get(definition_name)
+    if not isinstance(schema, dict):
+        return
+    required = schema.get("required")
+    if not isinstance(required, list):
+        return
+    schema["required"] = [field for field in required if field not in optional_fields]

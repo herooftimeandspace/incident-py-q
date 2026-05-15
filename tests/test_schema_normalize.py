@@ -180,6 +180,104 @@ def test_normalize_swagger_document_ignores_ticket_status_without_required_field
     assert normalize_swagger_document(malformed_definitions) == malformed_definitions
 
 
+def test_normalize_swagger_document_preserves_shared_ticket_required_fields() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "Ticket": {
+                "type": "object",
+                "required": [
+                    "TicketId",
+                    "SiteId",
+                    "ProductId",
+                    "IsDeleted",
+                    "IsTraining",
+                    "TicketNumber",
+                ],
+                "properties": {
+                    "TicketId": {"type": "string"},
+                    "SiteId": {"type": "string"},
+                    "ProductId": {"type": "string"},
+                    "IsDeleted": {"type": "boolean"},
+                    "IsTraining": {"type": "boolean"},
+                    "TicketNumber": {"type": "string"},
+                },
+            },
+            "UpdateTicketRequest": {
+                "type": "object",
+                "required": ["TicketId", "SiteId", "ProductId", "IsTraining"],
+                "properties": {
+                    "TicketId": {"type": "string"},
+                    "SiteId": {"type": "string"},
+                    "ProductId": {"type": "string"},
+                    "IsTraining": {"type": "boolean"},
+                },
+            },
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert normalized["definitions"]["Ticket"]["required"] == [
+        "TicketId",
+        "SiteId",
+        "ProductId",
+        "IsDeleted",
+        "IsTraining",
+        "TicketNumber",
+    ]
+    assert normalized["definitions"]["UpdateTicketRequest"]["required"] == [
+        "TicketId",
+        "SiteId",
+        "ProductId",
+        "IsTraining",
+    ]
+
+
+def test_normalize_swagger_document_preserves_shared_nested_ticket_required_fields() -> None:
+    source: dict[str, Any] = {
+        "definitions": {
+            "TicketCustomFieldValue": {
+                "type": "object",
+                "required": [
+                    "CustomFieldTypeId",
+                    "TicketId",
+                ],
+                "properties": {
+                    "CustomFieldTypeId": {"type": "string"},
+                    "TicketId": {"type": "string"},
+                    "Value": {"type": "string"},
+                },
+            },
+            "Tag": {
+                "type": "object",
+                "required": [
+                    "TagId",
+                    "SiteId",
+                    "ProductId",
+                ],
+                "properties": {
+                    "TagId": {"type": "string"},
+                    "SiteId": {"type": "string"},
+                    "ProductId": {"type": "string"},
+                    "Name": {"type": "string"},
+                },
+            },
+        }
+    }
+
+    normalized = normalize_swagger_document(source)
+
+    assert normalized["definitions"]["TicketCustomFieldValue"]["required"] == [
+        "CustomFieldTypeId",
+        "TicketId",
+    ]
+    assert normalized["definitions"]["Tag"]["required"] == [
+        "TagId",
+        "SiteId",
+        "ProductId",
+    ]
+
+
 def test_normalize_swagger_document_relaxes_live_site_required_field_drift() -> None:
     source: dict[str, Any] = {
         "definitions": {
