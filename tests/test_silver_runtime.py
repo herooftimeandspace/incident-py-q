@@ -8,7 +8,7 @@ import struct
 from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any, cast
+from typing import Any, TypedDict, cast
 
 import httpx
 import pytest
@@ -21,6 +21,13 @@ from incident_py_q.media import prepare_png_upload
 from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.silver import runtime as silver_runtime
 from incident_py_q.silver.inventory import SilverMethodMetadata, SilverParameterMetadata
+
+
+class _AssignedTicketsForAgentInvalidBodyKwargs(TypedDict):
+    """Keyword arguments used to exercise helper body validation failures."""
+
+    agent_user_id: str
+    schema: str
 
 
 def _stub_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
@@ -539,7 +546,7 @@ def test_client_silver_assigned_tickets_for_agent_uses_services_agent_filter(
 )
 def test_client_silver_assigned_tickets_for_agent_rejects_invalid_body_inputs(
     tiny_registry: SchemaRegistry,
-    kwargs: dict[str, str],
+    kwargs: _AssignedTicketsForAgentInvalidBodyKwargs,
     message: str,
 ) -> None:
     client = Client(
