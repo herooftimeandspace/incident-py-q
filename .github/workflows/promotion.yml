@@ -153,15 +153,12 @@ jobs:
           # that can carry the release-prep version bump before the PR is merged.
           # Updating the promotion ref with github.token suppresses the downstream
           # pull_request/pull_request_target workflows that prepare and verify the
-          # release branch. Use the secret-backed promotion token for ref writes so a
-          # refresh of an existing PR emits the synchronize event and runs the
-          # prepare-release-promotion, release-prep, and docs checks for the new head.
-          export GH_TOKEN="${GH_PR_TOKEN}"
-          if gh api "repos/${GH_REPO}/git/ref/heads/${GH_PROMOTION_REF}" >/dev/null 2>&1; then
-            gh api "repos/${GH_REPO}/git/refs/heads/${GH_PROMOTION_REF}" -X PATCH -f sha="${GH_SHA}" -F force=true >/dev/null
-          else
-            gh api "repos/${GH_REPO}/git/refs" -X POST -f ref="refs/heads/${GH_PROMOTION_REF}" -f sha="${GH_SHA}" >/dev/null
-          fi
+          # release branch. Use the same secret-backed Git push path as
+          # release-prep: the promotion token can push refs over Git even when the
+          # REST Git refs API rejects the token with HTTP 403.
+          git push "https://x-access-token:${GH_PR_TOKEN}@github.com/${GH_REPO}.git" \
+            "${GH_SHA}:refs/heads/${GH_PROMOTION_REF}" \
+            --force
 
           export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base main --head "${GH_PROMOTION_REF}" --state open --json number --jq '.[0].number')"
