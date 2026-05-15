@@ -32,6 +32,8 @@ _DIRECT_USER_ROUTE = "/api/v1.0/users/{user_id}"
 _CURRENT_USER_ASSIGNED_TICKETS_ROUTE = "/services/tickets/-/-/AssignedToMe_Unassigned"
 _CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_ROUTE = "/services/tickets"
 _CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_BODY = {"Schema": "AssignedToMe_Unassigned"}
+_EXPLICIT_AGENT_TICKETS_ROUTE = "/services/tickets"
+_EXPLICIT_AGENT_TICKET_SCHEMAS = frozenset({"Open", "All"})
 _CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS = {
     "Client": "WebBrowser",
     "Accept": "application/json, text/plain, */*",
@@ -358,6 +360,28 @@ def format_manual_silver_docstring(
                 (
                     "Use this helper when `client.silver.views.get_view(...)` or analytics summaries "
                     "return zero rows for current-user views that the UI still shows as populated."
+                ),
+            ]
+        )
+    if (
+        metadata.namespace_path == ("tickets",)
+        and metadata.method_name == "list_assigned_tickets_for_agent"
+    ):
+        lines.extend(
+            [
+                "",
+                "Behavior notes:",
+                (
+                    "This helper queries tickets assigned to the explicit `agent_user_id` instead "
+                    "of resolving assignment from the current authenticated session. Use it for "
+                    "service-account automation that needs a human agent's ticket list."
+                ),
+                (
+                    "`schema='Open'` matches the open-ticket services query validated for issue "
+                    "#87. `schema='All'` returns the broader assigned-agent history from the same "
+                    "facet shape; live validation found it can include one more row than the "
+                    "corresponding UI/history total, so treat `All` as the API's all-schema result "
+                    "rather than an exact UI badge count."
                 ),
             ]
         )
@@ -945,6 +969,144 @@ class AsyncSilverCurrentUserAssignedTicketsMethod:
         )
 
 
+class SilverAssignedTicketsForAgentMethod:
+    """Sync Silver helper for tickets assigned to an explicit agent user id."""
+
+    def __init__(self, *, client: _SyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
+        self._client = client
+        self.metadata = metadata
+        self.__name__ = metadata.method_name
+        self.__signature__ = inspect.Signature(
+            parameters=[
+                inspect.Parameter(
+                    "agent_user_id",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "schema",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default="Open",
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "page_size",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=100,
+                    annotation=int,
+                ),
+                inspect.Parameter(
+                    "sort_by",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "sort_direction",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "timeout",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=None,
+                    annotation=float | None,
+                ),
+            ]
+        )
+        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=False)
+
+    def __call__(
+        self,
+        *,
+        agent_user_id: str,
+        schema: str = "Open",
+        page_size: int = 100,
+        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+        timeout: float | None = None,
+    ) -> JSONPayload:
+        return _list_assigned_tickets_for_agent_sync(
+            self._client,
+            agent_user_id=agent_user_id,
+            schema=schema,
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+            timeout=timeout,
+        )
+
+
+class AsyncSilverAssignedTicketsForAgentMethod:
+    """Async Silver helper for tickets assigned to an explicit agent user id."""
+
+    def __init__(self, *, client: _AsyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
+        self._client = client
+        self.metadata = metadata
+        self.__name__ = metadata.method_name
+        self.__signature__ = inspect.Signature(
+            parameters=[
+                inspect.Parameter(
+                    "agent_user_id",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "schema",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default="Open",
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "page_size",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=100,
+                    annotation=int,
+                ),
+                inspect.Parameter(
+                    "sort_by",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "sort_direction",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+                    annotation=str,
+                ),
+                inspect.Parameter(
+                    "timeout",
+                    kind=inspect.Parameter.KEYWORD_ONLY,
+                    default=None,
+                    annotation=float | None,
+                ),
+            ]
+        )
+        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=True)
+
+    async def __call__(
+        self,
+        *,
+        agent_user_id: str,
+        schema: str = "Open",
+        page_size: int = 100,
+        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
+        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
+        timeout: float | None = None,
+    ) -> JSONPayload:
+        return await _list_assigned_tickets_for_agent_async(
+            self._client,
+            agent_user_id=agent_user_id,
+            schema=schema,
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+            timeout=timeout,
+        )
+
+
 def build_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
     """Load checked-in Silver metadata used by runtime, docs, and stubs."""
     return load_silver_inventory()
@@ -1086,6 +1248,73 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                 "POST /services/tickets with AssignedToMe_Unassigned schema body",
             ),
         ),
+        SilverManualMethodMetadata(
+            namespace_path=("tickets",),
+            method_name="list_assigned_tickets_for_agent",
+            summary="List tickets assigned to an explicit Incident IQ agent user id.",
+            description=(
+                "This helper exists for service-account automation where the authenticated SDK "
+                "user is not the human agent whose status report is being generated. "
+                "`list_current_user_assigned_tickets(...)` resolves the Incident IQ current-user "
+                "queue from the active session, so a service account can see the service account's "
+                "queue instead of the target agent's queue. This helper sends the validated "
+                "`POST /services/tickets` read-only services query with `Schema` set to `Open` or "
+                "`All` and a single `Filters` entry of `{\"Facet\": \"agent\", \"Id\": "
+                "\"<agent_user_id>\"}`. The helper always sends the UI-style `Client: WebBrowser` "
+                "header because that is the validated services shape for the explicit agent "
+                "facet. Live validation for issue #87 showed `schema=\"Open\"` matched the "
+                "expected open-ticket UI count for the target agent. The same validation showed "
+                "`schema=\"All\"` returned one more row than the stated UI/history total, so the "
+                "SDK documents `All` as the API all-schema result while the exact UI exclusion "
+                "rule remains tenant/product behavior outside the checked-in contract."
+            ),
+            parameters=(
+                SilverManualParameterMetadata(
+                    python_name="agent_user_id",
+                    api_name="Filters[0].Id",
+                    location="body",
+                    required=True,
+                    type_display="str",
+                    description="Incident IQ `UserId` for the agent whose assigned tickets should be returned.",
+                ),
+                SilverManualParameterMetadata(
+                    python_name="schema",
+                    api_name="Schema",
+                    location="body",
+                    required=False,
+                    type_display="str",
+                    description="Services ticket schema selector. Supported values are `Open` and `All`.",
+                ),
+                SilverManualParameterMetadata(
+                    python_name="page_size",
+                    api_name="$s",
+                    location="query",
+                    required=False,
+                    type_display="int",
+                    description="Maximum number of ticket rows to return from the services query.",
+                ),
+                SilverManualParameterMetadata(
+                    python_name="sort_by",
+                    api_name="$o",
+                    location="query",
+                    required=False,
+                    type_display="str",
+                    description="Incident IQ ticket field used for ordering returned rows.",
+                ),
+                SilverManualParameterMetadata(
+                    python_name="sort_direction",
+                    api_name="$d",
+                    location="query",
+                    required=False,
+                    type_display="str",
+                    description="Sort direction, either `Ascending` or `Descending`.",
+                ),
+            ),
+            typed_return="dict[str, Any] | list[Any] | None",
+            raw_return="dict[str, Any] | list[Any] | None",
+            response_model=None,
+            backing_routes=("POST /services/tickets with Schema Open/All and agent facet filter",),
+        ),
     )
 
 
@@ -1207,6 +1436,15 @@ def _build_manual_silver_method(
             AsyncSilverCurrentUserAssignedTicketsMethod(client=client, metadata=metadata)
             if async_mode
             else SilverCurrentUserAssignedTicketsMethod(client=client, metadata=metadata)
+        )
+    if (
+        metadata.namespace_path == ("tickets",)
+        and metadata.method_name == "list_assigned_tickets_for_agent"
+    ):
+        return (
+            AsyncSilverAssignedTicketsForAgentMethod(client=client, metadata=metadata)
+            if async_mode
+            else SilverAssignedTicketsForAgentMethod(client=client, metadata=metadata)
         )
     raise ValueError(f"Unsupported Silver manual helper {metadata.namespace}.{metadata.method_name!r}.")
 
@@ -1389,6 +1627,24 @@ def _build_current_user_assigned_ticket_legacy_sort_params(
     }
 
 
+def _build_explicit_agent_ticket_body(*, agent_user_id: str, schema: str) -> dict[str, Any]:
+    """Build the validated services ticket query body for an explicit agent facet."""
+    if not agent_user_id.strip():
+        raise ValueError("agent_user_id must not be empty.")
+    if schema not in _EXPLICIT_AGENT_TICKET_SCHEMAS:
+        allowed = ", ".join(sorted(_EXPLICIT_AGENT_TICKET_SCHEMAS))
+        raise ValueError(f"schema must be one of: {allowed}.")
+    return {
+        "Schema": schema,
+        "Filters": [
+            {
+                "Facet": "agent",
+                "Id": agent_user_id,
+            }
+        ],
+    }
+
+
 def _list_current_user_assigned_tickets_sync(
     client: _SyncRequestClient,
     *,
@@ -1508,6 +1764,75 @@ async def _list_current_user_assigned_tickets_async(
             sort_direction=sort_direction,
         ),
         json=dict(_CURRENT_USER_ASSIGNED_TICKETS_SCHEMA_BODY),
+        headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
+        timeout=timeout,
+    )
+
+
+def _explicit_agent_tickets_metadata() -> SilverMethodMetadata:
+    """Return synthetic metadata for the explicit-agent services ticket query."""
+    return SilverMethodMetadata(
+        namespace_path=("tickets",),
+        method_name="list_assigned_tickets_for_agent",
+        http_method="POST",
+        route=_EXPLICIT_AGENT_TICKETS_ROUTE,
+        parameters=(),
+        summary="Manual helper for tickets assigned to an explicit agent user id.",
+        description=(
+            "Synthetic route metadata for the read-only services ticket query that filters by an "
+            "explicit `agent` facet rather than the current authenticated user."
+        ),
+        typed_return="dict[str, Any] | list[Any] | None",
+        raw_return="dict[str, Any] | list[Any] | None",
+        sources=("GitHub issue #87 live validation",),
+        status_codes=(200,),
+        uses_app_headers=False,
+    )
+
+
+def _list_assigned_tickets_for_agent_sync(
+    client: _SyncRequestClient,
+    *,
+    agent_user_id: str,
+    schema: str,
+    page_size: int,
+    sort_by: str,
+    sort_direction: str,
+    timeout: float | None,
+) -> JSONPayload:
+    """Call the read-only services ticket query for an explicit agent facet."""
+    return client.request_silver(
+        _explicit_agent_tickets_metadata(),
+        params=_build_current_user_assigned_ticket_params(
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+        ),
+        json=_build_explicit_agent_ticket_body(agent_user_id=agent_user_id, schema=schema),
+        headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
+        timeout=timeout,
+    )
+
+
+async def _list_assigned_tickets_for_agent_async(
+    client: _AsyncRequestClient,
+    *,
+    agent_user_id: str,
+    schema: str,
+    page_size: int,
+    sort_by: str,
+    sort_direction: str,
+    timeout: float | None,
+) -> JSONPayload:
+    """Call the read-only services ticket query for an explicit agent facet."""
+    return await client.request_silver(
+        _explicit_agent_tickets_metadata(),
+        params=_build_current_user_assigned_ticket_params(
+            page_size=page_size,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+        ),
+        json=_build_explicit_agent_ticket_body(agent_user_id=agent_user_id, schema=schema),
         headers=_CURRENT_USER_ASSIGNED_TICKETS_UI_HEADERS,
         timeout=timeout,
     )
