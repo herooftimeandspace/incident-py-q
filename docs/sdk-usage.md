@@ -57,6 +57,12 @@ lookup = client.silver.apps.google_device_data.lookup_asset(
 )
 stats = client.silver.analytics.get_agent_current_stats()
 assigned = client.silver.tickets.list_current_user_assigned_tickets()
+agent_assigned = client.silver.tickets.list_assigned_tickets_for_agent(
+    agent_user_id="agent-guid",
+    schema="Open",
+)
 ```
 
-`list_current_user_assigned_tickets(...)` uses the UI-observed read-only assigned/open queue route. It is useful when analytics or saved-view routes return zero rows while the web UI still shows current-user assigned work.
+`list_current_user_assigned_tickets(...)` uses the UI-observed read-only `AssignedToMe_Unassigned` queue route. That queue can include current-user assigned rows and unassigned rows; use `client.silver.analytics.get_agent_current_stats(...)` for the tenant's authoritative assigned-to-me and unassigned counts.
+
+Use `list_assigned_tickets_for_agent(...)` when automation authenticates as a service account but needs tickets for a specific human agent. The helper sends `POST /services/tickets` with `Schema` set to `Open` or `All`, an explicit `agent` facet filter, and the UI-style `Client: WebBrowser` header. In live validation for issue #87, `schema="Open"` matched the target agent's expected open-ticket UI count; `schema="All"` returned one more row than the stated UI/history total, so the checked-in docs treat `All` as the API's all-schema result until the UI exclusion rule is known.
