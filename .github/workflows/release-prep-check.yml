@@ -20,7 +20,7 @@ jobs:
       GH_PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
       - name: Checkout promotion branch
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0

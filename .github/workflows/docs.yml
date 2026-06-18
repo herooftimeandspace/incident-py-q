@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
         uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
 
       - name: Build docs status badge payload
         run: |

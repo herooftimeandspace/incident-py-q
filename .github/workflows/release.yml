@@ -15,7 +15,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
         with:
           fetch-depth: 0
 

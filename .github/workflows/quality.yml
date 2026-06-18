@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout
         if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
         if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
@@ -140,7 +140,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
 
       - name: Download coverage badge artifact
         if: needs.unit.result == 'success'
