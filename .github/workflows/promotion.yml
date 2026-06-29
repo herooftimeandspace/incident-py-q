@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
@@ -89,7 +89,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
