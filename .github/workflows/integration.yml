@@ -51,18 +51,23 @@ jobs:
           exit 1
 
       - name: Install dependencies
-        if: steps.detect.outputs.enabled == 'true'
+        if: steps.detect.outputs.enabled == 'true' && github.event_name != 'pull_request'
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e '.[dev]'
 
       - name: Run integration tests
-        if: steps.detect.outputs.enabled == 'true'
+        if: steps.detect.outputs.enabled == 'true' && github.event_name != 'pull_request'
         run: pytest -m integration
 
       - name: Integration skipped
-        if: steps.detect.outputs.enabled != 'true' && github.event_name != 'push'
-        run: echo "Integration secrets are not configured; skipping live tests."
+        if: github.event_name == 'pull_request' || (steps.detect.outputs.enabled != 'true' && github.event_name != 'push')
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Live integration tests run on protected branch pushes, manual dispatch, and schedule; skipping for pull requests."
+          else
+            echo "Integration secrets are not configured; skipping live tests."
+          fi
 
   publish-badges:
     needs: integration
