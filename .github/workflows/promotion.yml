@@ -85,7 +85,12 @@ jobs:
             --label "${resolved_label}"
 
   promote-staging-to-main:
-    if: github.event.workflow_run.name == 'integration' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'staging'
+    # Promotion must depend on repo-owned quality checks, not on live Incident IQ
+    # smoke tests. Live integration credentials can expire or be tenant-scoped,
+    # and a 401 from that external system should not prevent creating the
+    # staging -> main review PR after staging has passed the deterministic
+    # package/test/lint gate.
+    if: github.event.workflow_run.name == 'quality' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'staging'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source branch
