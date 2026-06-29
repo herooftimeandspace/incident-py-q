@@ -1,6 +1,6 @@
 {
-  "color": "red",
+  "color": "brightgreen",
   "label": "main integration",
-  "message": "failing",
+  "message": "passing",
   "schemaVersion": 1
 }
