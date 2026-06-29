@@ -28,7 +28,7 @@ jobs:
       INCIDENTIQ_TEST_AUTH_MODE: ${{ secrets.INCIDENTIQ_TEST_AUTH_MODE }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
 
       - name: Set up Python
         uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
@@ -44,25 +44,30 @@ jobs:
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Require integration secrets on protected branch CI
-        if: steps.detect.outputs.enabled != 'true' && (github.event_name == 'push' || github.event_name == 'pull_request')
+      - name: Require integration secrets on protected branch pushes
+        if: steps.detect.outputs.enabled != 'true' && github.event_name == 'push'
         run: |
-          echo "Integration secrets are required for staging and main validation."
+          echo "Integration secrets are required for protected branch push validation."
           exit 1
 
       - name: Install dependencies
-        if: steps.detect.outputs.enabled == 'true'
+        if: steps.detect.outputs.enabled == 'true' && github.event_name != 'pull_request'
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e '.[dev]'
 
       - name: Run integration tests
-        if: steps.detect.outputs.enabled == 'true'
+        if: steps.detect.outputs.enabled == 'true' && github.event_name != 'pull_request'
         run: pytest -m integration
 
       - name: Integration skipped
-        if: steps.detect.outputs.enabled != 'true' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
-        run: echo "Integration secrets are not configured; skipping live tests."
+        if: github.event_name == 'pull_request' || (steps.detect.outputs.enabled != 'true' && github.event_name != 'push')
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Live integration tests run on protected branch pushes, manual dispatch, and schedule; skipping for pull requests."
+          else
+            echo "Integration secrets are not configured; skipping live tests."
+          fi
 
   publish-badges:
     needs: integration
@@ -72,7 +77,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
 
       - name: Build integration status badge payload
         run: |

@@ -24,6 +24,9 @@ class ResponseSchemaValidator:
         self._registry = registry
         self._validator_cls = validators.validator_for(registry.merged_document)
         self._resolver = RefResolver.from_schema(registry.merged_document)
+        ticket_detail_document = _ticket_detail_response_document(registry.merged_document)
+        self._ticket_detail_validator_cls = validators.validator_for(ticket_detail_document)
+        self._ticket_detail_resolver = RefResolver.from_schema(ticket_detail_document)
 
     def validate(
         self,
@@ -47,9 +50,8 @@ class ResponseSchemaValidator:
         validator_cls = self._validator_cls
         resolver = self._resolver
         if _is_ticket_detail_response(operation):
-            detail_document = _ticket_detail_response_document(self._registry.merged_document)
-            validator_cls = validators.validator_for(detail_document)
-            resolver = RefResolver.from_schema(detail_document)
+            validator_cls = self._ticket_detail_validator_cls
+            resolver = self._ticket_detail_resolver
 
         validator = validator_cls(response_schema, resolver=resolver)
 
