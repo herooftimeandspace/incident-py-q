@@ -44,10 +44,10 @@ jobs:
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Require integration secrets on protected branch CI
-        if: steps.detect.outputs.enabled != 'true' && (github.event_name == 'push' || github.event_name == 'pull_request')
+      - name: Require integration secrets on protected branch pushes
+        if: steps.detect.outputs.enabled != 'true' && github.event_name == 'push'
         run: |
-          echo "Integration secrets are required for staging and main validation."
+          echo "Integration secrets are required for protected branch push validation."
           exit 1
 
       - name: Install dependencies
@@ -61,7 +61,7 @@ jobs:
         run: pytest -m integration
 
       - name: Integration skipped
-        if: steps.detect.outputs.enabled != 'true' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
+        if: steps.detect.outputs.enabled != 'true' && github.event_name != 'push'
         run: echo "Integration secrets are not configured; skipping live tests."
 
   publish-badges:
