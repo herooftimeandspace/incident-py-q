@@ -1,6 +1,6 @@
 {
-  "color": "brightgreen",
+  "color": "red",
   "label": "staging integration",
-  "message": "passing",
+  "message": "failing",
   "schemaVersion": 1
 }
