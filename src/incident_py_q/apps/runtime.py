@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from typing import Any, Literal, Protocol
+from typing import Any, Literal, Protocol, cast
 from urllib.parse import urlsplit
 
 from incident_py_q.config import ClientConfig
@@ -113,12 +113,101 @@ def _app_headers(config: ClientConfig, extra_headers: Mapping[str, str] | None =
     return merged
 
 
-class AppRegistryService:
-    """Operations for the Incident IQ app registry endpoint."""
+class _AppServiceBase:
+    """Shared response validation for metadata-backed app service requests."""
 
-    def __init__(self, client: _SyncRequestClient, validator: AppSchemaValidator) -> None:
+    def __init__(self, client: Any, validator: AppSchemaValidator) -> None:
         self._client = client
         self._validator = validator
+
+    def _validated_response(
+        self,
+        payload: Any,
+        *,
+        schema_name: str,
+        expected: str,
+        allow_none: bool = False,
+        list_response: bool = False,
+    ) -> Any:
+        if payload is None and allow_none:
+            return None
+        expected_type = list if list_response else dict
+        if not isinstance(payload, expected_type):
+            raise ValueError(expected)
+        self._validator.validate(schema_name, payload)
+        if list_response:
+            return [item for item in payload if isinstance(item, dict)]
+        return payload
+
+
+class _SyncAppService(_AppServiceBase):
+    """Execute ordinary sync app requests through one validation path."""
+
+    _client: _SyncRequestClient
+
+    def _request(
+        self,
+        method: str,
+        path: str,
+        *,
+        schema_name: str,
+        expected: str,
+        json: Any | None = None,
+        timeout: float | None = None,
+        allow_none: bool = False,
+        list_response: bool = False,
+    ) -> Any:
+        payload = self._client.request(
+            method,
+            _absolute_app_url(self._client.config.base_url, path),
+            json=json,
+            headers=_app_headers(self._client.config),
+            timeout=timeout,
+        )
+        return self._validated_response(
+            payload,
+            schema_name=schema_name,
+            expected=expected,
+            allow_none=allow_none,
+            list_response=list_response,
+        )
+
+
+class _AsyncAppService(_AppServiceBase):
+    """Execute ordinary async app requests through one validation path."""
+
+    _client: _AsyncRequestClient
+
+    async def _request(
+        self,
+        method: str,
+        path: str,
+        *,
+        schema_name: str,
+        expected: str,
+        json: Any | None = None,
+        timeout: float | None = None,
+        allow_none: bool = False,
+        list_response: bool = False,
+    ) -> Any:
+        payload = await self._client.request(
+            method,
+            _absolute_app_url(self._client.config.base_url, path),
+            json=json,
+            headers=_app_headers(self._client.config),
+            timeout=timeout,
+        )
+        return self._validated_response(
+            payload,
+            schema_name=schema_name,
+            expected=expected,
+            allow_none=allow_none,
+            list_response=list_response,
+        )
+
+
+class AppRegistryService(_SyncAppService):
+    """Operations for the Incident IQ app registry endpoint."""
 
     def list_apps(self, *, include_hidden: bool = False, timeout: float | None = None) -> AppRegistryResponse:
         payload = self.list_apps_raw(include_hidden=include_hidden, timeout=timeout)
@@ -130,26 +219,18 @@ class AppRegistryService:
         self, *, include_hidden: bool = False, timeout: float | None = None
     ) -> dict[str, Any] | None:
         path = f"/api/v1.0/app-registry/apps/{str(include_hidden).lower()}"
-        payload = self._client.request(
+        return cast(dict[str, Any] | None, self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, path),
-            headers=_app_headers(self._client.config),
+            path,
+            schema_name="registry_response",
+            expected="Expected app registry response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected app registry response object.")
-        self._validator.validate("registry_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
 
-class AsyncAppRegistryService:
+class AsyncAppRegistryService(_AsyncAppService):
     """Async operations for the Incident IQ app registry endpoint."""
-
-    def __init__(self, client: _AsyncRequestClient, validator: AppSchemaValidator) -> None:
-        self._client = client
-        self._validator = validator
 
     async def list_apps(
         self, *, include_hidden: bool = False, timeout: float | None = None
@@ -163,29 +244,21 @@ class AsyncAppRegistryService:
         self, *, include_hidden: bool = False, timeout: float | None = None
     ) -> dict[str, Any] | None:
         path = f"/api/v1.0/app-registry/apps/{str(include_hidden).lower()}"
-        payload = await self._client.request(
+        return cast(dict[str, Any] | None, await self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, path),
-            headers=_app_headers(self._client.config),
+            path,
+            schema_name="registry_response",
+            expected="Expected app registry response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected app registry response object.")
-        self._validator.validate("registry_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
 
-class MicrosoftIntuneService:
+class MicrosoftIntuneService(_SyncAppService):
     """Microsoft Intune app-path operations and ownership helpers."""
 
     _lookup_path = "/apps/microsoftIntune/api/microsoftIntune/data/assets/lookup"
     _remote_actions_path = "/apps/microsoftIntune/api/microsoftIntune/remoteactions"
-
-    def __init__(self, client: _SyncRequestClient, validator: AppSchemaValidator) -> None:
-        self._client = client
-        self._validator = validator
 
     def lookup_asset(
         self,
@@ -221,35 +294,29 @@ class MicrosoftIntuneService:
         request_payload = request_model.model_dump(by_alias=True)
         self._validator.validate("intune_lookup_request", request_payload)
 
-        payload = self._client.request(
+        return cast(dict[str, Any] | None, self._request(
             "POST",
-            _absolute_app_url(self._client.config.base_url, self._lookup_path),
+            self._lookup_path,
             json=request_payload,
-            headers=_app_headers(self._client.config),
+            schema_name="lookup_response",
+            expected="Expected Intune lookup response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Intune lookup response object.")
-        self._validator.validate("lookup_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
     def list_remote_actions(self, *, timeout: float | None = None) -> list[AppRemoteAction]:
         payload = self.list_remote_actions_raw(timeout=timeout)
         return [AppRemoteAction.model_validate(item) for item in payload]
 
     def list_remote_actions_raw(self, *, timeout: float | None = None) -> list[dict[str, Any]]:
-        payload = self._client.request(
+        return cast(list[dict[str, Any]], self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._remote_actions_path),
-            headers=_app_headers(self._client.config),
+            self._remote_actions_path,
+            schema_name="remote_actions_response",
+            expected="Expected Intune remote actions response list.",
             timeout=timeout,
-        )
-        if not isinstance(payload, list):
-            raise ValueError("Expected Intune remote actions response list.")
-        self._validator.validate("remote_actions_response", payload)
-        return [item for item in payload if isinstance(item, dict)]
+            list_response=True,
+        ))
 
     def classify_owner_type_from_lookup(
         self,
@@ -332,15 +399,11 @@ class MicrosoftIntuneService:
         )
 
 
-class AsyncMicrosoftIntuneService:
+class AsyncMicrosoftIntuneService(_AsyncAppService):
     """Async Microsoft Intune app-path operations and ownership helpers."""
 
     _lookup_path = "/apps/microsoftIntune/api/microsoftIntune/data/assets/lookup"
     _remote_actions_path = "/apps/microsoftIntune/api/microsoftIntune/remoteactions"
-
-    def __init__(self, client: _AsyncRequestClient, validator: AppSchemaValidator) -> None:
-        self._client = client
-        self._validator = validator
 
     async def lookup_asset(
         self,
@@ -376,35 +439,29 @@ class AsyncMicrosoftIntuneService:
         request_payload = request_model.model_dump(by_alias=True)
         self._validator.validate("intune_lookup_request", request_payload)
 
-        payload = await self._client.request(
+        return cast(dict[str, Any] | None, await self._request(
             "POST",
-            _absolute_app_url(self._client.config.base_url, self._lookup_path),
+            self._lookup_path,
             json=request_payload,
-            headers=_app_headers(self._client.config),
+            schema_name="lookup_response",
+            expected="Expected Intune lookup response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Intune lookup response object.")
-        self._validator.validate("lookup_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
     async def list_remote_actions(self, *, timeout: float | None = None) -> list[AppRemoteAction]:
         payload = await self.list_remote_actions_raw(timeout=timeout)
         return [AppRemoteAction.model_validate(item) for item in payload]
 
     async def list_remote_actions_raw(self, *, timeout: float | None = None) -> list[dict[str, Any]]:
-        payload = await self._client.request(
+        return cast(list[dict[str, Any]], await self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._remote_actions_path),
-            headers=_app_headers(self._client.config),
+            self._remote_actions_path,
+            schema_name="remote_actions_response",
+            expected="Expected Intune remote actions response list.",
             timeout=timeout,
-        )
-        if not isinstance(payload, list):
-            raise ValueError("Expected Intune remote actions response list.")
-        self._validator.validate("remote_actions_response", payload)
-        return [item for item in payload if isinstance(item, dict)]
+            list_response=True,
+        ))
 
     def classify_owner_type_from_lookup(
         self,
@@ -487,15 +544,11 @@ class AsyncMicrosoftIntuneService:
         )
 
 
-class MosyleService:
+class MosyleService(_SyncAppService):
     """Mosyle Manager app-path operations."""
 
     _lookup_path = "/apps/mosyleManager/api/mosyleManager/data/assets/lookup"
     _remote_actions_path = "/apps/mosyleManager/api/mosyleManager/remoteactions"
-
-    def __init__(self, client: _SyncRequestClient, validator: AppSchemaValidator) -> None:
-        self._client = client
-        self._validator = validator
 
     def lookup_asset(
         self,
@@ -531,46 +584,36 @@ class MosyleService:
         request_payload = request_model.model_dump(by_alias=True)
         self._validator.validate("mosyle_lookup_request", request_payload)
 
-        payload = self._client.request(
+        return cast(dict[str, Any] | None, self._request(
             "POST",
-            _absolute_app_url(self._client.config.base_url, self._lookup_path),
+            self._lookup_path,
             json=request_payload,
-            headers=_app_headers(self._client.config),
+            schema_name="lookup_response",
+            expected="Expected Mosyle lookup response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Mosyle lookup response object.")
-        self._validator.validate("lookup_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
     def list_remote_actions(self, *, timeout: float | None = None) -> list[AppRemoteAction]:
         payload = self.list_remote_actions_raw(timeout=timeout)
         return [AppRemoteAction.model_validate(item) for item in payload]
 
     def list_remote_actions_raw(self, *, timeout: float | None = None) -> list[dict[str, Any]]:
-        payload = self._client.request(
+        return cast(list[dict[str, Any]], self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._remote_actions_path),
-            headers=_app_headers(self._client.config),
+            self._remote_actions_path,
+            schema_name="remote_actions_response",
+            expected="Expected Mosyle remote actions response list.",
             timeout=timeout,
-        )
-        if not isinstance(payload, list):
-            raise ValueError("Expected Mosyle remote actions response list.")
-        self._validator.validate("remote_actions_response", payload)
-        return [item for item in payload if isinstance(item, dict)]
+            list_response=True,
+        ))
 
 
-class AsyncMosyleService:
+class AsyncMosyleService(_AsyncAppService):
     """Async Mosyle Manager app-path operations."""
 
     _lookup_path = "/apps/mosyleManager/api/mosyleManager/data/assets/lookup"
     _remote_actions_path = "/apps/mosyleManager/api/mosyleManager/remoteactions"
-
-    def __init__(self, client: _AsyncRequestClient, validator: AppSchemaValidator) -> None:
-        self._client = client
-        self._validator = validator
 
     async def lookup_asset(
         self,
@@ -606,47 +649,37 @@ class AsyncMosyleService:
         request_payload = request_model.model_dump(by_alias=True)
         self._validator.validate("mosyle_lookup_request", request_payload)
 
-        payload = await self._client.request(
+        return cast(dict[str, Any] | None, await self._request(
             "POST",
-            _absolute_app_url(self._client.config.base_url, self._lookup_path),
+            self._lookup_path,
             json=request_payload,
-            headers=_app_headers(self._client.config),
+            schema_name="lookup_response",
+            expected="Expected Mosyle lookup response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Mosyle lookup response object.")
-        self._validator.validate("lookup_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
     async def list_remote_actions(self, *, timeout: float | None = None) -> list[AppRemoteAction]:
         payload = await self.list_remote_actions_raw(timeout=timeout)
         return [AppRemoteAction.model_validate(item) for item in payload]
 
     async def list_remote_actions_raw(self, *, timeout: float | None = None) -> list[dict[str, Any]]:
-        payload = await self._client.request(
+        return cast(list[dict[str, Any]], await self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._remote_actions_path),
-            headers=_app_headers(self._client.config),
+            self._remote_actions_path,
+            schema_name="remote_actions_response",
+            expected="Expected Mosyle remote actions response list.",
             timeout=timeout,
-        )
-        if not isinstance(payload, list):
-            raise ValueError("Expected Mosyle remote actions response list.")
-        self._validator.validate("remote_actions_response", payload)
-        return [item for item in payload if isinstance(item, dict)]
+            list_response=True,
+        ))
 
 
-class GoogleDeviceDataService:
+class GoogleDeviceDataService(_SyncAppService):
     """Google Device Data app-path operations."""
 
     _lookup_path = "/apps/googleDeviceData/api/googleDeviceData/data/assets/get-google-device"
     _remote_actions_path = "/apps/googleDeviceData/api/googleDeviceData/remoteactions"
     _sync_options_path = "/apps/googleDeviceData/api/googleDeviceData/sync/options"
-
-    def __init__(self, client: _SyncRequestClient, validator: AppSchemaValidator) -> None:
-        self._client = client
-        self._validator = validator
 
     def lookup_asset(
         self,
@@ -694,35 +727,29 @@ class GoogleDeviceDataService:
         request_payload = request_model.model_dump(by_alias=True)
         self._validator.validate("google_lookup_request", request_payload)
 
-        payload = self._client.request(
+        return cast(dict[str, Any] | None, self._request(
             "POST",
-            _absolute_app_url(self._client.config.base_url, self._lookup_path),
+            self._lookup_path,
             json=request_payload,
-            headers=_app_headers(self._client.config),
+            schema_name="lookup_response",
+            expected="Expected Google Device Data lookup response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Google Device Data lookup response object.")
-        self._validator.validate("lookup_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
     def list_remote_actions(self, *, timeout: float | None = None) -> list[AppRemoteAction]:
         payload = self.list_remote_actions_raw(timeout=timeout)
         return [AppRemoteAction.model_validate(item) for item in payload]
 
     def list_remote_actions_raw(self, *, timeout: float | None = None) -> list[dict[str, Any]]:
-        payload = self._client.request(
+        return cast(list[dict[str, Any]], self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._remote_actions_path),
-            headers=_app_headers(self._client.config),
+            self._remote_actions_path,
+            schema_name="remote_actions_response",
+            expected="Expected Google Device Data remote actions response list.",
             timeout=timeout,
-        )
-        if not isinstance(payload, list):
-            raise ValueError("Expected Google Device Data remote actions response list.")
-        self._validator.validate("remote_actions_response", payload)
-        return [item for item in payload if isinstance(item, dict)]
+            list_response=True,
+        ))
 
     def get_sync_options(self, *, timeout: float | None = None) -> GoogleSyncOptionsResponse:
         payload = self.get_sync_options_raw(timeout=timeout)
@@ -731,30 +758,22 @@ class GoogleDeviceDataService:
         return GoogleSyncOptionsResponse.model_validate(payload)
 
     def get_sync_options_raw(self, *, timeout: float | None = None) -> dict[str, Any] | None:
-        payload = self._client.request(
+        return cast(dict[str, Any] | None, self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._sync_options_path),
-            headers=_app_headers(self._client.config),
+            self._sync_options_path,
+            schema_name="google_sync_options_response",
+            expected="Expected Google Device Data sync options object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Google Device Data sync options object.")
-        self._validator.validate("google_sync_options_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
 
-class AsyncGoogleDeviceDataService:
+class AsyncGoogleDeviceDataService(_AsyncAppService):
     """Async Google Device Data app-path operations."""
 
     _lookup_path = "/apps/googleDeviceData/api/googleDeviceData/data/assets/get-google-device"
     _remote_actions_path = "/apps/googleDeviceData/api/googleDeviceData/remoteactions"
     _sync_options_path = "/apps/googleDeviceData/api/googleDeviceData/sync/options"
-
-    def __init__(self, client: _AsyncRequestClient, validator: AppSchemaValidator) -> None:
-        self._client = client
-        self._validator = validator
 
     async def lookup_asset(
         self,
@@ -802,35 +821,29 @@ class AsyncGoogleDeviceDataService:
         request_payload = request_model.model_dump(by_alias=True)
         self._validator.validate("google_lookup_request", request_payload)
 
-        payload = await self._client.request(
+        return cast(dict[str, Any] | None, await self._request(
             "POST",
-            _absolute_app_url(self._client.config.base_url, self._lookup_path),
+            self._lookup_path,
             json=request_payload,
-            headers=_app_headers(self._client.config),
+            schema_name="lookup_response",
+            expected="Expected Google Device Data lookup response object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Google Device Data lookup response object.")
-        self._validator.validate("lookup_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
     async def list_remote_actions(self, *, timeout: float | None = None) -> list[AppRemoteAction]:
         payload = await self.list_remote_actions_raw(timeout=timeout)
         return [AppRemoteAction.model_validate(item) for item in payload]
 
     async def list_remote_actions_raw(self, *, timeout: float | None = None) -> list[dict[str, Any]]:
-        payload = await self._client.request(
+        return cast(list[dict[str, Any]], await self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._remote_actions_path),
-            headers=_app_headers(self._client.config),
+            self._remote_actions_path,
+            schema_name="remote_actions_response",
+            expected="Expected Google Device Data remote actions response list.",
             timeout=timeout,
-        )
-        if not isinstance(payload, list):
-            raise ValueError("Expected Google Device Data remote actions response list.")
-        self._validator.validate("remote_actions_response", payload)
-        return [item for item in payload if isinstance(item, dict)]
+            list_response=True,
+        ))
 
     async def get_sync_options(self, *, timeout: float | None = None) -> GoogleSyncOptionsResponse:
         payload = await self.get_sync_options_raw(timeout=timeout)
@@ -839,18 +852,14 @@ class AsyncGoogleDeviceDataService:
         return GoogleSyncOptionsResponse.model_validate(payload)
 
     async def get_sync_options_raw(self, *, timeout: float | None = None) -> dict[str, Any] | None:
-        payload = await self._client.request(
+        return cast(dict[str, Any] | None, await self._request(
             "GET",
-            _absolute_app_url(self._client.config.base_url, self._sync_options_path),
-            headers=_app_headers(self._client.config),
+            self._sync_options_path,
+            schema_name="google_sync_options_response",
+            expected="Expected Google Device Data sync options object.",
             timeout=timeout,
-        )
-        if payload is None:
-            return None
-        if not isinstance(payload, dict):
-            raise ValueError("Expected Google Device Data sync options object.")
-        self._validator.validate("google_sync_options_response", payload)
-        return payload
+            allow_none=True,
+        ))
 
 
 class AppsNamespace:

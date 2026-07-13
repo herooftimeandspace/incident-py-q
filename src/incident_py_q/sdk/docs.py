@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import inspect
 from collections import defaultdict
 from pathlib import Path
 
@@ -612,7 +613,7 @@ def _render_silver_method(method: SilverMethodMetadata) -> list[str]:
             ]
         )
         for parameter in method.parameters:
-            lines.append(_render_silver_parameter_row(parameter))
+            lines.append(_render_simple_parameter_row(parameter))
         lines.append("")
     else:
         lines.extend(["#### Parameters", "", "This Silver route does not define inferred parameters.", ""])
@@ -661,7 +662,7 @@ def _render_manual_app_method(method: AppMethodMetadata) -> list[str]:
             ]
         )
         for parameter in method.parameters:
-            lines.append(_render_app_parameter_row(parameter))
+            lines.append(_render_simple_parameter_row(parameter))
         lines.append("")
     else:
         lines.extend(["#### Parameters", "", "This method does not define parameters.", ""])
@@ -738,7 +739,7 @@ def _render_manual_silver_method(method: SilverManualMethodMetadata) -> list[str
         ]
     )
     for parameter in method.parameters:
-        lines.append(_render_manual_silver_parameter_row(parameter))
+        lines.append(_render_simple_parameter_row(parameter))
     lines.extend(
         [
             "",
@@ -766,23 +767,10 @@ def _render_parameter_row(parameter: SDKParameterMetadata) -> str:
     )
 
 
-def _render_app_parameter_row(parameter: AppParameterMetadata) -> str:
-    return (
-        f"| `{parameter.python_name}` | `{parameter.api_name}` | `{parameter.location}` | "
-        f"`{'yes' if parameter.required else 'no'}` | `{parameter.type_display}` | "
-        f"{_escape_table(parameter.description)} |"
-    )
-
-
-def _render_silver_parameter_row(parameter: SilverParameterMetadata) -> str:
-    return (
-        f"| `{parameter.python_name}` | `{parameter.api_name}` | `{parameter.location}` | "
-        f"`{'yes' if parameter.required else 'no'}` | `{parameter.type_display}` | "
-        f"{_escape_table(parameter.description)} |"
-    )
-
-
-def _render_manual_silver_parameter_row(parameter: SilverManualParameterMetadata) -> str:
+def _render_simple_parameter_row(
+    parameter: AppParameterMetadata | SilverParameterMetadata | SilverManualParameterMetadata,
+) -> str:
+    """Render the shared parameter shape used by app and Silver metadata."""
     return (
         f"| `{parameter.python_name}` | `{parameter.api_name}` | `{parameter.location}` | "
         f"`{'yes' if parameter.required else 'no'}` | `{parameter.type_display}` | "
@@ -817,7 +805,7 @@ def _silver_raw_call_example(method: SilverMethodMetadata) -> str:
 def _manual_silver_signature_suffix(method: SilverManualMethodMetadata) -> str:
     parts = []
     for parameter in method.parameters:
-        placeholder = _manual_silver_default_display(method, parameter)
+        placeholder = _manual_silver_default_display(parameter)
         parts.append(f"{parameter.python_name}={placeholder}")
     parts.append("timeout=None")
     return f"({', '.join(parts)})"
@@ -838,61 +826,19 @@ def _manual_silver_return_note(method: SilverManualMethodMetadata) -> str:
     return "Raw payload return"
 
 
-def _manual_silver_default_display(
-    method: SilverManualMethodMetadata,
-    parameter: SilverManualParameterMetadata,
-) -> str:
-    if parameter.python_name == "wait_for_consistency":
-        return "False"
-    if parameter.python_name == "consistency_timeout":
-        return "10.0"
-    if parameter.python_name == "consistency_poll_interval":
-        return "1.0"
-    if (
-        method.namespace_path == ("tickets",)
-        and method.method_name in {
-            "list_current_user_assigned_tickets",
-            "list_assigned_tickets_for_agent",
-        }
-    ):
-        defaults = {
-            "schema": '"Open"',
-            "page_size": "100",
-            "sort_by": '"TicketModifiedDate"',
-            "sort_direction": '"Descending"',
-        }
-        default = defaults.get(parameter.python_name)
-        if default is not None:
-            return default
-    return "..." if parameter.required else "None"
+def _manual_silver_default_display(parameter: SilverManualParameterMetadata) -> str:
+    if parameter.default is inspect.Parameter.empty:
+        return "..." if parameter.required else "None"
+    if isinstance(parameter.default, str):
+        return f'"{parameter.default}"'
+    return repr(parameter.default)
 
 
 def _manual_silver_stub_type_and_default(
-    method: SilverManualMethodMetadata,
     parameter: SilverManualParameterMetadata,
 ) -> tuple[str, str]:
-    if parameter.python_name == "wait_for_consistency":
-        return "bool", "False"
-    if parameter.python_name == "consistency_timeout":
-        return "float", "10.0"
-    if parameter.python_name == "consistency_poll_interval":
-        return "float", "1.0"
-    if (
-        method.namespace_path == ("tickets",)
-        and method.method_name in {
-            "list_current_user_assigned_tickets",
-            "list_assigned_tickets_for_agent",
-        }
-    ):
-        defaults = {
-            "schema": "'Open'",
-            "page_size": "100",
-            "sort_by": "'TicketModifiedDate'",
-            "sort_direction": "'Descending'",
-        }
-        default = defaults.get(parameter.python_name)
-        if default is not None:
-            return parameter.type_display, default
+    if parameter.default is not inspect.Parameter.empty:
+        return parameter.type_display, repr(parameter.default)
     type_display = parameter.type_display if parameter.required else f"{parameter.type_display} | None"
     default = "..." if parameter.required else "None"
     return type_display, default
@@ -1166,7 +1112,7 @@ def _silver_stub_signature(method: SilverMethodMetadata) -> str:
 def _manual_silver_stub_signature(method: SilverManualMethodMetadata) -> str:
     params = ["self", "*"]
     for parameter in method.parameters:
-        type_display, default = _manual_silver_stub_type_and_default(method, parameter)
+        type_display, default = _manual_silver_stub_type_and_default(parameter)
         params.append(f"{parameter.python_name}: {type_display} = {default}")
     params.append("timeout: float | None = None")
     return f"({', '.join(params)}) -> {method.typed_return}"
