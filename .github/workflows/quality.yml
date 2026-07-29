@@ -25,7 +25,7 @@ jobs:
 
       - name: Set up Python
         if: github.event_name != 'pull_request' || github.base_ref != 'staging' || github.head_ref != 'dev'
-        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/setup-python@v7  # TODO: pin to specific SHA for reproducibility
         with:
           python-version: "3.14"
 
