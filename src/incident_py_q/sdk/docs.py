@@ -35,7 +35,7 @@ def render_sdk_index(
     lines = [
         "# SDK Reference",
         "",
-        "Golden methods come from bundled Stoplight controller contracts. Silver methods come "
+        "Golden methods come from the bundled Incident IQ OpenAPI contract. Silver methods come "
         "from HAR-observed undocumented routes and are exposed separately so they never silently "
         "override the documented Golden surface.",
         "",
@@ -101,7 +101,7 @@ def render_apps_reference(
         "",
         "Primary async access: `client.silver.apps` with `await` for async service methods.",
         "",
-        "These methods are Silver because Stoplight does not publish Golden contracts for them. "
+        "These methods are Silver because the published contract does not document them. "
         "The legacy `client.apps` alias remains available so existing integrations keep working "
         "while the undocumented nature of these routes is made explicit.",
         "",
@@ -149,7 +149,7 @@ def render_namespace_reference(namespace: str, methods: tuple[SDKMethodMetadata,
         "",
         f"Async client access: `client.{namespace}` with `await` on method calls.",
         "",
-        "These methods are Golden because they come from bundled Stoplight controller contracts.",
+        "These methods are Golden because they come from the bundled Incident IQ OpenAPI contract.",
         "",
     ]
 
@@ -173,7 +173,7 @@ def render_namespace_reference(namespace: str, methods: tuple[SDKMethodMetadata,
             [
                 f"### `{method.name}`",
                 "",
-                "Provenance: Golden Stoplight contract",
+                "Provenance: Golden OpenAPI contract",
                 "",
                 f"Operation ID: `{method.operation.operation_id}`",
                 "",
@@ -214,7 +214,7 @@ def render_silver_overview(metadata: tuple[SilverMethodMetadata, ...] | None = N
         "Async client access: `client.silver` with `await` on async methods.",
         "",
         "Silver routes are undocumented APIs observed in tenant HAR traffic. The SDK exposes them "
-        "explicitly and separately because Golden Stoplight contracts are always preferred when "
+        "explicitly and separately because the Golden contract is always preferred when "
         "they exist.",
         "",
         "| Namespace | Methods | Page |",
@@ -246,8 +246,8 @@ def render_silver_namespace_reference(
         "",
         f"Async client access: `client.silver.{namespace_display}` with `await` on method calls.",
         "",
-        "These methods are Silver because Stoplight does not publish direct Golden contracts for "
-        "them, or because the SDK intentionally wraps a narrower Silver workflow around existing "
+        "These methods are Silver because the published contract does not document them directly, "
+        "or because the SDK intentionally wraps a narrower Silver workflow around existing "
         "Golden operations. They remain separate so undocumented or convenience behavior never "
         "overrides the documented SDK surface.",
         "",

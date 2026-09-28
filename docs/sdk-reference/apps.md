@@ -6,7 +6,7 @@ Legacy sync alias: `client.apps`
 
 Primary async access: `client.silver.apps` with `await` for async service methods.
 
-These methods are Silver because Stoplight does not publish Golden contracts for them. The legacy `client.apps` alias remains available so existing integrations keep working while the undocumented nature of these routes is made explicit.
+These methods are Silver because the published contract does not document them. The legacy `client.apps` alias remains available so existing integrations keep working while the undocumented nature of these routes is made explicit.
 
 | Service | Manual Helpers | Generic Silver Methods | Access Path |
 | --- | ---: | ---: | --- |

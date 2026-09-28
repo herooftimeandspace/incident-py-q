@@ -1,7 +1,7 @@
 # SDK Usage
 
 The SDK surface is split into Golden and Silver paths:
-- Golden: generated from bundled Stoplight controller contracts.
+- Golden: generated from the bundled Incident IQ OpenAPI contract.
 - Silver: generated from HAR-observed undocumented routes and exposed explicitly under `client.silver`.
 
 Full generated method and route documentation lives under the SDK reference pages.

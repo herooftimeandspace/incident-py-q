@@ -219,42 +219,54 @@ def test_request_raises_transport_error_after_retry_exhaustion(
 
 
 @respx.mock
-def test_golden_asset_serial_lookup_stays_strict(
+def test_golden_asset_serial_lookup_accepts_live_payload(
     bundled_registry: SchemaRegistry,
 ) -> None:
+    """The Golden contract now documents this route and accepts the live shape.
+
+    Live asset payloads embed custom field values without the parent `AssetId`.
+    That drift is relaxed in contract normalization, so the documented route
+    validates without the Silver-only override this used to require.
+    """
     payload = _load_asset_serial_payload()
-    respx.get("https://tenant.example/api/v1/assets/serial/4825670226C6").mock(
+    respx.get("https://tenant.example/api/v1.0/assets/serial/4825670226C6").mock(
         return_value=httpx.Response(200, json=payload)
     )
 
     client = Client(
-        base_url="https://tenant.example/api/v1",
+        base_url="https://tenant.example",
         api_token="token-123",
         registry=bundled_registry,
     )
     try:
-        with pytest.raises(SchemaValidationError):
-            client.assets.get_assets_by_serial(serial="4825670226C6")
+        assert client.assets.get_asset_by_serial.raw(serial="4825670226C6") == payload
     finally:
         client.close()
 
 
 @respx.mock
-def test_silver_asset_serial_lookup_accepts_relaxed_live_payload(
+def test_golden_asset_serial_lookup_stays_strict_on_unrelated_fields(
     bundled_registry: SchemaRegistry,
 ) -> None:
+    """Only the documented drift is relaxed; other required fields still fail.
+
+    `AssetCustomFieldValue.AssetId` is relaxed because live payloads omit it on
+    nested values, but `CustomFieldTypeId` on the same object stays required.
+    """
     payload = _load_asset_serial_payload()
-    respx.get("https://tenant.example/api/v1/assets/serial/4825670226C6").mock(
+    payload["Items"][0]["CustomFieldValues"][0].pop("CustomFieldTypeId")
+    respx.get("https://tenant.example/api/v1.0/assets/serial/4825670226C6").mock(
         return_value=httpx.Response(200, json=payload)
     )
 
     client = Client(
-        base_url="https://tenant.example/api/v1",
+        base_url="https://tenant.example",
         api_token="token-123",
         registry=bundled_registry,
     )
     try:
-        assert client.silver.assets.get_asset_by_serial(serial="4825670226C6") == payload
+        with pytest.raises(SchemaValidationError):
+            client.assets.get_asset_by_serial.raw(serial="4825670226C6")
     finally:
         client.close()
 
@@ -294,20 +306,26 @@ def test_ticket_statuses_accept_live_payload_missing_workflow_and_display_order(
         registry=bundled_registry,
     )
     try:
-        assert client.tickets.get_ticket_statuses.raw() == payload
+        assert client.tickets.list_ticket_statuses.raw() == payload
     finally:
         client.close()
 
 
 @respx.mock
-def test_ticket_statuses_still_require_ticket_status_type_id(
+def test_ticket_statuses_still_require_status_name(
     bundled_registry: SchemaRegistry,
 ) -> None:
+    """The workflow-field relaxation is narrow; core status naming still fails.
+
+    The published contract requires only `StatusName` and `StepName` on
+    `TicketStatus`, so this asserts against `StatusName` rather than the
+    identifier the retired contract also marked required.
+    """
     payload = _ticket_statuses_payload(
         include_workflow_id=False,
         include_workflow_step_id=False,
     )
-    del payload["Items"][0]["TicketStatusTypeId"]
+    del payload["Items"][0]["StatusName"]
     respx.get("https://tenant.example/api/v1.0/tickets/statuses").mock(
         return_value=httpx.Response(200, json=payload)
     )
@@ -318,6 +336,6 @@ def test_ticket_statuses_still_require_ticket_status_type_id(
     )
     try:
         with pytest.raises(SchemaValidationError):
-            client.tickets.get_ticket_statuses.raw()
+            client.tickets.list_ticket_statuses.raw()
     finally:
         client.close()

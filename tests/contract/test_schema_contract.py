@@ -7,14 +7,14 @@ from typing import Any
 from jsonschema import validators
 
 from incident_py_q import Client
-from incident_py_q.schema.loader import load_stoplight_documents
+from incident_py_q.schema.loader import load_contract_documents
 from incident_py_q.schema.registry import build_schema_registry
 from incident_py_q.sdk.docs import render_client_stub
 from incident_py_q.sdk.runtime import build_sdk_metadata
 
 
 def test_bundled_registry_has_expected_shape() -> None:
-    documents = load_stoplight_documents()
+    documents = load_contract_documents()
     registry = build_schema_registry(documents)
 
     assert len(documents) >= 1
@@ -26,7 +26,7 @@ def test_bundled_registry_has_expected_shape() -> None:
 
 
 def test_all_response_schemas_are_jsonschema_valid() -> None:
-    registry = build_schema_registry(load_stoplight_documents())
+    registry = build_schema_registry(load_contract_documents())
     validator_cls = validators.validator_for(registry.merged_document)
 
     for operation in registry.operations:
@@ -35,7 +35,7 @@ def test_all_response_schemas_are_jsonschema_valid() -> None:
 
 
 def test_sdk_inventory_maps_all_operations() -> None:
-    registry = build_schema_registry(load_stoplight_documents())
+    registry = build_schema_registry(load_contract_documents())
     client = Client(
         base_url="https://example.incidentiq.com/api/v1",
         api_token="placeholder-token",
@@ -51,7 +51,7 @@ def test_sdk_inventory_maps_all_operations() -> None:
 
 
 def test_namespace_methods_have_callable_runtime_surface() -> None:
-    registry = build_schema_registry(load_stoplight_documents())
+    registry = build_schema_registry(load_contract_documents())
     client = Client(
         base_url="https://example.incidentiq.com/api/v1",
         api_token="placeholder-token",
@@ -70,7 +70,7 @@ def test_namespace_methods_have_callable_runtime_surface() -> None:
 
 
 def test_sdk_metadata_maps_all_operations_once() -> None:
-    registry = build_schema_registry(load_stoplight_documents())
+    registry = build_schema_registry(load_contract_documents())
 
     metadata = build_sdk_metadata(registry)
 
@@ -81,7 +81,7 @@ def test_sdk_metadata_maps_all_operations_once() -> None:
 
 
 def test_generated_client_stub_mentions_each_operation_once() -> None:
-    registry = build_schema_registry(load_stoplight_documents())
+    registry = build_schema_registry(load_contract_documents())
 
     stub = render_client_stub(registry)
     stub_lines = stub.splitlines()

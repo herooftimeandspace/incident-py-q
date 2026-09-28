@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any
 
@@ -10,7 +9,11 @@ from jsonschema import RefResolver, validators
 from jsonschema import ValidationError as JSONSchemaValidationError
 
 from incident_py_q.exceptions import SchemaValidationError
-from incident_py_q.schema.registry import OperationSpec, SchemaRegistry
+from incident_py_q.schema.loader import load_legacy_contract_document
+from incident_py_q.schema.normalize import normalize_swagger_document
+from incident_py_q.schema.registry import SchemaRegistry
+
+_HTTP_METHODS = ("get", "post", "put", "delete", "patch", "head", "options")
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,115 +66,49 @@ class SilverResponseSchemaValidator:
         return True
 
 
-# This override is intentionally verbose because the distinction is easy to lose later if someone
-# only sees "remove some required fields" in a diff. The live `/assets/serial/{serial}` route is
-# exposed under `client.silver.*` because Silver is our HAR-derived, inferred view of the API as it
-# behaves in production traffic. Golden is different: Golden is the published Stoplight contract
-# that we treat as the authoritative source of truth for documented behavior. For this route, the
-# live tenant payload omits a handful of fields that the Golden contract still marks as required.
-# We do not want to "fix" Golden to match that drift, because doing so would erase evidence that
-# the published contract and the live service disagree. Instead, we add a narrow Silver-only schema
-# clone that documents a business decision: Silver may accept the live response shape as a tactical
-# compatibility workaround for scripts that need the route to function today, while Golden remains
-# strict so upstream contract drift stays visible. If IncidentIQ aligns the live payload and the
-# published schema later, this override should be revisited and ideally removed rather than copied
-# to more routes.
+# Silver response overrides exist for one situation: a route Silver exposes because the
+# published Golden contract does not document it, but for which the SDK still holds a
+# schema worth enforcing.
+#
+# Every override registered today comes from the Golden OpenAPI migration. The published
+# contract is a locked allowlist profile that stopped documenting a set of routes the SDK
+# previously served from Golden. Those routes were migrated onto Silver rather than being
+# dropped, and the pruned legacy contract keeps their schemas so they did not silently
+# lose strict response validation on the way across.
+#
+# Routes discovered from HAR traffic have no schema and are not represented here; they
+# validate structurally at the runtime layer only. Drift on a route the published contract
+# *does* document belongs in `incident_py_q.schema.normalize`, not here.
 def _build_overrides(registry: SchemaRegistry) -> dict[tuple[str, str], _SilverOverride]:
-    serial_lookup_operation = _find_operation(
-        registry,
-        method="GET",
-        path_template="/assets/serial/{Serial}",
-    )
-    if serial_lookup_operation is None:
-        return {}
-    serial_lookup_override = _build_asset_get_assets_by_serial_override(
-        registry=registry,
-        operation=serial_lookup_operation,
-    )
-    return {
-        ("GET", "/assets/serial/{serial}"): serial_lookup_override,
-    }
+    document = normalize_swagger_document(load_legacy_contract_document())
+    validator_cls = validators.validator_for(document)
+    resolver = RefResolver.from_schema(document)
 
+    overrides: dict[tuple[str, str], _SilverOverride] = {}
+    paths = document.get("paths")
+    if not isinstance(paths, dict):
+        return overrides
 
-def _build_asset_get_assets_by_serial_override(
-    *,
-    registry: SchemaRegistry,
-    operation: OperationSpec,
-) -> _SilverOverride:
-    document = deepcopy(registry.merged_document)
-    definitions = document.setdefault("definitions", {})
+    for route, path_item in paths.items():
+        if not isinstance(path_item, dict):
+            continue
+        for method_name, operation in path_item.items():
+            if method_name.lower() not in _HTTP_METHODS or not isinstance(operation, dict):
+                continue
+            response_schemas: dict[str, dict[str, Any]] = {}
+            for status_code, response in (operation.get("responses") or {}).items():
+                if isinstance(response, dict) and isinstance(response.get("schema"), dict):
+                    response_schemas[str(status_code)] = response["schema"]
 
-    custom_field_name = "SilverAssetGetAssetsBySerialAssetCustomFieldValue"
-    site_name = "SilverAssetGetAssetsBySerialSite"
-    asset_name = "SilverAssetGetAssetsBySerialAsset"
-    response_name = "SilverAssetGetAssetsBySerialResponse"
+            operation_id = operation.get("operationId")
+            overrides[(method_name.upper(), str(route))] = _SilverOverride(
+                operation_id=str(operation_id) if operation_id else f"{method_name.upper()} {route}",
+                response_schemas=response_schemas,
+                validator_cls=validator_cls,
+                resolver=resolver,
+            )
 
-    relaxed_custom_field = deepcopy(definitions["AssetCustomFieldValue"])
-    _remove_required_fields(relaxed_custom_field, {"AssetId"})
-
-    relaxed_site = deepcopy(definitions["Site"])
-    _remove_required_fields(
-        relaxed_site,
-        {
-            "DefaultWorkflowId",
-            "DefaultWorkflowInitialStepId",
-            "EnableAnalytics",
-            "EnableUsersnap",
-        },
-    )
-
-    relaxed_asset = deepcopy(definitions["Asset"])
-    _remove_required_fields(
-        relaxed_asset,
-        {
-            "IsTraining",
-            "IsReadOnly",
-            "IsExternallyManaged",
-        },
-    )
-    asset_properties = relaxed_asset.setdefault("properties", {})
-    custom_field_values = asset_properties.setdefault("CustomFieldValues", {})
-    custom_field_values["items"] = {"$ref": f"#/definitions/{custom_field_name}"}
-    asset_properties["Site"] = {"$ref": f"#/definitions/{site_name}"}
-
-    relaxed_response = deepcopy(definitions["ListGetResponseOfAsset"])
-    response_properties = relaxed_response.setdefault("properties", {})
-    items = response_properties.setdefault("Items", {})
-    items["items"] = {"$ref": f"#/definitions/{asset_name}"}
-
-    definitions[custom_field_name] = relaxed_custom_field
-    definitions[site_name] = relaxed_site
-    definitions[asset_name] = relaxed_asset
-    definitions[response_name] = relaxed_response
-
-    response_schemas = dict(operation.response_schemas)
-    response_schemas["200"] = {"$ref": f"#/definitions/{response_name}"}
-
-    return _SilverOverride(
-        operation_id=operation.operation_id,
-        response_schemas=response_schemas,
-        validator_cls=validators.validator_for(document),
-        resolver=RefResolver.from_schema(document),
-    )
-
-
-def _find_operation(
-    registry: SchemaRegistry,
-    *,
-    method: str,
-    path_template: str,
-) -> OperationSpec | None:
-    for operation in registry.operations:
-        if operation.method == method and operation.path_template == path_template:
-            return operation
-    return None
-
-
-def _remove_required_fields(schema: dict[str, Any], fields: set[str]) -> None:
-    required = schema.get("required")
-    if not isinstance(required, list):
-        return
-    schema["required"] = [field for field in required if field not in fields]
+    return overrides
 
 
 def _pick_response_schema(

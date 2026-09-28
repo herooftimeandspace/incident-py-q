@@ -23,7 +23,12 @@ from incident_py_q.apps import (
 from incident_py_q.config import ClientConfig
 from incident_py_q.media import prepare_png_upload
 
-from .inventory import SilverMethodMetadata, SilverParameterMetadata, load_silver_inventory
+from .inventory import (
+    SilverMethodMetadata,
+    SilverParameterMetadata,
+    _matches_golden_contract,
+    load_silver_inventory,
+)
 
 JSONPayload = dict[str, Any] | list[Any] | None
 PreparedFiles = dict[str, tuple[str, Any, str]]
@@ -247,8 +252,8 @@ def format_silver_docstring(metadata: SilverMethodMetadata, *, async_mode: bool)
         "",
         "Why this method is separate from Golden paths:",
         (
-            "Stoplight controller contracts are treated as the Golden source of truth for the SDK. "
-            "This route remains on the Silver surface because no bundled Stoplight contract "
+            "The published OpenAPI contract is treated as the Golden source of truth for the SDK. "
+            "This route remains on the Silver surface because no bundled Golden contract "
             "defines it, so the SDK exposes it explicitly instead of letting undocumented behavior "
             "silently override a Golden method."
         ),
@@ -919,9 +924,8 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
             description=(
                 "This helper exists because saved-view routes can return zero rows for "
                 "current-user ticket queues even when the Incident IQ web UI shows queue work, "
-                "while analytics summaries expose counts but not ticket rows. The bundled "
-                "Postman corpus includes the UI-observed "
-                "`/services/tickets/-/-/AssignedToMe_Unassigned` route for the combined "
+                "while analytics summaries expose counts but not ticket rows. The UI-observed "
+                "`/services/tickets/-/-/AssignedToMe_Unassigned` route serves the combined "
                 "assigned-to-me/unassigned open queue, "
                 "so the SDK exposes a narrow read-only helper around that route instead of asking "
                 "callers to construct a services URL by hand. The route uses POST for query "
@@ -1052,9 +1056,33 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
     )
 
 
+def superseded_by_golden(
+    metadata: tuple[SilverMethodMetadata, ...],
+    registry: Any,
+) -> tuple[SilverMethodMetadata, ...]:
+    """Return the Silver methods that the Golden contract now documents.
+
+    Silver exists only to cover routes the published contract does not. When a
+    Golden sync adds a route that Silver had inferred from HAR traffic, the
+    documented contract wins and the Silver twin is dropped so a single route is
+    not reachable through two differently-validated code paths.
+    """
+    if registry is None:
+        return ()
+    return tuple(
+        method
+        for method in metadata
+        if _matches_golden_contract(registry, method.http_method, method.route)
+    )
+
+
 def build_silver_sdk(*, client: Any, async_mode: bool) -> SilverArtifacts:
     """Build the explicit `client.silver` namespace tree."""
     metadata = build_silver_metadata()
+    registry = getattr(client, "_registry", None)
+    superseded = set(superseded_by_golden(metadata, registry))
+    if superseded:
+        metadata = tuple(method for method in metadata if method not in superseded)
     manual_metadata = build_manual_silver_method_metadata()
     root = SilverRootNamespace("silver")
     apps_namespace: SilverAppsNamespace | AsyncSilverAppsNamespace

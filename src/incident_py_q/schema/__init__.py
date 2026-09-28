@@ -2,10 +2,15 @@
 
 from .loader import (
     load_app_schemas,
-    load_postman_collection,
+    load_contract_documents,
+    load_legacy_aliases,
+    load_legacy_contract_document,
+    load_openapi_document,
+    load_openapi_metadata,
     load_silver_inventory,
-    load_stoplight_documents,
+    load_source_manifest,
 )
+from .openapi import convert_openapi_document
 from .registry import OperationSpec, ParameterSpec, SchemaRegistry, build_schema_registry
 from .validator import ResponseSchemaValidator
 
@@ -15,8 +20,13 @@ __all__ = [
     "ResponseSchemaValidator",
     "SchemaRegistry",
     "build_schema_registry",
+    "convert_openapi_document",
     "load_app_schemas",
-    "load_postman_collection",
+    "load_contract_documents",
+    "load_legacy_aliases",
+    "load_legacy_contract_document",
+    "load_openapi_document",
+    "load_openapi_metadata",
     "load_silver_inventory",
-    "load_stoplight_documents",
+    "load_source_manifest",
 ]
