@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import inspect
 from collections import defaultdict
+from functools import cache
 from pathlib import Path
 
 from incident_py_q.apps import AppMethodMetadata, AppParameterMetadata, build_app_method_metadata
+from incident_py_q.schema.loader import load_legacy_aliases
 from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.silver import (
     SilverManualMethodMetadata,
@@ -261,6 +263,24 @@ def render_silver_namespace_reference(
     return "\n".join(lines).rstrip() + "\n"
 
 
+@cache
+def _legacy_aliases_by_namespace() -> dict[str, tuple[str, ...]]:
+    """Map each namespace to the deprecated alias names installed on it.
+
+    Aliases are attached at runtime from the migration artifact, so the stub has
+    to declare them or type checkers reject call sites that still use the old
+    names. They are typed as `DeprecatedMethodAlias` rather than the target's
+    protocol: that keeps `client.ns.old_name(...)` and `.raw(...)` checkable
+    while making the deprecation visible in the type itself.
+    """
+    grouped: dict[str, list[str]] = {}
+    for record in load_legacy_aliases().get("aliases", []):
+        if not isinstance(record, dict):
+            continue
+        grouped.setdefault(str(record["legacy_namespace"]), []).append(str(record["legacy_name"]))
+    return {namespace: tuple(sorted(names)) for namespace, names in grouped.items()}
+
+
 def render_client_stub(registry: SchemaRegistry) -> str:
     """Render the static typing stub for the dynamic Golden and Silver client surfaces."""
     metadata = build_sdk_metadata(registry)
@@ -301,6 +321,7 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         "    IntuneOwnerClassification,",
         "    IntuneOwnershipPartition,",
         ")",
+        "from .compat import DeprecatedMethodAlias",
         "from .config import ClientConfig",
         "from .schema.registry import SchemaRegistry",
         "from .sdk.runtime import AsyncNamespace, Namespace",
@@ -923,11 +944,19 @@ def _render_namespace_stub(
     class_name = _namespace_class_name(namespace, async_mode=async_mode)
     base_name = "AsyncNamespace" if async_mode else "Namespace"
     lines = [f"class {class_name}({base_name}):", "    def list_methods(self) -> list[str]: ..."]
+    declared: set[str] = set()
     for method in methods:
         protocol_name = _protocol_name(namespace, method.name, async_mode=async_mode)
         lines.append(f"    {method.name}: {protocol_name}")
+        declared.add(method.name)
         for alias_name in method.aliases:
             lines.append(f"    {alias_name}: {protocol_name}")
+            declared.add(alias_name)
+    for legacy_name in _legacy_aliases_by_namespace().get(namespace, ()):
+        # A real method always wins the name; the migration records those as conflicts.
+        if legacy_name in declared:
+            continue
+        lines.append(f"    {legacy_name}: DeprecatedMethodAlias")
     return lines
 
 

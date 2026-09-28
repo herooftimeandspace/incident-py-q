@@ -15,6 +15,7 @@ from .apps.models import (
     IntuneOwnerClassification,
     IntuneOwnershipPartition,
 )
+from .compat import DeprecatedMethodAlias
 from .config import ClientConfig
 from .schema.registry import SchemaRegistry
 from .sdk.runtime import AsyncNamespace, Namespace
@@ -1747,6 +1748,12 @@ class AnalyticsNamespace(Namespace):
     get_asset_verification_counts_by_location: _AnalyticsGetAssetVerificationCountsByLocationMethod
     get_asset_verification_counts_by_type: _AnalyticsGetAssetVerificationCountsByTypeMethod
     get_requestor_summary_stats: _AnalyticsGetRequestorSummaryStatsMethod
+    get_asset_counts_by_verification_location: DeprecatedMethodAlias
+    get_asset_counts_by_verification_type: DeprecatedMethodAlias
+    get_report: DeprecatedMethodAlias
+    get_report_elements: DeprecatedMethodAlias
+    get_report_queries: DeprecatedMethodAlias
+    get_reports: DeprecatedMethodAlias
 
 class AsyncAnalyticsNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -1763,6 +1770,12 @@ class AsyncAnalyticsNamespace(AsyncNamespace):
     get_asset_verification_counts_by_location: _AsyncAnalyticsGetAssetVerificationCountsByLocationMethod
     get_asset_verification_counts_by_type: _AsyncAnalyticsGetAssetVerificationCountsByTypeMethod
     get_requestor_summary_stats: _AsyncAnalyticsGetRequestorSummaryStatsMethod
+    get_asset_counts_by_verification_location: DeprecatedMethodAlias
+    get_asset_counts_by_verification_type: DeprecatedMethodAlias
+    get_report: DeprecatedMethodAlias
+    get_report_elements: DeprecatedMethodAlias
+    get_report_queries: DeprecatedMethodAlias
+    get_reports: DeprecatedMethodAlias
 
 # OperationId: addAssetFavorite
 class _AssetsAddAssetFavoriteMethod(Protocol):
@@ -2965,6 +2978,35 @@ class AssetsNamespace(Namespace):
     update_asset_view_sort: _AssetsUpdateAssetViewSortMethod
     update_manufacturer: _AssetsUpdateManufacturerMethod
     update_my_classes_asset_verification: _AssetsUpdateMyClassesAssetVerificationMethod
+    add_manufacturer_to_site2: DeprecatedMethodAlias
+    add_user_favorite_asset: DeprecatedMethodAlias
+    create_asset_status_type: DeprecatedMethodAlias
+    delete_asset_funding_type: DeprecatedMethodAlias
+    delete_asset_status_type: DeprecatedMethodAlias
+    get_asset: DeprecatedMethodAlias
+    get_asset_favorites: DeprecatedMethodAlias
+    get_asset_favorites2: DeprecatedMethodAlias
+    get_asset_funding_type: DeprecatedMethodAlias
+    get_asset_funding_types: DeprecatedMethodAlias
+    get_asset_funding_types2: DeprecatedMethodAlias
+    get_asset_status_types: DeprecatedMethodAlias
+    get_asset_status_types2: DeprecatedMethodAlias
+    get_assets: DeprecatedMethodAlias
+    get_assets_by_asset_status_type: DeprecatedMethodAlias
+    get_assets_by_asset_tag: DeprecatedMethodAlias
+    get_assets_by_location_room: DeprecatedMethodAlias
+    get_assets_by_serial: DeprecatedMethodAlias
+    get_assets_by_storage_unit_number: DeprecatedMethodAlias
+    get_assets_count: DeprecatedMethodAlias
+    get_global_manufacturers2: DeprecatedMethodAlias
+    get_manufacturer: DeprecatedMethodAlias
+    get_spare_assets_by_asset_tag: DeprecatedMethodAlias
+    get_user_assets: DeprecatedMethodAlias
+    get_user_assets2: DeprecatedMethodAlias
+    remove_user_favorite_asset: DeprecatedMethodAlias
+    search_assets_by_asset_tag: DeprecatedMethodAlias
+    update_asset_funding_type: DeprecatedMethodAlias
+    update_asset_status_type: DeprecatedMethodAlias
 
 class AsyncAssetsNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -3077,6 +3119,35 @@ class AsyncAssetsNamespace(AsyncNamespace):
     update_asset_view_sort: _AsyncAssetsUpdateAssetViewSortMethod
     update_manufacturer: _AsyncAssetsUpdateManufacturerMethod
     update_my_classes_asset_verification: _AsyncAssetsUpdateMyClassesAssetVerificationMethod
+    add_manufacturer_to_site2: DeprecatedMethodAlias
+    add_user_favorite_asset: DeprecatedMethodAlias
+    create_asset_status_type: DeprecatedMethodAlias
+    delete_asset_funding_type: DeprecatedMethodAlias
+    delete_asset_status_type: DeprecatedMethodAlias
+    get_asset: DeprecatedMethodAlias
+    get_asset_favorites: DeprecatedMethodAlias
+    get_asset_favorites2: DeprecatedMethodAlias
+    get_asset_funding_type: DeprecatedMethodAlias
+    get_asset_funding_types: DeprecatedMethodAlias
+    get_asset_funding_types2: DeprecatedMethodAlias
+    get_asset_status_types: DeprecatedMethodAlias
+    get_asset_status_types2: DeprecatedMethodAlias
+    get_assets: DeprecatedMethodAlias
+    get_assets_by_asset_status_type: DeprecatedMethodAlias
+    get_assets_by_asset_tag: DeprecatedMethodAlias
+    get_assets_by_location_room: DeprecatedMethodAlias
+    get_assets_by_serial: DeprecatedMethodAlias
+    get_assets_by_storage_unit_number: DeprecatedMethodAlias
+    get_assets_count: DeprecatedMethodAlias
+    get_global_manufacturers2: DeprecatedMethodAlias
+    get_manufacturer: DeprecatedMethodAlias
+    get_spare_assets_by_asset_tag: DeprecatedMethodAlias
+    get_user_assets: DeprecatedMethodAlias
+    get_user_assets2: DeprecatedMethodAlias
+    remove_user_favorite_asset: DeprecatedMethodAlias
+    search_assets_by_asset_tag: DeprecatedMethodAlias
+    update_asset_funding_type: DeprecatedMethodAlias
+    update_asset_status_type: DeprecatedMethodAlias
 
 # OperationId: addAssetToAuditPolicy
 class _AuditsAddAssetToAuditPolicyMethod(Protocol):
@@ -4061,6 +4132,13 @@ class CustomFieldsNamespace(Namespace):
     upsert_event_custom_field_values: _CustomFieldsUpsertEventCustomFieldValuesMethod
     upsert_ticket_custom_field_values: _CustomFieldsUpsertTicketCustomFieldValuesMethod
     upsert_user_custom_field_values: _CustomFieldsUpsertUserCustomFieldValuesMethod
+    delete_custom_fields: DeprecatedMethodAlias
+    get_custom_field: DeprecatedMethodAlias
+    get_custom_field_type: DeprecatedMethodAlias
+    get_custom_field_types: DeprecatedMethodAlias
+    get_custom_field_types2: DeprecatedMethodAlias
+    get_custom_fields: DeprecatedMethodAlias
+    get_custom_fields2: DeprecatedMethodAlias
 
 class AsyncCustomFieldsNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -4115,6 +4193,13 @@ class AsyncCustomFieldsNamespace(AsyncNamespace):
     upsert_event_custom_field_values: _AsyncCustomFieldsUpsertEventCustomFieldValuesMethod
     upsert_ticket_custom_field_values: _AsyncCustomFieldsUpsertTicketCustomFieldValuesMethod
     upsert_user_custom_field_values: _AsyncCustomFieldsUpsertUserCustomFieldValuesMethod
+    delete_custom_fields: DeprecatedMethodAlias
+    get_custom_field: DeprecatedMethodAlias
+    get_custom_field_type: DeprecatedMethodAlias
+    get_custom_field_types: DeprecatedMethodAlias
+    get_custom_field_types2: DeprecatedMethodAlias
+    get_custom_fields: DeprecatedMethodAlias
+    get_custom_fields2: DeprecatedMethodAlias
 
 # OperationId: listCustomFieldTypesNew
 class _CustomFieldsNewListCustomFieldTypesNewMethod(Protocol):
@@ -6220,6 +6305,10 @@ class IssuesNamespace(Namespace):
     update_issue: _IssuesUpdateIssueMethod
     update_issue_type: _IssuesUpdateIssueTypeMethod
     update_model_issues_to_match_category: _IssuesUpdateModelIssuesToMatchCategoryMethod
+    get_issue: DeprecatedMethodAlias
+    get_issue_type: DeprecatedMethodAlias
+    get_issue_types: DeprecatedMethodAlias
+    get_issue_types_simple: DeprecatedMethodAlias
 
 class AsyncIssuesNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -6255,6 +6344,10 @@ class AsyncIssuesNamespace(AsyncNamespace):
     update_issue: _AsyncIssuesUpdateIssueMethod
     update_issue_type: _AsyncIssuesUpdateIssueTypeMethod
     update_model_issues_to_match_category: _AsyncIssuesUpdateModelIssuesToMatchCategoryMethod
+    get_issue: DeprecatedMethodAlias
+    get_issue_type: DeprecatedMethodAlias
+    get_issue_types: DeprecatedMethodAlias
+    get_issue_types_simple: DeprecatedMethodAlias
 
 # OperationId: createLaborRate
 class _LaborCreateLaborRateMethod(Protocol):
@@ -6895,6 +6988,15 @@ class LocationsNamespace(Namespace):
     update_location_room_layouts: _LocationsUpdateLocationRoomLayoutsMethod
     update_location_rooms_batch: _LocationsUpdateLocationRoomsBatchMethod
     update_location_v2: _LocationsUpdateLocationV2Method
+    delete_location: DeprecatedMethodAlias
+    get_all_location_rooms: DeprecatedMethodAlias
+    get_location: DeprecatedMethodAlias
+    get_location_room: DeprecatedMethodAlias
+    get_location_rooms: DeprecatedMethodAlias
+    get_location_type: DeprecatedMethodAlias
+    get_location_types: DeprecatedMethodAlias
+    get_locations: DeprecatedMethodAlias
+    update_location: DeprecatedMethodAlias
 
 class AsyncLocationsNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -6941,6 +7043,15 @@ class AsyncLocationsNamespace(AsyncNamespace):
     update_location_room_layouts: _AsyncLocationsUpdateLocationRoomLayoutsMethod
     update_location_rooms_batch: _AsyncLocationsUpdateLocationRoomsBatchMethod
     update_location_v2: _AsyncLocationsUpdateLocationV2Method
+    delete_location: DeprecatedMethodAlias
+    get_all_location_rooms: DeprecatedMethodAlias
+    get_location: DeprecatedMethodAlias
+    get_location_room: DeprecatedMethodAlias
+    get_location_rooms: DeprecatedMethodAlias
+    get_location_type: DeprecatedMethodAlias
+    get_location_types: DeprecatedMethodAlias
+    get_locations: DeprecatedMethodAlias
+    update_location: DeprecatedMethodAlias
 
 # OperationId: createMetric
 class _MetricsCreateMetricMethod(Protocol):
@@ -7011,6 +7122,16 @@ class MetricsNamespace(Namespace):
     get_metric_by_id: _MetricsGetMetricByIdMethod
     list_metric_metrics: _MetricsListMetricMetricsMethod
     list_metrics: _MetricsListMetricsMethod
+    delete_metric: DeprecatedMethodAlias
+    delete_metric_type: DeprecatedMethodAlias
+    get_metric: DeprecatedMethodAlias
+    get_metric_type: DeprecatedMethodAlias
+    get_metric_types: DeprecatedMethodAlias
+    get_metrics: DeprecatedMethodAlias
+    get_metrics_for_sla: DeprecatedMethodAlias
+    update_metric: DeprecatedMethodAlias
+    update_metric_type: DeprecatedMethodAlias
+    update_metrics_for_sla: DeprecatedMethodAlias
 
 class AsyncMetricsNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -7021,6 +7142,16 @@ class AsyncMetricsNamespace(AsyncNamespace):
     get_metric_by_id: _AsyncMetricsGetMetricByIdMethod
     list_metric_metrics: _AsyncMetricsListMetricMetricsMethod
     list_metrics: _AsyncMetricsListMetricsMethod
+    delete_metric: DeprecatedMethodAlias
+    delete_metric_type: DeprecatedMethodAlias
+    get_metric: DeprecatedMethodAlias
+    get_metric_type: DeprecatedMethodAlias
+    get_metric_types: DeprecatedMethodAlias
+    get_metrics: DeprecatedMethodAlias
+    get_metrics_for_sla: DeprecatedMethodAlias
+    update_metric: DeprecatedMethodAlias
+    update_metric_type: DeprecatedMethodAlias
+    update_metrics_for_sla: DeprecatedMethodAlias
 
 # OperationId: createModel
 class _ModelsCreateModelMethod(Protocol):
@@ -8381,6 +8512,10 @@ class SlasNamespace(Namespace):
     deactivate_sla: _SlasDeactivateSlaMethod
     delete_sla_by_id: _SlasDeleteSlaByIdMethod
     list_slas: _SlasListSlasMethod
+    delete_sla: DeprecatedMethodAlias
+    get_sla: DeprecatedMethodAlias
+    get_slas: DeprecatedMethodAlias
+    update_sla: DeprecatedMethodAlias
 
 class AsyncSlasNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -8391,6 +8526,10 @@ class AsyncSlasNamespace(AsyncNamespace):
     deactivate_sla: _AsyncSlasDeactivateSlaMethod
     delete_sla_by_id: _AsyncSlasDeleteSlaByIdMethod
     list_slas: _AsyncSlasListSlasMethod
+    delete_sla: DeprecatedMethodAlias
+    get_sla: DeprecatedMethodAlias
+    get_slas: DeprecatedMethodAlias
+    update_sla: DeprecatedMethodAlias
 
 # OperationId: assignSubtask
 class _SubtasksAssignSubtaskMethod(Protocol):
@@ -10585,6 +10724,13 @@ class TicketsNamespace(Namespace):
     update_ticket_view: _TicketsUpdateTicketViewMethod
     update_ticket_view_schedules: _TicketsUpdateTicketViewSchedulesMethod
     update_ticket_view_sort: _TicketsUpdateTicketViewSortMethod
+    change_ticket_to_requestor_responded: DeprecatedMethodAlias
+    change_ticket_to_waiting_on_requestor: DeprecatedMethodAlias
+    get_ticket_statuses: DeprecatedMethodAlias
+    un_assign_ticket_from_team: DeprecatedMethodAlias
+    un_assign_ticket_from_user: DeprecatedMethodAlias
+    un_assign_ticket_sla: DeprecatedMethodAlias
+    un_confirm_ticket_issue: DeprecatedMethodAlias
 
 class AsyncTicketsNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -10699,6 +10845,13 @@ class AsyncTicketsNamespace(AsyncNamespace):
     update_ticket_view: _AsyncTicketsUpdateTicketViewMethod
     update_ticket_view_schedules: _AsyncTicketsUpdateTicketViewSchedulesMethod
     update_ticket_view_sort: _AsyncTicketsUpdateTicketViewSortMethod
+    change_ticket_to_requestor_responded: DeprecatedMethodAlias
+    change_ticket_to_waiting_on_requestor: DeprecatedMethodAlias
+    get_ticket_statuses: DeprecatedMethodAlias
+    un_assign_ticket_from_team: DeprecatedMethodAlias
+    un_assign_ticket_from_user: DeprecatedMethodAlias
+    un_assign_ticket_sla: DeprecatedMethodAlias
+    un_confirm_ticket_issue: DeprecatedMethodAlias
 
 # OperationId: addRoomToUser
 class _UsersAddRoomToUserMethod(Protocol):
@@ -11648,6 +11801,14 @@ class UsersNamespace(Namespace):
     update_user: _UsersUpdateUserMethod
     update_user_authentication_source: _UsersUpdateUserAuthenticationSourceMethod
     update_user_view_sort: _UsersUpdateUserViewSortMethod
+    delete_user_view: DeprecatedMethodAlias
+    get_agents: DeprecatedMethodAlias
+    get_agents_legacy: DeprecatedMethodAlias
+    get_user: DeprecatedMethodAlias
+    get_user_views: DeprecatedMethodAlias
+    get_users: DeprecatedMethodAlias
+    get_users_legacy: DeprecatedMethodAlias
+    update_user_view: DeprecatedMethodAlias
 
 class AsyncUsersNamespace(AsyncNamespace):
     def list_methods(self) -> list[str]: ...
@@ -11737,6 +11898,14 @@ class AsyncUsersNamespace(AsyncNamespace):
     update_user: _AsyncUsersUpdateUserMethod
     update_user_authentication_source: _AsyncUsersUpdateUserAuthenticationSourceMethod
     update_user_view_sort: _AsyncUsersUpdateUserViewSortMethod
+    delete_user_view: DeprecatedMethodAlias
+    get_agents: DeprecatedMethodAlias
+    get_agents_legacy: DeprecatedMethodAlias
+    get_user: DeprecatedMethodAlias
+    get_user_views: DeprecatedMethodAlias
+    get_users: DeprecatedMethodAlias
+    get_users_legacy: DeprecatedMethodAlias
+    update_user_view: DeprecatedMethodAlias
 
 # OperationId: createView
 class _ViewsCreateViewMethod(Protocol):
