@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import inspect
 from collections import defaultdict
+from functools import cache
 from pathlib import Path
 
 from incident_py_q.apps import AppMethodMetadata, AppParameterMetadata, build_app_method_metadata
+from incident_py_q.schema.loader import load_legacy_aliases
 from incident_py_q.schema.registry import SchemaRegistry
 from incident_py_q.silver import (
     SilverManualMethodMetadata,
@@ -35,7 +37,7 @@ def render_sdk_index(
     lines = [
         "# SDK Reference",
         "",
-        "Golden methods come from bundled Stoplight controller contracts. Silver methods come "
+        "Golden methods come from the bundled Incident IQ OpenAPI contract. Silver methods come "
         "from HAR-observed undocumented routes and are exposed separately so they never silently "
         "override the documented Golden surface.",
         "",
@@ -101,7 +103,7 @@ def render_apps_reference(
         "",
         "Primary async access: `client.silver.apps` with `await` for async service methods.",
         "",
-        "These methods are Silver because Stoplight does not publish Golden contracts for them. "
+        "These methods are Silver because the published contract does not document them. "
         "The legacy `client.apps` alias remains available so existing integrations keep working "
         "while the undocumented nature of these routes is made explicit.",
         "",
@@ -149,7 +151,7 @@ def render_namespace_reference(namespace: str, methods: tuple[SDKMethodMetadata,
         "",
         f"Async client access: `client.{namespace}` with `await` on method calls.",
         "",
-        "These methods are Golden because they come from bundled Stoplight controller contracts.",
+        "These methods are Golden because they come from the bundled Incident IQ OpenAPI contract.",
         "",
     ]
 
@@ -173,7 +175,7 @@ def render_namespace_reference(namespace: str, methods: tuple[SDKMethodMetadata,
             [
                 f"### `{method.name}`",
                 "",
-                "Provenance: Golden Stoplight contract",
+                "Provenance: Golden OpenAPI contract",
                 "",
                 f"Operation ID: `{method.operation.operation_id}`",
                 "",
@@ -214,7 +216,7 @@ def render_silver_overview(metadata: tuple[SilverMethodMetadata, ...] | None = N
         "Async client access: `client.silver` with `await` on async methods.",
         "",
         "Silver routes are undocumented APIs observed in tenant HAR traffic. The SDK exposes them "
-        "explicitly and separately because Golden Stoplight contracts are always preferred when "
+        "explicitly and separately because the Golden contract is always preferred when "
         "they exist.",
         "",
         "| Namespace | Methods | Page |",
@@ -246,8 +248,8 @@ def render_silver_namespace_reference(
         "",
         f"Async client access: `client.silver.{namespace_display}` with `await` on method calls.",
         "",
-        "These methods are Silver because Stoplight does not publish direct Golden contracts for "
-        "them, or because the SDK intentionally wraps a narrower Silver workflow around existing "
+        "These methods are Silver because the published contract does not document them directly, "
+        "or because the SDK intentionally wraps a narrower Silver workflow around existing "
         "Golden operations. They remain separate so undocumented or convenience behavior never "
         "overrides the documented SDK surface.",
         "",
@@ -259,6 +261,24 @@ def render_silver_namespace_reference(
     for manual_method in silver_manual:
         lines.extend(_render_manual_silver_method(manual_method))
     return "\n".join(lines).rstrip() + "\n"
+
+
+@cache
+def _legacy_aliases_by_namespace() -> dict[str, tuple[str, ...]]:
+    """Map each namespace to the deprecated alias names installed on it.
+
+    Aliases are attached at runtime from the migration artifact, so the stub has
+    to declare them or type checkers reject call sites that still use the old
+    names. They are typed as `DeprecatedMethodAlias` rather than the target's
+    protocol: that keeps `client.ns.old_name(...)` and `.raw(...)` checkable
+    while making the deprecation visible in the type itself.
+    """
+    grouped: dict[str, list[str]] = {}
+    for record in load_legacy_aliases().get("aliases", []):
+        if not isinstance(record, dict):
+            continue
+        grouped.setdefault(str(record["legacy_namespace"]), []).append(str(record["legacy_name"]))
+    return {namespace: tuple(sorted(names)) for namespace, names in grouped.items()}
 
 
 def render_client_stub(registry: SchemaRegistry) -> str:
@@ -301,6 +321,7 @@ def render_client_stub(registry: SchemaRegistry) -> str:
         "    IntuneOwnerClassification,",
         "    IntuneOwnershipPartition,",
         ")",
+        "from .compat import DeprecatedMethodAlias",
         "from .config import ClientConfig",
         "from .schema.registry import SchemaRegistry",
         "from .sdk.runtime import AsyncNamespace, Namespace",
@@ -923,11 +944,19 @@ def _render_namespace_stub(
     class_name = _namespace_class_name(namespace, async_mode=async_mode)
     base_name = "AsyncNamespace" if async_mode else "Namespace"
     lines = [f"class {class_name}({base_name}):", "    def list_methods(self) -> list[str]: ..."]
+    declared: set[str] = set()
     for method in methods:
         protocol_name = _protocol_name(namespace, method.name, async_mode=async_mode)
         lines.append(f"    {method.name}: {protocol_name}")
+        declared.add(method.name)
         for alias_name in method.aliases:
             lines.append(f"    {alias_name}: {protocol_name}")
+            declared.add(alias_name)
+    for legacy_name in _legacy_aliases_by_namespace().get(namespace, ()):
+        # A real method always wins the name; the migration records those as conflicts.
+        if legacy_name in declared:
+            continue
+        lines.append(f"    {legacy_name}: DeprecatedMethodAlias")
     return lines
 
 

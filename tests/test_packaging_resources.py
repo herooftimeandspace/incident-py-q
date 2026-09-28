@@ -6,29 +6,47 @@ from importlib.resources import files
 
 from incident_py_q.schema.loader import (
     load_app_schemas,
-    load_postman_collection,
+    load_contract_documents,
+    load_openapi_document,
+    load_openapi_metadata,
     load_silver_inventory,
     load_source_manifest,
-    load_stoplight_documents,
 )
 
 
 def test_bundled_contract_assets_load() -> None:
-    stoplight_docs = load_stoplight_documents()
-    postman = load_postman_collection()
+    openapi_document = load_openapi_document()
     manifest = load_source_manifest()
     app_schemas = load_app_schemas()
     silver_inventory = load_silver_inventory()
 
-    assert stoplight_docs
-    assert "item" in postman
-    assert "sources" in manifest
+    assert openapi_document["openapi"].startswith("3.")
+    assert openapi_document["paths"]
+    assert "golden_openapi" in manifest["sources"]
     assert "lookup_response" in app_schemas
     assert "endpoints" in silver_inventory
 
 
-def test_bundled_controller_files_exist() -> None:
-    controllers_dir = files("incident_py_q").joinpath("data/stoplight/controllers")
-    controller_names = sorted(path.name for path in controllers_dir.iterdir() if path.name.endswith(".json"))
-    assert controller_names
-    assert "Tickets.json" in controller_names
+def test_bundled_openapi_spec_file_exists() -> None:
+    openapi_dir = files("incident_py_q").joinpath("data/openapi")
+    names = sorted(path.name for path in openapi_dir.iterdir() if path.name.endswith(".json"))
+    assert names == ["metadata.json", "openapi-spec.json"]
+
+
+def test_bundled_openapi_metadata_describes_snapshot() -> None:
+    metadata = load_openapi_metadata()
+
+    assert metadata["openapi_version"].startswith("3.")
+    assert metadata["operation_count"] > 0
+    assert metadata["spec_url"]
+    assert metadata["synced_at"]
+
+
+def test_contract_documents_convert_to_internal_shape() -> None:
+    documents = load_contract_documents()
+
+    assert len(documents) == 1
+    document = documents[0]
+    assert document["swagger"] == "2.0"
+    assert document["definitions"]
+    assert document["paths"]

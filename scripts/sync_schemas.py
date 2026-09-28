@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""Sync bundled Incident IQ contract artifacts from official upstream sources."""
+"""Sync the bundled Incident IQ Golden contract from the published OpenAPI spec.
+
+The Golden path is the published Incident IQ API reference:
+https://scopousiiq.github.io/iiq-docusaurus-docs/docs/api/
+
+That documentation site is rendered from a single OpenAPI 3.0 document, which is
+the machine-readable contract this script pulls. It supersedes the previous
+Stoplight GraphQL controller sync and the APIHub Postman collection sync.
+"""
 
 from __future__ import annotations
 
@@ -12,53 +20,7 @@ from typing import Any, cast
 
 import httpx
 
-PROJECT_QUERY = """
-query ResolveProject($workspace: String!, $project: String!) {
-  projects(where: {slug: {_eq: $project}, workspace: {slug: {_eq: $workspace}}}) {
-    id
-    slug
-    name
-    workspace {
-      slug
-    }
-  }
-}
-"""
-
-DEFAULT_BRANCH_QUERY = """
-query ResolveDefaultBranch($projectId: Int!) {
-  branches(where: {projectId: {_eq: $projectId}, isDefault: {_eq: true}}) {
-    id
-    slug
-    isDefault
-    projectId
-  }
-}
-"""
-
-CONTROLLER_NODES_QUERY = """
-query ResolveControllerNodes($branchId: Int!, $uriPattern: String!) {
-  branchNodes(
-    where: {
-      branchId: {_eq: $branchId}
-      node: {uri: {_regex: $uriPattern}}
-    }
-    limit: 500
-  ) {
-    name
-    slug
-    node {
-      uri
-      format
-    }
-    snapshot {
-      id
-      data
-      summary
-    }
-  }
-}
-"""
+HTTP_METHODS = ("get", "post", "put", "delete", "patch", "head", "options")
 
 
 @dataclass(slots=True)
@@ -74,96 +36,93 @@ def _read_manifest(path: Path) -> dict[str, Any]:
     return cast(dict[str, Any], loaded)
 
 
-def _post_graphql(endpoint: str, query: str, variables: dict[str, Any]) -> dict[str, Any]:
-    response = httpx.post(
-        endpoint,
-        json={"query": query, "variables": variables},
-        timeout=30.0,
-    )
+def _fetch_json(url: str, timeout: float) -> dict[str, Any]:
+    response = httpx.get(url, timeout=timeout, follow_redirects=True)
     response.raise_for_status()
-    payload = cast(dict[str, Any], response.json())
-    if payload.get("errors"):
-        raise RuntimeError(f"GraphQL returned errors: {payload['errors']}")
-    data = payload.get("data")
-    if not isinstance(data, dict):
-        raise RuntimeError("GraphQL response payload did not include object 'data'.")
-    return cast(dict[str, Any], data)
+    payload = response.json()
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"Expected a JSON object from {url!r}, got {type(payload).__name__}.")
+    return cast(dict[str, Any], payload)
 
 
-def _sync_stoplight(manifest: dict[str, Any], output_root: Path) -> str:
-    source = manifest["sources"]["stoplight"]
-    endpoint = source["endpoint"]
-    workspace_slug = source["workspace_slug"]
-    project_slug = source["project_slug"]
-    uri_pattern = source["controller_uri_regex"]
+def _validate_openapi_document(document: dict[str, Any]) -> tuple[int, int, int]:
+    """Assert the payload is a usable OpenAPI 3 contract and summarize its size."""
+    version = document.get("openapi")
+    if not isinstance(version, str) or not version.startswith("3."):
+        raise RuntimeError(f"Expected an OpenAPI 3.x document, got openapi={version!r}.")
 
-    project_data = _post_graphql(
-        endpoint,
-        PROJECT_QUERY,
-        {"workspace": workspace_slug, "project": project_slug},
+    paths = document.get("paths")
+    if not isinstance(paths, dict) or not paths:
+        raise RuntimeError("OpenAPI document did not contain any paths.")
+
+    operations = 0
+    for path_item in paths.values():
+        if not isinstance(path_item, dict):
+            continue
+        operations += sum(1 for method in path_item if method.lower() in HTTP_METHODS)
+    if operations == 0:
+        raise RuntimeError("OpenAPI document did not contain any operations.")
+
+    components = document.get("components")
+    components = components if isinstance(components, dict) else {}
+    schemas = components.get("schemas")
+    schema_count = len(schemas) if isinstance(schemas, dict) else 0
+    if schema_count == 0:
+        raise RuntimeError("OpenAPI document did not contain any component schemas.")
+
+    return len(paths), operations, schema_count
+
+
+def _sync_golden_openapi(manifest: dict[str, Any], output_root: Path) -> str:
+    source = manifest["sources"]["golden_openapi"]
+    url = source["spec_url"]
+    timeout = float(source.get("timeout_seconds", 60.0))
+
+    document = _fetch_json(url, timeout)
+    path_count, operation_count, schema_count = _validate_openapi_document(document)
+
+    openapi_dir = output_root / "openapi"
+    openapi_dir.mkdir(parents=True, exist_ok=True)
+
+    spec_destination = openapi_dir / "openapi-spec.json"
+    spec_destination.write_text(
+        json.dumps(document, indent=2, sort_keys=True),
+        encoding="utf-8",
     )
-    projects = project_data.get("projects", [])
-    if not projects:
-        raise RuntimeError("No Stoplight project matched workspace_slug + project_slug.")
-    project_id = int(projects[0]["id"])
 
-    branch_data = _post_graphql(endpoint, DEFAULT_BRANCH_QUERY, {"projectId": project_id})
-    branches = branch_data.get("branches", [])
-    if not branches:
-        raise RuntimeError("No default branch found for Incident IQ Stoplight project.")
-    branch_id = int(branches[0]["id"])
-
-    node_data = _post_graphql(
-        endpoint,
-        CONTROLLER_NODES_QUERY,
-        {"branchId": branch_id, "uriPattern": uri_pattern},
-    )
-    branch_nodes = node_data.get("branchNodes", [])
-    if not branch_nodes:
-        raise RuntimeError("No controller nodes returned from Stoplight graph query.")
-
-    controllers_dir = output_root / "stoplight" / "controllers"
-    controllers_dir.mkdir(parents=True, exist_ok=True)
-
-    saved = 0
-    for node in sorted(branch_nodes, key=lambda item: item["node"]["uri"]):
-        uri = str(node["node"]["uri"])
-        filename = uri.split("/")[-1]
-        raw_data = node["snapshot"]["data"]
-        if not isinstance(raw_data, str):
-            raise RuntimeError(f"Unexpected snapshot payload type for {uri!r}")
-        parsed = json.loads(raw_data)
-        destination = controllers_dir / filename
-        destination.write_text(json.dumps(parsed, indent=2, sort_keys=True), encoding="utf-8")
-        saved += 1
-
-    metadata = {
+    info = document.get("info")
+    info = info if isinstance(info, dict) else {}
+    metadata: dict[str, Any] = {
         "synced_at": datetime.now(UTC).isoformat(),
-        "project_id": project_id,
-        "branch_id": branch_id,
-        "workspace_slug": workspace_slug,
-        "project_slug": project_slug,
-        "controllers_saved": saved,
+        "spec_url": url,
+        "documentation_url": source.get("documentation_url"),
+        "openapi_version": document.get("openapi"),
+        "api_title": info.get("title"),
+        "api_version": info.get("version"),
+        "path_count": path_count,
+        "operation_count": operation_count,
+        "schema_count": schema_count,
     }
-    (output_root / "stoplight" / "metadata.json").write_text(
+
+    # The published spec is a locked allowlist profile; carrying its provenance
+    # forward makes it obvious which upstream profile the bundle was cut from.
+    merge_metadata = document.get("x-merge-metadata")
+    if isinstance(merge_metadata, dict):
+        metadata["upstream_profile"] = {
+            key: merge_metadata.get(key)
+            for key in ("profileId", "profileName", "generatedAt", "keptPathsCount")
+            if key in merge_metadata
+        }
+
+    (openapi_dir / "metadata.json").write_text(
         json.dumps(metadata, indent=2, sort_keys=True),
         encoding="utf-8",
     )
-    return f"saved {saved} controller specs"
 
-
-def _sync_postman(manifest: dict[str, Any], output_root: Path) -> str:
-    source = manifest["sources"]["apihub_postman"]
-    url = source["url"]
-    response = httpx.get(url, timeout=45.0)
-    response.raise_for_status()
-    payload = response.json()
-
-    postman_dir = output_root / "postman"
-    postman_dir.mkdir(parents=True, exist_ok=True)
-    destination = postman_dir / "collection.json"
-    destination.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
-    return f"saved Postman collection to {destination}"
+    return (
+        f"saved {operation_count} operations across {path_count} paths "
+        f"and {schema_count} schemas to {spec_destination}"
+    )
 
 
 def main() -> int:
@@ -187,17 +146,12 @@ def main() -> int:
     results: list[SyncResult] = []
     source_map = manifest.get("sources", {})
 
-    for source_name in ("stoplight", "apihub_postman"):
+    for source_name in ("golden_openapi",):
         if source_name not in source_map:
             continue
         required = bool(source_map[source_name].get("required", False))
         try:
-            if source_name == "stoplight":
-                detail = _sync_stoplight(manifest, output_root)
-            elif source_name == "apihub_postman":
-                detail = _sync_postman(manifest, output_root)
-            else:
-                detail = "skipped unknown source"
+            detail = _sync_golden_openapi(manifest, output_root)
             results.append(
                 SyncResult(source=source_name, success=True, detail=detail, required=required)
             )

@@ -4,357 +4,272 @@ Sync client access: `client.metrics`
 
 Async client access: `client.metrics` with `await` on method calls.
 
-These methods are Golden because they come from bundled Stoplight controller contracts.
+These methods are Golden because they come from the bundled Incident IQ OpenAPI contract.
 
 ## Aliases
 
 | Alias | Canonical Method | Route |
 | --- | --- | --- |
-| `delete` | `delete_metric` | `DELETE /metrics/{MetricId}` |
-| `get` | `get_metric` | `GET /metrics/{MetricId}` |
-| `list` | `get_metrics` | `GET /metrics` |
-| `update` | `update_metric` | `POST /metrics/{MetricId}` |
+| `create` | `create_metric` | `POST /api/v1.0/metrics/new` |
 
 ## Methods
 
-### `delete_metric`
+### `create_metric`
 
-Provenance: Golden Stoplight contract
+Provenance: Golden OpenAPI contract
 
-Operation ID: `Sla_DeleteMetric`
+Operation ID: `createMetric`
 
-- Sync: `client.metrics.delete_metric(metric_id=..., timeout=None)`
-- Async: `await client.metrics.delete_metric(metric_id=..., timeout=None)`
-- Raw payload: `client.metrics.delete_metric.raw(metric_id=..., timeout=None)`
-- HTTP route: `DELETE /metrics/{MetricId}`
-- Source controller: `SLAs`
-- Aliases: `delete`
+- Sync: `client.metrics.create_metric(client=None, product_id=None, site_id=None, timeout=None)`
+- Async: `await client.metrics.create_metric(client=None, product_id=None, site_id=None, timeout=None)`
+- Raw payload: `client.metrics.create_metric.raw(client=None, product_id=None, site_id=None, timeout=None)`
+- HTTP route: `POST /api/v1.0/metrics/new`
+- Source controller: `IncidentIQ API`
+- Aliases: `create`
 
-Delete SLA Metric
+Create New Custom Metric
 
-#### Delete a specific SLA Metric
-#### Sample request:
-```
-DELETE /api/v1.0/metrics/2c6101d2-1ac8-4320-b234-74f51a3b2e58
-```
+Creates a new custom metric type for tracking SLA performance. Custom metrics allow organizations to define organization-specific measurements beyond the built-in metric types.
 
-#### Parameters
+**Workflow Example**
+1. Review existing metrics: [GET /api/v1.0/metrics/types](#/SLAs/listMetrics) to avoid duplicates.
+2. Define the metric configuration in the request body (name, calculation method, thresholds).
+3. Call this endpoint: [POST /api/v1.0/metrics/new](#/SLAs/createMetric) with the metric definition.
+4. Use the returned MetricId when configuring SLAs.
 
-| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
-| --- | --- | --- | --- | --- | --- | --- |
-| `metric_id` | `MetricId` | `path` | `yes` | `str` | `-` | MetricID to be deleted |
-
-#### Returns
-
-- Typed call return: `ItemDeleteResponse`
-- Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ItemDeleteResponse`
-- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
-
----
-
-### `delete_metric_type`
-
-Provenance: Golden Stoplight contract
-
-Operation ID: `Sla_DeleteMetricType`
-
-- Sync: `client.metrics.delete_metric_type(metric_type_id=..., timeout=None)`
-- Async: `await client.metrics.delete_metric_type(metric_type_id=..., timeout=None)`
-- Raw payload: `client.metrics.delete_metric_type.raw(metric_type_id=..., timeout=None)`
-- HTTP route: `DELETE /metrics/types/{MetricTypeId}`
-- Source controller: `SLAs`
-
-Delete Metric Type
-
-#### Delete a specific SLA Metric Type
-#### Sample request:
-```
-DELETE /api/v1.0/metrics/types/67a39334-d778-487c-95ae-07a776ed8201
-```
+**Related Endpoints:**
+- [GET /api/v1.0/metrics](#/SLAs/listMetricMetrics) - List all custom metrics
+- [DELETE /api/v1.0/metrics/{id}](#/SLAs/deleteMetricMetrics) - Remove a custom metric
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Schema / Model | Description |
 | --- | --- | --- | --- | --- | --- | --- |
-| `metric_type_id` | `MetricTypeId` | `path` | `yes` | `str` | `-` | MetricTypeID of the MetricType to be deleted |
+| `client` | `Client` | `header` | `no` | `str` | `-` | - |
+| `product_id` | `ProductId` | `header` | `no` | `int` | `-` | - |
+| `site_id` | `SiteId` | `header` | `no` | `str` | `-` | - |
 
 #### Returns
 
-- Typed call return: `ItemDeleteResponse`
+- Typed call return: `GenericObject`
 - Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ItemDeleteResponse`
+- Response model: `GenericObject`
 - Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
 
 ---
 
-### `get_metric`
+### `create_metric_by_id`
 
-Provenance: Golden Stoplight contract
+Provenance: Golden OpenAPI contract
 
-Operation ID: `Sla_GetMetric`
+Operation ID: `createMetricById`
 
-- Sync: `client.metrics.get_metric(metric_id=..., r=..., timeout=None)`
-- Async: `await client.metrics.get_metric(metric_id=..., r=..., timeout=None)`
-- Raw payload: `client.metrics.get_metric.raw(metric_id=..., r=..., timeout=None)`
-- HTTP route: `GET /metrics/{MetricId}`
-- Source controller: `SLAs`
-- Aliases: `get`
+- Sync: `client.metrics.create_metric_by_id(client=None, product_id=None, site_id=None, id=..., timeout=None)`
+- Async: `await client.metrics.create_metric_by_id(client=None, product_id=None, site_id=None, id=..., timeout=None)`
+- Raw payload: `client.metrics.create_metric_by_id.raw(client=None, product_id=None, site_id=None, id=..., timeout=None)`
+- HTTP route: `POST /api/v1.0/metrics/for/sla/{id}`
+- Source controller: `IncidentIQ API`
 
-Get SLA Metric
+Update Metrics for SLA
 
-#### Retrieve a specific metric type by MetricId
-#### Sample request:
-```
-GET /api/v1.0/metrics/2c6101d2-1ac8-4320-b234-74f51a3b2e58
-```
+Retrieves or recalculates SLA-related metrics for the specified SLA record, returning aggregated counts used for reporting and dashboard widgets. Use this endpoint after creating or updating an SLA, or when you need a fresh metrics snapshot for compliance reporting.
+
+**Prerequisites**
+1. **id** - Use [GET /api/v1.0/slas](#/SLAs/listSlas) to list SLAs and extract `Items[].SlaId`.
+
+**Workflow Example**
+1. List SLAs: [GET /api/v1.0/slas](#/SLAs/listSlas) -> capture the target `SlaId`.
+2. Refresh metrics: [POST /api/v1.0/metrics/for/sla/{id}](#/SLAs/createMetricById) with the SLA UUID.
+3. Use the response data to populate SLA dashboards or export metrics.
+
+**Minimal Required Fields**: id (path).
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Schema / Model | Description |
 | --- | --- | --- | --- | --- | --- | --- |
-| `metric_id` | `MetricId` | `path` | `yes` | `str` | `-` | MetricId of Metric being requested |
-| `r` | `r` | `query` | `yes` | `Any` | `-` | Request Options specified for the Metric(s) |
+| `client` | `Client` | `header` | `no` | `str` | `-` | - |
+| `product_id` | `ProductId` | `header` | `no` | `int` | `-` | - |
+| `site_id` | `SiteId` | `header` | `no` | `str` | `-` | - |
+| `id` | `id` | `path` | `yes` | `str` | `-` | The id parameter |
 
 #### Returns
 
-- Typed call return: `ItemGetResponseOfMetric`
+- Typed call return: `GenericObject`
 - Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ItemGetResponseOfMetric`
+- Response model: `GenericObject`
 - Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
 
 ---
 
-### `get_metric_type`
+### `delete_metric_metrics`
 
-Provenance: Golden Stoplight contract
+Provenance: Golden OpenAPI contract
 
-Operation ID: `Sla_GetMetricType`
+Operation ID: `deleteMetricMetrics`
 
-- Sync: `client.metrics.get_metric_type(metric_type_id=..., r=..., timeout=None)`
-- Async: `await client.metrics.get_metric_type(metric_type_id=..., r=..., timeout=None)`
-- Raw payload: `client.metrics.get_metric_type.raw(metric_type_id=..., r=..., timeout=None)`
-- HTTP route: `GET /metrics/types/{MetricTypeId}`
-- Source controller: `SLAs`
+- Sync: `client.metrics.delete_metric_metrics(client=None, product_id=None, site_id=None, id=..., timeout=None)`
+- Async: `await client.metrics.delete_metric_metrics(client=None, product_id=None, site_id=None, id=..., timeout=None)`
+- Raw payload: `client.metrics.delete_metric_metrics.raw(client=None, product_id=None, site_id=None, id=..., timeout=None)`
+- HTTP route: `DELETE /api/v1.0/metrics/{id}`
+- Source controller: `IncidentIQ API`
+
+Delete Custom Metric
+
+Deletes a custom metric type from the system. This permanently removes the metric definition and may affect SLAs that reference it.
+
+**Prerequisites**
+1. **id** - Use [GET /api/v1.0/metrics](#/SLAs/listMetricMetrics) to list custom metrics. Extract the target metric's UUID from the response.
+
+**Workflow Example**
+1. List custom metrics: [GET /api/v1.0/metrics](#/SLAs/listMetricMetrics) → identify metric to delete.
+2. Verify no active SLAs depend on this metric.
+3. Call this endpoint: [DELETE /api/v1.0/metrics/{id}](#/SLAs/deleteMetricMetrics) with the metric UUID.
+
+**Warning**: Deleting a metric may affect historical reporting data. Consider deactivating SLAs that use this metric first.
+
+#### Parameters
+
+| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
+| --- | --- | --- | --- | --- | --- | --- |
+| `client` | `Client` | `header` | `no` | `str` | `-` | - |
+| `product_id` | `ProductId` | `header` | `no` | `int` | `-` | - |
+| `site_id` | `SiteId` | `header` | `no` | `str` | `-` | - |
+| `id` | `id` | `path` | `yes` | `str` | `-` | The id parameter |
+
+#### Returns
+
+- Typed call return: `UnauthorizedError`
+- Raw payload return: `dict[str, Any] | list[Any] | None`
+- Response model: `UnauthorizedError`
+- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
+
+---
+
+### `get_metric_by_id`
+
+Provenance: Golden OpenAPI contract
+
+Operation ID: `getMetricById`
+
+- Sync: `client.metrics.get_metric_by_id(client=None, product_id=None, site_id=None, type_id=..., timeout=None)`
+- Async: `await client.metrics.get_metric_by_id(client=None, product_id=None, site_id=None, type_id=..., timeout=None)`
+- Raw payload: `client.metrics.get_metric_by_id.raw(client=None, product_id=None, site_id=None, type_id=..., timeout=None)`
+- HTTP route: `GET /api/v1.0/metrics/types/{typeId}`
+- Source controller: `IncidentIQ API`
 
 Get Metric Type
 
-#### Retrieve a specific metric type by MetricTypeId
-#### Sample request:
-```
-GET /api/v1.0/metrics/types/67a39334-d778-487c-95ae-07a776ed8201
-```
+Retrieves a specific metric type definition by its unique identifier. Returns the metric configuration including name, calculation method, and threshold settings.
+
+**Prerequisites**
+1. **typeId** - Use [GET /api/v1.0/metrics/types](#/SLAs/listMetrics) to list available metric types. Extract `Items[].MetricTypeId` from the response.
+
+**Workflow Example**
+1. List metric types: [GET /api/v1.0/metrics/types](#/SLAs/listMetrics) → identify target metric.
+2. Call this endpoint: [GET /api/v1.0/metrics/types/{typeId}](#/SLAs/getMetricById) with the metric type UUID.
+
+**Related Endpoints:**
+- [DELETE /api/v1.0/metrics/{id}](#/SLAs/deleteMetricMetrics) - Delete a custom metric type
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Schema / Model | Description |
 | --- | --- | --- | --- | --- | --- | --- |
-| `metric_type_id` | `MetricTypeId` | `path` | `yes` | `str` | `-` | MetricTypeId of the MetricType being requested |
-| `r` | `r` | `query` | `yes` | `Any` | `-` | Request Options specified for the MetricType(s) |
+| `client` | `Client` | `header` | `no` | `str` | `-` | - |
+| `product_id` | `ProductId` | `header` | `no` | `int` | `-` | - |
+| `site_id` | `SiteId` | `header` | `no` | `str` | `-` | - |
+| `type_id` | `typeId` | `path` | `yes` | `str` | `-` | The typeId parameter |
 
 #### Returns
 
-- Typed call return: `ItemGetResponseOfMetricType`
+- Typed call return: `GenericObject`
 - Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ItemGetResponseOfMetricType`
+- Response model: `GenericObject`
 - Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
 
 ---
 
-### `get_metric_types`
+### `list_metric_metrics`
 
-Provenance: Golden Stoplight contract
+Provenance: Golden OpenAPI contract
 
-Operation ID: `Sla_GetMetricTypes`
+Operation ID: `listMetricMetrics`
 
-- Sync: `client.metrics.get_metric_types(r=..., timeout=None)`
-- Async: `await client.metrics.get_metric_types(r=..., timeout=None)`
-- Raw payload: `client.metrics.get_metric_types.raw(r=..., timeout=None)`
-- HTTP route: `GET /metrics/types`
-- Source controller: `SLAs`
+- Sync: `client.metrics.list_metric_metrics(client=None, product_id=None, site_id=None, timeout=None)`
+- Async: `await client.metrics.list_metric_metrics(client=None, product_id=None, site_id=None, timeout=None)`
+- Raw payload: `client.metrics.list_metric_metrics.raw(client=None, product_id=None, site_id=None, timeout=None)`
+- HTTP route: `GET /api/v1.0/metrics`
+- Source controller: `IncidentIQ API`
+
+Get Metrics
+
+Retrieves all custom metrics configured for the current site. Custom metrics extend the default SLA measurements with organization-specific performance indicators.
+
+**Workflow Example**
+1. Call this endpoint: [GET /api/v1.0/metrics](#/SLAs/listMetricMetrics) to list all custom metrics.
+2. Use returned metric IDs when configuring SLA definitions or building reports.
+3. Create new metrics via [POST /api/v1.0/metrics/new](#/SLAs/createMetric) if needed.
+
+**Related Endpoints:**
+- [GET /api/v1.0/metrics/types](#/SLAs/listMetrics) - List metric type definitions
+- [POST /api/v1.0/metrics/for/sla/{id}](#/SLAs/createMetricById) - Refresh metrics for a specific SLA
+
+#### Parameters
+
+| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
+| --- | --- | --- | --- | --- | --- | --- |
+| `client` | `Client` | `header` | `no` | `str` | `-` | - |
+| `product_id` | `ProductId` | `header` | `no` | `int` | `-` | - |
+| `site_id` | `SiteId` | `header` | `no` | `str` | `-` | - |
+
+#### Returns
+
+- Typed call return: `GenericObject`
+- Raw payload return: `dict[str, Any] | list[Any] | None`
+- Response model: `GenericObject`
+- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
+
+---
+
+### `list_metrics`
+
+Provenance: Golden OpenAPI contract
+
+Operation ID: `listMetrics`
+
+- Sync: `client.metrics.list_metrics(client=None, product_id=None, site_id=None, timeout=None)`
+- Async: `await client.metrics.list_metrics(client=None, product_id=None, site_id=None, timeout=None)`
+- Raw payload: `client.metrics.list_metrics.raw(client=None, product_id=None, site_id=None, timeout=None)`
+- HTTP route: `GET /api/v1.0/metrics/types`
+- Source controller: `IncidentIQ API`
 
 Get Metric Types
 
-#### Retrieves a list of metric types. A specific metric type can be retrieved via GET `api/v1.0/metrics/types/{MetricTypeId}`.
-#### Sample request:
-```
-GET /api/v1.0/metrics/types
-```
+Retrieves all available metric type definitions used to measure SLA performance. Metric types define the categories of measurements tracked for service level agreements, such as response time, resolution time, and customer satisfaction.
+
+**Workflow Example**
+1. Call this endpoint: [GET /api/v1.0/metrics/types](#/SLAs/listMetrics) to list all metric types.
+2. Use the returned metric type IDs when creating or configuring SLAs.
+3. Reference specific metrics via [GET /api/v1.0/metrics/types/{typeId}](#/SLAs/getMetricById).
+
+**Related Endpoints:**
+- [POST /api/v1.0/metrics/new](#/SLAs/createMetric) - Create a new custom metric type
+- [GET /api/v1.0/slas](#/SLAs/listSlas) - List SLAs that use these metrics
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Schema / Model | Description |
 | --- | --- | --- | --- | --- | --- | --- |
-| `r` | `r` | `query` | `yes` | `Any` | `-` | Request Options specified for the MetricType(s) |
+| `client` | `Client` | `header` | `no` | `str` | `-` | - |
+| `product_id` | `ProductId` | `header` | `no` | `int` | `-` | - |
+| `site_id` | `SiteId` | `header` | `no` | `str` | `-` | - |
 
 #### Returns
 
-- Typed call return: `ListGetResponseOfMetricType`
+- Typed call return: `GenericObject`
 - Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ListGetResponseOfMetricType`
-- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
-
----
-
-### `get_metrics`
-
-Provenance: Golden Stoplight contract
-
-Operation ID: `Sla_GetMetrics`
-
-- Sync: `client.metrics.get_metrics(r=..., timeout=None)`
-- Async: `await client.metrics.get_metrics(r=..., timeout=None)`
-- Raw payload: `client.metrics.get_metrics.raw(r=..., timeout=None)`
-- HTTP route: `GET /metrics`
-- Source controller: `SLAs`
-- Aliases: `list`
-
-Get All SLA Metrics
-
-#### Retrieves a list of metrics. A specific metric can be retrieved via GET `api/v1.0/metrics/{MetricId}`.
-#### Sample request:
-```
-GET /api/v1.0/metrics/
-```
-
-#### Parameters
-
-| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
-| --- | --- | --- | --- | --- | --- | --- |
-| `r` | `r` | `query` | `yes` | `Any` | `-` | Request Options specified for the Metric(s) |
-
-#### Returns
-
-- Typed call return: `ListGetResponseOfMetric`
-- Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ListGetResponseOfMetric`
-- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
-
----
-
-### `get_metrics_for_sla`
-
-Provenance: Golden Stoplight contract
-
-Operation ID: `Sla_GetMetricsForSla`
-
-- Sync: `client.metrics.get_metrics_for_sla(sla_id=..., r=..., timeout=None)`
-- Async: `await client.metrics.get_metrics_for_sla(sla_id=..., r=..., timeout=None)`
-- Raw payload: `client.metrics.get_metrics_for_sla.raw(sla_id=..., r=..., timeout=None)`
-- HTTP route: `GET /metrics/for/sla/{SlaId}`
-- Source controller: `SLAs`
-
-Get Metrics for an SLA
-
-#### Retrieves a list of metrics for a specific SLA.
-#### Sample request:
-```
-GET /api/v1.0/metrics/for/sla/bd64e104-4c83-4744-a888-eeb760c03bfe
-```
-
-#### Parameters
-
-| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
-| --- | --- | --- | --- | --- | --- | --- |
-| `sla_id` | `SlaId` | `path` | `yes` | `str` | `-` | SlaId of SLA containing the Metrics being requested |
-| `r` | `r` | `query` | `yes` | `Any` | `-` | Request Options specified for the Sla Metrics |
-
-#### Returns
-
-- Typed call return: `ListGetResponseOfMetric`
-- Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ListGetResponseOfMetric`
-- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
-
----
-
-### `update_metric`
-
-Provenance: Golden Stoplight contract
-
-Operation ID: `Sla_UpdateMetric`
-
-- Sync: `client.metrics.update_metric(metric_id=..., item=..., timeout=None)`
-- Async: `await client.metrics.update_metric(metric_id=..., item=..., timeout=None)`
-- Raw payload: `client.metrics.update_metric.raw(metric_id=..., item=..., timeout=None)`
-- HTTP route: `POST /metrics/{MetricId}`
-- Source controller: `SLAs`
-- Aliases: `update`
-
-No contract summary provided.
-
-#### Parameters
-
-| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
-| --- | --- | --- | --- | --- | --- | --- |
-| `metric_id` | `MetricId` | `path` | `yes` | `str` | `-` | - |
-| `item` | `Item` | `body` | `yes` | `UpdateMetricRequest` | `UpdateMetricRequest` | - |
-
-#### Returns
-
-- Typed call return: `ItemUpdateResponseOfGuid`
-- Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ItemUpdateResponseOfGuid`
-- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
-
----
-
-### `update_metric_type`
-
-Provenance: Golden Stoplight contract
-
-Operation ID: `Sla_UpdateMetricType`
-
-- Sync: `client.metrics.update_metric_type(metric_type_id=..., item=..., timeout=None)`
-- Async: `await client.metrics.update_metric_type(metric_type_id=..., item=..., timeout=None)`
-- Raw payload: `client.metrics.update_metric_type.raw(metric_type_id=..., item=..., timeout=None)`
-- HTTP route: `POST /metrics/types/{MetricTypeId}`
-- Source controller: `SLAs`
-
-No contract summary provided.
-
-#### Parameters
-
-| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
-| --- | --- | --- | --- | --- | --- | --- |
-| `metric_type_id` | `MetricTypeId` | `path` | `yes` | `str` | `-` | - |
-| `item` | `Item` | `body` | `yes` | `UpdateMetricTypeRequest` | `UpdateMetricTypeRequest` | - |
-
-#### Returns
-
-- Typed call return: `ItemUpdateResponseOfGuid`
-- Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ItemUpdateResponseOfGuid`
-- Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
-
----
-
-### `update_metrics_for_sla`
-
-Provenance: Golden Stoplight contract
-
-Operation ID: `Sla_UpdateMetricsForSla`
-
-- Sync: `client.metrics.update_metrics_for_sla(sla_id=..., items=..., timeout=None)`
-- Async: `await client.metrics.update_metrics_for_sla(sla_id=..., items=..., timeout=None)`
-- Raw payload: `client.metrics.update_metrics_for_sla.raw(sla_id=..., items=..., timeout=None)`
-- HTTP route: `POST /metrics/for/sla/{SlaId}`
-- Source controller: `SLAs`
-
-No contract summary provided.
-
-#### Parameters
-
-| Python Arg | API Name | In | Required | Type | Schema / Model | Description |
-| --- | --- | --- | --- | --- | --- | --- |
-| `sla_id` | `SlaId` | `path` | `yes` | `str` | `-` | - |
-| `items` | `Items` | `body` | `yes` | `list[Any]` | `-` | - |
-
-#### Returns
-
-- Typed call return: `ListUpdateResponseOfGuid`
-- Raw payload return: `dict[str, Any] | list[Any] | None`
-- Response model: `ListUpdateResponseOfGuid`
+- Response model: `GenericObject`
 - Pagination helper: No paging query parameters detected; `iter_pages(...)` returns a single raw response.
 
 ---

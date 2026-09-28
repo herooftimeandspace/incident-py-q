@@ -453,9 +453,9 @@ def test_ticket_detail_drift_relaxation_is_scoped_to_get_ticket_response() -> No
                 "swagger": "2.0",
                 "info": {"title": "Ticket Controller", "version": "1.0.0"},
                 "paths": {
-                    "/tickets/{TicketId}": {
+                    "/api/v1.0/tickets/{ticketId}": {
                         "get": {
-                            "operationId": "Ticket_GetTicket",
+                            "operationId": "getTicket",
                             "responses": {
                                 "200": {
                                     "schema": {"$ref": "#/definitions/ItemGetResponseOfTicket"}
@@ -463,9 +463,9 @@ def test_ticket_detail_drift_relaxation_is_scoped_to_get_ticket_response() -> No
                             },
                         }
                     },
-                    "/tickets": {
+                    "/api/v1.0/tickets": {
                         "get": {
-                            "operationId": "Ticket_GetTickets",
+                            "operationId": "listTickets",
                             "responses": {
                                 "200": {
                                     "schema": {"$ref": "#/definitions/ListGetResponseOfTicket"}
@@ -540,9 +540,9 @@ def test_ticket_detail_drift_relaxation_is_scoped_to_get_ticket_response() -> No
     )
     detail_operation = registry.match_operation(
         "GET",
-        "/tickets/11111111-1111-1111-1111-111111111111",
+        "/api/v1.0/tickets/11111111-1111-1111-1111-111111111111",
     )
-    list_operation = registry.match_operation("GET", "/tickets")
+    list_operation = registry.match_operation("GET", "/api/v1.0/tickets")
     assert detail_operation is not None
     assert list_operation is not None
 
@@ -579,7 +579,7 @@ def test_response_validation_accepts_ticket_detail_missing_known_live_optional_f
 ) -> None:
     operation = bundled_registry.match_operation(
         "GET",
-        "/tickets/11111111-1111-1111-1111-111111111111",
+        "/api/v1.0/tickets/11111111-1111-1111-1111-111111111111",
     )
     assert operation is not None
 
@@ -597,7 +597,7 @@ def test_response_validation_caches_ticket_detail_relaxed_schema(
 ) -> None:
     operation = bundled_registry.match_operation(
         "GET",
-        "/tickets/11111111-1111-1111-1111-111111111111",
+        "/api/v1.0/tickets/11111111-1111-1111-1111-111111111111",
     )
     assert operation is not None
     fixture = _load_ticket_detail_live_shape_fixtures()[0]
@@ -628,7 +628,7 @@ def test_response_validation_still_rejects_ticket_detail_missing_core_status_fie
 ) -> None:
     operation = bundled_registry.match_operation(
         "GET",
-        "/tickets/11111111-1111-1111-1111-111111111111",
+        "/api/v1.0/tickets/11111111-1111-1111-1111-111111111111",
     )
     assert operation is not None
     fixture = _load_ticket_detail_live_shape_fixtures()[0]

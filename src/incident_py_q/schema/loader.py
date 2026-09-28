@@ -6,21 +6,44 @@ import json
 from importlib.resources import files
 from typing import Any, cast
 
-
-def load_stoplight_documents() -> list[dict[str, Any]]:
-    """Load bundled Stoplight Swagger controller documents."""
-    root = files("incident_py_q").joinpath("data/stoplight/controllers")
-    documents: list[dict[str, Any]] = []
-    for entry in sorted(root.iterdir(), key=lambda item: item.name):
-        if not entry.name.endswith(".json"):
-            continue
-        documents.append(json.loads(entry.read_text(encoding="utf-8")))
-    return documents
+from .openapi import convert_openapi_document
 
 
-def load_postman_collection() -> dict[str, Any]:
-    """Load the bundled APIHub Postman collection document."""
-    path = files("incident_py_q").joinpath("data/postman/collection.json")
+def load_openapi_document() -> dict[str, Any]:
+    """Load the bundled Golden OpenAPI 3.0 contract document as published."""
+    path = files("incident_py_q").joinpath("data/openapi/openapi-spec.json")
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], loaded)
+
+
+def load_openapi_metadata() -> dict[str, Any]:
+    """Load sync metadata describing the bundled Golden contract snapshot."""
+    path = files("incident_py_q").joinpath("data/openapi/metadata.json")
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], loaded)
+
+
+def load_contract_documents() -> list[dict[str, Any]]:
+    """Load Golden contract documents in the SDK's internal Swagger-shaped form."""
+    return [convert_openapi_document(load_openapi_document())]
+
+
+def load_legacy_contract_document() -> dict[str, Any]:
+    """Load the pruned legacy contract for routes migrated onto the Silver surface.
+
+    The published Golden contract is a locked allowlist profile and stopped
+    documenting a set of routes the SDK previously exposed. Those routes moved to
+    Silver rather than being dropped, and this bundle keeps their Swagger 2.0
+    schemas so they retain strict response validation.
+    """
+    path = files("incident_py_q").joinpath("data/legacy/contract.json")
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], loaded)
+
+
+def load_legacy_aliases() -> dict[str, Any]:
+    """Load the deprecated alias map from the Golden OpenAPI migration."""
+    path = files("incident_py_q").joinpath("data/legacy/aliases.json")
     loaded = json.loads(path.read_text(encoding="utf-8"))
     return cast(dict[str, Any], loaded)
 

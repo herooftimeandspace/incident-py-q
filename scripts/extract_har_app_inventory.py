@@ -15,7 +15,7 @@ def main() -> int:
     if str(src_root) not in sys.path:
         sys.path.insert(0, str(src_root))
 
-    from incident_py_q.schema.loader import load_stoplight_documents
+    from incident_py_q.schema.loader import load_contract_documents
     from incident_py_q.schema.registry import build_schema_registry
     from incident_py_q.silver import extract_silver_inventory, legacy_app_inventory_records
 
@@ -28,7 +28,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    registry = build_schema_registry(load_stoplight_documents())
+    registry = build_schema_registry(load_contract_documents())
     silver_metadata = extract_silver_inventory(har_files=args.har_files, registry=registry)
     legacy_inventory = legacy_app_inventory_records(silver_metadata)
 

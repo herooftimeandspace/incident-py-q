@@ -13,14 +13,15 @@ from urllib.parse import urljoin, urlsplit
 import httpx
 
 from ._utils import render_path
+from .compat import install_legacy_aliases
 from .config import AuthMode, ClientConfig, build_authorization_value
 from .exceptions import ConfigurationError
 from .logging_utils import redact_headers
 from .retry import compute_backoff_seconds, method_is_idempotent, should_retry_status
-from .schema.loader import load_stoplight_documents
+from .schema.loader import load_contract_documents
 from .schema.registry import OperationSpec, SchemaRegistry, build_schema_registry
 from .schema.validator import ResponseSchemaValidator
-from .sdk.runtime import SDKArtifacts, build_sdk
+from .sdk.runtime import AsyncNamespace, Namespace, SDKArtifacts, build_sdk
 from .silver.inventory import SilverMethodMetadata
 from .silver.runtime import (
     AsyncSilverAppsNamespace,
@@ -31,7 +32,7 @@ from .silver.runtime import (
 )
 from .silver.validation import SilverResponseSchemaValidator
 
-_TENANT_ROOT_PATH_PREFIXES = ("/api/", "/services/", "/apps/", "/img/", "/s/")
+_TENANT_ROOT_PATH_PREFIXES = ("/api/", "/services/", "/apps/", "/img/", "/s/", "/pub/")
 
 
 class Client:
@@ -82,7 +83,7 @@ class Client:
             )
 
         self._config = config
-        self._registry = registry or build_schema_registry(load_stoplight_documents())
+        self._registry = registry or build_schema_registry(load_contract_documents())
         self._response_validator = ResponseSchemaValidator(self._registry)
         self._silver_response_validator = SilverResponseSchemaValidator(self._registry)
         self._http = http_client or httpx.Client(timeout=config.timeout)
@@ -91,7 +92,7 @@ class Client:
         self._sdk: SDKArtifacts = build_sdk(client=self, registry=self._registry, async_mode=False)
         for namespace_name, namespace_obj in self._sdk.namespaces.items():
             setattr(self, namespace_name, namespace_obj)
-        # Golden and Silver are exposed side-by-side on purpose. Golden methods come from Stoplight
+        # Golden and Silver are exposed side-by-side on purpose. Golden methods come from the published
         # contracts and remain the authoritative SDK surface whenever a documented route exists.
         # Silver methods are the explicitly undocumented supplement derived from HAR traffic, so we
         # keep them under `client.silver` instead of letting them silently shadow Golden behavior.
@@ -101,6 +102,9 @@ class Client:
         # the original app-path runtime. The alias points at `client.silver.apps` so callers can
         # migrate without losing behavior while still seeing that app-path APIs are Silver.
         self.apps: SilverAppsNamespace = self.silver.apps
+        # Deprecated aliases for the pre-OpenAPI method names. Installed last so they can
+        # never shadow a real Golden or Silver method.
+        self._legacy_aliases = install_legacy_aliases(client=self, namespace_factory=Namespace)
 
     @classmethod
     def from_env(cls) -> Client:
@@ -118,7 +122,7 @@ class Client:
         return self._config
 
     def sdk_inventory(self) -> list[dict[str, str]]:
-        """Return the Golden Stoplight-derived SDK inventory."""
+        """Return the Golden contract-derived SDK inventory."""
         return list(self._sdk.inventory)
 
     def silver_sdk_inventory(self) -> list[dict[str, Any]]:
@@ -172,16 +176,14 @@ class Client:
         )
 
     # Silver exists so we can expose HAR-derived live routes without pretending those routes are
-    # first-class published contracts. That distinction matters here because this particular asset
-    # serial lookup is one of the cases where the live API is useful in practice, but the Stoplight
-    # contract that powers Golden validation is stricter than what the tenant actually returns. The
-    # business decision is to keep Golden strict, because Golden is still our source of truth for
-    # documented behavior and is the surface that should continue to reveal upstream contract drift.
-    # Silver, by contrast, is our explicitly inferred compatibility surface for live traffic. This
-    # hook lets Silver opt into a narrowly-scoped relaxed validator for a known drifted route
-    # without weakening Golden behavior or teaching the rest of the SDK that the relaxed shape is
-    # universally correct. If IncidentIQ fixes the published contract or changes the live payload,
-    # this hook is the seam where we should remove or revisit the workaround.
+    # first-class published contracts. Silver requests route through here so they can opt into a
+    # narrowly-scoped relaxed validator when a Silver-only route's live payload disagrees with the
+    # schema Golden would otherwise lend it, without weakening Golden behavior or teaching the rest
+    # of the SDK that the relaxed shape is universally correct.
+    #
+    # No such override is registered today: the asset serial lookup that motivated this seam is now
+    # part of the published contract, and its live drift moved into ordinary contract normalization.
+    # See `incident_py_q.silver.validation` before adding a new override here.
     def request_silver(
         self,
         metadata: SilverMethodMetadata,
@@ -388,7 +390,7 @@ class AsyncClient:
             )
 
         self._config = config
-        self._registry = registry or build_schema_registry(load_stoplight_documents())
+        self._registry = registry or build_schema_registry(load_contract_documents())
         self._response_validator = ResponseSchemaValidator(self._registry)
         self._silver_response_validator = SilverResponseSchemaValidator(self._registry)
         self._http = http_client or httpx.AsyncClient(timeout=config.timeout)
@@ -400,6 +402,9 @@ class AsyncClient:
         self._silver: SilverArtifacts = build_silver_sdk(client=self, async_mode=True)
         self.silver = self._silver.root
         self.apps: AsyncSilverAppsNamespace = self.silver.apps
+        self._legacy_aliases = install_legacy_aliases(
+            client=self, namespace_factory=AsyncNamespace
+        )
 
     @classmethod
     def from_env(cls) -> AsyncClient:
@@ -417,7 +422,7 @@ class AsyncClient:
         return self._config
 
     def sdk_inventory(self) -> list[dict[str, str]]:
-        """Return the Golden Stoplight-derived SDK inventory."""
+        """Return the Golden contract-derived SDK inventory."""
         return list(self._sdk.inventory)
 
     def silver_sdk_inventory(self) -> list[dict[str, Any]]:
@@ -471,16 +476,14 @@ class AsyncClient:
         )
 
     # Silver exists so we can expose HAR-derived live routes without pretending those routes are
-    # first-class published contracts. That distinction matters here because this particular asset
-    # serial lookup is one of the cases where the live API is useful in practice, but the Stoplight
-    # contract that powers Golden validation is stricter than what the tenant actually returns. The
-    # business decision is to keep Golden strict, because Golden is still our source of truth for
-    # documented behavior and is the surface that should continue to reveal upstream contract drift.
-    # Silver, by contrast, is our explicitly inferred compatibility surface for live traffic. This
-    # hook lets Silver opt into a narrowly-scoped relaxed validator for a known drifted route
-    # without weakening Golden behavior or teaching the rest of the SDK that the relaxed shape is
-    # universally correct. If IncidentIQ fixes the published contract or changes the live payload,
-    # this hook is the seam where we should remove or revisit the workaround.
+    # first-class published contracts. Silver requests route through here so they can opt into a
+    # narrowly-scoped relaxed validator when a Silver-only route's live payload disagrees with the
+    # schema Golden would otherwise lend it, without weakening Golden behavior or teaching the rest
+    # of the SDK that the relaxed shape is universally correct.
+    #
+    # No such override is registered today: the asset serial lookup that motivated this seam is now
+    # part of the published contract, and its live drift moved into ordinary contract normalization.
+    # See `incident_py_q.silver.validation` before adding a new override here.
     async def request_silver(
         self,
         metadata: SilverMethodMetadata,

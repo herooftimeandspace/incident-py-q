@@ -15,7 +15,7 @@ The package ships:
 - sync and async clients (`Client`, `AsyncClient`)
 - strict runtime response validation against bundled Incident IQ contracts
 - dynamic SDK namespaces generated from schema operations
-- schema sync tooling for Stoplight controller specs and APIHub Postman artifacts
+- schema sync tooling for the published Incident IQ OpenAPI contract
 - contract/unit/integration tests, docs site tooling, and CI workflows
 
 ## Requirements
@@ -45,9 +45,10 @@ Authorization: Bearer <token>
 Each client requires a tenant-specific base URL. You may pass either the tenant root
 (`https://your-tenant.incidentiq.com`) or an explicit API prefix such as
 `https://your-tenant.incidentiq.com/api/v1.0`. Bare tenant roots are normalized to
-`/api/v1.0` for Golden Stoplight routes. Silver routes that already include an
-absolute tenant path such as `/api/v1.0/...`, `/services/...`, or `/apps/...` are
-sent from the tenant origin so they do not accidentally inherit the Golden prefix.
+`/api/v1.0`. Golden contract paths are tenant-absolute (`/api/v1.0/...`), and Silver
+routes that include an absolute tenant path such as `/api/v1.0/...`, `/services/...`,
+`/apps/...`, or `/pub/...` are sent from the tenant origin so they do not accidentally
+inherit the base URL prefix twice.
 
 Runtime environment variables:
 - `INCIDENTIQ_BASE_URL` (required unless passed explicitly)
@@ -192,14 +193,48 @@ Refresh bundled contracts from official upstream sources:
 ```bash
 python scripts/sync_schemas.py
 python scripts/update_sdk_inventory.py
+python scripts/reconcile_silver_inventory.py
 python scripts/extract_har_app_inventory.py <intune.har> <mosyle.har> <google.har>
 ```
 
+`sync_schemas.py` pulls the published OpenAPI contract, `update_sdk_inventory.py`
+regenerates the Golden/Silver/merged inventory snapshots, and
+`reconcile_silver_inventory.py` drops bundled Silver routes the contract now
+documents. Golden always wins a route-level conflict with Silver.
+
 Bundled source tree:
-- `src/incident_py_q/data/stoplight/controllers/*.json` (primary)
-- `src/incident_py_q/data/postman/collection.json` (secondary)
+- `src/incident_py_q/data/openapi/openapi-spec.json` (Golden contract, primary)
+- `src/incident_py_q/data/openapi/metadata.json` (sync provenance)
 - `src/incident_py_q/data/source_manifest.json` (source manifest)
+- `src/incident_py_q/data/silver_inventory.json` (Silver inventory: HAR-derived + migrated routes)
+- `src/incident_py_q/data/legacy/contract.json` (schemas for routes migrated off Golden)
+- `src/incident_py_q/data/legacy/aliases.json` (deprecated method-name aliases)
 - `src/incident_py_q/data/app_schemas.json` (HAR-derived app-path schemas)
+
+## Upgrading from the pre-OpenAPI SDK
+
+The Golden contract moved to the published OpenAPI document, which renamed most operations
+and stopped documenting 64 routes. Those routes moved to `client.silver.*` rather than being
+dropped, and every previous method name still works as a deprecated alias that forwards to its
+new location and emits a `DeprecationWarning`.
+
+One legacy name could not be preserved: `client.tickets.assign_ticket` now reaches a different
+operation than it used to. `incident_py_q.legacy_alias_conflicts()` reports it at runtime.
+
+See [docs/migration-openapi.md](docs/migration-openapi.md) for the full mapping. To find every
+call site that needs updating:
+
+```python
+import warnings
+
+warnings.simplefilter("error", DeprecationWarning)
+```
+
+Regenerate the compatibility bundle from the pre-migration commit with:
+
+```bash
+python scripts/build_legacy_compat.py --from-ref <commit>
+```
 
 ## Versioning and Stability
 
