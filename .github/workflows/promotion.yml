@@ -25,53 +25,23 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Verify promotion app credentials
-        env:
-          APP_ID: ${{ secrets.PROMOTION_APP_ID }}
-          APP_PRIVATE_KEY: ${{ secrets.PROMOTION_APP_PRIVATE_KEY }}
-        run: |
-          set -euo pipefail
-          if [ -z "${APP_ID}" ] || [ -z "${APP_PRIVATE_KEY}" ]; then
-            echo "PROMOTION_APP_ID and PROMOTION_APP_PRIVATE_KEY are required."
-            echo "They back a GitHub App installation token, which replaces the former"
-            echo "PROMOTION_PR_TOKEN personal access token. See docs/project-docs.md."
-            exit 1
-          fi
-
-      - name: Mint promotion app token
-        id: promotion_token
-        uses: actions/create-github-app-token@v2  # TODO: pin to specific SHA for reproducibility
-        with:
-          app-id: ${{ secrets.PROMOTION_APP_ID }}
-          private-key: ${{ secrets.PROMOTION_APP_PRIVATE_KEY }}
-
       - name: Create or refresh dev to staging promotion PR
         env:
           GH_API_TOKEN: ${{ github.token }}
-          GH_PR_TOKEN: ${{ steps.promotion_token.outputs.token }}
           GH_REPO: ${{ github.repository }}
           GH_SHA: ${{ github.event.workflow_run.head_sha }}
           GH_URL: ${{ github.event.workflow_run.html_url }}
         run: |
           set -euo pipefail
 
-          # PRs created with github.token do not fan back out into pull_request workflows,
-          # which leaves the promotion PR blocked on the required integration check.
-          # A GitHub App installation token is treated as a distinct actor, so the promotion
-          # PR triggers downstream validation the same way a human-authored PR does.
-          # App tokens are short-lived and minted per run, so there is no PAT to expire.
-          if [ -z "${GH_PR_TOKEN}" ]; then
-            echo "Failed to mint a promotion app token; cannot author the promotion PR."
-            exit 1
-          fi
-
+          # Authoring with github.token needs no stored credential. PRs it opens do not
+          # trigger pull_request workflows, so the required `unit` and `integration`
+          # checks are produced by the push to the head branch instead - checks are
+          # scoped to the head commit, not to the event that created them.
           git fetch origin staging
           # The resolver shells out to gh, which reads GH_TOKEN/GITHUB_TOKEN.
-          # Establish API auth before label resolution, then switch to the PR
-          # authoring token only for create/edit operations below.
           export GH_TOKEN="${GH_API_TOKEN}"
           resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref dev)"
-          export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base staging --head dev --state open --json number --jq '.[0].number')"
           title="Promote dev to staging"
           body="$(printf '%s\n' \
@@ -146,30 +116,9 @@ jobs:
           echo "Timed out waiting for the unit check on ${GH_SHA}."
           exit 1
 
-      - name: Verify promotion app credentials
-        env:
-          APP_ID: ${{ secrets.PROMOTION_APP_ID }}
-          APP_PRIVATE_KEY: ${{ secrets.PROMOTION_APP_PRIVATE_KEY }}
-        run: |
-          set -euo pipefail
-          if [ -z "${APP_ID}" ] || [ -z "${APP_PRIVATE_KEY}" ]; then
-            echo "PROMOTION_APP_ID and PROMOTION_APP_PRIVATE_KEY are required."
-            echo "They back a GitHub App installation token, which replaces the former"
-            echo "PROMOTION_PR_TOKEN personal access token. See docs/project-docs.md."
-            exit 1
-          fi
-
-      - name: Mint promotion app token
-        id: promotion_token
-        uses: actions/create-github-app-token@v2  # TODO: pin to specific SHA for reproducibility
-        with:
-          app-id: ${{ secrets.PROMOTION_APP_ID }}
-          private-key: ${{ secrets.PROMOTION_APP_PRIVATE_KEY }}
-
       - name: Create or refresh staging to main promotion PR
         env:
           GH_API_TOKEN: ${{ github.token }}
-          GH_PR_TOKEN: ${{ steps.promotion_token.outputs.token }}
           GH_REPO: ${{ github.repository }}
           GH_SHA: ${{ github.event.workflow_run.head_sha }}
           GH_URL: ${{ github.event.workflow_run.html_url }}
@@ -177,15 +126,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [ -z "${GH_PR_TOKEN}" ]; then
-            echo "Failed to mint a promotion app token; cannot author the promotion PR."
-            exit 1
-          fi
-
           git fetch origin main
           # The resolver shells out to gh, which reads GH_TOKEN/GITHUB_TOKEN.
-          # Establish API auth before label resolution, then switch to the PR
-          # authoring token only for create/edit operations below.
           export GH_TOKEN="${GH_API_TOKEN}"
           resolved_label="$(python scripts/resolve_promotion_semver.py --repo "${GH_REPO}" --sha "${GH_SHA}" --base-ref staging)"
 
@@ -201,11 +143,10 @@ jobs:
           # release branch. Use the same secret-backed Git push path as
           # release-prep: the promotion token can push refs over Git even when the
           # REST Git refs API rejects the token with HTTP 403.
-          git push "https://x-access-token:${GH_PR_TOKEN}@github.com/${GH_REPO}.git" \
+          git push "https://x-access-token:${GH_API_TOKEN}@github.com/${GH_REPO}.git" \
             "${GH_SHA}:refs/heads/${GH_PROMOTION_REF}" \
             --force
 
-          export GH_TOKEN="${GH_PR_TOKEN}"
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base main --head "${GH_PROMOTION_REF}" --state open --json number --jq '.[0].number')"
           title="Promote staging to main"
           body="$(printf '%s\n' \
