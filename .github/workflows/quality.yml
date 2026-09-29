@@ -2,7 +2,9 @@ name: quality
 
 on:
   push:
-    branches: ["main", "staging", "dev"]
+    # The promotion branch is included so release-prep's version bump, pushed with
+    # github.token, still produces the `unit` check the promotion PR requires.
+    branches: ["main", "staging", "dev", "promote/staging-to-main"]
   pull_request:
 
 permissions:
@@ -134,7 +136,7 @@ jobs:
 
   publish-badges:
     needs: unit
-    if: always() && github.event_name == 'push'
+    if: always() && github.event_name == 'push' && github.ref_name != 'promote/staging-to-main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
