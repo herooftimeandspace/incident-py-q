@@ -218,8 +218,17 @@ def _extract_response_schemas(responses: dict[str, Any]) -> dict[str, dict[str, 
     return extracted
 
 
+_API_VERSION_PREFIX = re.compile(r"^/api/v[0-9]+(?:\.[0-9]+)*(?=/)", re.IGNORECASE)
+
+
 def _namespace_from_path(path: str) -> str:
-    stripped = path.strip("/")
+    """Derive the SDK namespace from the first meaningful path segment.
+
+    Golden contract paths are tenant-absolute (`/api/v1.0/tickets/...`), so the
+    versioned API prefix is stripped first; otherwise every operation would
+    collapse into a single `api` namespace.
+    """
+    stripped = _API_VERSION_PREFIX.sub("", path).strip("/")
     if not stripped:
         return "root"
     first = stripped.split("/", 1)[0]

@@ -109,7 +109,17 @@ class SwaggerModelFactory:
         for prop_name, prop_schema in properties.items():
             annotation = self.type_from_schema(prop_schema if isinstance(prop_schema, dict) else None)
             default: Any = ... if prop_name in required_names else None
-            fields[prop_name] = (annotation, Field(default=default))
+            field_name = _safe_field_name(prop_name, taken=fields)
+            if field_name == prop_name:
+                fields[field_name] = (annotation, Field(default=default))
+            else:
+                # Pydantic rejects leading-underscore field names, but the wire
+                # contract still uses them. Keep the wire name as the alias so
+                # payloads validate and serialize unchanged.
+                fields[field_name] = (
+                    annotation,
+                    Field(default=default, alias=prop_name),
+                )
 
         return _create_model(name, fields)
 
@@ -127,10 +137,28 @@ def _without(schema: dict[str, Any], key: str) -> dict[str, Any]:
     return {k: v for k, v in schema.items() if k != key}
 
 
+def _safe_field_name(prop_name: str, *, taken: dict[str, tuple[Any, Any]]) -> str:
+    """Return a pydantic-safe field name for a wire property name.
+
+    Only leading-underscore names need rewriting; pydantic reserves those for
+    private attributes. Everything else is passed through unchanged so existing
+    field names stay stable.
+    """
+    if not prop_name.startswith("_"):
+        return prop_name
+
+    candidate = prop_name.lstrip("_") or "field"
+    if candidate[0].isdigit():
+        candidate = f"field_{candidate}"
+    while candidate in taken:
+        candidate = f"{candidate}_"
+    return candidate
+
+
 def _create_model(name: str, fields: dict[str, tuple[Any, Any]]) -> type[BaseModel]:
     model = create_model(
         name,
-        __config__=ConfigDict(extra="allow"),
+        __config__=ConfigDict(extra="allow", populate_by_name=True),
         **cast(Any, fields),
     )
     return cast(type[BaseModel], model)

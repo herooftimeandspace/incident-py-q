@@ -1,6 +1,35 @@
 {
   "endpoints": [
     {
+      "description": "#### Allows creation / sending of notifications within Incident IQ.  Notifications can be directed at users with varying severity.  Content may include rich HTML and links to other resources.\n#### Sample request:\n```\nPOST /api/v1.0/alerts/new\n{\n  \"AlertKey\": \"Custom-Notification-1\",\n  \"EntityTypeId\": \"ac6cece8-e4f4-e511-a789-005056bb000e\",\n  \"EntityId\": \"ac6cece8-e4f4-e511-a789-005056bb000e\",\n  \"Severity\": 20,\n  \"Subject\": \"Test notification 1\",\n  \"Details\": \"New notification content - click &lt;a href=\"#\"&gt;here&lt;/a&gt;\"\n}\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.alerts.queue_notification` (operationId `Alerts_QueueNotification`).",
+      "http_method": "POST",
+      "method_name": "queue_notification",
+      "namespace_path": [
+        "alerts"
+      ],
+      "parameters": [
+        {
+          "api_name": "notification",
+          "description": "Notification details / parameters",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/alerts/new",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Send a new notification",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
       "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. It accepts common local raster image formats including JPG/JPEG, PNG, GIF, WEBP, and BMP. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "GET",
       "method_name": "get_agent_current_stats",
@@ -41,62 +70,109 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "#### Get information related to a given report.  Meta information for the overall report is returned.  For a listing of defined report elements associated with this report call GET `/api/v1.0/analytics/reports/elements/{ReportId}`.\n#### Sample request:\n```\nGET /api/v1.0/analytics/reports/ac6cece8-e4f4-e511-a789-005056bb000e\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.analytics.get_report` (operationId `Analytics_GetReport`).",
       "http_method": "GET",
-      "method_name": "get_asset_summary_stats",
+      "method_name": "get_report",
       "namespace_path": [
         "analytics"
       ],
       "parameters": [
         {
-          "api_name": "asset_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "api_name": "ReportId",
+          "description": "Report ID of the record to modify",
           "location": "path",
-          "python_name": "asset_id",
+          "python_name": "report_id",
           "required": true,
           "type_display": "str"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/analytics/asset/{asset_id}/summary-stats",
+      "route": "/api/v1.0/analytics/reports/{report_id}",
       "sources": [
-        "Chromebook-asset-actions.har",
-        "apple-asset-actions.har",
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.analytics`.",
+      "summary": "Get report details",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "#### Get all elements defined for a given report.  Meta information for the overall report is not returned in this endpoint.  To obtain information regarding the overall report call GET `/api/v1.0/analytics/reports/{ReportId}`.\n#### Sample request:\n```\nGET /api/v1.0/analytics/reports/elements/ac6cece8-e4f4-e511-a789-005056bb000e\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.analytics.get_report_elements` (operationId `Analytics_GetReportElements`).",
       "http_method": "GET",
-      "method_name": "get_requestor_summary_stats",
+      "method_name": "get_report_elements",
       "namespace_path": [
         "analytics"
       ],
       "parameters": [
         {
-          "api_name": "requestor_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "api_name": "ReportId",
+          "description": "Report ID of the record to modify",
           "location": "path",
-          "python_name": "requestor_id",
+          "python_name": "report_id",
           "required": true,
           "type_display": "str"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/analytics/requestor/{requestor_id}/summary-stats",
+      "route": "/api/v1.0/analytics/reports/elements/{report_id}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.analytics`.",
+      "summary": "Get report elements",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Get all queries defined for a given report.  Meta information for the overall report is not returned in this endpoint.  To obtain information regarding the overall report call GET `/api/v1.0/analytics/reports/{ReportId}`.\n#### Sample request:\n```\nGET /api/v1.0/analytics/reports/queries/ac6cece8-e4f4-e511-a789-005056bb000e\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.analytics.get_report_queries` (operationId `Analytics_GetReportQueries`).",
+      "http_method": "GET",
+      "method_name": "get_report_queries",
+      "namespace_path": [
+        "analytics"
+      ],
+      "parameters": [
+        {
+          "api_name": "ReportId",
+          "description": "Report ID of the record to modify",
+          "location": "path",
+          "python_name": "report_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/analytics/reports/queries/{report_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get report queries",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Get all currently active and defined reports\n#### Sample request:\n```\nGET /api/v1.0/analytics/reports\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.analytics.get_reports` (operationId `Analytics_GetReports`).",
+      "http_method": "GET",
+      "method_name": "get_reports",
+      "namespace_path": [
+        "analytics"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/analytics/reports",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get all reports",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -2786,203 +2862,456 @@
       "uses_app_headers": true
     },
     {
-      "description": "This route is treated as Silver because bundled Stoplight contracts do not define it. The SDK exposes it separately so Golden Stoplight methods remain the authoritative contract whenever they exist.",
-      "http_method": "GET",
-      "method_name": "get_asset_by_serial",
+      "description": "#### Remove a Manufacturer from a Site\n#### Sample request:\n```\nPOST /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site/true\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.add_manufacturer_to_site2` (operationId `Manufacturer_AddManufacturerToSite2`).",
+      "http_method": "POST",
+      "method_name": "add_manufacturer_to_site2",
       "namespace_path": [
         "assets"
       ],
       "parameters": [
         {
-          "api_name": "serial",
-          "description": "Serial number path segment. This Silver route is added explicitly because it is known to exist even when the HAR does not capture it.",
+          "api_name": "IncludeAllModels",
+          "description": "(default false) Add all Models from this manufacturer to site",
           "location": "path",
-          "python_name": "serial",
+          "python_name": "include_all_models",
           "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/assets/serial/{serial}",
-      "sources": [
-        "synthetic_required_route"
-      ],
-      "status_codes": [],
-      "summary": "Silver path for asset lookup by serial number.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_asset_files",
-      "namespace_path": [
-        "assets"
-      ],
-      "parameters": [
+          "type_display": "bool"
+        },
         {
-          "api_name": "asset_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "api_name": "ManufacturerId",
+          "description": "Manufacturer Id to be added",
           "location": "path",
-          "python_name": "asset_id",
+          "python_name": "manufacturer_id",
           "required": true,
           "type_display": "str"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/assets/{asset_id}/files",
+      "route": "/api/v1.0/assets/manufacturers/{manufacturer_id}/site/{include_all_models}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.assets`.",
+      "summary": "Remove Manufacturer",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_asset_verifications",
+      "description": "#### Creates a new Asset Status Type with provided attributes.  A AssetStatusID, as well a complete record of the updated Asset Status Type is returned for every successful creation of Asset Status Types.\n#### Sample request:\n```\nPOST /api/v1.0/assets/status/types/new\n{\n  \"Update\":{\n\t\t\"AssetStatusTypeId\":\"a102cced-419d-4102-aadf-461f1e96b07b\"\n\t\t\"Name\":\"Example New Status Type\",\n\t\t\"IsRetired\":false\n\t\t}\n}\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.create_asset_status_type` (operationId `AssetStatusType_CreateAssetStatusType`).",
+      "http_method": "POST",
+      "method_name": "create_asset_status_type",
       "namespace_path": [
         "assets"
       ],
       "parameters": [
         {
-          "api_name": "asset_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "api_name": "Item",
+          "description": "Asset Status Type to be updated, including all attributes",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/status/types/new",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Create a new asset status type",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Delete an Asset Funding Type\n#### Sample request:\n```\nDELETE /api/v1.0/assets/funding/types/a443fec7-45fe-4d08-8daf-11f4dd86df79\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.delete_asset_funding_type` (operationId `AssetFundingType_DeleteAssetFundingType`).",
+      "http_method": "DELETE",
+      "method_name": "delete_asset_funding_type",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "AssetFundingTypeId",
+          "description": "Asset Funding Type Id to be removed",
           "location": "path",
-          "python_name": "asset_id",
+          "python_name": "asset_funding_type_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/funding/types/{asset_funding_type_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Delete Asset Funding Type ",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Delete an asset status type.\n#### Sample request:\n```\nDELETE /api/v1.0/assets/status/types/a102cced-419d-4102-aadf-461f1e96b07b\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.delete_asset_status_type` (operationId `AssetStatusType_DeleteAssetStatusType`).",
+      "http_method": "DELETE",
+      "method_name": "delete_asset_status_type",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "AssetStatusTypeId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "asset_status_type_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/status/types/{asset_status_type_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Delete Asset Status Type",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Performs a query to obtain assets favorited by a given user.  For a more generalized / flexible asset query call POST `/api/v1.0/assets` to search by filter.\n#### Sample request:\n```\nGET /api/v1.0/assets/favorites/ac6cece8-e4f4-e511-a789-005056bb000e\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.get_asset_favorites2` (operationId `Asset_GetAssetFavorites2`).",
+      "http_method": "GET",
+      "method_name": "get_asset_favorites2",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "All",
+          "description": "Include assets within the provided user's assigned location rooms",
+          "location": "path",
+          "python_name": "all",
           "required": true,
           "type_display": "str"
         },
         {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/assets/{asset_id}/verifications",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.assets`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_stats_locations",
-      "namespace_path": [
-        "assets"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/assets/stats/locations",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.assets`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_type",
-      "namespace_path": [
-        "assets"
-      ],
-      "parameters": [
-        {
-          "api_name": "type_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "api_name": "UserId",
+          "description": "User ID to use when searching assets",
           "location": "path",
-          "python_name": "type_id",
+          "python_name": "user_id",
           "required": true,
           "type_display": "str"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/assets/types/{type_id}",
+      "route": "/api/v1.0/assets/favorites/{user_id}/{all}",
       "sources": [
-        "apple-asset-actions.har",
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.assets`.",
+      "summary": "Get user favorites",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_checkouts_transactions_query_get",
+      "description": "#### Retrieve a specific asset funding type by AssetFundingTypeId\n#### Sample request:\n```\nGET /api/v1.0/assets/funding/types/a443fec7-45fe-4d08-8daf-11f4dd86df79\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.get_asset_funding_type` (operationId `AssetFundingType_GetAssetFundingType`).",
+      "http_method": "GET",
+      "method_name": "get_asset_funding_type",
       "namespace_path": [
         "assets"
       ],
       "parameters": [
         {
-          "api_name": "json_body",
-          "description": "Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema.",
+          "api_name": "AssetFundingTypeId",
+          "description": "Asset Funding Type Id to be retrieved, including all attributes",
+          "location": "path",
+          "python_name": "asset_funding_type_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "r",
+          "description": "Query parameter migrated from the previous Golden SDK.",
+          "location": "query",
+          "python_name": "r",
+          "required": true,
+          "type_display": "Any"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/funding/types/{asset_funding_type_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Asset Funding Type",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of asset funding types. A specific location type via GET `api/v1.0/assets/funding/types/a443fec7-45fe-4d08-8daf-11f4dd86df79`.\n#### Sample request:\n```\nGET /api/v1.0/assets/funding/types\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.get_asset_funding_types2` (operationId `AssetFundingType_GetAssetFundingTypes2`).",
+      "http_method": "POST",
+      "method_name": "get_asset_funding_types2",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "r",
+          "description": "Body parameter migrated from the previous Golden SDK.",
           "location": "body",
           "python_name": "json_body",
           "required": true,
-          "type_display": "Mapping[str, Any]"
+          "type_display": "dict[str, Any] | list[Any]"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/assets/checkouts/transactions/query/get",
+      "route": "/api/v1.0/assets/funding/types",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.assets`.",
+      "summary": "Get Asset Funding Types",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "#### Queries / searches for assets which match a given status.  For a more generalized / flexible asset query call POST `/api/v1.0/assets` to search by filter.\n#### Sample request:\n```\nGET /api/v1.0/assets/assetstatustype/ac6cece8-e4f4-e511-a789-005056bb000e\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.get_assets_by_asset_status_type` (operationId `Asset_GetAssetsByAssetStatusType`).",
       "http_method": "GET",
-      "method_name": "get_policies_schedules_for_asset",
+      "method_name": "get_assets_by_asset_status_type",
       "namespace_path": [
-        "audits"
+        "assets"
       ],
       "parameters": [
         {
-          "api_name": "for_asset_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "api_name": "AssetStatusTypeId",
+          "description": "Asset status ID to search for",
           "location": "path",
-          "python_name": "for_asset_id",
+          "python_name": "asset_status_type_id",
           "required": true,
           "type_display": "str"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/audits/policies/schedules/for-asset/{for_asset_id}",
+      "route": "/api/v1.0/assets/assetstatustype/{asset_status_type_id}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.audits`.",
+      "summary": "Query by status",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Queries / searches for assets which exactly match a given asset tag.  Search is case-insensitive.  For a more generalized / flexible asset query call POST `/api/v1.0/assets` to search by filter.\n#### Sample request:\n```\nGET /api/v1.0/assets/assettag/100345\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.get_assets_by_asset_tag` (operationId `Asset_GetAssetsByAssetTag`).",
+      "http_method": "GET",
+      "method_name": "get_assets_by_asset_tag",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "AssetTag",
+          "description": "Asset tag to search for",
+          "location": "path",
+          "python_name": "asset_tag",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/assettag/{asset_tag}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Query by asset tag ( exact )",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Queries / searches only for spare assets which exactly match a given asset tag.  Search is case-insensitive.  For a more generalized / flexible asset query call POST `/api/v1.0/assets` to search by filter.\n#### Sample request:\n```\nGET /api/v1.0/assets/assettag/search/100345\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.get_spare_assets_by_asset_tag` (operationId `Asset_GetSpareAssetsByAssetTag`).",
+      "http_method": "GET",
+      "method_name": "get_spare_assets_by_asset_tag",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "AssetTag",
+          "description": "Asset tag to search for",
+          "location": "path",
+          "python_name": "asset_tag",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/spares/assettag/{asset_tag}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Query spares by asset tag",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Queries / searches for assets which match a given user.  For a more generalized / flexible asset query call POST `/api/v1.0/assets` to search by filter.\n#### Sample request:\n```\nGET /api/v1.0/assets/for/ac6cece8-e4f4-e511-a789-005056bb000e\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.get_user_assets2` (operationId `Asset_GetUserAssets2`).",
+      "http_method": "GET",
+      "method_name": "get_user_assets2",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "All",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "all",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "UserId",
+          "description": "User ID to search for",
+          "location": "path",
+          "python_name": "user_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/for/{user_id}/{all}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Query by user",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Queries / searches for assets which loosely match a given asset tag by means of a \"contains text\" search.  Search is case-insensitive.  For a more generalized / flexible asset query call POST `/api/v1.0/assets` to search by filter.\n#### Sample request:\n```\nGET /api/v1.0/assets/assettag/search/100345\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.search_assets_by_asset_tag` (operationId `Asset_SearchAssetsByAssetTag`).",
+      "http_method": "GET",
+      "method_name": "search_assets_by_asset_tag",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "AssetTag",
+          "description": "Asset tag to search for",
+          "location": "path",
+          "python_name": "asset_tag",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/assettag/search/{asset_tag}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Query by asset tag ( wildcard )",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.update_asset_funding_type` (operationId `AssetFundingType_UpdateAssetFundingType`).",
+      "http_method": "POST",
+      "method_name": "update_asset_funding_type",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "AssetFundingTypeId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "asset_funding_type_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "Item",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/funding/types/{asset_funding_type_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for POST /assets/funding/types/{AssetFundingTypeId}.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Updates a previously submitted Asset Status Type with provided changes.  A AssetStatusID, as well a complete record of the updated Asset Status Type is returned for every successful update Asset Status Type call made to the API.  \n#### Sample request:\n```\nPOST /api/v1.0/assets/status/types/a102cced-419d-4102-aadf-461f1e96b07b\n{\n  \"Update\":{\n\t\t\"Name\":\"New Status Type\",\n\t\t\"IsRetired\":false\n\t\t}\n}\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.assets.update_asset_status_type` (operationId `AssetStatusType_UpdateAssetStatusType`).",
+      "http_method": "POST",
+      "method_name": "update_asset_status_type",
+      "namespace_path": [
+        "assets"
+      ],
+      "parameters": [
+        {
+          "api_name": "AssetStatusTypeId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "asset_status_type_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "Item",
+          "description": "Asset Status Type to be created, including all necessary attributes",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/assets/status/types/{asset_status_type_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Update an existing asset status type",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -3036,164 +3365,60 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.custom_fields.delete_custom_fields` (operationId `CustomField_DeleteCustomFields`).",
+      "http_method": "DELETE",
+      "method_name": "delete_custom_fields",
+      "namespace_path": [
+        "custom_fields"
+      ],
+      "parameters": [
+        {
+          "api_name": "CustomFieldIds",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/custom-fields",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for DELETE /custom-fields.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.custom_fields.get_custom_fields` (operationId `CustomField_GetCustomFields`).",
       "http_method": "GET",
-      "method_name": "get_of_filters",
-      "namespace_path": [
-        "categories"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/categories/of/filters",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.categories`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_of_models",
-      "namespace_path": [
-        "categories"
-      ],
-      "parameters": [
-        {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/categories/of/models",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.categories`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_for__asset",
+      "method_name": "get_custom_fields",
       "namespace_path": [
         "custom_fields"
       ],
       "parameters": [
         {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
+          "api_name": "ProductFilterType",
+          "description": "Query parameter migrated from the previous Golden SDK.",
           "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        },
-        {
-          "api_name": "json_body",
-          "description": "Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema.",
-          "location": "body",
-          "python_name": "json_body",
-          "required": true,
-          "type_display": "Mapping[str, Any]"
+          "python_name": "product_filter_type",
+          "required": false,
+          "type_display": "str"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/custom-fields/for/asset",
+      "route": "/api/v1.0/custom-fields",
       "sources": [
-        "Chromebook-asset-actions.har",
-        "apple-asset-actions.har",
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.custom_fields`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_for__ticket",
-      "namespace_path": [
-        "custom_fields"
-      ],
-      "parameters": [
-        {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        },
-        {
-          "api_name": "json_body",
-          "description": "Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema.",
-          "location": "body",
-          "python_name": "json_body",
-          "required": true,
-          "type_display": "Mapping[str, Any]"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/custom-fields/for/ticket",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.custom_fields`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_for__user",
-      "namespace_path": [
-        "custom_fields"
-      ],
-      "parameters": [
-        {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        },
-        {
-          "api_name": "json_body",
-          "description": "Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema.",
-          "location": "body",
-          "python_name": "json_body",
-          "required": true,
-          "type_display": "Mapping[str, Any]"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/custom-fields/for/user",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.custom_fields`.",
+      "summary": "Migrated Silver route for GET /custom-fields.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -3267,101 +3492,6 @@
     },
     {
       "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_entity",
-      "namespace_path": [
-        "files"
-      ],
-      "parameters": [
-        {
-          "api_name": "entity_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "entity_id",
-          "required": true,
-          "type_display": "str"
-        },
-        {
-          "api_name": "n_888891ac_91aa_e711_80c2_100dffa00004_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "n_888891ac_91aa_e711_80c2_100dffa00004_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/files/entity/{entity_id}/{n_888891ac_91aa_e711_80c2_100dffa00004_id}",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.files`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_for__entitytype",
-      "namespace_path": [
-        "filters"
-      ],
-      "parameters": [
-        {
-          "api_name": "entitytype_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "entitytype_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/filters/for/entitytype/{entitytype_id}",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.filters`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_set",
-      "namespace_path": [
-        "filters"
-      ],
-      "parameters": [
-        {
-          "api_name": "set_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "set_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/filters/sets/{set_id}",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        500
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.filters`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_endpoint",
       "namespace_path": [
@@ -3415,6 +3545,35 @@
         200
       ],
       "summary": "HAR-derived undocumented POST route for `client.silver.flow_procedures`.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Supports form submissions to Incident IQ using pre-configured forms that trigger actions upon submission\n#### Sample request:\n```\nPOST /api/v1.0/forms/submit\n{\n  \"FormKey\": \"test-form-1\",\n  \"SiteId\": \"ac6cece8-e4f4-e511-a789-005056bb000e\",\n  \"Data\": [ {\n    \"CustomFieldTypeId\": \"ac6cece8-e4f4-e511-a789-005056bb000e\",\n    \"Value\": \"Test form submission\",\n  } ]\n}\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.forms.submit_form` (operationId `Form_SubmitForm`).",
+      "http_method": "POST",
+      "method_name": "submit_form",
+      "namespace_path": [
+        "forms"
+      ],
+      "parameters": [
+        {
+          "api_name": "Model",
+          "description": "Form submission infomation / parameters",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/forms/submit",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Submit new record to a form",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -3526,55 +3685,6 @@
     {
       "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
-      "method_name": "get_rates_user_2",
-      "namespace_path": [
-        "labor"
-      ],
-      "parameters": [
-        {
-          "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "user_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/labor/rates/user/{user_id}",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.labor`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_types",
-      "namespace_path": [
-        "labor"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/labor/types",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.labor`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
       "method_name": "get_my_dashboard",
       "namespace_path": [
         "layouts"
@@ -3589,6 +3699,434 @@
         200
       ],
       "summary": "HAR-derived undocumented GET route for `client.silver.layouts`.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Delete a specific location\n#### Sample request:\n```\nDELETE /api/v1.0/locations/d344d88d-d201-4c52-8d23-4371fa7179bb\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.locations.delete_location` (operationId `Location_DeleteLocation`).",
+      "http_method": "DELETE",
+      "method_name": "delete_location",
+      "namespace_path": [
+        "locations"
+      ],
+      "parameters": [
+        {
+          "api_name": "LocationId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "location_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/locations/{location_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Delete location",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieve a list of rooms for all locations\n#### Sample request:\n```\nGET /api/v1.0/locations/rooms\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.locations.get_all_location_rooms` (operationId `Location_GetAllLocationRooms`).",
+      "http_method": "GET",
+      "method_name": "get_all_location_rooms",
+      "namespace_path": [
+        "locations"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/locations/rooms",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get All Location Rooms",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieve a list of Location Rooms for a specific Location ID\n#### Sample request:\n```\nGET /api/v1.0/locations/4fc0dc90-c40a-4012-b4e2-224ca02bdfb7/rooms\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.locations.get_location_rooms` (operationId `Location_GetLocationRooms`).",
+      "http_method": "GET",
+      "method_name": "get_location_rooms",
+      "namespace_path": [
+        "locations"
+      ],
+      "parameters": [
+        {
+          "api_name": "LocationId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "location_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/locations/{location_id}/rooms",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Location Room for Location",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieve a specific Location Type via LocationTypeID\n#### Sample request:\n```\nGET /api/v1.0/locations/types/27c81cbe-fdc4-4d7f-9c1c-e0311de5f882\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.locations.get_location_type` (operationId `Location_GetLocationType`).",
+      "http_method": "GET",
+      "method_name": "get_location_type",
+      "namespace_path": [
+        "locations"
+      ],
+      "parameters": [
+        {
+          "api_name": "LocationTypeId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "location_type_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/locations/types/{location_type_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Location Type",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of location types that can then be used to retrieve a specific location type via GET `api/locations/types/{LocationTypeId:guid}`.\n#### Sample request:\n```\nGET /api/v1.0/locations/types\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.locations.get_location_types` (operationId `Location_GetLocationTypes`).",
+      "http_method": "GET",
+      "method_name": "get_location_types",
+      "namespace_path": [
+        "locations"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/locations/types",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Location Types",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.locations.update_location` (operationId `Location_UpdateLocation`).",
+      "http_method": "POST",
+      "method_name": "update_location",
+      "namespace_path": [
+        "locations"
+      ],
+      "parameters": [
+        {
+          "api_name": "LocationId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "location_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "Location",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/locations/{location_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for POST /locations/{LocationId}.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Remove a Manufacturer from a Site\n#### Sample request:\n```\nPOST /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site/true\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.add_manufacturer_to_site3` (operationId `Manufacturer_AddManufacturerToSite3`).",
+      "http_method": "POST",
+      "method_name": "add_manufacturer_to_site3",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "ManufacturerId",
+          "description": "Manufacturer Id to be added",
+          "location": "path",
+          "python_name": "manufacturer_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "IncludeAllModels",
+          "description": "(default false) Add all Models from this manufacturer to site",
+          "location": "query",
+          "python_name": "include_all_models",
+          "required": false,
+          "type_display": "bool"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/{manufacturer_id}/site",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Remove Manufacturer",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Remove a Manufacturer from a Site\n#### Sample request:\n```\nPOST /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site/true\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.add_manufacturer_to_site4` (operationId `Manufacturer_AddManufacturerToSite4`).",
+      "http_method": "POST",
+      "method_name": "add_manufacturer_to_site4",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "IncludeAllModels",
+          "description": "(default false) Add all Models from this manufacturer to site",
+          "location": "path",
+          "python_name": "include_all_models",
+          "required": true,
+          "type_display": "bool"
+        },
+        {
+          "api_name": "ManufacturerId",
+          "description": "Manufacturer Id to be added",
+          "location": "path",
+          "python_name": "manufacturer_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/{manufacturer_id}/site/{include_all_models}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Remove Manufacturer",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.delete_manufacturer2` (operationId `Manufacturer_DeleteManufacturer2`).",
+      "http_method": "DELETE",
+      "method_name": "delete_manufacturer2",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "ManufacturerId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "manufacturer_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/{manufacturer_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for DELETE /manufacturers/{ManufacturerId}.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of all manufacturers.\n#### Sample request:\n```\nGET /api/v1.0/manufacturers/global\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.get_global_manufacturers3` (operationId `Manufacturer_GetGlobalManufacturers3`).",
+      "http_method": "GET",
+      "method_name": "get_global_manufacturers3",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "r",
+          "description": "Query parameter migrated from the previous Golden SDK.",
+          "location": "query",
+          "python_name": "r",
+          "required": true,
+          "type_display": "Any"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/global",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Manufacturers",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of all manufacturers.\n#### Sample request:\n```\nGET /api/v1.0/manufacturers/global\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.get_global_manufacturers4` (operationId `Manufacturer_GetGlobalManufacturers4`).",
+      "http_method": "POST",
+      "method_name": "get_global_manufacturers4",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "r",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/global",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Manufacturers",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieve a specific manufacturer by Manufacturer Id\n#### Sample request:\n```\nGET /api/v1.0/parts/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.get_manufacturer2` (operationId `Manufacturer_GetManufacturer2`).",
+      "http_method": "GET",
+      "method_name": "get_manufacturer2",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "ManufacturerId",
+          "description": "Manufacturer ID to be retrieved",
+          "location": "path",
+          "python_name": "manufacturer_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "r",
+          "description": "Query parameter migrated from the previous Golden SDK.",
+          "location": "query",
+          "python_name": "r",
+          "required": true,
+          "type_display": "Any"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/{manufacturer_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Manufacturer",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Remove a Manufacturer\n#### Sample request:\n```\nDELETE /api/v1.0/manufacturers/70fe08d5-e67e-4495-8ac4-d92f734774af/site\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.remove_manufacturer_from_site2` (operationId `Manufacturer_RemoveManufacturerFromSite2`).",
+      "http_method": "DELETE",
+      "method_name": "remove_manufacturer_from_site2",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "ManufacturerId",
+          "description": "Manufacturer Id to be removed",
+          "location": "path",
+          "python_name": "manufacturer_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/{manufacturer_id}/site",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Remove Manufacturer",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.manufacturers.update_manufacturer2` (operationId `Manufacturer_UpdateManufacturer2`).",
+      "http_method": "POST",
+      "method_name": "update_manufacturer2",
+      "namespace_path": [
+        "manufacturers"
+      ],
+      "parameters": [
+        {
+          "api_name": "ManufacturerId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "manufacturer_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "Item",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/manufacturers/{manufacturer_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for POST /manufacturers/{ManufacturerId}.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -3624,217 +4162,605 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_all",
+      "description": "#### Delete a specific SLA Metric Type\n#### Sample request:\n```\nDELETE /api/v1.0/metrics/types/67a39334-d778-487c-95ae-07a776ed8201\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.metrics.delete_metric_type` (operationId `Sla_DeleteMetricType`).",
+      "http_method": "DELETE",
+      "method_name": "delete_metric_type",
       "namespace_path": [
-        "models"
+        "metrics"
       ],
       "parameters": [
         {
-          "api_name": "$filter",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "filter",
+          "api_name": "MetricTypeId",
+          "description": "MetricTypeID of the MetricType to be deleted",
+          "location": "path",
+          "python_name": "metric_type_id",
           "required": true,
           "type_display": "str"
-        },
-        {
-          "api_name": "$o",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "o",
-          "required": true,
-          "type_display": "str"
-        },
-        {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/models/all",
+      "route": "/api/v1.0/metrics/types/{metric_type_id}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.models`.",
+      "summary": "Delete Metric Type",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "#### Retrieve a specific metric type by MetricId\n#### Sample request:\n```\nGET /api/v1.0/metrics/2c6101d2-1ac8-4320-b234-74f51a3b2e58\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.metrics.get_metric` (operationId `Sla_GetMetric`).",
       "http_method": "GET",
-      "method_name": "get_apps_aeries_sis",
+      "method_name": "get_metric",
       "namespace_path": [
-        "models"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/models/apps/aeriesSis",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.models`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_apps_google_device_data",
-      "namespace_path": [
-        "models"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/models/apps/googleDeviceData",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.models`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_apps_microsoft_intune",
-      "namespace_path": [
-        "models"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/models/apps/microsoftIntune",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.models`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_apps_subtickets_for_i_t",
-      "namespace_path": [
-        "models"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/models/apps/subticketsForIT",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.models`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_available_to_site",
-      "namespace_path": [
-        "models"
+        "metrics"
       ],
       "parameters": [
         {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
+          "api_name": "MetricId",
+          "description": "MetricId of Metric being requested",
+          "location": "path",
+          "python_name": "metric_id",
           "required": true,
-          "type_display": "int"
+          "type_display": "str"
         },
         {
-          "api_name": "json_body",
-          "description": "Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema.",
+          "api_name": "r",
+          "description": "Request Options specified for the Metric(s)",
+          "location": "query",
+          "python_name": "r",
+          "required": true,
+          "type_display": "Any"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/metrics/{metric_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get SLA Metric",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of metrics for a specific SLA.\n#### Sample request:\n```\nGET /api/v1.0/metrics/for/sla/bd64e104-4c83-4744-a888-eeb760c03bfe\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.metrics.get_metrics_for_sla` (operationId `Sla_GetMetricsForSla`).",
+      "http_method": "GET",
+      "method_name": "get_metrics_for_sla",
+      "namespace_path": [
+        "metrics"
+      ],
+      "parameters": [
+        {
+          "api_name": "SlaId",
+          "description": "SlaId of SLA containing the Metrics being requested",
+          "location": "path",
+          "python_name": "sla_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "r",
+          "description": "Request Options specified for the Sla Metrics",
+          "location": "query",
+          "python_name": "r",
+          "required": true,
+          "type_display": "Any"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/metrics/for/sla/{sla_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Metrics for an SLA",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.metrics.update_metric` (operationId `Sla_UpdateMetric`).",
+      "http_method": "POST",
+      "method_name": "update_metric",
+      "namespace_path": [
+        "metrics"
+      ],
+      "parameters": [
+        {
+          "api_name": "MetricId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "metric_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "Item",
+          "description": "Body parameter migrated from the previous Golden SDK.",
           "location": "body",
           "python_name": "json_body",
           "required": true,
-          "type_display": "Mapping[str, Any]"
+          "type_display": "dict[str, Any] | list[Any]"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/models/available/to/site",
+      "route": "/api/v1.0/metrics/{metric_id}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.models`.",
+      "summary": "Migrated Silver route for POST /metrics/{MetricId}.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.metrics.update_metric_type` (operationId `Sla_UpdateMetricType`).",
       "http_method": "POST",
-      "method_name": "post_endpoint",
+      "method_name": "update_metric_type",
       "namespace_path": [
-        "models"
+        "metrics"
       ],
       "parameters": [
         {
-          "api_name": "$filter",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "filter",
-          "required": false,
+          "api_name": "MetricTypeId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "metric_type_id",
+          "required": true,
           "type_display": "str"
         },
         {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": false,
-          "type_display": "int"
-        },
-        {
-          "api_name": "$v",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "v",
-          "required": false,
-          "type_display": "int"
-        },
-        {
-          "api_name": "json_body",
-          "description": "Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema.",
+          "api_name": "Item",
+          "description": "Body parameter migrated from the previous Golden SDK.",
           "location": "body",
           "python_name": "json_body",
           "required": true,
-          "type_display": "Mapping[str, Any]"
+          "type_display": "dict[str, Any] | list[Any]"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/models",
+      "route": "/api/v1.0/metrics/types/{metric_type_id}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.models`.",
+      "summary": "Migrated Silver route for POST /metrics/types/{MetricTypeId}.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Queries the system for any notifications based on submitted request parameters\n#### Sample request:\n```\nPOST /api/v1.0/notifications\n{\n  \"IncludeRead\": true,\n  \"IncludeArchived\": true,\n  \"IncludeUnarchived\": true\n}\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.get_notifications` (operationId `Notification_GetNotifications`).",
+      "http_method": "POST",
+      "method_name": "get_notifications",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [
+        {
+          "api_name": "RequestInfo",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Query notifications",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### For a specific, single ticket query the system for all related emails\n#### Sample request:\n```\nGET /api/v1.0/notifications/emails/for/ticket/ac6cece8-e4f4-e511-a789-005056bb000e\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.get_ticket_emails` (operationId `Notification_GetTicketEmails`).",
+      "http_method": "GET",
+      "method_name": "get_ticket_emails",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [
+        {
+          "api_name": "TicketId",
+          "description": "Ticket ID of the record to query",
+          "location": "path",
+          "python_name": "ticket_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications/emails/for/ticket/{ticket_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get emails for ticket",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Queries the system for any unarchived notifications\n#### Sample request:\n```\nGET /api/v1.0/notifications/unarchived\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.get_unarchived_notifications` (operationId `Notification_GetUnarchivedNotifications`).",
+      "http_method": "GET",
+      "method_name": "get_unarchived_notifications",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications/unarchived",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get unarchived",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Queries the system for any unread notifications\n#### Sample request:\n```\nGET /api/v1.0/notifications/unread\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.get_unread_notifications` (operationId `Notification_GetUnreadNotifications`).",
+      "http_method": "GET",
+      "method_name": "get_unread_notifications",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications/unread",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get unread",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Marks all notifications that are not yet marked \"archived\" as \"archived\"\n#### Sample request:\n```\nPOST /api/v1.0/notifications/all-archive\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.mark_all_notifications_archived` (operationId `Notification_MarkAllNotificationsArchived`).",
+      "http_method": "POST",
+      "method_name": "mark_all_notifications_archived",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications/all-archive",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Mark all notification as archived",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Marks all notifications that are not yet marked \"read\" as \"read\"\n#### Sample request:\n```\nPOST /api/v1.0/notifications/all-read\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.mark_all_notifications_read` (operationId `Notification_MarkAllNotificationsRead`).",
+      "http_method": "POST",
+      "method_name": "mark_all_notifications_read",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications/all-read",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Mark all notification as read",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Marks a provided single notification as \"archived\"\n#### Sample request:\n```\nPOST /api/v1.0/notifications/ac6cece8-e4f4-e511-a789-005056bb000e/archive\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.mark_notification_archived` (operationId `Notification_MarkNotificationArchived`).",
+      "http_method": "POST",
+      "method_name": "mark_notification_archived",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [
+        {
+          "api_name": "NotificationId",
+          "description": "Notification ID of the record to modify",
+          "location": "path",
+          "python_name": "notification_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications/{notification_id}/archive",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Mark notification as archived",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Marks a provided single notification as \"read\"\n#### Sample request:\n```\nPOST /api/v1.0/notifications/ac6cece8-e4f4-e511-a789-005056bb000e/read\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.notifications.mark_notification_read` (operationId `Notification_MarkNotificationRead`).",
+      "http_method": "POST",
+      "method_name": "mark_notification_read",
+      "namespace_path": [
+        "notifications"
+      ],
+      "parameters": [
+        {
+          "api_name": "NotificationId",
+          "description": "Notification ID of the record to modify",
+          "location": "path",
+          "python_name": "notification_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/notifications/{notification_id}/read",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Mark notification as read",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Delete a specific Part\n#### Sample request:\n```\nDELETE /api/v1.0/parts/c94f81dc-8fae-4e82-8014-b5e5b5e86575\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.delete_part` (operationId `Part_DeletePart`).",
+      "http_method": "DELETE",
+      "method_name": "delete_part",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [
+        {
+          "api_name": "PartId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "part_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts/{part_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Delete a Part",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Delete a specific part supplier.\n#### Sample request:\n```\nDELETE /api/v1.0/parts/suppliers/e67018f1-3815-449c-a09f-e66dc6b83202\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.delete_part_supplier` (operationId `Part_DeletePartSupplier`).",
+      "http_method": "DELETE",
+      "method_name": "delete_part_supplier",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [
+        {
+          "api_name": "PartSupplierId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "part_supplier_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts/suppliers/{part_supplier_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Delete a Part Supplier",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieve a specific Part based on PartID\n#### Sample request:\n```\nGET /api/v1.0/parts/bbfdf941-7bbe-4cc2-a9d7-9b7fbeed2358\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.get_part` (operationId `Part_GetPart`).",
+      "http_method": "GET",
+      "method_name": "get_part",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [
+        {
+          "api_name": "PartId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "part_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts/{part_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Part",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieve a specific part supplier on PartSupplierId\n#### Sample request:\n```\nGET /api/v1.0/parts/suppliers/0baa50cf-2037-43a4-9b64-391737f58d41\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.get_part_supplier` (operationId `Part_GetPartSupplier`).",
+      "http_method": "GET",
+      "method_name": "get_part_supplier",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [
+        {
+          "api_name": "PartSupplierId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "part_supplier_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts/suppliers/{part_supplier_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Part Supplier",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of parts suppliers. A specific location type via GET `api/v1.0/parts/suppliers/{PartSupplierId:guid}`.\n#### Sample request:\n```\nGET /api/v1.0/parts/suppliers\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.get_part_suppliers` (operationId `Part_GetPartSuppliers`).",
+      "http_method": "GET",
+      "method_name": "get_part_suppliers",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts/suppliers",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Part Suppliers",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of parts. A specific part can be retrieved via GET `api/v1.0/parts/{PartId:guid}`.\n#### Sample request:\n```\nGET /api/v1.0/parts\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.get_parts` (operationId `Part_GetParts`).",
+      "http_method": "GET",
+      "method_name": "get_parts",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Parts",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.update_part` (operationId `Part_UpdatePart`).",
+      "http_method": "POST",
+      "method_name": "update_part",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [
+        {
+          "api_name": "PartId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "part_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "Part",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts/{part_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for POST /parts/{PartId}.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.parts.update_part_supplier` (operationId `Part_UpdatePartSupplier`).",
+      "http_method": "POST",
+      "method_name": "update_part_supplier",
+      "namespace_path": [
+        "parts"
+      ],
+      "parameters": [
+        {
+          "api_name": "PartSupplierId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "part_supplier_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "PartSupplier",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/parts/suppliers/{part_supplier_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for POST /parts/suppliers/{PartSupplierId}.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -3979,6 +4905,121 @@
         200
       ],
       "summary": "HAR-derived undocumented POST route for `client.silver.profiles`.",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Delete a specific purchase order.\n#### Sample request:\n```\nDELETE /api/v1.0/purchaseorders/b199f092-e1a9-418b-8eef-f6e44e273539\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.purchaseorders.delete_purchase_order` (operationId `Part_DeletePurchaseOrder`).",
+      "http_method": "DELETE",
+      "method_name": "delete_purchase_order",
+      "namespace_path": [
+        "purchaseorders"
+      ],
+      "parameters": [
+        {
+          "api_name": "PurchaseOrderId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "purchase_order_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/purchaseorders/{purchase_order_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Delete a Purchase Order",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieve a specific purchase order with a specific PurchaseOrderId\n#### Sample request:\n```\nGET /api/v1.0/purchaseorders/b199f092-e1a9-418b-8eef-f6e44e273539\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.purchaseorders.get_purchase_order` (operationId `Part_GetPurchaseOrder`).",
+      "http_method": "GET",
+      "method_name": "get_purchase_order",
+      "namespace_path": [
+        "purchaseorders"
+      ],
+      "parameters": [
+        {
+          "api_name": "PurchaseOrderId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "purchase_order_id",
+          "required": true,
+          "type_display": "str"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/purchaseorders/{purchase_order_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Purchase Order",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "#### Retrieves a list of purchase orders. A specific purchase order can be retrieved via GET `api/v1.0/purchaseorders/{PurchaseOrderId:guid}`.\n#### Sample request:\n```\nGET /api/v1.0/purchaseorders\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.purchaseorders.get_purchase_orders` (operationId `Part_GetPurchaseOrders`).",
+      "http_method": "GET",
+      "method_name": "get_purchase_orders",
+      "namespace_path": [
+        "purchaseorders"
+      ],
+      "parameters": [],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/purchaseorders",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Get Purchase Orders",
+      "typed_return": "dict[str, Any] | list[Any] | None",
+      "uses_app_headers": false
+    },
+    {
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.purchaseorders.update_purchase_order` (operationId `Part_UpdatePurchaseOrder`).",
+      "http_method": "POST",
+      "method_name": "update_purchase_order",
+      "namespace_path": [
+        "purchaseorders"
+      ],
+      "parameters": [
+        {
+          "api_name": "PurchaseOrderId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "purchase_order_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "PurchaseOrder",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
+        }
+      ],
+      "raw_return": "dict[str, Any] | list[Any] | None",
+      "route": "/api/v1.0/purchaseorders/{purchase_order_id}",
+      "sources": [
+        "migrated_from_golden_stoplight"
+      ],
+      "status_codes": [
+        200
+      ],
+      "summary": "Migrated Silver route for POST /purchaseorders/{PurchaseOrderId}.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -4564,128 +5605,76 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "#### Retrieve a specific SLA  by SlaId\n#### Sample request:\n```\nGET /api/v1.0/slas/{SlaId:guid}\n```\n\nMigrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.slas.get_sla` (operationId `Sla_GetSla`).",
       "http_method": "GET",
-      "method_name": "get_deployments",
+      "method_name": "get_sla",
       "namespace_path": [
-        "sites"
+        "slas"
       ],
-      "parameters": [],
+      "parameters": [
+        {
+          "api_name": "SlaId",
+          "description": "SlaId of SLA being requested",
+          "location": "path",
+          "python_name": "sla_id",
+          "required": true,
+          "type_display": "str"
+        },
+        {
+          "api_name": "r",
+          "description": "Request Options specified for the SlaId",
+          "location": "query",
+          "python_name": "r",
+          "required": true,
+          "type_display": "Any"
+        }
+      ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/sites/deployments",
+      "route": "/api/v1.0/slas/{sla_id}",
       "sources": [
-        "Chromebook-asset-actions.har",
-        "apple-asset-actions.har",
-        "demo.incidentiq.com.har",
-        "windows-asset-intune-actions.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.sites`.",
+      "summary": "Get SLA",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.slas.update_sla` (operationId `Sla_UpdateSla`).",
       "http_method": "POST",
-      "method_name": "post_roles",
+      "method_name": "update_sla",
       "namespace_path": [
-        "sites"
+        "slas"
       ],
       "parameters": [
         {
-          "api_name": "$filter",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "filter",
-          "required": false,
+          "api_name": "SlaId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
+          "location": "path",
+          "python_name": "sla_id",
+          "required": true,
           "type_display": "str"
         },
         {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": false,
-          "type_display": "int"
-        },
-        {
-          "api_name": "$v",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "v",
-          "required": false,
-          "type_display": "int"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/sites/roles",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.sites`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_subtask",
-      "namespace_path": [
-        "subtasks"
-      ],
-      "parameters": [
-        {
-          "api_name": "subtask_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "subtask_id",
+          "api_name": "Item",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
           "required": true,
-          "type_display": "str"
+          "type_display": "dict[str, Any] | list[Any]"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/subtasks/{subtask_id}",
+      "route": "/api/v1.0/slas/{sla_id}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.subtasks`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_responses_ticket",
-      "namespace_path": [
-        "surveys"
-      ],
-      "parameters": [
-        {
-          "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "ticket_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/surveys/responses/ticket/{ticket_id}",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.surveys`.",
+      "summary": "Migrated Silver route for POST /slas/{SlaId}.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -4721,43 +5710,6 @@
     {
       "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
-      "method_name": "get_endpoint",
-      "namespace_path": [
-        "teams"
-      ],
-      "parameters": [
-        {
-          "api_name": "$filter",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "filter",
-          "required": true,
-          "type_display": "str"
-        },
-        {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/teams",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.teams`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
       "method_name": "get_for_",
       "namespace_path": [
         "teams"
@@ -4781,122 +5733,6 @@
         200
       ],
       "summary": "HAR-derived undocumented GET route for `client.silver.teams`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_ticket_activities",
-      "namespace_path": [
-        "tickets"
-      ],
-      "parameters": [
-        {
-          "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "ticket_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/tickets/{ticket_id}/activities",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.tickets`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_ticket_kb_articles",
-      "namespace_path": [
-        "tickets"
-      ],
-      "parameters": [
-        {
-          "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "ticket_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/tickets/{ticket_id}/kb-articles",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.tickets`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_ticket_next_steps",
-      "namespace_path": [
-        "tickets"
-      ],
-      "parameters": [
-        {
-          "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "ticket_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/tickets/{ticket_id}/next-steps",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.tickets`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_ticket_status",
-      "namespace_path": [
-        "tickets"
-      ],
-      "parameters": [
-        {
-          "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "ticket_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/tickets/{ticket_id}/status",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.tickets`.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -4935,80 +5771,6 @@
         200
       ],
       "summary": "HAR-derived undocumented GET route for `client.silver.tickets`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_endpoint",
-      "namespace_path": [
-        "tickets"
-      ],
-      "parameters": [
-        {
-          "api_name": "$o",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "o",
-          "required": true,
-          "type_display": "str"
-        },
-        {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        },
-        {
-          "api_name": "json_body",
-          "description": "Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema.",
-          "location": "body",
-          "python_name": "json_body",
-          "required": true,
-          "type_display": "Mapping[str, Any]"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/tickets",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.tickets`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "POST",
-      "method_name": "post_ticket_timeline",
-      "namespace_path": [
-        "tickets"
-      ],
-      "parameters": [
-        {
-          "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "ticket_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/tickets/{ticket_id}/timeline",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented POST route for `client.silver.tickets`.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     },
@@ -5059,170 +5821,6 @@
     },
     {
       "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_my_shortcuts",
-      "namespace_path": [
-        "users"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/users/my/shortcuts",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.users`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_shortcuts_available",
-      "namespace_path": [
-        "users"
-      ],
-      "parameters": [],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/users/shortcuts/available",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.users`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_simple",
-      "namespace_path": [
-        "users"
-      ],
-      "parameters": [
-        {
-          "api_name": "simple_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "simple_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/users/simple/{simple_id}",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.users`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_user_options",
-      "namespace_path": [
-        "users"
-      ],
-      "parameters": [
-        {
-          "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "user_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/users/{user_id}/options",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.users`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_user_relationships",
-      "namespace_path": [
-        "users"
-      ],
-      "parameters": [
-        {
-          "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "user_id",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/users/{user_id}/relationships",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.users`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_user_rooms",
-      "namespace_path": [
-        "users"
-      ],
-      "parameters": [
-        {
-          "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "user_id",
-          "required": true,
-          "type_display": "str"
-        },
-        {
-          "api_name": "$s",
-          "description": "Query parameter inferred from HAR observations for this undocumented Silver route.",
-          "location": "query",
-          "python_name": "s",
-          "required": true,
-          "type_display": "int"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/users/{user_id}/rooms",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.users`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_is_online_list",
       "namespace_path": [
@@ -5254,60 +5852,39 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_view",
+      "description": "Migrated from the previous Golden SDK. The published Golden OpenAPI contract no longer documents this route, so it moved to the Silver surface to preserve access. Previously `client.users.update_user_view` (operationId `View_UpdateUserView`).",
+      "http_method": "POST",
+      "method_name": "update_user_view",
       "namespace_path": [
-        "views"
+        "users"
       ],
       "parameters": [
         {
-          "api_name": "view_key",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
-          "location": "path",
-          "python_name": "view_key",
-          "required": true,
-          "type_display": "str"
-        }
-      ],
-      "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/views/{view_key}",
-      "sources": [
-        "demo.incidentiq.com.har"
-      ],
-      "status_codes": [
-        200
-      ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.views`.",
-      "typed_return": "dict[str, Any] | list[Any] | None",
-      "uses_app_headers": false
-    },
-    {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
-      "http_method": "GET",
-      "method_name": "get_view_2",
-      "namespace_path": [
-        "views"
-      ],
-      "parameters": [
-        {
-          "api_name": "view_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "api_name": "ViewId",
+          "description": "Path parameter migrated from the previous Golden SDK.",
           "location": "path",
           "python_name": "view_id",
           "required": true,
           "type_display": "str"
+        },
+        {
+          "api_name": "UserView",
+          "description": "Body parameter migrated from the previous Golden SDK.",
+          "location": "body",
+          "python_name": "json_body",
+          "required": true,
+          "type_display": "dict[str, Any] | list[Any]"
         }
       ],
       "raw_return": "dict[str, Any] | list[Any] | None",
-      "route": "/api/v1.0/views/{view_id}",
+      "route": "/api/v1.0/users/views/{view_id}",
       "sources": [
-        "demo.incidentiq.com.har"
+        "migrated_from_golden_stoplight"
       ],
       "status_codes": [
         200
       ],
-      "summary": "HAR-derived undocumented GET route for `client.silver.views`.",
+      "summary": "Migrated Silver route for POST /users/views/{ViewId}.",
       "typed_return": "dict[str, Any] | list[Any] | None",
       "uses_app_headers": false
     }

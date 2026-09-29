@@ -1,0 +1,1042 @@
+{
+  "aliases": [
+    {
+      "legacy_name": "queue_notification",
+      "legacy_namespace": "alerts",
+      "legacy_operation_id": "Alerts_QueueNotification",
+      "surface": "silver",
+      "target_name": "queue_notification",
+      "target_namespace": "alerts",
+      "target_operation_id": "Alerts_QueueNotification"
+    },
+    {
+      "legacy_name": "get_asset_counts_by_verification_location",
+      "legacy_namespace": "analytics",
+      "legacy_operation_id": "Analytics_GetAssetCountsByVerificationLocation",
+      "surface": "golden",
+      "target_name": "get_asset_verification_counts_by_location",
+      "target_namespace": "analytics",
+      "target_operation_id": "getAssetVerificationCountsByLocation"
+    },
+    {
+      "legacy_name": "get_asset_counts_by_verification_type",
+      "legacy_namespace": "analytics",
+      "legacy_operation_id": "Analytics_GetAssetCountsByVerificationType",
+      "surface": "golden",
+      "target_name": "get_asset_verification_counts_by_type",
+      "target_namespace": "analytics",
+      "target_operation_id": "getAssetVerificationCountsByType"
+    },
+    {
+      "legacy_name": "get_report",
+      "legacy_namespace": "analytics",
+      "legacy_operation_id": "Analytics_GetReport",
+      "surface": "silver",
+      "target_name": "get_report",
+      "target_namespace": "analytics",
+      "target_operation_id": "Analytics_GetReport"
+    },
+    {
+      "legacy_name": "get_report_elements",
+      "legacy_namespace": "analytics",
+      "legacy_operation_id": "Analytics_GetReportElements",
+      "surface": "silver",
+      "target_name": "get_report_elements",
+      "target_namespace": "analytics",
+      "target_operation_id": "Analytics_GetReportElements"
+    },
+    {
+      "legacy_name": "get_report_queries",
+      "legacy_namespace": "analytics",
+      "legacy_operation_id": "Analytics_GetReportQueries",
+      "surface": "silver",
+      "target_name": "get_report_queries",
+      "target_namespace": "analytics",
+      "target_operation_id": "Analytics_GetReportQueries"
+    },
+    {
+      "legacy_name": "get_reports",
+      "legacy_namespace": "analytics",
+      "legacy_operation_id": "Analytics_GetReports",
+      "surface": "silver",
+      "target_name": "get_reports",
+      "target_namespace": "analytics",
+      "target_operation_id": "Analytics_GetReports"
+    },
+    {
+      "legacy_name": "add_manufacturer_to_site2",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Manufacturer_AddManufacturerToSite2",
+      "surface": "silver",
+      "target_name": "add_manufacturer_to_site2",
+      "target_namespace": "assets",
+      "target_operation_id": "Manufacturer_AddManufacturerToSite2"
+    },
+    {
+      "legacy_name": "add_user_favorite_asset",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_AddUserFavoriteAsset",
+      "surface": "golden",
+      "target_name": "add_asset_favorite",
+      "target_namespace": "assets",
+      "target_operation_id": "addAssetFavorite"
+    },
+    {
+      "legacy_name": "create_asset_status_type",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetStatusType_CreateAssetStatusType",
+      "surface": "silver",
+      "target_name": "create_asset_status_type",
+      "target_namespace": "assets",
+      "target_operation_id": "AssetStatusType_CreateAssetStatusType"
+    },
+    {
+      "legacy_name": "delete_asset_funding_type",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetFundingType_DeleteAssetFundingType",
+      "surface": "silver",
+      "target_name": "delete_asset_funding_type",
+      "target_namespace": "assets",
+      "target_operation_id": "AssetFundingType_DeleteAssetFundingType"
+    },
+    {
+      "legacy_name": "delete_asset_status_type",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetStatusType_DeleteAssetStatusType",
+      "surface": "silver",
+      "target_name": "delete_asset_status_type",
+      "target_namespace": "assets",
+      "target_operation_id": "AssetStatusType_DeleteAssetStatusType"
+    },
+    {
+      "legacy_name": "get_asset",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAsset",
+      "surface": "golden",
+      "target_name": "get_asset_by_id",
+      "target_namespace": "assets",
+      "target_operation_id": "getAssetById"
+    },
+    {
+      "legacy_name": "get_asset_favorites",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetFavorites",
+      "surface": "golden",
+      "target_name": "get_user_favorite_assets",
+      "target_namespace": "assets",
+      "target_operation_id": "getUserFavoriteAssets"
+    },
+    {
+      "legacy_name": "get_asset_favorites2",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetFavorites2",
+      "surface": "silver",
+      "target_name": "get_asset_favorites2",
+      "target_namespace": "assets",
+      "target_operation_id": "Asset_GetAssetFavorites2"
+    },
+    {
+      "legacy_name": "get_asset_funding_type",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetFundingType_GetAssetFundingType",
+      "surface": "silver",
+      "target_name": "get_asset_funding_type",
+      "target_namespace": "assets",
+      "target_operation_id": "AssetFundingType_GetAssetFundingType"
+    },
+    {
+      "legacy_name": "get_asset_funding_types",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetFundingType_GetAssetFundingTypes",
+      "surface": "golden",
+      "target_name": "list_asset_funding_types",
+      "target_namespace": "assets",
+      "target_operation_id": "listAssetFundingTypes"
+    },
+    {
+      "legacy_name": "get_asset_funding_types2",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetFundingType_GetAssetFundingTypes2",
+      "surface": "silver",
+      "target_name": "get_asset_funding_types2",
+      "target_namespace": "assets",
+      "target_operation_id": "AssetFundingType_GetAssetFundingTypes2"
+    },
+    {
+      "legacy_name": "get_asset_status_types",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetStatusType_GetAssetStatusTypes",
+      "surface": "golden",
+      "target_name": "list_asset_status_types",
+      "target_namespace": "assets",
+      "target_operation_id": "listAssetStatusTypes"
+    },
+    {
+      "legacy_name": "get_asset_status_types2",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetStatusType_GetAssetStatusTypes2",
+      "surface": "golden",
+      "target_name": "list_asset_status_types_post",
+      "target_namespace": "assets",
+      "target_operation_id": "listAssetStatusTypesPost"
+    },
+    {
+      "legacy_name": "get_assets",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssets",
+      "surface": "golden",
+      "target_name": "search_assets",
+      "target_namespace": "assets",
+      "target_operation_id": "searchAssets"
+    },
+    {
+      "legacy_name": "get_assets_by_asset_status_type",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetsByAssetStatusType",
+      "surface": "silver",
+      "target_name": "get_assets_by_asset_status_type",
+      "target_namespace": "assets",
+      "target_operation_id": "Asset_GetAssetsByAssetStatusType"
+    },
+    {
+      "legacy_name": "get_assets_by_asset_tag",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetsByAssetTag",
+      "surface": "silver",
+      "target_name": "get_assets_by_asset_tag",
+      "target_namespace": "assets",
+      "target_operation_id": "Asset_GetAssetsByAssetTag"
+    },
+    {
+      "legacy_name": "get_assets_by_location_room",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetsByLocationRoom",
+      "surface": "golden",
+      "target_name": "list_assets_by_room",
+      "target_namespace": "assets",
+      "target_operation_id": "listAssetsByRoom"
+    },
+    {
+      "legacy_name": "get_assets_by_serial",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetsBySerial",
+      "surface": "golden",
+      "target_name": "get_asset_by_serial",
+      "target_namespace": "assets",
+      "target_operation_id": "getAssetBySerial"
+    },
+    {
+      "legacy_name": "get_assets_by_storage_unit_number",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetsByStorageUnitNumber",
+      "surface": "golden",
+      "target_name": "list_assets_by_storage_unit",
+      "target_namespace": "assets",
+      "target_operation_id": "listAssetsByStorageUnit"
+    },
+    {
+      "legacy_name": "get_assets_count",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetAssetsCount",
+      "surface": "golden",
+      "target_name": "count_assets",
+      "target_namespace": "assets",
+      "target_operation_id": "countAssets"
+    },
+    {
+      "legacy_name": "get_global_manufacturers2",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Manufacturer_GetGlobalManufacturers2",
+      "surface": "golden",
+      "target_name": "search_global_manufacturers",
+      "target_namespace": "assets",
+      "target_operation_id": "searchGlobalManufacturers"
+    },
+    {
+      "legacy_name": "get_manufacturer",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Manufacturer_GetManufacturer",
+      "surface": "golden",
+      "target_name": "get_manufacturer_by_id",
+      "target_namespace": "assets",
+      "target_operation_id": "getManufacturerById"
+    },
+    {
+      "legacy_name": "get_spare_assets_by_asset_tag",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetSpareAssetsByAssetTag",
+      "surface": "silver",
+      "target_name": "get_spare_assets_by_asset_tag",
+      "target_namespace": "assets",
+      "target_operation_id": "Asset_GetSpareAssetsByAssetTag"
+    },
+    {
+      "legacy_name": "get_user_assets",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetUserAssets",
+      "surface": "golden",
+      "target_name": "get_assets_for_user_current",
+      "target_namespace": "assets",
+      "target_operation_id": "getAssetsForUserCurrent"
+    },
+    {
+      "legacy_name": "get_user_assets2",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_GetUserAssets2",
+      "surface": "silver",
+      "target_name": "get_user_assets2",
+      "target_namespace": "assets",
+      "target_operation_id": "Asset_GetUserAssets2"
+    },
+    {
+      "legacy_name": "remove_user_favorite_asset",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_RemoveUserFavoriteAsset",
+      "surface": "golden",
+      "target_name": "remove_asset_favorite",
+      "target_namespace": "assets",
+      "target_operation_id": "removeAssetFavorite"
+    },
+    {
+      "legacy_name": "search_assets_by_asset_tag",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "Asset_SearchAssetsByAssetTag",
+      "surface": "silver",
+      "target_name": "search_assets_by_asset_tag",
+      "target_namespace": "assets",
+      "target_operation_id": "Asset_SearchAssetsByAssetTag"
+    },
+    {
+      "legacy_name": "update_asset_funding_type",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetFundingType_UpdateAssetFundingType",
+      "surface": "silver",
+      "target_name": "update_asset_funding_type",
+      "target_namespace": "assets",
+      "target_operation_id": "AssetFundingType_UpdateAssetFundingType"
+    },
+    {
+      "legacy_name": "update_asset_status_type",
+      "legacy_namespace": "assets",
+      "legacy_operation_id": "AssetStatusType_UpdateAssetStatusType",
+      "surface": "silver",
+      "target_name": "update_asset_status_type",
+      "target_namespace": "assets",
+      "target_operation_id": "AssetStatusType_UpdateAssetStatusType"
+    },
+    {
+      "legacy_name": "delete_custom_fields",
+      "legacy_namespace": "custom_fields",
+      "legacy_operation_id": "CustomField_DeleteCustomFields",
+      "surface": "silver",
+      "target_name": "delete_custom_fields",
+      "target_namespace": "custom_fields",
+      "target_operation_id": "CustomField_DeleteCustomFields"
+    },
+    {
+      "legacy_name": "get_custom_field",
+      "legacy_namespace": "custom_fields",
+      "legacy_operation_id": "CustomField_GetCustomField",
+      "surface": "golden",
+      "target_name": "get_custom_field_by_id",
+      "target_namespace": "custom_fields",
+      "target_operation_id": "getCustomFieldById"
+    },
+    {
+      "legacy_name": "get_custom_field_type",
+      "legacy_namespace": "custom_fields",
+      "legacy_operation_id": "CustomField_GetCustomFieldType",
+      "surface": "golden",
+      "target_name": "get_custom_field_type_by_id",
+      "target_namespace": "custom_fields",
+      "target_operation_id": "getCustomFieldTypeById"
+    },
+    {
+      "legacy_name": "get_custom_field_types",
+      "legacy_namespace": "custom_fields",
+      "legacy_operation_id": "CustomField_GetCustomFieldTypes",
+      "surface": "golden",
+      "target_name": "list_custom_field_types",
+      "target_namespace": "custom_fields",
+      "target_operation_id": "listCustomFieldTypes"
+    },
+    {
+      "legacy_name": "get_custom_field_types2",
+      "legacy_namespace": "custom_fields",
+      "legacy_operation_id": "CustomField_GetCustomFieldTypes2",
+      "surface": "golden",
+      "target_name": "search_custom_field_types",
+      "target_namespace": "custom_fields",
+      "target_operation_id": "searchCustomFieldTypes"
+    },
+    {
+      "legacy_name": "get_custom_fields",
+      "legacy_namespace": "custom_fields",
+      "legacy_operation_id": "CustomField_GetCustomFields",
+      "surface": "silver",
+      "target_name": "get_custom_fields",
+      "target_namespace": "custom_fields",
+      "target_operation_id": "CustomField_GetCustomFields"
+    },
+    {
+      "legacy_name": "get_custom_fields2",
+      "legacy_namespace": "custom_fields",
+      "legacy_operation_id": "CustomField_GetCustomFields2",
+      "surface": "golden",
+      "target_name": "search_custom_fields",
+      "target_namespace": "custom_fields",
+      "target_operation_id": "searchCustomFields"
+    },
+    {
+      "legacy_name": "submit_form",
+      "legacy_namespace": "forms",
+      "legacy_operation_id": "Form_SubmitForm",
+      "surface": "silver",
+      "target_name": "submit_form",
+      "target_namespace": "forms",
+      "target_operation_id": "Form_SubmitForm"
+    },
+    {
+      "legacy_name": "get_issue",
+      "legacy_namespace": "issues",
+      "legacy_operation_id": "Issue_GetIssue",
+      "surface": "golden",
+      "target_name": "get_issue_by_id",
+      "target_namespace": "issues",
+      "target_operation_id": "getIssueById"
+    },
+    {
+      "legacy_name": "get_issue_type",
+      "legacy_namespace": "issues",
+      "legacy_operation_id": "Issue_GetIssueType",
+      "surface": "golden",
+      "target_name": "get_issue_type_by_id",
+      "target_namespace": "issues",
+      "target_operation_id": "getIssueTypeById"
+    },
+    {
+      "legacy_name": "get_issue_types",
+      "legacy_namespace": "issues",
+      "legacy_operation_id": "Issue_GetIssueTypes",
+      "surface": "golden",
+      "target_name": "search_issue_types",
+      "target_namespace": "issues",
+      "target_operation_id": "searchIssueTypes"
+    },
+    {
+      "legacy_name": "get_issue_types_simple",
+      "legacy_namespace": "issues",
+      "legacy_operation_id": "Issue_GetIssueTypesSimple",
+      "surface": "golden",
+      "target_name": "list_issue_types",
+      "target_namespace": "issues",
+      "target_operation_id": "listIssueTypes"
+    },
+    {
+      "legacy_name": "delete_location",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_DeleteLocation",
+      "surface": "silver",
+      "target_name": "delete_location",
+      "target_namespace": "locations",
+      "target_operation_id": "Location_DeleteLocation"
+    },
+    {
+      "legacy_name": "get_all_location_rooms",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_GetAllLocationRooms",
+      "surface": "silver",
+      "target_name": "get_all_location_rooms",
+      "target_namespace": "locations",
+      "target_operation_id": "Location_GetAllLocationRooms"
+    },
+    {
+      "legacy_name": "get_location",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_GetLocation",
+      "surface": "golden",
+      "target_name": "get_location_by_id_v2",
+      "target_namespace": "locations",
+      "target_operation_id": "getLocationByIdV2"
+    },
+    {
+      "legacy_name": "get_location_room",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_GetLocationRoom",
+      "surface": "golden",
+      "target_name": "get_location_room_by_id",
+      "target_namespace": "locations",
+      "target_operation_id": "getLocationRoomById"
+    },
+    {
+      "legacy_name": "get_location_rooms",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_GetLocationRooms",
+      "surface": "silver",
+      "target_name": "get_location_rooms",
+      "target_namespace": "locations",
+      "target_operation_id": "Location_GetLocationRooms"
+    },
+    {
+      "legacy_name": "get_location_type",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_GetLocationType",
+      "surface": "silver",
+      "target_name": "get_location_type",
+      "target_namespace": "locations",
+      "target_operation_id": "Location_GetLocationType"
+    },
+    {
+      "legacy_name": "get_location_types",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_GetLocationTypes",
+      "surface": "silver",
+      "target_name": "get_location_types",
+      "target_namespace": "locations",
+      "target_operation_id": "Location_GetLocationTypes"
+    },
+    {
+      "legacy_name": "get_locations",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_GetLocations",
+      "surface": "golden",
+      "target_name": "get_all_site_locations_v2",
+      "target_namespace": "locations",
+      "target_operation_id": "getAllSiteLocationsV2"
+    },
+    {
+      "legacy_name": "update_location",
+      "legacy_namespace": "locations",
+      "legacy_operation_id": "Location_UpdateLocation",
+      "surface": "silver",
+      "target_name": "update_location",
+      "target_namespace": "locations",
+      "target_operation_id": "Location_UpdateLocation"
+    },
+    {
+      "legacy_name": "add_manufacturer_to_site3",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_AddManufacturerToSite3",
+      "surface": "silver",
+      "target_name": "add_manufacturer_to_site3",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_AddManufacturerToSite3"
+    },
+    {
+      "legacy_name": "add_manufacturer_to_site4",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_AddManufacturerToSite4",
+      "surface": "silver",
+      "target_name": "add_manufacturer_to_site4",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_AddManufacturerToSite4"
+    },
+    {
+      "legacy_name": "delete_manufacturer2",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_DeleteManufacturer2",
+      "surface": "silver",
+      "target_name": "delete_manufacturer2",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_DeleteManufacturer2"
+    },
+    {
+      "legacy_name": "get_global_manufacturers3",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_GetGlobalManufacturers3",
+      "surface": "silver",
+      "target_name": "get_global_manufacturers3",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_GetGlobalManufacturers3"
+    },
+    {
+      "legacy_name": "get_global_manufacturers4",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_GetGlobalManufacturers4",
+      "surface": "silver",
+      "target_name": "get_global_manufacturers4",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_GetGlobalManufacturers4"
+    },
+    {
+      "legacy_name": "get_manufacturer2",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_GetManufacturer2",
+      "surface": "silver",
+      "target_name": "get_manufacturer2",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_GetManufacturer2"
+    },
+    {
+      "legacy_name": "remove_manufacturer_from_site2",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_RemoveManufacturerFromSite2",
+      "surface": "silver",
+      "target_name": "remove_manufacturer_from_site2",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_RemoveManufacturerFromSite2"
+    },
+    {
+      "legacy_name": "update_manufacturer2",
+      "legacy_namespace": "manufacturers",
+      "legacy_operation_id": "Manufacturer_UpdateManufacturer2",
+      "surface": "silver",
+      "target_name": "update_manufacturer2",
+      "target_namespace": "manufacturers",
+      "target_operation_id": "Manufacturer_UpdateManufacturer2"
+    },
+    {
+      "legacy_name": "delete_metric",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_DeleteMetric",
+      "surface": "golden",
+      "target_name": "delete_metric_metrics",
+      "target_namespace": "metrics",
+      "target_operation_id": "deleteMetricMetrics"
+    },
+    {
+      "legacy_name": "delete_metric_type",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_DeleteMetricType",
+      "surface": "silver",
+      "target_name": "delete_metric_type",
+      "target_namespace": "metrics",
+      "target_operation_id": "Sla_DeleteMetricType"
+    },
+    {
+      "legacy_name": "get_metric",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_GetMetric",
+      "surface": "silver",
+      "target_name": "get_metric",
+      "target_namespace": "metrics",
+      "target_operation_id": "Sla_GetMetric"
+    },
+    {
+      "legacy_name": "get_metric_type",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_GetMetricType",
+      "surface": "golden",
+      "target_name": "get_metric_by_id",
+      "target_namespace": "metrics",
+      "target_operation_id": "getMetricById"
+    },
+    {
+      "legacy_name": "get_metric_types",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_GetMetricTypes",
+      "surface": "golden",
+      "target_name": "list_metrics",
+      "target_namespace": "metrics",
+      "target_operation_id": "listMetrics"
+    },
+    {
+      "legacy_name": "get_metrics",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_GetMetrics",
+      "surface": "golden",
+      "target_name": "list_metric_metrics",
+      "target_namespace": "metrics",
+      "target_operation_id": "listMetricMetrics"
+    },
+    {
+      "legacy_name": "get_metrics_for_sla",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_GetMetricsForSla",
+      "surface": "silver",
+      "target_name": "get_metrics_for_sla",
+      "target_namespace": "metrics",
+      "target_operation_id": "Sla_GetMetricsForSla"
+    },
+    {
+      "legacy_name": "update_metric",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_UpdateMetric",
+      "surface": "silver",
+      "target_name": "update_metric",
+      "target_namespace": "metrics",
+      "target_operation_id": "Sla_UpdateMetric"
+    },
+    {
+      "legacy_name": "update_metric_type",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_UpdateMetricType",
+      "surface": "silver",
+      "target_name": "update_metric_type",
+      "target_namespace": "metrics",
+      "target_operation_id": "Sla_UpdateMetricType"
+    },
+    {
+      "legacy_name": "update_metrics_for_sla",
+      "legacy_namespace": "metrics",
+      "legacy_operation_id": "Sla_UpdateMetricsForSla",
+      "surface": "golden",
+      "target_name": "create_metric_by_id",
+      "target_namespace": "metrics",
+      "target_operation_id": "createMetricById"
+    },
+    {
+      "legacy_name": "get_notifications",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_GetNotifications",
+      "surface": "silver",
+      "target_name": "get_notifications",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_GetNotifications"
+    },
+    {
+      "legacy_name": "get_ticket_emails",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_GetTicketEmails",
+      "surface": "silver",
+      "target_name": "get_ticket_emails",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_GetTicketEmails"
+    },
+    {
+      "legacy_name": "get_unarchived_notifications",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_GetUnarchivedNotifications",
+      "surface": "silver",
+      "target_name": "get_unarchived_notifications",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_GetUnarchivedNotifications"
+    },
+    {
+      "legacy_name": "get_unread_notifications",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_GetUnreadNotifications",
+      "surface": "silver",
+      "target_name": "get_unread_notifications",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_GetUnreadNotifications"
+    },
+    {
+      "legacy_name": "mark_all_notifications_archived",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_MarkAllNotificationsArchived",
+      "surface": "silver",
+      "target_name": "mark_all_notifications_archived",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_MarkAllNotificationsArchived"
+    },
+    {
+      "legacy_name": "mark_all_notifications_read",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_MarkAllNotificationsRead",
+      "surface": "silver",
+      "target_name": "mark_all_notifications_read",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_MarkAllNotificationsRead"
+    },
+    {
+      "legacy_name": "mark_notification_archived",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_MarkNotificationArchived",
+      "surface": "silver",
+      "target_name": "mark_notification_archived",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_MarkNotificationArchived"
+    },
+    {
+      "legacy_name": "mark_notification_read",
+      "legacy_namespace": "notifications",
+      "legacy_operation_id": "Notification_MarkNotificationRead",
+      "surface": "silver",
+      "target_name": "mark_notification_read",
+      "target_namespace": "notifications",
+      "target_operation_id": "Notification_MarkNotificationRead"
+    },
+    {
+      "legacy_name": "delete_part",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_DeletePart",
+      "surface": "silver",
+      "target_name": "delete_part",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_DeletePart"
+    },
+    {
+      "legacy_name": "delete_part_supplier",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_DeletePartSupplier",
+      "surface": "silver",
+      "target_name": "delete_part_supplier",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_DeletePartSupplier"
+    },
+    {
+      "legacy_name": "get_part",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_GetPart",
+      "surface": "silver",
+      "target_name": "get_part",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_GetPart"
+    },
+    {
+      "legacy_name": "get_part_supplier",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_GetPartSupplier",
+      "surface": "silver",
+      "target_name": "get_part_supplier",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_GetPartSupplier"
+    },
+    {
+      "legacy_name": "get_part_suppliers",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_GetPartSuppliers",
+      "surface": "silver",
+      "target_name": "get_part_suppliers",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_GetPartSuppliers"
+    },
+    {
+      "legacy_name": "get_parts",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_GetParts",
+      "surface": "silver",
+      "target_name": "get_parts",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_GetParts"
+    },
+    {
+      "legacy_name": "update_part",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_UpdatePart",
+      "surface": "silver",
+      "target_name": "update_part",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_UpdatePart"
+    },
+    {
+      "legacy_name": "update_part_supplier",
+      "legacy_namespace": "parts",
+      "legacy_operation_id": "Part_UpdatePartSupplier",
+      "surface": "silver",
+      "target_name": "update_part_supplier",
+      "target_namespace": "parts",
+      "target_operation_id": "Part_UpdatePartSupplier"
+    },
+    {
+      "legacy_name": "delete_purchase_order",
+      "legacy_namespace": "purchaseorders",
+      "legacy_operation_id": "Part_DeletePurchaseOrder",
+      "surface": "silver",
+      "target_name": "delete_purchase_order",
+      "target_namespace": "purchaseorders",
+      "target_operation_id": "Part_DeletePurchaseOrder"
+    },
+    {
+      "legacy_name": "get_purchase_order",
+      "legacy_namespace": "purchaseorders",
+      "legacy_operation_id": "Part_GetPurchaseOrder",
+      "surface": "silver",
+      "target_name": "get_purchase_order",
+      "target_namespace": "purchaseorders",
+      "target_operation_id": "Part_GetPurchaseOrder"
+    },
+    {
+      "legacy_name": "get_purchase_orders",
+      "legacy_namespace": "purchaseorders",
+      "legacy_operation_id": "Part_GetPurchaseOrders",
+      "surface": "silver",
+      "target_name": "get_purchase_orders",
+      "target_namespace": "purchaseorders",
+      "target_operation_id": "Part_GetPurchaseOrders"
+    },
+    {
+      "legacy_name": "update_purchase_order",
+      "legacy_namespace": "purchaseorders",
+      "legacy_operation_id": "Part_UpdatePurchaseOrder",
+      "surface": "silver",
+      "target_name": "update_purchase_order",
+      "target_namespace": "purchaseorders",
+      "target_operation_id": "Part_UpdatePurchaseOrder"
+    },
+    {
+      "legacy_name": "delete_sla",
+      "legacy_namespace": "slas",
+      "legacy_operation_id": "Sla_DeleteSla",
+      "surface": "golden",
+      "target_name": "delete_sla_by_id",
+      "target_namespace": "slas",
+      "target_operation_id": "deleteSlaById"
+    },
+    {
+      "legacy_name": "get_sla",
+      "legacy_namespace": "slas",
+      "legacy_operation_id": "Sla_GetSla",
+      "surface": "silver",
+      "target_name": "get_sla",
+      "target_namespace": "slas",
+      "target_operation_id": "Sla_GetSla"
+    },
+    {
+      "legacy_name": "get_slas",
+      "legacy_namespace": "slas",
+      "legacy_operation_id": "Sla_GetSlas",
+      "surface": "golden",
+      "target_name": "list_slas",
+      "target_namespace": "slas",
+      "target_operation_id": "listSlas"
+    },
+    {
+      "legacy_name": "update_sla",
+      "legacy_namespace": "slas",
+      "legacy_operation_id": "Sla_UpdateSla",
+      "surface": "silver",
+      "target_name": "update_sla",
+      "target_namespace": "slas",
+      "target_operation_id": "Sla_UpdateSla"
+    },
+    {
+      "legacy_name": "change_ticket_to_requestor_responded",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_ChangeTicketToRequestorResponded",
+      "surface": "golden",
+      "target_name": "set_ticket_requestor_responded",
+      "target_namespace": "tickets",
+      "target_operation_id": "setTicketRequestorResponded"
+    },
+    {
+      "legacy_name": "change_ticket_to_waiting_on_requestor",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_ChangeTicketToWaitingOnRequestor",
+      "surface": "golden",
+      "target_name": "set_ticket_waiting_on_requestor",
+      "target_namespace": "tickets",
+      "target_operation_id": "setTicketWaitingOnRequestor"
+    },
+    {
+      "legacy_name": "get_ticket_statuses",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_GetTicketStatuses",
+      "surface": "golden",
+      "target_name": "list_ticket_statuses",
+      "target_namespace": "tickets",
+      "target_operation_id": "listTicketStatuses"
+    },
+    {
+      "legacy_name": "un_assign_ticket_from_team",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_UnAssignTicketFromTeam",
+      "surface": "golden",
+      "target_name": "unassign_ticket_from_team",
+      "target_namespace": "tickets",
+      "target_operation_id": "unassignTicketFromTeam"
+    },
+    {
+      "legacy_name": "un_assign_ticket_from_user",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_UnAssignTicketFromUser",
+      "surface": "golden",
+      "target_name": "unassign_ticket_from_user",
+      "target_namespace": "tickets",
+      "target_operation_id": "unassignTicketFromUser"
+    },
+    {
+      "legacy_name": "un_assign_ticket_sla",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_UnAssignTicketSla",
+      "surface": "golden",
+      "target_name": "unassign_ticket_sla",
+      "target_namespace": "tickets",
+      "target_operation_id": "unassignTicketSla"
+    },
+    {
+      "legacy_name": "un_confirm_ticket_issue",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_UnConfirmTicketIssue",
+      "surface": "golden",
+      "target_name": "unconfirm_ticket_issue",
+      "target_namespace": "tickets",
+      "target_operation_id": "unconfirmTicketIssue"
+    },
+    {
+      "legacy_name": "delete_user_view",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "View_DeleteUserView",
+      "surface": "golden",
+      "target_name": "delete_user_by_id",
+      "target_namespace": "users",
+      "target_operation_id": "deleteUserById"
+    },
+    {
+      "legacy_name": "get_agents",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "User_GetAgents",
+      "surface": "golden",
+      "target_name": "search_agents",
+      "target_namespace": "users",
+      "target_operation_id": "searchAgents"
+    },
+    {
+      "legacy_name": "get_agents_legacy",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "User_GetAgentsLegacy",
+      "surface": "golden",
+      "target_name": "search_agents_legacy_get",
+      "target_namespace": "users",
+      "target_operation_id": "searchAgentsLegacyGet"
+    },
+    {
+      "legacy_name": "get_user",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "User_GetUser",
+      "surface": "golden",
+      "target_name": "get_user_by_id",
+      "target_namespace": "users",
+      "target_operation_id": "getUserById"
+    },
+    {
+      "legacy_name": "get_user_views",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "View_GetUserViews",
+      "surface": "golden",
+      "target_name": "list_user_views",
+      "target_namespace": "users",
+      "target_operation_id": "listUserViews"
+    },
+    {
+      "legacy_name": "get_users",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "User_GetUsers",
+      "surface": "golden",
+      "target_name": "search_users",
+      "target_namespace": "users",
+      "target_operation_id": "searchUsers"
+    },
+    {
+      "legacy_name": "get_users_legacy",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "User_GetUsersLegacy",
+      "surface": "golden",
+      "target_name": "search_users_legacy_get",
+      "target_namespace": "users",
+      "target_operation_id": "searchUsersLegacyGet"
+    },
+    {
+      "legacy_name": "update_user_view",
+      "legacy_namespace": "users",
+      "legacy_operation_id": "View_UpdateUserView",
+      "surface": "silver",
+      "target_name": "update_user_view",
+      "target_namespace": "users",
+      "target_operation_id": "View_UpdateUserView"
+    }
+  ],
+  "conflicts": [
+    {
+      "legacy_name": "assign_ticket",
+      "legacy_namespace": "tickets",
+      "legacy_operation_id": "Ticket_AssignTicket",
+      "legacy_route": "POST /tickets/{TicketId}/sla",
+      "now_resolves_to_operation_id": "assignTicket",
+      "now_resolves_to_route": "POST /api/v1.0/tickets/{ticketId}/assign",
+      "previous_behavior_moved_to": "tickets.assign_ticket_sla",
+      "surface": "golden"
+    }
+  ]
+}

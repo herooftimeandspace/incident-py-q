@@ -16,3 +16,7 @@ docs/api/
 .env
 
 output/
+vendor-wheels/
+
+# Data exports (ticket/asset/user CSVs) - never commit tenant data
+*.csv

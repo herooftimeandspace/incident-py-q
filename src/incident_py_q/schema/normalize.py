@@ -26,6 +26,10 @@ _LIVE_OPTIONAL_TICKET_STATUS_FIELDS = {
     "WorkflowStepId",
 }
 
+_LIVE_OPTIONAL_ASSET_CUSTOM_FIELD_VALUE_FIELDS = {
+    "AssetId",
+}
+
 _LIVE_PORTALS_ENUM_VALUES = {
     0,
 }
@@ -45,6 +49,7 @@ def normalize_swagger_document(document: dict[str, Any]) -> dict[str, Any]:
     _normalize_site_required_field_drift(normalized)
     _normalize_user_required_field_drift(normalized)
     _normalize_user_custom_field_value_required_field_drift(normalized)
+    _normalize_asset_custom_field_value_required_field_drift(normalized)
     _normalize_portals_enum_drift(normalized)
     return normalized
 
@@ -127,8 +132,8 @@ def _highest_bitmask_value(highest_flag: int) -> int:
 def _normalize_ticket_status_required_field_drift(document: dict[str, Any]) -> None:
     """Treat known live-optional `TicketStatus` workflow fields as optional.
 
-    Incident IQ's bundled Stoplight controller marks `DisplayOrder`,
-    `WorkflowId`, and `WorkflowStepId` as required on `TicketStatus`, but live
+    Incident IQ's published contract marks `DisplayOrder`, `WorkflowId`, and
+    `WorkflowStepId` as required on `TicketStatus`, but live
     `GET /tickets/statuses` responses can omit ordering and workflow metadata
     while still carrying the stable ticket status type identifier and
     human-readable status metadata used by callers. The SDK keeps those upstream
@@ -153,7 +158,7 @@ def _normalize_ticket_status_required_field_drift(document: dict[str, Any]) -> N
 def _normalize_site_required_field_drift(document: dict[str, Any]) -> None:
     """Treat known live-optional `Site` fields as optional in runtime contracts.
 
-    Incident IQ's published Stoplight controllers mark several `Site` fields as
+    Incident IQ's published contract has marked several `Site` fields as
     required even though live responses can omit them in nested payloads. This is
     currently visible in `GET /users`, where user list items can include a
     compact `Site` object without default workflow or analytics flags. Silver's
@@ -182,7 +187,7 @@ def _normalize_site_required_field_drift(document: dict[str, Any]) -> None:
 def _normalize_user_required_field_drift(document: dict[str, Any]) -> None:
     """Treat known live-optional `User` fields as optional in runtime contracts.
 
-    Incident IQ's published Stoplight controller marks `TrainingPercentComplete`
+    Incident IQ's published contract has marked `TrainingPercentComplete`
     as required on `User`, but live `GET /users` list responses can omit it while
     still carrying the stable identifiers, timestamps, role, status, and portal
     fields needed by callers. The SDK keeps the property in the schema for
@@ -229,6 +234,39 @@ def _normalize_user_custom_field_value_required_field_drift(
         field
         for field in required
         if field not in _LIVE_OPTIONAL_USER_CUSTOM_FIELD_VALUE_FIELDS
+    ]
+
+
+def _normalize_asset_custom_field_value_required_field_drift(
+    document: dict[str, Any],
+) -> None:
+    """Treat known live-optional `AssetCustomFieldValue` fields as optional.
+
+    This mirrors the `UserCustomFieldValue.UserId` relaxation. Live asset lookup
+    responses, including `GET /assets/serial/{serial}`, embed custom field values
+    without repeating the parent asset identifier, while the published contract
+    still marks `AssetId` as required on the nested value.
+
+    Before the Golden contract documented `/assets/serial/{serial}`, this drift
+    was absorbed by a Silver-only response override. Now that the route is part
+    of the documented contract, the relaxation belongs here alongside the other
+    narrow required-field drift fixes. Only the `required` list is relaxed; the
+    property stays in the schema, and `AssetId` remains required on `Asset`
+    itself so unrelated payload gaps still fail validation.
+    """
+    definitions = document.get("definitions")
+    if not isinstance(definitions, dict):
+        return
+    asset_custom_field_value = definitions.get("AssetCustomFieldValue")
+    if not isinstance(asset_custom_field_value, dict):
+        return
+    required = asset_custom_field_value.get("required")
+    if not isinstance(required, list):
+        return
+    asset_custom_field_value["required"] = [
+        field
+        for field in required
+        if field not in _LIVE_OPTIONAL_ASSET_CUSTOM_FIELD_VALUE_FIELDS
     ]
 
 

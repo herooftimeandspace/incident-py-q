@@ -12,9 +12,41 @@ from incident_py_q.exceptions import SchemaValidationError
 
 from .registry import OperationSpec, SchemaRegistry
 
-_LIVE_OPTIONAL_TICKET_DETAIL_FIELDS = frozenset({"IsTraining", "SiteId", "TicketId"})
+# The published OpenAPI contract describes a fully-expanded ticket: it marks the
+# nested site, requestor, owner, issue, location, workflow-step, asset, and
+# permission expansions as required alongside the ticket's own identifiers. Live
+# and sanitized ticket-detail payloads routinely omit those expansions while still
+# carrying the fields callers read. This relaxation is scoped to the ticket-detail
+# response only, so list, create, and update contracts stay strict.
+_LIVE_OPTIONAL_TICKET_DETAIL_FIELDS = frozenset(
+    {
+        "Assets",
+        "CustomFieldValues",
+        "For",
+        "IsTraining",
+        "Issue",
+        "Location",
+        "Owner",
+        "Site",
+        "SiteId",
+        "TicketFollowerUserIds",
+        "TicketId",
+        "UserPermissions",
+        "WorkflowStep",
+    }
+)
 _LIVE_OPTIONAL_TICKET_CUSTOM_FIELD_VALUE_FIELDS = frozenset({"TicketId"})
-_LIVE_OPTIONAL_TAG_FIELDS = frozenset({"ProductId", "SiteId"})
+# Under the published contract `Ticket.CustomFieldValues` rows are `CustomFieldValue`,
+# not `TicketCustomFieldValue`. Live rows identify the field by type and carry a value
+# without repeating the custom field's own identifier.
+_LIVE_OPTIONAL_CUSTOM_FIELD_VALUE_FIELDS = frozenset({"CustomFieldId"})
+# Live ticket-detail payloads embed compact tag rows carrying only `TagId` and
+# `Name`. The published OpenAPI contract marks more tag fields required than the
+# retired contract did, so the relaxation covers those too; see
+# `tests/fixtures/ticket_detail_live_shape_drift.json` for the captured shape.
+_LIVE_OPTIONAL_TAG_FIELDS = frozenset(
+    {"IsDeleted", "ProductId", "Scope", "SiteId", "TagTypeId"}
+)
 
 
 class ResponseSchemaValidator:
@@ -92,8 +124,8 @@ def _is_ticket_detail_response(operation: OperationSpec) -> bool:
     """Return whether an operation validates a single ticket-detail response."""
     return (
         operation.method == "GET"
-        and operation.path_template == "/tickets/{TicketId}"
-        and operation.operation_id == "Ticket_GetTicket"
+        and operation.path_template == "/api/v1.0/tickets/{ticketId}"
+        and operation.operation_id == "getTicket"
     )
 
 
@@ -121,6 +153,11 @@ def _ticket_detail_response_document(document: dict[str, Any]) -> dict[str, Any]
         definitions,
         "TicketCustomFieldValue",
         _LIVE_OPTIONAL_TICKET_CUSTOM_FIELD_VALUE_FIELDS,
+    )
+    _remove_required_fields(
+        definitions,
+        "CustomFieldValue",
+        _LIVE_OPTIONAL_CUSTOM_FIELD_VALUE_FIELDS,
     )
     _remove_required_fields(
         definitions,
