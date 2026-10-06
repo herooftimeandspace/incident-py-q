@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v6  # TODO: pin to specific SHA for reproducibility
+        uses: actions/setup-python@v7  # TODO: pin to specific SHA for reproducibility
         with:
           python-version: "3.14"
 
