@@ -23,11 +23,17 @@ def test_silver_inventory_has_required_route_and_no_golden_overlap() -> None:
     silver_pairs = {
         (entry["http_method"], _normalize_path(entry["path"])) for entry in silver_inventory
     }
-    golden_pairs = {(entry["method"], entry["path"]) for entry in golden_inventory}
+    # Golden paths are tenant-absolute, so both sides are normalized the same way
+    # before comparison; otherwise the disjointness check below passes trivially.
+    golden_pairs = {
+        (entry["method"], _normalize_path(entry["path"])) for entry in golden_inventory
+    }
 
-    assert ("GET", "/assets/serial/{serial}") in silver_pairs
     assert ("POST", "/profiles/{user_id}/picture") in silver_pairs
     assert ("POST", "/profiles/my/picture") not in silver_pairs
+    # Golden documents this route now, so Silver must not shadow it.
+    assert ("GET", "/assets/serial/{serial}") in golden_pairs
+    assert ("GET", "/assets/serial/{serial}") not in silver_pairs
     assert silver_pairs.isdisjoint(golden_pairs)
 
 

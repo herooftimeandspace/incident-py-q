@@ -64,7 +64,9 @@ def test_extract_silver_inventory_filters_golden_and_discards_static_noise(
 
     assert ("GET", "/api/v1.0/app-registry/app/{app_key}") in routes
     assert ("POST", "/api/v1.0/custom-fields/for/ticket") in routes
-    assert ("GET", "/assets/serial/{serial}") in routes
+    # The asset-serial route is no longer synthesized into Silver; the published
+    # Golden contract documents it.
+    assert ("GET", "/assets/serial/{serial}") not in routes
     assert not any("/core/" in route for _, route in routes)
     assert not any(route.endswith("/things") for _, route in routes)
 

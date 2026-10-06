@@ -1,0 +1,17 @@
+{
+  "api_title": "IncidentIQ API",
+  "api_version": "1.0.0",
+  "documentation_url": "https://scopousiiq.github.io/iiq-docusaurus-docs/docs/api/",
+  "openapi_version": "3.0.0",
+  "operation_count": 863,
+  "path_count": 682,
+  "schema_count": 839,
+  "spec_url": "https://raw.githubusercontent.com/scopousiiq/iiq-docusaurus-docs/master/openapi-spec.json",
+  "synced_at": "2026-09-28T19:15:04.309488+00:00",
+  "upstream_profile": {
+    "generatedAt": "2026-04-23T14:58:49Z",
+    "keptPathsCount": 682,
+    "profileId": "stoplight",
+    "profileName": "Stoplight Documentation"
+  }
+}

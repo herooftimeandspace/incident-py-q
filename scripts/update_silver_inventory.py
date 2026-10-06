@@ -16,7 +16,7 @@ def main() -> int:
         sys.path.insert(0, str(src_root))
 
     from incident_py_q import Client
-    from incident_py_q.schema.loader import load_stoplight_documents
+    from incident_py_q.schema.loader import load_contract_documents
     from incident_py_q.schema.registry import build_schema_registry
     from incident_py_q.silver import (
         extract_silver_inventory,
@@ -29,7 +29,7 @@ def main() -> int:
     parser.add_argument("har_files", nargs="+", help="HAR files to scan for undocumented routes.")
     args = parser.parse_args()
 
-    registry = build_schema_registry(load_stoplight_documents())
+    registry = build_schema_registry(load_contract_documents())
     silver_metadata = extract_silver_inventory(har_files=args.har_files, registry=registry)
 
     package_destination = project_root / "src/incident_py_q/data/silver_inventory.json"
