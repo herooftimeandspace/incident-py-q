@@ -3,14 +3,23 @@
 ## Bundled Contracts
 
 Primary contract corpus:
-- Incident IQ Stoplight Swagger 2.0 controller specs (`/controllers/*.json`)
+- The published Incident IQ OpenAPI 3.0 contract, rendered as the
+  [API reference](https://scopousiiq.github.io/iiq-docusaurus-docs/docs/api/)
 
-Secondary compatibility corpus:
-- Incident IQ APIHub Postman collection
+This single document replaces the former Stoplight Swagger 2.0 controller specs and
+the APIHub Postman compatibility corpus. It is loaded as published and converted
+into the SDK's internal Swagger-shaped form by `incident_py_q.schema.openapi`.
+
+Legacy contract corpus:
+- `src/incident_py_q/data/legacy/contract.json`, a pruned Swagger 2.0 bundle covering the
+  routes the published contract no longer documents. These moved to the Silver surface
+  during the OpenAPI migration and keep strict response validation from this bundle.
 
 Bundled assets live under:
-- `src/incident_py_q/data/stoplight/controllers/`
-- `src/incident_py_q/data/postman/`
+- `src/incident_py_q/data/openapi/openapi-spec.json`
+- `src/incident_py_q/data/openapi/metadata.json`
+- `src/incident_py_q/data/legacy/contract.json`
+- `src/incident_py_q/data/legacy/aliases.json`
 - `src/incident_py_q/data/source_manifest.json`
 - `src/incident_py_q/data/app_schemas.json`
 - `src/incident_py_q/data/silver_inventory.json`
@@ -25,15 +34,19 @@ Bundled assets live under:
 3. Validate JSON payload with `jsonschema`.
 4. Raise `SchemaValidationError` (`ValueError`) on mismatch.
 
-Golden routes under `client.<namespace>.*` validate against Stoplight contracts. Silver routes under `client.silver.*` are intentionally kept separate because Stoplight does not publish contracts for them. The typed app helpers under `client.silver.apps.*` and the legacy alias `client.apps.*` use the bundled app schema set where dedicated Silver schemas exist.
+Golden routes under `client.<namespace>.*` validate against the published contract. Silver routes under `client.silver.*` are intentionally kept separate because the published contract does not document them; when a contract sync starts documenting a Silver route, the Silver twin is dropped so Golden owns it. Silver routes migrated off Golden validate against the bundled legacy contract, so moving surfaces did not weaken their validation. Routes discovered from HAR traffic have no schema and are validated structurally only. The typed app helpers under `client.silver.apps.*` and the legacy alias `client.apps.*` use the bundled app schema set where dedicated Silver schemas exist.
 
 ## Schema Sync Workflow
 
 ```bash
 python scripts/sync_schemas.py
 python scripts/update_sdk_inventory.py
+python scripts/reconcile_silver_inventory.py
 python scripts/update_silver_inventory.py demo.incidentiq.com.har
 python scripts/extract_har_app_inventory.py demo.incidentiq.com.har
 ```
 
-`update_sdk_inventory.py` refreshes the Golden Stoplight inventory. `update_silver_inventory.py` classifies HAR traffic into Golden, Silver, and discarded routes, writes the bundled Silver inventory, refreshes the merged SDK inventory snapshot, and updates the legacy app-path fixture used by contract tests.
+`sync_schemas.py` pulls the published OpenAPI contract into the bundle.
+`update_sdk_inventory.py` refreshes the Golden, Silver, and merged inventory
+snapshots. `reconcile_silver_inventory.py` prunes bundled Silver routes that the
+contract now documents, and needs no HAR captures. `update_silver_inventory.py` classifies HAR traffic into Golden, Silver, and discarded routes, writes the bundled Silver inventory, refreshes the merged SDK inventory snapshot, and updates the legacy app-path fixture used by contract tests.

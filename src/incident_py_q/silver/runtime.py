@@ -23,7 +23,12 @@ from incident_py_q.apps import (
 from incident_py_q.config import ClientConfig
 from incident_py_q.media import prepare_png_upload
 
-from .inventory import SilverMethodMetadata, SilverParameterMetadata, load_silver_inventory
+from .inventory import (
+    SilverMethodMetadata,
+    SilverParameterMetadata,
+    _matches_golden_contract,
+    load_silver_inventory,
+)
 
 JSONPayload = dict[str, Any] | list[Any] | None
 PreparedFiles = dict[str, tuple[str, Any, str]]
@@ -152,6 +157,7 @@ class SilverManualParameterMetadata:
     required: bool
     type_display: str
     description: str
+    default: Any = inspect.Parameter.empty
 
 
 @dataclass(slots=True, frozen=True)
@@ -246,8 +252,8 @@ def format_silver_docstring(metadata: SilverMethodMetadata, *, async_mode: bool)
         "",
         "Why this method is separate from Golden paths:",
         (
-            "Stoplight controller contracts are treated as the Golden source of truth for the SDK. "
-            "This route remains on the Silver surface because no bundled Stoplight contract "
+            "The published OpenAPI contract is treated as the Golden source of truth for the SDK. "
+            "This route remains on the Silver surface because no bundled Golden contract "
             "defines it, so the SDK exposes it explicitly instead of letting undocumented behavior "
             "silently override a Golden method."
         ),
@@ -739,372 +745,95 @@ class AsyncSilverProfilePictureUploadMethod:
         return response
 
 
-class SilverRemoveProfilePictureMethod:
-    """Sync Silver helper for clearing a user's profile picture safely."""
+class _SilverManualMethodBase:
+    """Shared metadata-driven shape for all manual Silver helper callables."""
+
+    def __init__(self, *, client: Any, metadata: SilverManualMethodMetadata) -> None:
+        self._client = client
+        self.metadata = metadata
+        self.__name__ = metadata.method_name
+        self.__signature__ = _build_manual_silver_signature(metadata)
+
+
+class SilverManualMethod(_SilverManualMethodBase):
+    """Sync callable that dispatches a manual Silver helper from its metadata key."""
 
     def __init__(self, *, client: _SyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
-        self._client = client
-        self.metadata = metadata
-        self.__name__ = metadata.method_name
-        self.__signature__ = inspect.Signature(
-            parameters=[
-                inspect.Parameter(
-                    "user_id",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "wait_for_consistency",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=False,
-                    annotation=bool,
-                ),
-                inspect.Parameter(
-                    "consistency_timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_DEFAULT_CONSISTENCY_TIMEOUT,
-                    annotation=float,
-                ),
-                inspect.Parameter(
-                    "consistency_poll_interval",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_DEFAULT_CONSISTENCY_POLL_INTERVAL,
-                    annotation=float,
-                ),
-                inspect.Parameter(
-                    "timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=None,
-                    annotation=float | None,
-                ),
-            ]
-        )
+        super().__init__(client=client, metadata=metadata)
         self.__doc__ = format_manual_silver_docstring(metadata, async_mode=False)
 
-    def __call__(
-        self,
-        *,
-        user_id: str,
-        timeout: float | None = None,
-        wait_for_consistency: bool = False,
-        consistency_timeout: float = _DEFAULT_CONSISTENCY_TIMEOUT,
-        consistency_poll_interval: float = _DEFAULT_CONSISTENCY_POLL_INTERVAL,
-    ) -> Any:
-        return _remove_profile_picture_sync(
-            self._client,
-            user_id=user_id,
-            timeout=timeout,
-            wait_for_consistency=wait_for_consistency,
-            consistency_timeout=consistency_timeout,
-            consistency_poll_interval=consistency_poll_interval,
-        )
+    def __call__(self, **kwargs: Any) -> Any:
+        bound = self.__signature__.bind(**kwargs)
+        bound.apply_defaults()
+        return _dispatch_manual_silver_sync(self._client, self.metadata, bound.arguments)
 
 
-class AsyncSilverRemoveProfilePictureMethod:
-    """Async Silver helper for clearing a user's profile picture safely."""
+class AsyncSilverManualMethod(_SilverManualMethodBase):
+    """Async callable that dispatches a manual Silver helper from its metadata key."""
 
     def __init__(self, *, client: _AsyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
-        self._client = client
-        self.metadata = metadata
-        self.__name__ = metadata.method_name
-        self.__signature__ = inspect.Signature(
-            parameters=[
-                inspect.Parameter(
-                    "user_id",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "wait_for_consistency",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=False,
-                    annotation=bool,
-                ),
-                inspect.Parameter(
-                    "consistency_timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_DEFAULT_CONSISTENCY_TIMEOUT,
-                    annotation=float,
-                ),
-                inspect.Parameter(
-                    "consistency_poll_interval",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_DEFAULT_CONSISTENCY_POLL_INTERVAL,
-                    annotation=float,
-                ),
-                inspect.Parameter(
-                    "timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=None,
-                    annotation=float | None,
-                ),
-            ]
-        )
+        super().__init__(client=client, metadata=metadata)
         self.__doc__ = format_manual_silver_docstring(metadata, async_mode=True)
 
-    async def __call__(
-        self,
-        *,
-        user_id: str,
-        timeout: float | None = None,
-        wait_for_consistency: bool = False,
-        consistency_timeout: float = _DEFAULT_CONSISTENCY_TIMEOUT,
-        consistency_poll_interval: float = _DEFAULT_CONSISTENCY_POLL_INTERVAL,
-    ) -> Any:
-        return await _remove_profile_picture_async(
-            self._client,
-            user_id=user_id,
-            timeout=timeout,
-            wait_for_consistency=wait_for_consistency,
-            consistency_timeout=consistency_timeout,
-            consistency_poll_interval=consistency_poll_interval,
+    async def __call__(self, **kwargs: Any) -> Any:
+        bound = self.__signature__.bind(**kwargs)
+        bound.apply_defaults()
+        return await _dispatch_manual_silver_async(self._client, self.metadata, bound.arguments)
+
+
+def _build_manual_silver_signature(metadata: SilverManualMethodMetadata) -> inspect.Signature:
+    """Build the public helper signature from the runtime/docs metadata contract."""
+    annotations = {"bool": bool, "float": float, "int": int, "str": str}
+    parameters = [
+        inspect.Parameter(
+            parameter.python_name,
+            kind=inspect.Parameter.KEYWORD_ONLY,
+            default=parameter.default,
+            annotation=annotations.get(parameter.type_display, Any),
         )
-
-
-class SilverCurrentUserAssignedTicketsMethod:
-    """Sync Silver helper for the UI-style current-user assigned ticket queue."""
-
-    def __init__(self, *, client: _SyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
-        self._client = client
-        self.metadata = metadata
-        self.__name__ = metadata.method_name
-        self.__signature__ = inspect.Signature(
-            parameters=[
-                inspect.Parameter(
-                    "page_size",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=100,
-                    annotation=int,
-                ),
-                inspect.Parameter(
-                    "sort_by",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "sort_direction",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=None,
-                    annotation=float | None,
-                ),
-            ]
+        for parameter in metadata.parameters
+    ]
+    parameters.append(
+        inspect.Parameter(
+            "timeout",
+            kind=inspect.Parameter.KEYWORD_ONLY,
+            default=None,
+            annotation=float | None,
         )
-        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=False)
-
-    def __call__(
-        self,
-        *,
-        page_size: int = 100,
-        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-        timeout: float | None = None,
-    ) -> JSONPayload:
-        return _list_current_user_assigned_tickets_sync(
-            self._client,
-            page_size=page_size,
-            sort_by=sort_by,
-            sort_direction=sort_direction,
-            timeout=timeout,
-        )
+    )
+    return inspect.Signature(parameters=parameters)
 
 
-class AsyncSilverCurrentUserAssignedTicketsMethod:
-    """Async Silver helper for the UI-style current-user assigned ticket queue."""
-
-    def __init__(self, *, client: _AsyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
-        self._client = client
-        self.metadata = metadata
-        self.__name__ = metadata.method_name
-        self.__signature__ = inspect.Signature(
-            parameters=[
-                inspect.Parameter(
-                    "page_size",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=100,
-                    annotation=int,
-                ),
-                inspect.Parameter(
-                    "sort_by",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "sort_direction",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=None,
-                    annotation=float | None,
-                ),
-            ]
-        )
-        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=True)
-
-    async def __call__(
-        self,
-        *,
-        page_size: int = 100,
-        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-        timeout: float | None = None,
-    ) -> JSONPayload:
-        return await _list_current_user_assigned_tickets_async(
-            self._client,
-            page_size=page_size,
-            sort_by=sort_by,
-            sort_direction=sort_direction,
-            timeout=timeout,
-        )
+def _dispatch_manual_silver_sync(
+    client: _SyncRequestClient,
+    metadata: SilverManualMethodMetadata,
+    arguments: Mapping[str, Any],
+) -> Any:
+    """Dispatch one sync manual helper while keeping operation logic explicit."""
+    key = (metadata.namespace_path, metadata.method_name)
+    if key == (("profiles",), "remove_profile_picture"):
+        return _remove_profile_picture_sync(client, **arguments)
+    if key == (("tickets",), "list_current_user_assigned_tickets"):
+        return _list_current_user_assigned_tickets_sync(client, **arguments)
+    if key == (("tickets",), "list_assigned_tickets_for_agent"):
+        return _list_assigned_tickets_for_agent_sync(client, **arguments)
+    raise ValueError(f"Unsupported Silver manual helper {metadata.namespace}.{metadata.method_name!r}.")
 
 
-class SilverAssignedTicketsForAgentMethod:
-    """Sync Silver helper for tickets assigned to an explicit agent user id."""
-
-    def __init__(self, *, client: _SyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
-        self._client = client
-        self.metadata = metadata
-        self.__name__ = metadata.method_name
-        self.__signature__ = inspect.Signature(
-            parameters=[
-                inspect.Parameter(
-                    "agent_user_id",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "schema",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default="Open",
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "page_size",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=100,
-                    annotation=int,
-                ),
-                inspect.Parameter(
-                    "sort_by",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "sort_direction",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=None,
-                    annotation=float | None,
-                ),
-            ]
-        )
-        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=False)
-
-    def __call__(
-        self,
-        *,
-        agent_user_id: str,
-        schema: str = "Open",
-        page_size: int = 100,
-        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-        timeout: float | None = None,
-    ) -> JSONPayload:
-        return _list_assigned_tickets_for_agent_sync(
-            self._client,
-            agent_user_id=agent_user_id,
-            schema=schema,
-            page_size=page_size,
-            sort_by=sort_by,
-            sort_direction=sort_direction,
-            timeout=timeout,
-        )
-
-
-class AsyncSilverAssignedTicketsForAgentMethod:
-    """Async Silver helper for tickets assigned to an explicit agent user id."""
-
-    def __init__(self, *, client: _AsyncRequestClient, metadata: SilverManualMethodMetadata) -> None:
-        self._client = client
-        self.metadata = metadata
-        self.__name__ = metadata.method_name
-        self.__signature__ = inspect.Signature(
-            parameters=[
-                inspect.Parameter(
-                    "agent_user_id",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "schema",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default="Open",
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "page_size",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=100,
-                    annotation=int,
-                ),
-                inspect.Parameter(
-                    "sort_by",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "sort_direction",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-                    annotation=str,
-                ),
-                inspect.Parameter(
-                    "timeout",
-                    kind=inspect.Parameter.KEYWORD_ONLY,
-                    default=None,
-                    annotation=float | None,
-                ),
-            ]
-        )
-        self.__doc__ = format_manual_silver_docstring(metadata, async_mode=True)
-
-    async def __call__(
-        self,
-        *,
-        agent_user_id: str,
-        schema: str = "Open",
-        page_size: int = 100,
-        sort_by: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
-        sort_direction: str = _CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
-        timeout: float | None = None,
-    ) -> JSONPayload:
-        return await _list_assigned_tickets_for_agent_async(
-            self._client,
-            agent_user_id=agent_user_id,
-            schema=schema,
-            page_size=page_size,
-            sort_by=sort_by,
-            sort_direction=sort_direction,
-            timeout=timeout,
-        )
+async def _dispatch_manual_silver_async(
+    client: _AsyncRequestClient,
+    metadata: SilverManualMethodMetadata,
+    arguments: Mapping[str, Any],
+) -> Any:
+    """Dispatch one async manual helper while keeping operation logic explicit."""
+    key = (metadata.namespace_path, metadata.method_name)
+    if key == (("profiles",), "remove_profile_picture"):
+        return await _remove_profile_picture_async(client, **arguments)
+    if key == (("tickets",), "list_current_user_assigned_tickets"):
+        return await _list_current_user_assigned_tickets_async(client, **arguments)
+    if key == (("tickets",), "list_assigned_tickets_for_agent"):
+        return await _list_assigned_tickets_for_agent_async(client, **arguments)
+    raise ValueError(f"Unsupported Silver manual helper {metadata.namespace}.{metadata.method_name!r}.")
 
 
 def build_silver_metadata() -> tuple[SilverMethodMetadata, ...]:
@@ -1150,6 +879,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                         "When `True`, poll user readback until `PhotoId` becomes `None` or raise "
                         "`TimeoutError` if the tenant does not converge in time."
                     ),
+                    default=False,
                 ),
                 SilverManualParameterMetadata(
                     python_name="consistency_timeout",
@@ -1161,6 +891,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                         "Maximum number of seconds to wait for readback convergence when "
                         "`wait_for_consistency=True`."
                     ),
+                    default=_DEFAULT_CONSISTENCY_TIMEOUT,
                 ),
                 SilverManualParameterMetadata(
                     python_name="consistency_poll_interval",
@@ -1172,6 +903,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                         "Polling interval in seconds between user readback checks when "
                         "`wait_for_consistency=True`."
                     ),
+                    default=_DEFAULT_CONSISTENCY_POLL_INTERVAL,
                 ),
             ),
             typed_return="ItemUpdateResponseOfUser",
@@ -1192,9 +924,8 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
             description=(
                 "This helper exists because saved-view routes can return zero rows for "
                 "current-user ticket queues even when the Incident IQ web UI shows queue work, "
-                "while analytics summaries expose counts but not ticket rows. The bundled "
-                "Postman corpus includes the UI-observed "
-                "`/services/tickets/-/-/AssignedToMe_Unassigned` route for the combined "
+                "while analytics summaries expose counts but not ticket rows. The UI-observed "
+                "`/services/tickets/-/-/AssignedToMe_Unassigned` route serves the combined "
                 "assigned-to-me/unassigned open queue, "
                 "so the SDK exposes a narrow read-only helper around that route instead of asking "
                 "callers to construct a services URL by hand. The route uses POST for query "
@@ -1220,6 +951,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                     required=False,
                     type_display="int",
                     description="Maximum number of ticket rows to return from the queue.",
+                    default=100,
                 ),
                 SilverManualParameterMetadata(
                     python_name="sort_by",
@@ -1228,6 +960,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                     required=False,
                     type_display="str",
                     description="Incident IQ ticket field used for ordering returned rows.",
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
                 ),
                 SilverManualParameterMetadata(
                     python_name="sort_direction",
@@ -1236,6 +969,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                     required=False,
                     type_display="str",
                     description="Sort direction, either `Ascending` or `Descending`.",
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
                 ),
             ),
             typed_return="dict[str, Any] | list[Any] | None",
@@ -1284,6 +1018,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                     required=False,
                     type_display="str",
                     description="Services ticket schema selector. Supported values are `Open` and `All`.",
+                    default="Open",
                 ),
                 SilverManualParameterMetadata(
                     python_name="page_size",
@@ -1292,6 +1027,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                     required=False,
                     type_display="int",
                     description="Maximum number of ticket rows to return from the services query.",
+                    default=100,
                 ),
                 SilverManualParameterMetadata(
                     python_name="sort_by",
@@ -1300,6 +1036,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                     required=False,
                     type_display="str",
                     description="Incident IQ ticket field used for ordering returned rows.",
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_BY,
                 ),
                 SilverManualParameterMetadata(
                     python_name="sort_direction",
@@ -1308,6 +1045,7 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
                     required=False,
                     type_display="str",
                     description="Sort direction, either `Ascending` or `Descending`.",
+                    default=_CURRENT_USER_ASSIGNED_TICKETS_SORT_DIRECTION,
                 ),
             ),
             typed_return="dict[str, Any] | list[Any] | None",
@@ -1318,9 +1056,33 @@ def build_manual_silver_method_metadata() -> tuple[SilverManualMethodMetadata, .
     )
 
 
+def superseded_by_golden(
+    metadata: tuple[SilverMethodMetadata, ...],
+    registry: Any,
+) -> tuple[SilverMethodMetadata, ...]:
+    """Return the Silver methods that the Golden contract now documents.
+
+    Silver exists only to cover routes the published contract does not. When a
+    Golden sync adds a route that Silver had inferred from HAR traffic, the
+    documented contract wins and the Silver twin is dropped so a single route is
+    not reachable through two differently-validated code paths.
+    """
+    if registry is None:
+        return ()
+    return tuple(
+        method
+        for method in metadata
+        if _matches_golden_contract(registry, method.http_method, method.route)
+    )
+
+
 def build_silver_sdk(*, client: Any, async_mode: bool) -> SilverArtifacts:
     """Build the explicit `client.silver` namespace tree."""
     metadata = build_silver_metadata()
+    registry = getattr(client, "_registry", None)
+    superseded = set(superseded_by_golden(metadata, registry))
+    if superseded:
+        metadata = tuple(method for method in metadata if method not in superseded)
     manual_metadata = build_manual_silver_method_metadata()
     root = SilverRootNamespace("silver")
     apps_namespace: SilverAppsNamespace | AsyncSilverAppsNamespace
@@ -1422,31 +1184,15 @@ def _build_manual_silver_method(
     metadata: SilverManualMethodMetadata,
     async_mode: bool,
 ) -> Any:
-    if metadata.namespace_path == ("profiles",) and metadata.method_name == "remove_profile_picture":
-        return (
-            AsyncSilverRemoveProfilePictureMethod(client=client, metadata=metadata)
-            if async_mode
-            else SilverRemoveProfilePictureMethod(client=client, metadata=metadata)
-        )
-    if (
-        metadata.namespace_path == ("tickets",)
-        and metadata.method_name == "list_current_user_assigned_tickets"
-    ):
-        return (
-            AsyncSilverCurrentUserAssignedTicketsMethod(client=client, metadata=metadata)
-            if async_mode
-            else SilverCurrentUserAssignedTicketsMethod(client=client, metadata=metadata)
-        )
-    if (
-        metadata.namespace_path == ("tickets",)
-        and metadata.method_name == "list_assigned_tickets_for_agent"
-    ):
-        return (
-            AsyncSilverAssignedTicketsForAgentMethod(client=client, metadata=metadata)
-            if async_mode
-            else SilverAssignedTicketsForAgentMethod(client=client, metadata=metadata)
-        )
-    raise ValueError(f"Unsupported Silver manual helper {metadata.namespace}.{metadata.method_name!r}.")
+    supported = {
+        (("profiles",), "remove_profile_picture"),
+        (("tickets",), "list_current_user_assigned_tickets"),
+        (("tickets",), "list_assigned_tickets_for_agent"),
+    }
+    if (metadata.namespace_path, metadata.method_name) not in supported:
+        raise ValueError(f"Unsupported Silver manual helper {metadata.namespace}.{metadata.method_name!r}.")
+    method_type = AsyncSilverManualMethod if async_mode else SilverManualMethod
+    return method_type(client=client, metadata=metadata)
 
 
 def _ensure_namespace(

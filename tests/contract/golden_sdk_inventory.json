@@ -1,1213 +1,6043 @@
 [
   {
-    "method": "POST",
-    "name": "queue_notification",
-    "namespace": "alerts",
-    "operation_id": "Alerts_QueueNotification",
-    "path": "/alerts/new"
+    "method": "GET",
+    "name": "get_asset_audit_policy_periods_by_status",
+    "namespace": "analytics",
+    "operation_id": "getAssetAuditPolicyPeriodsByStatus",
+    "path": "/api/v1.0/analytics/audit-policies/by-schedule-period-status/{AssetAuditPolicyScheduleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_audit_policy_periods_by_status_for_asset",
+    "namespace": "analytics",
+    "operation_id": "getAssetAuditPolicyPeriodsByStatusForAsset",
+    "path": "/api/v1.0/analytics/audit-policies/by-schedule-period-status/{AssetAuditPolicyScheduleId}/for-asset/{AssetId}"
   },
   {
     "method": "GET",
     "name": "get_asset_counts_by_audit_policy_coverage",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetAssetCountsByAuditPolicyCoverage",
-    "path": "/analytics/assets/by-audit-policy-coverage"
+    "operation_id": "getAssetCountsByAuditPolicyCoverage",
+    "path": "/api/v1.0/analytics/assets/by-audit-policy-coverage"
   },
   {
     "method": "GET",
     "name": "get_asset_counts_by_audit_policy_schedule_status",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetAssetCountsByAuditPolicyScheduleStatus",
-    "path": "/analytics/assets/by-audit-policy-schedule-status/{AssetAuditPolicyScheduleId}"
+    "operation_id": "getAssetCountsByAuditPolicyScheduleStatus",
+    "path": "/api/v1.0/analytics/assets/by-audit-policy-schedule-status/{AssetAuditPolicyScheduleId}"
   },
   {
     "method": "GET",
     "name": "get_asset_counts_by_audit_policy_status",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetAssetCountsByAuditPolicyStatus",
-    "path": "/analytics/assets/by-audit-policy-status/{AssetAuditPolicyId}"
+    "operation_id": "getAssetCountsByAuditPolicyStatus",
+    "path": "/api/v1.0/analytics/assets/by-audit-policy-status/{AssetAuditPolicyId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_verification_location",
+    "namespace": "analytics",
+    "operation_id": "getAssetCountsByAuditPolicyVerificationLocation",
+    "path": "/api/v1.0/analytics/assets/by-audit-policy-verification-location/{AssetAuditPolicyId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_counts_by_audit_policy_verification_type",
+    "namespace": "analytics",
+    "operation_id": "getAssetCountsByAuditPolicyVerificationType",
+    "path": "/api/v1.0/analytics/assets/by-audit-policy-verification-type/{AssetAuditPolicyId}"
   },
   {
     "method": "GET",
     "name": "get_asset_counts_by_audit_status",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetAssetCountsByAuditStatus",
-    "path": "/analytics/assets/by-audit-status"
+    "operation_id": "getAssetCountsByAuditStatus",
+    "path": "/api/v1.0/analytics/assets/by-audit-status"
   },
   {
     "method": "GET",
-    "name": "get_asset_counts_by_verification_location",
+    "name": "get_asset_counts_by_status_type",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetAssetCountsByVerificationLocation",
-    "path": "/analytics/assets/by-verification-location"
+    "operation_id": "getAssetCountsByStatusType",
+    "path": "/api/v1.0/analytics/assets/by-status"
   },
   {
     "method": "GET",
-    "name": "get_asset_counts_by_verification_type",
+    "name": "get_asset_summary_stats",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetAssetCountsByVerificationType",
-    "path": "/analytics/assets/by-verification-type"
+    "operation_id": "getAssetSummaryStats",
+    "path": "/api/v1.0/analytics/asset/{AssetId}/summary-stats"
   },
   {
     "method": "GET",
-    "name": "get_report",
+    "name": "get_asset_verification_counts_by_location",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetReport",
-    "path": "/analytics/reports/{ReportId}"
+    "operation_id": "getAssetVerificationCountsByLocation",
+    "path": "/api/v1.0/analytics/assets/by-verification-location"
   },
   {
     "method": "GET",
-    "name": "get_report_elements",
+    "name": "get_asset_verification_counts_by_type",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetReportElements",
-    "path": "/analytics/reports/elements/{ReportId}"
+    "operation_id": "getAssetVerificationCountsByType",
+    "path": "/api/v1.0/analytics/assets/by-verification-type"
   },
   {
     "method": "GET",
-    "name": "get_report_queries",
+    "name": "get_requestor_summary_stats",
     "namespace": "analytics",
-    "operation_id": "Analytics_GetReportQueries",
-    "path": "/analytics/reports/queries/{ReportId}"
+    "operation_id": "getRequestorSummaryStats",
+    "path": "/api/v1.0/analytics/requestor/{UserId}/summary-stats"
   },
   {
-    "method": "GET",
-    "name": "get_reports",
-    "namespace": "analytics",
-    "operation_id": "Analytics_GetReports",
-    "path": "/analytics/reports"
+    "method": "POST",
+    "name": "add_asset_favorite",
+    "namespace": "assets",
+    "operation_id": "addAssetFavorite",
+    "path": "/api/v1.0/assets/favorites/{assetId}/{userId}"
+  },
+  {
+    "method": "POST",
+    "name": "add_asset_files",
+    "namespace": "assets",
+    "operation_id": "addAssetFiles",
+    "path": "/api/v1.0/assets/{assetId}/files/new"
+  },
+  {
+    "method": "POST",
+    "name": "add_linked_assets",
+    "namespace": "assets",
+    "operation_id": "addLinkedAssets",
+    "path": "/api/v1.0/assets/linked/to/{assetId}"
   },
   {
     "method": "POST",
     "name": "add_manufacturer_to_site",
     "namespace": "assets",
-    "operation_id": "Manufacturer_AddManufacturerToSite",
-    "path": "/assets/manufacturers/{ManufacturerId}/site"
+    "operation_id": "addManufacturerToSite",
+    "path": "/api/v1.0/assets/manufacturers/{ManufacturerId}/site"
   },
   {
     "method": "POST",
-    "name": "add_manufacturer_to_site2",
+    "name": "bulk_create_asset_verifications",
     "namespace": "assets",
-    "operation_id": "Manufacturer_AddManufacturerToSite2",
-    "path": "/assets/manufacturers/{ManufacturerId}/site/{IncludeAllModels}"
+    "operation_id": "bulkCreateAssetVerifications",
+    "path": "/api/v1.0/assets/verifications/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "bulk_delete_asset_verifications",
+    "namespace": "assets",
+    "operation_id": "bulkDeleteAssetVerifications",
+    "path": "/api/v1.0/assets/verifications/ids/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "bulk_delete_linked_assets",
+    "namespace": "assets",
+    "operation_id": "bulkDeleteLinkedAssets",
+    "path": "/api/v1.0/assets/linked/to"
   },
   {
     "method": "POST",
-    "name": "add_user_favorite_asset",
+    "name": "checkin_asset",
     "namespace": "assets",
-    "operation_id": "Asset_AddUserFavoriteAsset",
-    "path": "/assets/favorites/{AssetId}/{UserId}"
+    "operation_id": "checkinAsset",
+    "path": "/api/v1.0/assets/checkouts/checkin"
   },
   {
     "method": "POST",
-    "name": "create_asset_status_type",
+    "name": "checkout_or_transfer_asset",
     "namespace": "assets",
-    "operation_id": "AssetStatusType_CreateAssetStatusType",
-    "path": "/assets/status/types/new"
+    "operation_id": "checkoutOrTransferAsset",
+    "path": "/api/v1.0/assets/checkouts/checkout-or-transfer"
+  },
+  {
+    "method": "POST",
+    "name": "count_assets",
+    "namespace": "assets",
+    "operation_id": "countAssets",
+    "path": "/api/v1.0/assets/count"
+  },
+  {
+    "method": "POST",
+    "name": "create_asset",
+    "namespace": "assets",
+    "operation_id": "createAsset",
+    "path": "/api/v1.0/assets/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_asset_type",
+    "namespace": "assets",
+    "operation_id": "createAssetType",
+    "path": "/api/v1.0/assets/types/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_asset_verification",
+    "namespace": "assets",
+    "operation_id": "createAssetVerification",
+    "path": "/api/v1.0/assets/{assetId}/verifications/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_asset_view",
+    "namespace": "assets",
+    "operation_id": "createAssetView",
+    "path": "/api/v1.0/assets/views/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_manufacturer",
+    "namespace": "assets",
+    "operation_id": "createManufacturer",
+    "path": "/api/v1.0/assets/manufacturers/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_my_classes_asset_verification",
+    "namespace": "assets",
+    "operation_id": "createMyClassesAssetVerification",
+    "path": "/api/v1.0/assets/{assetId}/my-classes/verifications/new"
   },
   {
     "method": "DELETE",
     "name": "delete_asset",
     "namespace": "assets",
-    "operation_id": "Asset_DeleteAsset",
-    "path": "/assets/{AssetId}"
+    "operation_id": "deleteAsset",
+    "path": "/api/v1.0/assets/{assetId}"
   },
   {
     "method": "DELETE",
-    "name": "delete_asset_funding_type",
+    "name": "delete_asset_checkout",
     "namespace": "assets",
-    "operation_id": "AssetFundingType_DeleteAssetFundingType",
-    "path": "/assets/funding/types/{AssetFundingTypeId}"
+    "operation_id": "deleteAssetCheckout",
+    "path": "/api/v1.0/assets/checkouts/{assetCheckoutId}/delete"
   },
   {
     "method": "DELETE",
-    "name": "delete_asset_status_type",
+    "name": "delete_asset_checkouts_by_ids",
     "namespace": "assets",
-    "operation_id": "AssetStatusType_DeleteAssetStatusType",
-    "path": "/assets/status/types/{AssetStatusTypeId}"
+    "operation_id": "deleteAssetCheckoutsByIds",
+    "path": "/api/v1.0/assets/checkouts/ids/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_checkouts_by_query",
+    "namespace": "assets",
+    "operation_id": "deleteAssetCheckoutsByQuery",
+    "path": "/api/v1.0/assets/checkouts/query/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_file",
+    "namespace": "assets",
+    "operation_id": "deleteAssetFile",
+    "path": "/api/v1.0/assets/{assetId}/files/{fileId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_view",
+    "namespace": "assets",
+    "operation_id": "deleteAssetView",
+    "path": "/api/v1.0/assets/views/{viewId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_linked_assets",
+    "namespace": "assets",
+    "operation_id": "deleteLinkedAssets",
+    "path": "/api/v1.0/assets/linked/to/{assetId}"
   },
   {
     "method": "DELETE",
     "name": "delete_manufacturer",
     "namespace": "assets",
-    "operation_id": "Manufacturer_DeleteManufacturer",
-    "path": "/assets/manufacturers/{ManufacturerId}"
+    "operation_id": "deleteManufacturer",
+    "path": "/api/v1.0/assets/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "POST",
+    "name": "exchange_asset",
+    "namespace": "assets",
+    "operation_id": "exchangeAsset",
+    "path": "/api/v1.0/assets/exchange"
   },
   {
     "method": "GET",
-    "name": "get_asset",
+    "name": "export_assets_by_type",
     "namespace": "assets",
-    "operation_id": "Asset_GetAsset",
-    "path": "/assets/{AssetId}"
+    "operation_id": "exportAssetsByType",
+    "path": "/api/v1.0/assets/export/{assetTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "generate_asset_tag",
+    "namespace": "assets",
+    "operation_id": "generateAssetTag",
+    "path": "/api/v1.0/assets/generate-asset-tag"
+  },
+  {
+    "method": "POST",
+    "name": "get_aggregated_asset_cost_values",
+    "namespace": "assets",
+    "operation_id": "getAggregatedAssetCostValues",
+    "path": "/api/v1.0/assets/aggregate-cost-values"
   },
   {
     "method": "GET",
     "name": "get_asset_activities",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetActivities",
-    "path": "/assets/{AssetId}/activities"
+    "operation_id": "getAssetActivities",
+    "path": "/api/v1.0/assets/{assetId}/activities"
   },
   {
     "method": "GET",
-    "name": "get_asset_favorites",
+    "name": "get_asset_by_id",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetFavorites",
-    "path": "/assets/favorites/{UserId}"
+    "operation_id": "getAssetById",
+    "path": "/api/v1.0/assets/{assetId}"
   },
   {
     "method": "GET",
-    "name": "get_asset_favorites2",
+    "name": "get_asset_by_serial",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetFavorites2",
-    "path": "/assets/favorites/{UserId}/{All}"
+    "operation_id": "getAssetBySerial",
+    "path": "/api/v1.0/assets/serial/{serial}"
   },
   {
     "method": "GET",
-    "name": "get_asset_funding_type",
+    "name": "get_asset_change",
     "namespace": "assets",
-    "operation_id": "AssetFundingType_GetAssetFundingType",
-    "path": "/assets/funding/types/{AssetFundingTypeId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_asset_funding_types",
-    "namespace": "assets",
-    "operation_id": "AssetFundingType_GetAssetFundingTypes",
-    "path": "/assets/funding/types"
+    "operation_id": "getAssetChange",
+    "path": "/api/v1.0/assets/changes/{assetChangeId}"
   },
   {
     "method": "POST",
-    "name": "get_asset_funding_types2",
+    "name": "get_asset_change_post",
     "namespace": "assets",
-    "operation_id": "AssetFundingType_GetAssetFundingTypes2",
-    "path": "/assets/funding/types"
+    "operation_id": "getAssetChangePost",
+    "path": "/api/v1.0/assets/changes/{assetChangeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_checkout",
+    "namespace": "assets",
+    "operation_id": "getAssetCheckout",
+    "path": "/api/v1.0/assets/checkouts/{assetCheckoutId}/get"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_checkout_for_owner",
+    "namespace": "assets",
+    "operation_id": "getAssetCheckoutForOwner",
+    "path": "/api/v1.0/assets/{assetId}/checkouts/owner/{ownerId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_checkout_post",
+    "namespace": "assets",
+    "operation_id": "getAssetCheckoutPost",
+    "path": "/api/v1.0/assets/checkouts/{assetCheckoutId}/get"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_checkout_transactions",
+    "namespace": "assets",
+    "operation_id": "getAssetCheckoutTransactions",
+    "path": "/api/v1.0/assets/checkouts/transactions/query/get"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_checkouts_by_ids",
+    "namespace": "assets",
+    "operation_id": "getAssetCheckoutsByIds",
+    "path": "/api/v1.0/assets/checkouts/ids/get"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_checkouts_by_query",
+    "namespace": "assets",
+    "operation_id": "getAssetCheckoutsByQuery",
+    "path": "/api/v1.0/assets/checkouts/query/get"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_files",
+    "namespace": "assets",
+    "operation_id": "getAssetFiles",
+    "path": "/api/v1.0/assets/{assetId}/files"
+  },
+  {
+    "method": "POST",
+    "name": "get_asset_ids_for_filter_sets",
+    "namespace": "assets",
+    "operation_id": "getAssetIdsForFilterSets",
+    "path": "/api/v1.0/assets/ids/for/filtersets"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_inventory_type",
+    "namespace": "assets",
+    "operation_id": "getAssetInventoryType",
+    "path": "/api/v1.0/assets/inventory/types/{assetInventoryTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_stats_by_location",
+    "namespace": "assets",
+    "operation_id": "getAssetStatsByLocation",
+    "path": "/api/v1.0/assets/stats/locations"
   },
   {
     "method": "GET",
     "name": "get_asset_status_type",
     "namespace": "assets",
-    "operation_id": "AssetStatusType_GetAssetStatusType",
-    "path": "/assets/status/types/{AssetStatusTypeId}"
+    "operation_id": "getAssetStatusType",
+    "path": "/api/v1.0/assets/status/types/{assetStatusTypeId}"
   },
   {
     "method": "GET",
-    "name": "get_asset_status_types",
+    "name": "get_asset_total_cost",
     "namespace": "assets",
-    "operation_id": "AssetStatusType_GetAssetStatusTypes",
-    "path": "/assets/status/types"
+    "operation_id": "getAssetTotalCost",
+    "path": "/api/v1.0/assets/{assetId}/total-cost"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_type",
+    "namespace": "assets",
+    "operation_id": "getAssetType",
+    "path": "/api/v1.0/assets/types/{assetTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_valuation",
+    "namespace": "assets",
+    "operation_id": "getAssetValuation",
+    "path": "/api/v1.0/assets/{assetId}/valuation"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_verifications_for_asset",
+    "namespace": "assets",
+    "operation_id": "getAssetVerificationsForAsset",
+    "path": "/api/v1.0/assets/{assetId}/verifications"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_view",
+    "namespace": "assets",
+    "operation_id": "getAssetView",
+    "path": "/api/v1.0/assets/views/{viewId}"
   },
   {
     "method": "POST",
-    "name": "get_asset_status_types2",
+    "name": "get_assets_by_name",
     "namespace": "assets",
-    "operation_id": "AssetStatusType_GetAssetStatusTypes2",
-    "path": "/assets/status/types"
+    "operation_id": "getAssetsByName",
+    "path": "/api/v1.0/assets/by-assetname"
   },
   {
     "method": "POST",
-    "name": "get_assets",
+    "name": "get_assets_by_type",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssets",
-    "path": "/assets"
+    "operation_id": "getAssetsByType",
+    "path": "/api/v1.0/assets/of/{assetTypeId}"
   },
   {
     "method": "GET",
-    "name": "get_assets_by_asset_status_type",
+    "name": "get_assets_by_type_and_location",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetsByAssetStatusType",
-    "path": "/assets/assetstatustype/{AssetStatusTypeId}"
+    "operation_id": "getAssetsByTypeAndLocation",
+    "path": "/api/v1.0/assets/of/{assetTypeId}/at/{locationId}"
   },
   {
     "method": "GET",
-    "name": "get_assets_by_asset_tag",
+    "name": "get_assets_for_user_by_type",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetsByAssetTag",
-    "path": "/assets/assettag/{AssetTag}"
+    "operation_id": "getAssetsForUserByType",
+    "path": "/api/v1.0/assets/of/{assetTypeId}/for/{userId}"
   },
   {
     "method": "GET",
-    "name": "get_assets_by_location_room",
+    "name": "get_assets_for_user_current",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetsByLocationRoom",
-    "path": "/assets/rooms/{LocationRoomId}"
+    "operation_id": "getAssetsForUserCurrent",
+    "path": "/api/v1.0/assets/for/{userId}"
   },
   {
     "method": "GET",
-    "name": "get_assets_by_serial",
+    "name": "get_available_asset_categories",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetsBySerial",
-    "path": "/assets/serial/{Serial}"
+    "operation_id": "getAvailableAssetCategories",
+    "path": "/api/v1.0/assets/categories/site"
   },
   {
     "method": "GET",
-    "name": "get_assets_by_storage_unit_number",
+    "name": "get_facility_assets_by_location",
     "namespace": "assets",
-    "operation_id": "Asset_GetAssetsByStorageUnitNumber",
-    "path": "/assets/storageunit/{LocationId}/{StorageUnitNumber}"
-  },
-  {
-    "method": "POST",
-    "name": "get_assets_count",
-    "namespace": "assets",
-    "operation_id": "Asset_GetAssetsCount",
-    "path": "/assets/count"
+    "operation_id": "getFacilityAssetsByLocation",
+    "path": "/api/v1.0/assets/facility/at/{locationId}"
   },
   {
     "method": "GET",
     "name": "get_global_manufacturers",
     "namespace": "assets",
-    "operation_id": "Manufacturer_GetGlobalManufacturers",
-    "path": "/assets/manufacturers/global"
+    "operation_id": "getGlobalManufacturers",
+    "path": "/api/v1.0/assets/manufacturers/global"
+  },
+  {
+    "method": "GET",
+    "name": "get_linked_assets",
+    "namespace": "assets",
+    "operation_id": "getLinkedAssets",
+    "path": "/api/v1.0/assets/linked/to/{assetId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_manufacturer_by_id",
+    "namespace": "assets",
+    "operation_id": "getManufacturerById",
+    "path": "/api/v1.0/assets/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_manufacturers",
+    "namespace": "assets",
+    "operation_id": "getManufacturers",
+    "path": "/api/v1.0/assets/manufacturers"
+  },
+  {
+    "method": "GET",
+    "name": "get_model_visibility",
+    "namespace": "assets",
+    "operation_id": "getModelVisibility",
+    "path": "/api/v1.0/assets/{assetId}/{modelId}/visibility"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_assets",
+    "namespace": "assets",
+    "operation_id": "getMyAssets",
+    "path": "/api/v1.0/assets/for/me"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_assets_by_type",
+    "namespace": "assets",
+    "operation_id": "getMyAssetsByType",
+    "path": "/api/v1.0/assets/of/{assetTypeId}/for/me"
+  },
+  {
+    "method": "GET",
+    "name": "get_n_s_a_asset_average_cost",
+    "namespace": "assets",
+    "operation_id": "getNSAAssetAverageCost",
+    "path": "/api/v1.0/assets/nsa/average-cost/{assetId}"
   },
   {
     "method": "POST",
-    "name": "get_global_manufacturers2",
+    "name": "get_overdue_asset_checkouts",
     "namespace": "assets",
-    "operation_id": "Manufacturer_GetGlobalManufacturers2",
-    "path": "/assets/manufacturers/global"
+    "operation_id": "getOverdueAssetCheckouts",
+    "path": "/api/v1.0/assets/{assetId}/checkouts/user-ids"
+  },
+  {
+    "method": "POST",
+    "name": "get_popular_categories_for_roles",
+    "namespace": "assets",
+    "operation_id": "getPopularCategoriesForRoles",
+    "path": "/api/v1.0/assets/categories/popular/for-roles"
+  },
+  {
+    "method": "POST",
+    "name": "get_recent_asset_checkout_transactions",
+    "namespace": "assets",
+    "operation_id": "getRecentAssetCheckoutTransactions",
+    "path": "/api/v1.0/assets/checkouts/transactions/recent-activity"
   },
   {
     "method": "GET",
-    "name": "get_manufacturer",
+    "name": "get_suggested_categories_for_user",
     "namespace": "assets",
-    "operation_id": "Manufacturer_GetManufacturer",
-    "path": "/assets/manufacturers/{ManufacturerId}"
+    "operation_id": "getSuggestedCategoriesForUser",
+    "path": "/api/v1.0/assets/models/categories/suggested/{UserId}"
   },
   {
     "method": "GET",
-    "name": "get_spare_assets_by_asset_tag",
+    "name": "get_suggested_online_systems_for_user",
     "namespace": "assets",
-    "operation_id": "Asset_GetSpareAssetsByAssetTag",
-    "path": "/assets/spares/assettag/{AssetTag}"
+    "operation_id": "getSuggestedOnlineSystemsForUser",
+    "path": "/api/v1.0/assets/models/online-systems/suggested/{UserId}"
   },
   {
     "method": "GET",
-    "name": "get_user_assets",
+    "name": "get_user_favorite_assets",
     "namespace": "assets",
-    "operation_id": "Asset_GetUserAssets",
-    "path": "/assets/for/{UserId}"
+    "operation_id": "getUserFavoriteAssets",
+    "path": "/api/v1.0/assets/favorites/{userId}"
+  },
+  {
+    "method": "POST",
+    "name": "keyword_search_assets",
+    "namespace": "assets",
+    "operation_id": "keywordSearchAssets",
+    "path": "/api/v1.0/assets/search"
   },
   {
     "method": "GET",
-    "name": "get_user_assets2",
+    "name": "list_all_assets",
     "namespace": "assets",
-    "operation_id": "Asset_GetUserAssets2",
-    "path": "/assets/for/{UserId}/{All}"
+    "operation_id": "listAllAssets",
+    "path": "/api/v1.0/assets"
+  },
+  {
+    "method": "GET",
+    "name": "list_asset_funding_types",
+    "namespace": "assets",
+    "operation_id": "listAssetFundingTypes",
+    "path": "/api/v1.0/assets/funding/types"
+  },
+  {
+    "method": "GET",
+    "name": "list_asset_inventory_types",
+    "namespace": "assets",
+    "operation_id": "listAssetInventoryTypes",
+    "path": "/api/v1.0/assets/inventory/types"
+  },
+  {
+    "method": "POST",
+    "name": "list_asset_inventory_types_post",
+    "namespace": "assets",
+    "operation_id": "listAssetInventoryTypesPost",
+    "path": "/api/v1.0/assets/inventory/types"
+  },
+  {
+    "method": "GET",
+    "name": "list_asset_status_types",
+    "namespace": "assets",
+    "operation_id": "listAssetStatusTypes",
+    "path": "/api/v1.0/assets/status/types"
+  },
+  {
+    "method": "POST",
+    "name": "list_asset_status_types_post",
+    "namespace": "assets",
+    "operation_id": "listAssetStatusTypesPost",
+    "path": "/api/v1.0/assets/status/types"
+  },
+  {
+    "method": "GET",
+    "name": "list_asset_types",
+    "namespace": "assets",
+    "operation_id": "listAssetTypes",
+    "path": "/api/v1.0/assets/types"
+  },
+  {
+    "method": "POST",
+    "name": "list_asset_types_post",
+    "namespace": "assets",
+    "operation_id": "listAssetTypesPost",
+    "path": "/api/v1.0/assets/types"
+  },
+  {
+    "method": "GET",
+    "name": "list_asset_views",
+    "namespace": "assets",
+    "operation_id": "listAssetViews",
+    "path": "/api/v1.0/assets/views"
+  },
+  {
+    "method": "GET",
+    "name": "list_assets_by_room",
+    "namespace": "assets",
+    "operation_id": "listAssetsByRoom",
+    "path": "/api/v1.0/assets/rooms/{locationRoomId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_assets_by_storage_unit",
+    "namespace": "assets",
+    "operation_id": "listAssetsByStorageUnit",
+    "path": "/api/v1.0/assets/storageunit/{locationId}/{storageUnitNumber}"
+  },
+  {
+    "method": "POST",
+    "name": "merge_assets",
+    "namespace": "assets",
+    "operation_id": "mergeAssets",
+    "path": "/api/v1.0/assets/merge/{slaveAssetId}/into/{masterAssetId}"
+  },
+  {
+    "method": "POST",
+    "name": "query_asset_changes",
+    "namespace": "assets",
+    "operation_id": "queryAssetChanges",
+    "path": "/api/v1.0/assets/changes/query"
+  },
+  {
+    "method": "POST",
+    "name": "remove_asset_favorite",
+    "namespace": "assets",
+    "operation_id": "removeAssetFavorite",
+    "path": "/api/v1.0/assets/favorites/remove/{assetId}/{userId}"
+  },
+  {
+    "method": "POST",
+    "name": "remove_asset_owner",
+    "namespace": "assets",
+    "operation_id": "removeAssetOwner",
+    "path": "/api/v1.0/assets/{assetId}/remove-owner"
   },
   {
     "method": "DELETE",
     "name": "remove_manufacturer_from_site",
     "namespace": "assets",
-    "operation_id": "Manufacturer_RemoveManufacturerFromSite",
-    "path": "/assets/manufacturers/{ManufacturerId}/site"
+    "operation_id": "removeManufacturerFromSite",
+    "path": "/api/v1.0/assets/manufacturers/{ManufacturerId}/site"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_user_asset",
+    "namespace": "assets",
+    "operation_id": "removeUserAsset",
+    "path": "/api/v1.0/assets/{assetId}/for/{userId}"
   },
   {
     "method": "POST",
-    "name": "remove_user_favorite_asset",
+    "name": "search_asset_verifications",
     "namespace": "assets",
-    "operation_id": "Asset_RemoveUserFavoriteAsset",
-    "path": "/assets/favorites/remove/{AssetId}/{UserId}"
+    "operation_id": "searchAssetVerifications",
+    "path": "/api/v1.0/assets/verifications"
   },
   {
-    "method": "GET",
-    "name": "search_assets_by_asset_tag",
+    "method": "POST",
+    "name": "search_assets",
     "namespace": "assets",
-    "operation_id": "Asset_SearchAssetsByAssetTag",
-    "path": "/assets/assettag/search/{AssetTag}"
+    "operation_id": "searchAssets",
+    "path": "/api/v1.0/assets"
   },
   {
     "method": "GET",
     "name": "search_assets_by_serial",
     "namespace": "assets",
-    "operation_id": "Asset_SearchAssetsBySerial",
-    "path": "/assets/serial/search/{Serial}"
+    "operation_id": "searchAssetsBySerial",
+    "path": "/api/v1.0/assets/serial/search/{serial}"
+  },
+  {
+    "method": "POST",
+    "name": "search_global_manufacturers",
+    "namespace": "assets",
+    "operation_id": "searchGlobalManufacturers",
+    "path": "/api/v1.0/assets/manufacturers/global"
+  },
+  {
+    "method": "POST",
+    "name": "search_manufacturers",
+    "namespace": "assets",
+    "operation_id": "searchManufacturers",
+    "path": "/api/v1.0/assets/manufacturers"
+  },
+  {
+    "method": "POST",
+    "name": "set_asset_location",
+    "namespace": "assets",
+    "operation_id": "setAssetLocation",
+    "path": "/api/v1.0/assets/location"
+  },
+  {
+    "method": "POST",
+    "name": "set_asset_owner",
+    "namespace": "assets",
+    "operation_id": "setAssetOwner",
+    "path": "/api/v1.0/assets/{assetId}/owner"
+  },
+  {
+    "method": "POST",
+    "name": "set_asset_owner_advanced_deployment_swap",
+    "namespace": "assets",
+    "operation_id": "setAssetOwnerAdvancedDeploymentSwap",
+    "path": "/api/v1.0/assets/{assetId}/owner/requestor/swap"
+  },
+  {
+    "method": "POST",
+    "name": "set_asset_status",
+    "namespace": "assets",
+    "operation_id": "setAssetStatus",
+    "path": "/api/v1.0/assets/{assetId}/status/{assetStatusTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "take_asset_ownership",
+    "namespace": "assets",
+    "operation_id": "takeAssetOwnership",
+    "path": "/api/v1.0/assets/{assetId}/take-ownership"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_asset",
+    "namespace": "assets",
+    "operation_id": "undeleteAsset",
+    "path": "/api/v1.0/assets/{assetId}/undelete"
+  },
+  {
+    "method": "POST",
+    "name": "undo_asset_exchange_transaction",
+    "namespace": "assets",
+    "operation_id": "undoAssetExchangeTransaction",
+    "path": "/api/v1.0/assets/checkouts/undo-exchange-transaction"
   },
   {
     "method": "POST",
     "name": "update_asset",
     "namespace": "assets",
-    "operation_id": "Asset_UpdateAsset",
-    "path": "/assets/{AssetId}"
+    "operation_id": "updateAsset",
+    "path": "/api/v1.0/assets/{assetId}"
   },
   {
     "method": "POST",
-    "name": "update_asset_funding_type",
+    "name": "update_asset_checkouts_by_ids",
     "namespace": "assets",
-    "operation_id": "AssetFundingType_UpdateAssetFundingType",
-    "path": "/assets/funding/types/{AssetFundingTypeId}"
+    "operation_id": "updateAssetCheckoutsByIds",
+    "path": "/api/v1.0/assets/checkouts/ids/update"
   },
   {
     "method": "POST",
-    "name": "update_asset_status_type",
+    "name": "update_asset_checkouts_by_query",
     "namespace": "assets",
-    "operation_id": "AssetStatusType_UpdateAssetStatusType",
-    "path": "/assets/status/types/{AssetStatusTypeId}"
+    "operation_id": "updateAssetCheckoutsByQuery",
+    "path": "/api/v1.0/assets/checkouts/query/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_exchange_transaction",
+    "namespace": "assets",
+    "operation_id": "updateAssetExchangeTransaction",
+    "path": "/api/v1.0/assets/checkouts/update-exchange-transaction"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_type",
+    "namespace": "assets",
+    "operation_id": "updateAssetType",
+    "path": "/api/v1.0/assets/types/{assetTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_view",
+    "namespace": "assets",
+    "operation_id": "updateAssetView",
+    "path": "/api/v1.0/assets/views/{viewId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_asset_view_sort",
+    "namespace": "assets",
+    "operation_id": "updateAssetViewSort",
+    "path": "/api/v1.0/assets/views/{viewId}/sort"
   },
   {
     "method": "POST",
     "name": "update_manufacturer",
     "namespace": "assets",
-    "operation_id": "Manufacturer_UpdateManufacturer",
-    "path": "/assets/manufacturers/{ManufacturerId}"
+    "operation_id": "updateManufacturer",
+    "path": "/api/v1.0/assets/manufacturers/{ManufacturerId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_my_classes_asset_verification",
+    "namespace": "assets",
+    "operation_id": "updateMyClassesAssetVerification",
+    "path": "/api/v1.0/assets/my-classes/verifications/{assetVerificationId}"
+  },
+  {
+    "method": "GET",
+    "name": "add_asset_to_audit_policy",
+    "namespace": "audits",
+    "operation_id": "addAssetToAuditPolicy",
+    "path": "/api/v1.0/audits/policies/{AssetAuditPolicyId}/add/asset/{AssetId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_audit_policies",
+    "namespace": "audits",
+    "operation_id": "getAssetAuditPolicies",
+    "path": "/api/v1.0/audits/policies"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_audit_policy",
+    "namespace": "audits",
+    "operation_id": "getAssetAuditPolicy",
+    "path": "/api/v1.0/audits/policies/{AssetAuditPolicyId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_audit_policy_assets",
+    "namespace": "audits",
+    "operation_id": "getAssetAuditPolicyAssets",
+    "path": "/api/v1.0/audits/policies/{AssetAuditPolicyId}/assets"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_audit_policy_schedule",
+    "namespace": "audits",
+    "operation_id": "getAssetAuditPolicySchedule",
+    "path": "/api/v1.0/audits/policies/schedules/{AssetAuditPolicyScheduleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_audit_policy_schedule_assets",
+    "namespace": "audits",
+    "operation_id": "getAssetAuditPolicyScheduleAssets",
+    "path": "/api/v1.0/audits/policies/schedule/{AssetAuditPolicyScheduleId}/assets"
+  },
+  {
+    "method": "GET",
+    "name": "get_asset_audit_policy_schedules_for_asset",
+    "namespace": "audits",
+    "operation_id": "getAssetAuditPolicySchedulesForAsset",
+    "path": "/api/v1.0/audits/policies/schedules/for-asset/{AssetId}"
+  },
+  {
+    "method": "POST",
+    "name": "create_asset_category",
+    "namespace": "categories",
+    "operation_id": "createAssetCategory",
+    "path": "/api/v1.0/categories/for/assets/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_category",
+    "namespace": "categories",
+    "operation_id": "createCategory",
+    "path": "/api/v1.0/categories/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_issue_category",
+    "namespace": "categories",
+    "operation_id": "createIssueCategory",
+    "path": "/api/v1.0/categories/for/issue/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_kb_category",
+    "namespace": "categories",
+    "operation_id": "createKbCategory",
+    "path": "/api/v1.0/categories/for/kb/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_model_category",
+    "namespace": "categories",
+    "operation_id": "createModelCategory",
+    "path": "/api/v1.0/categories/for/model/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_role_category",
+    "namespace": "categories",
+    "operation_id": "createRoleCategory",
+    "path": "/api/v1.0/categories/for/roles/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_category",
+    "namespace": "categories",
+    "operation_id": "deleteCategory",
+    "path": "/api/v1.0/categories/{CategoryId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_category_by_id",
+    "namespace": "categories",
+    "operation_id": "getCategoryById",
+    "path": "/api/v1.0/categories/{CategoryId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_category_by_id_and_type",
+    "namespace": "categories",
+    "operation_id": "getCategoryByIdAndType",
+    "path": "/api/v1.0/categories/v2/{CategoryId}/{CategoryTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_category_entity_type_links",
+    "namespace": "categories",
+    "operation_id": "getCategoryEntityTypeLinks",
+    "path": "/api/v1.0/categories/{CategoryTypeId}/link/{EntityTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "link_category_to_app",
+    "namespace": "categories",
+    "operation_id": "linkCategoryToApp",
+    "path": "/api/v1.0/categories/{CategoryId}/link/app/{AppId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_app_categories",
+    "namespace": "categories",
+    "operation_id": "listAppCategories",
+    "path": "/api/v1.0/categories/of/apps"
+  },
+  {
+    "method": "GET",
+    "name": "list_app_category_links",
+    "namespace": "categories",
+    "operation_id": "listAppCategoryLinks",
+    "path": "/api/v1.0/categories/app-links"
+  },
+  {
+    "method": "GET",
+    "name": "list_asset_categories",
+    "namespace": "categories",
+    "operation_id": "listAssetCategories",
+    "path": "/api/v1.0/categories/of/assets"
+  },
+  {
+    "method": "GET",
+    "name": "list_categories_for_app",
+    "namespace": "categories",
+    "operation_id": "listCategoriesForApp",
+    "path": "/api/v1.0/categories/app/{AppId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_categories_v2",
+    "namespace": "categories",
+    "operation_id": "listCategoriesV2",
+    "path": "/api/v1.0/categories/v2"
+  },
+  {
+    "method": "GET",
+    "name": "list_filter_categories",
+    "namespace": "categories",
+    "operation_id": "listFilterCategories",
+    "path": "/api/v1.0/categories/of/filters"
+  },
+  {
+    "method": "GET",
+    "name": "list_issue_categories",
+    "namespace": "categories",
+    "operation_id": "listIssueCategories",
+    "path": "/api/v1.0/categories/of/issues"
+  },
+  {
+    "method": "GET",
+    "name": "list_kb_categories",
+    "namespace": "categories",
+    "operation_id": "listKbCategories",
+    "path": "/api/v1.0/categories/of/kb"
+  },
+  {
+    "method": "GET",
+    "name": "list_model_categories",
+    "namespace": "categories",
+    "operation_id": "listModelCategories",
+    "path": "/api/v1.0/categories/of/models"
+  },
+  {
+    "method": "GET",
+    "name": "list_role_categories",
+    "namespace": "categories",
+    "operation_id": "listRoleCategories",
+    "path": "/api/v1.0/categories/of/roles"
+  },
+  {
+    "method": "POST",
+    "name": "search_categories_v1",
+    "namespace": "categories",
+    "operation_id": "searchCategoriesV1",
+    "path": "/api/v1.0/categories"
+  },
+  {
+    "method": "POST",
+    "name": "search_categories_v2",
+    "namespace": "categories",
+    "operation_id": "searchCategoriesV2",
+    "path": "/api/v1.0/categories/v2"
+  },
+  {
+    "method": "POST",
+    "name": "set_category_sort_order",
+    "namespace": "categories",
+    "operation_id": "setCategorySortOrder",
+    "path": "/api/v1.0/categories/{CategoryId}/sortorder/{SortOrder}"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_category",
+    "namespace": "categories",
+    "operation_id": "undeleteCategory",
+    "path": "/api/v1.0/categories/{CategoryId}/undelete"
+  },
+  {
+    "method": "DELETE",
+    "name": "unlink_category_from_app",
+    "namespace": "categories",
+    "operation_id": "unlinkCategoryFromApp",
+    "path": "/api/v1.0/categories/{CategoryId}/link/app/{AppId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_category",
+    "namespace": "categories",
+    "operation_id": "updateCategory",
+    "path": "/api/v1.0/categories/{CategoryId}"
+  },
+  {
+    "method": "POST",
+    "name": "batch_create_custom_field_entity_mappings",
+    "namespace": "custom_fields",
+    "operation_id": "batchCreateCustomFieldEntityMappings",
+    "path": "/api/v1.0/custom-fields/entity-mappings/batch"
+  },
+  {
+    "method": "POST",
+    "name": "batch_create_custom_field_types",
+    "namespace": "custom_fields",
+    "operation_id": "batchCreateCustomFieldTypes",
+    "path": "/api/v1.0/custom-fields/types/new/batch"
+  },
+  {
+    "method": "DELETE",
+    "name": "batch_delete_custom_field_entity_mappings",
+    "namespace": "custom_fields",
+    "operation_id": "batchDeleteCustomFieldEntityMappings",
+    "path": "/api/v1.0/custom-fields/entity-mappings/batch"
+  },
+  {
+    "method": "POST",
+    "name": "batch_update_custom_field_product",
+    "namespace": "custom_fields",
+    "operation_id": "batchUpdateCustomFieldProduct",
+    "path": "/api/v1.0/custom-fields/product/update/batch"
+  },
+  {
+    "method": "POST",
+    "name": "batch_update_custom_field_types",
+    "namespace": "custom_fields",
+    "operation_id": "batchUpdateCustomFieldTypes",
+    "path": "/api/v1.0/custom-fields/types/update/batch"
+  },
+  {
+    "method": "POST",
+    "name": "check_custom_field_mapping_compatibility",
+    "namespace": "custom_fields",
+    "operation_id": "checkCustomFieldMappingCompatibility",
+    "path": "/api/v1.0/custom-fields/entity-mappings/check-field-compatibility"
+  },
+  {
+    "method": "POST",
+    "name": "create_custom_field_batch",
+    "namespace": "custom_fields",
+    "operation_id": "createCustomFieldBatch",
+    "path": "/api/v1.0/custom-fields/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_custom_field_type",
+    "namespace": "custom_fields",
+    "operation_id": "createCustomFieldType",
+    "path": "/api/v1.0/custom-fields/types/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_asset_inventory_action_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "deleteAssetInventoryActionCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/values/for/asset-inventory-actions/delete"
   },
   {
     "method": "DELETE",
     "name": "delete_custom_field",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_DeleteCustomField",
-    "path": "/custom-fields/{CustomFieldId}"
+    "operation_id": "deleteCustomField",
+    "path": "/api/v1.0/custom-fields/{customFieldId}"
   },
   {
     "method": "DELETE",
     "name": "delete_custom_field_type",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_DeleteCustomFieldType",
-    "path": "/custom-fields/types/{CustomFieldTypeId}"
+    "operation_id": "deleteCustomFieldType",
+    "path": "/api/v1.0/custom-fields/types/{customFieldTypeId}"
   },
   {
     "method": "DELETE",
-    "name": "delete_custom_fields",
+    "name": "delete_custom_field_values_for_assets",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_DeleteCustomFields",
-    "path": "/custom-fields"
+    "operation_id": "deleteCustomFieldValuesForAssets",
+    "path": "/api/v1.0/custom-fields/values/for/assets/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_field_values_for_events",
+    "namespace": "custom_fields",
+    "operation_id": "deleteCustomFieldValuesForEvents",
+    "path": "/api/v1.0/custom-fields/values/for/events/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_field_values_for_tickets",
+    "namespace": "custom_fields",
+    "operation_id": "deleteCustomFieldValuesForTickets",
+    "path": "/api/v1.0/custom-fields/values/for/tickets/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_custom_field_values_for_users",
+    "namespace": "custom_fields",
+    "operation_id": "deleteCustomFieldValuesForUsers",
+    "path": "/api/v1.0/custom-fields/values/for/users/delete"
   },
   {
     "method": "GET",
-    "name": "get_custom_field",
+    "name": "get_asset_custom_field_values",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomField",
-    "path": "/custom-fields/{CustomFieldId}"
+    "operation_id": "getAssetCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/assets/values"
   },
   {
     "method": "GET",
-    "name": "get_custom_field_type",
+    "name": "get_asset_inventory_action_custom_field_values",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFieldType",
-    "path": "/custom-fields/types/{CustomFieldTypeId}"
+    "operation_id": "getAssetInventoryActionCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/values/for/asset-inventory-action/{id}"
   },
   {
     "method": "GET",
-    "name": "get_custom_field_types",
+    "name": "get_custom_field_by_id",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFieldTypes",
-    "path": "/custom-fields/types"
+    "operation_id": "getCustomFieldById",
+    "path": "/api/v1.0/custom-fields/{customFieldId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_entity_mapping_entity_types",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldEntityMappingEntityTypes",
+    "path": "/api/v1.0/custom-fields/entity-mappings/entity-types"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_entity_mappings",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldEntityMappings",
+    "path": "/api/v1.0/custom-fields/entity-mappings"
   },
   {
     "method": "POST",
-    "name": "get_custom_field_types2",
+    "name": "get_custom_field_mapping_compatible_fields",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFieldTypes2",
-    "path": "/custom-fields/types"
+    "operation_id": "getCustomFieldMappingCompatibleFields",
+    "path": "/api/v1.0/custom-fields/entity-mappings/compatible-fields"
+  },
+  {
+    "method": "GET",
+    "name": "get_custom_field_type_by_id",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldTypeById",
+    "path": "/api/v1.0/custom-fields/types/{customFieldTypeId}"
   },
   {
     "method": "GET",
     "name": "get_custom_field_values_for_asset",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFieldValuesForAsset",
-    "path": "/custom-fields/values/for/asset/{AssetId}"
+    "operation_id": "getCustomFieldValuesForAsset",
+    "path": "/api/v1.0/custom-fields/values/for/asset/{assetId}"
   },
   {
     "method": "GET",
     "name": "get_custom_field_values_for_ticket",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFieldValuesForTicket",
-    "path": "/custom-fields/values/for/ticket/{TicketId}"
+    "operation_id": "getCustomFieldValuesForTicket",
+    "path": "/api/v1.0/custom-fields/values/for/ticket/{ticketId}"
   },
   {
     "method": "GET",
     "name": "get_custom_field_values_for_user",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFieldValuesForUser",
-    "path": "/custom-fields/values/for/user/{UserId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_custom_fields",
-    "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFields",
-    "path": "/custom-fields"
+    "operation_id": "getCustomFieldValuesForUser",
+    "path": "/api/v1.0/custom-fields/values/for/user/{userId}"
   },
   {
     "method": "POST",
-    "name": "get_custom_fields2",
+    "name": "get_custom_fields_for_asset",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_GetCustomFields2",
-    "path": "/custom-fields"
+    "operation_id": "getCustomFieldsForAsset",
+    "path": "/api/v1.0/custom-fields/for/asset"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_asset_inventory_action",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForAssetInventoryAction",
+    "path": "/api/v1.0/custom-fields/for/asset-inventory-action"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_event",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForEvent",
+    "path": "/api/v1.0/custom-fields/for/event"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_inventory_item",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForInventoryItem",
+    "path": "/api/v1.0/custom-fields/for/inventory-item"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_location",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForLocation",
+    "path": "/api/v1.0/custom-fields/for/location"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_location_room",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForLocationRoom",
+    "path": "/api/v1.0/custom-fields/for/location-room"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_organization",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForOrganization",
+    "path": "/api/v1.0/custom-fields/for/organization"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_ticket",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForTicket",
+    "path": "/api/v1.0/custom-fields/for/ticket"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_fields_for_user",
+    "namespace": "custom_fields",
+    "operation_id": "getCustomFieldsForUser",
+    "path": "/api/v1.0/custom-fields/for/user"
+  },
+  {
+    "method": "GET",
+    "name": "get_event_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "getEventCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/events/values"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "getTicketCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/tickets/values"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "getUserCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/users/values"
+  },
+  {
+    "method": "GET",
+    "name": "list_custom_field_types",
+    "namespace": "custom_fields",
+    "operation_id": "listCustomFieldTypes",
+    "path": "/api/v1.0/custom-fields/types"
+  },
+  {
+    "method": "POST",
+    "name": "lookup_site_by_searchable_value",
+    "namespace": "custom_fields",
+    "operation_id": "lookupSiteBySearchableValue",
+    "path": "/api/v1.0/custom-fields/complex/lookup-site-by-searchable-value"
+  },
+  {
+    "method": "POST",
+    "name": "reorder_custom_field_types",
+    "namespace": "custom_fields",
+    "operation_id": "reorderCustomFieldTypes",
+    "path": "/api/v1.0/custom-fields/types/re-order"
+  },
+  {
+    "method": "POST",
+    "name": "reorder_custom_fields",
+    "namespace": "custom_fields",
+    "operation_id": "reorderCustomFields",
+    "path": "/api/v1.0/custom-fields/re-order"
+  },
+  {
+    "method": "POST",
+    "name": "search_custom_field_types",
+    "namespace": "custom_fields",
+    "operation_id": "searchCustomFieldTypes",
+    "path": "/api/v1.0/custom-fields/types"
+  },
+  {
+    "method": "POST",
+    "name": "search_custom_fields",
+    "namespace": "custom_fields",
+    "operation_id": "searchCustomFields",
+    "path": "/api/v1.0/custom-fields"
   },
   {
     "method": "POST",
     "name": "update_custom_field",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_UpdateCustomField",
-    "path": "/custom-fields/{CustomFieldId}"
+    "operation_id": "updateCustomField",
+    "path": "/api/v1.0/custom-fields/{customFieldId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_custom_field_product",
+    "namespace": "custom_fields",
+    "operation_id": "updateCustomFieldProduct",
+    "path": "/api/v1.0/custom-fields/{customFieldId}/product"
   },
   {
     "method": "POST",
     "name": "update_custom_field_type",
     "namespace": "custom_fields",
-    "operation_id": "CustomField_UpdateCustomFieldType",
-    "path": "/custom-fields/types/{CustomFieldTypeId}"
+    "operation_id": "updateCustomFieldType",
+    "path": "/api/v1.0/custom-fields/types/{customFieldTypeId}"
   },
   {
     "method": "POST",
-    "name": "submit_form",
-    "namespace": "forms",
-    "operation_id": "Form_SubmitForm",
-    "path": "/forms/submit"
+    "name": "upsert_asset_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "upsertAssetCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/values/for/assets"
+  },
+  {
+    "method": "POST",
+    "name": "upsert_asset_inventory_action_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "upsertAssetInventoryActionCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/values/for/asset-inventory-actions"
+  },
+  {
+    "method": "POST",
+    "name": "upsert_event_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "upsertEventCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/values/for/events"
+  },
+  {
+    "method": "POST",
+    "name": "upsert_ticket_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "upsertTicketCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/values/for/tickets"
+  },
+  {
+    "method": "POST",
+    "name": "upsert_user_custom_field_values",
+    "namespace": "custom_fields",
+    "operation_id": "upsertUserCustomFieldValues",
+    "path": "/api/v1.0/custom-fields/values/for/users"
+  },
+  {
+    "method": "POST",
+    "name": "list_custom_field_types_new",
+    "namespace": "custom_fields_new",
+    "operation_id": "listCustomFieldTypesNew",
+    "path": "/api/v1.0/custom-fields-new/types"
+  },
+  {
+    "method": "POST",
+    "name": "add_event_series_dates",
+    "namespace": "events",
+    "operation_id": "addEventSeriesDates",
+    "path": "/api/v1.0/events/series/add-dates"
+  },
+  {
+    "method": "POST",
+    "name": "calculate_event_fees",
+    "namespace": "events",
+    "operation_id": "calculateEventFees",
+    "path": "/api/v1.0/events/{EventId}/calculate-fees"
+  },
+  {
+    "method": "POST",
+    "name": "create_event",
+    "namespace": "events",
+    "operation_id": "createEvent",
+    "path": "/api/v1.0/events/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_event_series",
+    "namespace": "events",
+    "operation_id": "createEventSeries",
+    "path": "/api/v1.0/events/series/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_event_type",
+    "namespace": "events",
+    "operation_id": "createEventType",
+    "path": "/api/v1.0/events/types"
+  },
+  {
+    "method": "POST",
+    "name": "create_event_types",
+    "namespace": "events",
+    "operation_id": "createEventTypes",
+    "path": "/api/v1.0/events/types/ids"
+  },
+  {
+    "method": "POST",
+    "name": "create_events",
+    "namespace": "events",
+    "operation_id": "createEvents",
+    "path": "/api/v1.0/events/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_event",
+    "namespace": "events",
+    "operation_id": "deleteEvent",
+    "path": "/api/v1.0/events/{EventId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_event_type",
+    "namespace": "events",
+    "operation_id": "deleteEventType",
+    "path": "/api/v1.0/events/types/{EventTypeId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_event_types_by_ids",
+    "namespace": "events",
+    "operation_id": "deleteEventTypesByIds",
+    "path": "/api/v1.0/events/types/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_event_types_by_query",
+    "namespace": "events",
+    "operation_id": "deleteEventTypesByQuery",
+    "path": "/api/v1.0/events/types/query"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_events_by_ids",
+    "namespace": "events",
+    "operation_id": "deleteEventsByIds",
+    "path": "/api/v1.0/events/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_events_by_query",
+    "namespace": "events",
+    "operation_id": "deleteEventsByQuery",
+    "path": "/api/v1.0/events/query"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_recurring_event",
+    "namespace": "events",
+    "operation_id": "deleteRecurringEvent",
+    "path": "/api/v1.0/events/{EventId}/{instance}"
+  },
+  {
+    "method": "GET",
+    "name": "get_available_rooms",
+    "namespace": "events",
+    "operation_id": "getAvailableRooms",
+    "path": "/api/v1.0/events/available/rooms"
+  },
+  {
+    "method": "GET",
+    "name": "get_available_times",
+    "namespace": "events",
+    "operation_id": "getAvailableTimes",
+    "path": "/api/v1.0/events/available/times"
+  },
+  {
+    "method": "GET",
+    "name": "get_event",
+    "namespace": "events",
+    "operation_id": "getEvent",
+    "path": "/api/v1.0/events/{EventId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_event_attachments",
+    "namespace": "events",
+    "operation_id": "getEventAttachments",
+    "path": "/api/v1.0/events/{EventId}/attachments"
+  },
+  {
+    "method": "GET",
+    "name": "get_event_fee_package",
+    "namespace": "events",
+    "operation_id": "getEventFeePackage",
+    "path": "/api/v1.0/events/{EventId}/fee-package"
+  },
+  {
+    "method": "POST",
+    "name": "get_event_recurrence",
+    "namespace": "events",
+    "operation_id": "getEventRecurrence",
+    "path": "/api/v1.0/events/recurrence"
+  },
+  {
+    "method": "GET",
+    "name": "get_event_type",
+    "namespace": "events",
+    "operation_id": "getEventType",
+    "path": "/api/v1.0/events/types/{EventTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_event_types_by_ids",
+    "namespace": "events",
+    "operation_id": "getEventTypesByIds",
+    "path": "/api/v1.0/events/types/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_event_types_by_query_get",
+    "namespace": "events",
+    "operation_id": "getEventTypesByQueryGet",
+    "path": "/api/v1.0/events/types/query"
+  },
+  {
+    "method": "POST",
+    "name": "get_event_types_by_query_post",
+    "namespace": "events",
+    "operation_id": "getEventTypesByQueryPost",
+    "path": "/api/v1.0/events/types/query"
+  },
+  {
+    "method": "POST",
+    "name": "get_events_by_ids",
+    "namespace": "events",
+    "operation_id": "getEventsByIds",
+    "path": "/api/v1.0/events/ids/get"
+  },
+  {
+    "method": "GET",
+    "name": "get_events_by_query_get",
+    "namespace": "events",
+    "operation_id": "getEventsByQueryGet",
+    "path": "/api/v1.0/events/query"
+  },
+  {
+    "method": "POST",
+    "name": "get_events_by_query_post",
+    "namespace": "events",
+    "operation_id": "getEventsByQueryPost",
+    "path": "/api/v1.0/events/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_events_by_query_with_deleted_get",
+    "namespace": "events",
+    "operation_id": "getEventsByQueryWithDeletedGet",
+    "path": "/api/v1.0/events/query/withdeleted"
+  },
+  {
+    "method": "POST",
+    "name": "get_events_by_query_with_deleted_post",
+    "namespace": "events",
+    "operation_id": "getEventsByQueryWithDeletedPost",
+    "path": "/api/v1.0/events/query/withdeleted"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_events_get",
+    "namespace": "events",
+    "operation_id": "getUserEventsGet",
+    "path": "/api/v1.0/events/for/{UserId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_user_events_post",
+    "namespace": "events",
+    "operation_id": "getUserEventsPost",
+    "path": "/api/v1.0/events/for/{UserId}"
+  },
+  {
+    "method": "POST",
+    "name": "project_events",
+    "namespace": "events",
+    "operation_id": "projectEvents",
+    "path": "/api/v1.0/events/project-events"
+  },
+  {
+    "method": "POST",
+    "name": "save_event_attachments",
+    "namespace": "events",
+    "operation_id": "saveEventAttachments",
+    "path": "/api/v1.0/events/{EventId}/attachments"
+  },
+  {
+    "method": "PUT",
+    "name": "update_event",
+    "namespace": "events",
+    "operation_id": "updateEvent",
+    "path": "/api/v1.0/events/{EventId}/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_event_type",
+    "namespace": "events",
+    "operation_id": "updateEventType",
+    "path": "/api/v1.0/events/types/{EventTypeId}/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_event_types_by_ids",
+    "namespace": "events",
+    "operation_id": "updateEventTypesByIds",
+    "path": "/api/v1.0/events/types/ids/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_event_types_by_query",
+    "namespace": "events",
+    "operation_id": "updateEventTypesByQuery",
+    "path": "/api/v1.0/events/types/query/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_events_by_ids",
+    "namespace": "events",
+    "operation_id": "updateEventsByIds",
+    "path": "/api/v1.0/events/ids/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_events_by_query",
+    "namespace": "events",
+    "operation_id": "updateEventsByQuery",
+    "path": "/api/v1.0/events/query/update"
+  },
+  {
+    "method": "GET",
+    "name": "validate_schedule",
+    "namespace": "events",
+    "operation_id": "validateSchedule",
+    "path": "/api/v1.0/events/validate-schedule"
+  },
+  {
+    "method": "POST",
+    "name": "validate_schedules_all",
+    "namespace": "events",
+    "operation_id": "validateSchedulesAll",
+    "path": "/api/v1.0/events/validate-schedules-all"
+  },
+  {
+    "method": "POST",
+    "name": "validate_schedules_calendar_conflicts",
+    "namespace": "events",
+    "operation_id": "validateSchedulesCalendarConflicts",
+    "path": "/api/v1.0/events/validate-schedules-calendar-conflicts"
+  },
+  {
+    "method": "POST",
+    "name": "validate_schedules_conflicting_events",
+    "namespace": "events",
+    "operation_id": "validateSchedulesConflictingEvents",
+    "path": "/api/v1.0/events/validate-schedules-conflicting-events"
+  },
+  {
+    "method": "POST",
+    "name": "validate_schedules_place_reservations",
+    "namespace": "events",
+    "operation_id": "validateSchedulesPlaceReservations",
+    "path": "/api/v1.0/events/validate-schedules-place-reservations"
+  },
+  {
+    "method": "POST",
+    "name": "add_file_to_entity",
+    "namespace": "files",
+    "operation_id": "addFileToEntity",
+    "path": "/api/v1.0/files/{FileId}/entity/{EntityTypeId}/{EntityId}"
+  },
+  {
+    "method": "POST",
+    "name": "convert_to_excel",
+    "namespace": "files",
+    "operation_id": "convertToExcel",
+    "path": "/api/v1.0/files/convert-to-excel"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_file",
+    "namespace": "files",
+    "operation_id": "deleteFile",
+    "path": "/api/v1.0/files/{FileId}"
+  },
+  {
+    "method": "GET",
+    "name": "download_file",
+    "namespace": "files",
+    "operation_id": "downloadFile",
+    "path": "/api/v1.0/files/{FileId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_excel_file",
+    "namespace": "files",
+    "operation_id": "getExcelFile",
+    "path": "/api/v1.0/files/excel/{FileId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_file_attachment_content_types",
+    "namespace": "files",
+    "operation_id": "getFileAttachmentContentTypes",
+    "path": "/api/v1.0/files/file-attachment-content-types"
+  },
+  {
+    "method": "GET",
+    "name": "get_file_base64",
+    "namespace": "files",
+    "operation_id": "getFileBase64",
+    "path": "/api/v1.0/files/base64/{FileId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_file_details",
+    "namespace": "files",
+    "operation_id": "getFileDetails",
+    "path": "/api/v1.0/files/{FileId}/details"
+  },
+  {
+    "method": "GET",
+    "name": "get_file_inline",
+    "namespace": "files",
+    "operation_id": "getFileInline",
+    "path": "/api/v1.0/files/{FileId}/inline"
+  },
+  {
+    "method": "GET",
+    "name": "get_files_for_entity",
+    "namespace": "files",
+    "operation_id": "getFilesForEntity",
+    "path": "/api/v1.0/files/entity/{EntityTypeId}/{EntityId}"
+  },
+  {
+    "method": "POST",
+    "name": "parse_barcode",
+    "namespace": "files",
+    "operation_id": "parseBarcode",
+    "path": "/api/v1.0/files/barcode/parse"
+  },
+  {
+    "method": "POST",
+    "name": "parse_excel_column_unique_values",
+    "namespace": "files",
+    "operation_id": "parseExcelColumnUniqueValues",
+    "path": "/api/v1.0/files/{FileId}/parse-excel/worksheet/{WorksheetIndex}/column/{ColumnIndex}/values"
+  },
+  {
+    "method": "POST",
+    "name": "parse_file_as_excel",
+    "namespace": "files",
+    "operation_id": "parseFileAsExcel",
+    "path": "/api/v1.0/files/{FileId}/parse-excel/{MaxRows}"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_file_from_entity",
+    "namespace": "files",
+    "operation_id": "removeFileFromEntity",
+    "path": "/api/v1.0/files/{FileId}/entity/{EntityTypeId}/{EntityId}"
+  },
+  {
+    "method": "POST",
+    "name": "upload_file",
+    "namespace": "files",
+    "operation_id": "uploadFile",
+    "path": "/api/v1.0/files"
+  },
+  {
+    "method": "POST",
+    "name": "upload_file_base64",
+    "namespace": "files",
+    "operation_id": "uploadFileBase64",
+    "path": "/api/v1.0/files/base64/save"
+  },
+  {
+    "method": "POST",
+    "name": "upload_file_return_url",
+    "namespace": "files",
+    "operation_id": "uploadFileReturnUrl",
+    "path": "/api/v1.0/files/return-as-url"
+  },
+  {
+    "method": "GET",
+    "name": "get_filter_by_key_and_product_id",
+    "namespace": "filter",
+    "operation_id": "getFilterByKeyAndProductId",
+    "path": "/api/v1.0/filter/for/product/{filterKey}"
+  },
+  {
+    "method": "POST",
+    "name": "create_filter",
+    "namespace": "filters",
+    "operation_id": "createFilter",
+    "path": "/api/v1.0/filters/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_filter_by_id",
+    "namespace": "filters",
+    "operation_id": "createFilterById",
+    "path": "/api/v1.0/filters/label/{filterId}/values"
+  },
+  {
+    "method": "POST",
+    "name": "create_filter_set",
+    "namespace": "filters",
+    "operation_id": "createFilterSet",
+    "path": "/api/v1.0/filters/sets/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_filter",
+    "namespace": "filters",
+    "operation_id": "deleteFilter",
+    "path": "/api/v1.0/filters/{FilterId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_filter_by_origin_id",
+    "namespace": "filters",
+    "operation_id": "deleteFilterByOriginId",
+    "path": "/api/v1.0/filters/{SiteId}/origin/{OriginId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_filter_set_value",
+    "namespace": "filters",
+    "operation_id": "deleteFilterSetValue",
+    "path": "/api/v1.0/filters/sets/values/{FilterSetValueId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_field_filter_sets_by_ids",
+    "namespace": "filters",
+    "operation_id": "getCustomFieldFilterSetsByIds",
+    "path": "/api/v1.0/filters/custom-fields/sets/ids/get"
+  },
+  {
+    "method": "POST",
+    "name": "get_custom_field_filter_value_labels",
+    "namespace": "filters",
+    "operation_id": "getCustomFieldFilterValueLabels",
+    "path": "/api/v1.0/filters/label/{filterId}/for/custom-field/{customFieldTypeId}/values"
+  },
+  {
+    "method": "GET",
+    "name": "get_filter_set",
+    "namespace": "filters",
+    "operation_id": "getFilterSet",
+    "path": "/api/v1.0/filters/sets/{filterId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_filter_set_values",
+    "namespace": "filters",
+    "operation_id": "getFilterSetValues",
+    "path": "/api/v1.0/filters/sets/{filterId}/values"
+  },
+  {
+    "method": "POST",
+    "name": "get_filter_sets_by_ids",
+    "namespace": "filters",
+    "operation_id": "getFilterSetsByIds",
+    "path": "/api/v1.0/filters/sets/ids/get"
+  },
+  {
+    "method": "GET",
+    "name": "get_filter_sets_by_type",
+    "namespace": "filters",
+    "operation_id": "getFilterSetsByType",
+    "path": "/api/v1.0/filters/sets/for/type/{FilterSetType}"
+  },
+  {
+    "method": "GET",
+    "name": "get_filter_value_label",
+    "namespace": "filters",
+    "operation_id": "getFilterValueLabel",
+    "path": "/api/v1.0/filters/label/{FilterId}/{Value}"
+  },
+  {
+    "method": "GET",
+    "name": "list_filters",
+    "namespace": "filters",
+    "operation_id": "listFilters",
+    "path": "/api/v1.0/filters"
+  },
+  {
+    "method": "GET",
+    "name": "list_filters_for_entity_type",
+    "namespace": "filters",
+    "operation_id": "listFiltersForEntityType",
+    "path": "/api/v1.0/filters/for/entitytype/{entityTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "save_filter_values_for_kb_articles",
+    "namespace": "filters",
+    "operation_id": "saveFilterValuesForKbArticles",
+    "path": "/api/v1.0/filters/values/for/kb-articles"
+  },
+  {
+    "method": "POST",
+    "name": "save_filter_values_for_views",
+    "namespace": "filters",
+    "operation_id": "saveFilterValuesForViews",
+    "path": "/api/v1.0/filters/values/for/views"
+  },
+  {
+    "method": "POST",
+    "name": "update_filter",
+    "namespace": "filters",
+    "operation_id": "updateFilter",
+    "path": "/api/v1.0/filters/{FilterId}"
+  },
+  {
+    "method": "POST",
+    "name": "create_funding_source",
+    "namespace": "funding_sources",
+    "operation_id": "createFundingSource",
+    "path": "/api/v1.0/funding-sources/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_funding_sources",
+    "namespace": "funding_sources",
+    "operation_id": "createFundingSources",
+    "path": "/api/v1.0/funding-sources/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_funding_source",
+    "namespace": "funding_sources",
+    "operation_id": "deleteFundingSource",
+    "path": "/api/v1.0/funding-sources/{FundingSourceId}/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_funding_sources_by_ids",
+    "namespace": "funding_sources",
+    "operation_id": "deleteFundingSourcesByIds",
+    "path": "/api/v1.0/funding-sources/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_funding_sources_by_query",
+    "namespace": "funding_sources",
+    "operation_id": "deleteFundingSourcesByQuery",
+    "path": "/api/v1.0/funding-sources/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_funding_source_by_id",
+    "namespace": "funding_sources",
+    "operation_id": "getFundingSourceById",
+    "path": "/api/v1.0/funding-sources/{FundingSourceId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_funding_sources_by_ids",
+    "namespace": "funding_sources",
+    "operation_id": "getFundingSourcesByIds",
+    "path": "/api/v1.0/funding-sources/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_funding_sources_legacy",
+    "namespace": "funding_sources",
+    "operation_id": "getFundingSourcesLegacy",
+    "path": "/api/v1.0/funding-sources/query"
+  },
+  {
+    "method": "POST",
+    "name": "search_funding_sources",
+    "namespace": "funding_sources",
+    "operation_id": "searchFundingSources",
+    "path": "/api/v1.0/funding-sources/query"
+  },
+  {
+    "method": "POST",
+    "name": "update_funding_source",
+    "namespace": "funding_sources",
+    "operation_id": "updateFundingSource",
+    "path": "/api/v1.0/funding-sources/{FundingSourceId}/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_funding_sources_by_query",
+    "namespace": "funding_sources",
+    "operation_id": "updateFundingSourcesByQuery",
+    "path": "/api/v1.0/funding-sources/query/update"
+  },
+  {
+    "method": "POST",
+    "name": "get_ticket_stats_global",
+    "namespace": "global_",
+    "operation_id": "getTicketStatsGlobal",
+    "path": "/api/v1.0/global/tickets/stats"
+  },
+  {
+    "method": "POST",
+    "name": "search_tickets_global",
+    "namespace": "global_",
+    "operation_id": "searchTicketsGlobal",
+    "path": "/api/v1.0/global/tickets"
+  },
+  {
+    "method": "POST",
+    "name": "create_inventories_batch",
+    "namespace": "inventory",
+    "operation_id": "createInventoriesBatch",
+    "path": "/api/v1.0/inventory/inventories/ids"
+  },
+  {
+    "method": "POST",
+    "name": "create_inventory",
+    "namespace": "inventory",
+    "operation_id": "createInventory",
+    "path": "/api/v1.0/inventory/inventories/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_inventory_action",
+    "namespace": "inventory",
+    "operation_id": "createInventoryAction",
+    "path": "/api/v1.0/inventory/actions"
+  },
+  {
+    "method": "POST",
+    "name": "create_inventory_actions_batch",
+    "namespace": "inventory",
+    "operation_id": "createInventoryActionsBatch",
+    "path": "/api/v1.0/inventory/actions/ids/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_inventory_item",
+    "namespace": "inventory",
+    "operation_id": "createInventoryItem",
+    "path": "/api/v1.0/inventory/items"
+  },
+  {
+    "method": "POST",
+    "name": "create_inventory_items_batch",
+    "namespace": "inventory",
+    "operation_id": "createInventoryItemsBatch",
+    "path": "/api/v1.0/inventory/items/ids/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_inventory_action",
+    "namespace": "inventory",
+    "operation_id": "deleteInventoryAction",
+    "path": "/api/v1.0/inventory/actions/{InventoryActionId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_inventory_actions_by_ids",
+    "namespace": "inventory",
+    "operation_id": "deleteInventoryActionsByIds",
+    "path": "/api/v1.0/inventory/actions/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_inventory_actions_by_query",
+    "namespace": "inventory",
+    "operation_id": "deleteInventoryActionsByQuery",
+    "path": "/api/v1.0/inventory/actions/query"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_inventory_item",
+    "namespace": "inventory",
+    "operation_id": "deleteInventoryItem",
+    "path": "/api/v1.0/inventory/items/{InventoryItemId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_inventory_items_by_ids",
+    "namespace": "inventory",
+    "operation_id": "deleteInventoryItemsByIds",
+    "path": "/api/v1.0/inventory/items/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_inventory_items_by_query",
+    "namespace": "inventory",
+    "operation_id": "deleteInventoryItemsByQuery",
+    "path": "/api/v1.0/inventory/items/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_inventory_action",
+    "namespace": "inventory",
+    "operation_id": "getInventoryAction",
+    "path": "/api/v1.0/inventory/actions/{InventoryActionId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_inventory_action_post",
+    "namespace": "inventory",
+    "operation_id": "getInventoryActionPost",
+    "path": "/api/v1.0/inventory/actions/{InventoryActionId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_inventory_actions_by_ids",
+    "namespace": "inventory",
+    "operation_id": "getInventoryActionsByIds",
+    "path": "/api/v1.0/inventory/actions/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_inventory_actions_timeline",
+    "namespace": "inventory",
+    "operation_id": "getInventoryActionsTimeline",
+    "path": "/api/v1.0/inventory/actions/timeline"
+  },
+  {
+    "method": "POST",
+    "name": "get_inventory_actions_timeline_post",
+    "namespace": "inventory",
+    "operation_id": "getInventoryActionsTimelinePost",
+    "path": "/api/v1.0/inventory/actions/timeline"
+  },
+  {
+    "method": "GET",
+    "name": "get_inventory_by_id",
+    "namespace": "inventory",
+    "operation_id": "getInventoryById",
+    "path": "/api/v1.0/inventory/inventories/{InventoryId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_inventory_by_id_post",
+    "namespace": "inventory",
+    "operation_id": "getInventoryByIdPost",
+    "path": "/api/v1.0/inventory/inventories/{InventoryId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_inventory_by_query",
+    "namespace": "inventory",
+    "operation_id": "getInventoryByQuery",
+    "path": "/api/v1.0/inventory/{InventoryId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_inventory_category_summary",
+    "namespace": "inventory",
+    "operation_id": "getInventoryCategorySummary",
+    "path": "/api/v1.0/inventory/category-summary"
+  },
+  {
+    "method": "GET",
+    "name": "get_inventory_item_by_id",
+    "namespace": "inventory",
+    "operation_id": "getInventoryItemById",
+    "path": "/api/v1.0/inventory/items/{InventoryItemId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_inventory_item_by_id_post",
+    "namespace": "inventory",
+    "operation_id": "getInventoryItemByIdPost",
+    "path": "/api/v1.0/inventory/items/{InventoryItemId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_inventory_items_by_ids",
+    "namespace": "inventory",
+    "operation_id": "getInventoryItemsByIds",
+    "path": "/api/v1.0/inventory/items/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_inventory_location_category_summary",
+    "namespace": "inventory",
+    "operation_id": "getInventoryLocationCategorySummary",
+    "path": "/api/v1.0/inventory/location-category-summary"
+  },
+  {
+    "method": "GET",
+    "name": "list_inventories",
+    "namespace": "inventory",
+    "operation_id": "listInventories",
+    "path": "/api/v1.0/inventory/inventories"
+  },
+  {
+    "method": "POST",
+    "name": "query_inventories",
+    "namespace": "inventory",
+    "operation_id": "queryInventories",
+    "path": "/api/v1.0/inventory/inventories"
+  },
+  {
+    "method": "POST",
+    "name": "query_inventory_actions",
+    "namespace": "inventory",
+    "operation_id": "queryInventoryActions",
+    "path": "/api/v1.0/inventory/actions/query"
+  },
+  {
+    "method": "GET",
+    "name": "query_inventory_actions_get",
+    "namespace": "inventory",
+    "operation_id": "queryInventoryActionsGet",
+    "path": "/api/v1.0/inventory/actions/query"
+  },
+  {
+    "method": "POST",
+    "name": "query_inventory_by_id_post",
+    "namespace": "inventory",
+    "operation_id": "queryInventoryByIdPost",
+    "path": "/api/v1.0/inventory/{InventoryId}"
+  },
+  {
+    "method": "POST",
+    "name": "query_inventory_items",
+    "namespace": "inventory",
+    "operation_id": "queryInventoryItems",
+    "path": "/api/v1.0/inventory/items/query"
+  },
+  {
+    "method": "GET",
+    "name": "query_inventory_items_legacy",
+    "namespace": "inventory",
+    "operation_id": "queryInventoryItemsLegacy",
+    "path": "/api/v1.0/inventory/items/query"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventories_by_ids",
+    "namespace": "inventory",
+    "operation_id": "updateInventoriesByIds",
+    "path": "/api/v1.0/inventory/inventories/ids/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventories_by_query",
+    "namespace": "inventory",
+    "operation_id": "updateInventoriesByQuery",
+    "path": "/api/v1.0/inventory/inventories/query/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventory",
+    "namespace": "inventory",
+    "operation_id": "updateInventory",
+    "path": "/api/v1.0/inventory/inventories/{InventoryId}/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventory_action",
+    "namespace": "inventory",
+    "operation_id": "updateInventoryAction",
+    "path": "/api/v1.0/inventory/actions/{InventoryActionId}/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventory_actions_by_ids",
+    "namespace": "inventory",
+    "operation_id": "updateInventoryActionsByIds",
+    "path": "/api/v1.0/inventory/actions/ids/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventory_actions_by_query",
+    "namespace": "inventory",
+    "operation_id": "updateInventoryActionsByQuery",
+    "path": "/api/v1.0/inventory/actions/query/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventory_item",
+    "namespace": "inventory",
+    "operation_id": "updateInventoryItem",
+    "path": "/api/v1.0/inventory/items/{InventoryItemId}/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventory_items_by_ids",
+    "namespace": "inventory",
+    "operation_id": "updateInventoryItemsByIds",
+    "path": "/api/v1.0/inventory/items/ids/update"
+  },
+  {
+    "method": "POST",
+    "name": "update_inventory_items_by_query",
+    "namespace": "inventory",
+    "operation_id": "updateInventoryItemsByQuery",
+    "path": "/api/v1.0/inventory/items/query/update"
+  },
+  {
+    "method": "POST",
+    "name": "create_vendor",
+    "namespace": "invoicing",
+    "operation_id": "createVendor",
+    "path": "/api/v1.0/invoicing/vendors/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_vendor",
+    "namespace": "invoicing",
+    "operation_id": "deleteVendor",
+    "path": "/api/v1.0/invoicing/vendors/{id}"
+  },
+  {
+    "method": "GET",
+    "name": "get_all_vendors",
+    "namespace": "invoicing",
+    "operation_id": "getAllVendors",
+    "path": "/api/v1.0/invoicing/vendors"
+  },
+  {
+    "method": "GET",
+    "name": "get_vendor_by_id",
+    "namespace": "invoicing",
+    "operation_id": "getVendorById",
+    "path": "/api/v1.0/invoicing/vendors/{id}"
+  },
+  {
+    "method": "POST",
+    "name": "search_vendors",
+    "namespace": "invoicing",
+    "operation_id": "searchVendors",
+    "path": "/api/v1.0/invoicing/vendors"
+  },
+  {
+    "method": "POST",
+    "name": "update_vendor",
+    "namespace": "invoicing",
+    "operation_id": "updateVendor",
+    "path": "/api/v1.0/invoicing/vendors/{id}"
+  },
+  {
+    "method": "POST",
+    "name": "add_issue_to_models",
+    "namespace": "issues",
+    "operation_id": "addIssueToModels",
+    "path": "/api/v1.0/issues/for/models/link/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_issue",
+    "namespace": "issues",
+    "operation_id": "createIssue",
+    "path": "/api/v1.0/issues/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_issue_type",
+    "namespace": "issues",
+    "operation_id": "createIssueType",
+    "path": "/api/v1.0/issues/types/new"
   },
   {
     "method": "DELETE",
     "name": "delete_issue",
     "namespace": "issues",
-    "operation_id": "Issue_DeleteIssue",
-    "path": "/issues/{IssueId}"
+    "operation_id": "deleteIssue",
+    "path": "/api/v1.0/issues/{issueId}"
   },
   {
     "method": "DELETE",
     "name": "delete_issue_type",
     "namespace": "issues",
-    "operation_id": "Issue_DeleteIssueType",
-    "path": "/issues/types/{IssueTypeId}"
+    "operation_id": "deleteIssueType",
+    "path": "/api/v1.0/issues/types/{issueTypeId}"
   },
   {
     "method": "GET",
     "name": "get_available_issues",
     "namespace": "issues",
-    "operation_id": "Issue_GetAvailableIssues",
-    "path": "/issues/site"
+    "operation_id": "getAvailableIssues",
+    "path": "/api/v1.0/issues/site"
   },
   {
     "method": "GET",
-    "name": "get_issue",
+    "name": "get_issue_by_id",
     "namespace": "issues",
-    "operation_id": "Issue_GetIssue",
-    "path": "/issues/{IssueId}"
+    "operation_id": "getIssueById",
+    "path": "/api/v1.0/issues/{issueId}"
   },
   {
     "method": "GET",
-    "name": "get_issue_type",
+    "name": "get_issue_roles",
     "namespace": "issues",
-    "operation_id": "Issue_GetIssueType",
-    "path": "/issues/types/{IssueTypeId}"
+    "operation_id": "getIssueRoles",
+    "path": "/api/v1.0/issues/{issueId}/roles"
+  },
+  {
+    "method": "GET",
+    "name": "get_issue_type_by_id",
+    "namespace": "issues",
+    "operation_id": "getIssueTypeById",
+    "path": "/api/v1.0/issues/types/{issueTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_issues_for_model",
+    "namespace": "issues",
+    "operation_id": "getIssuesForModel",
+    "path": "/api/v1.0/issues/for/models/{modelId}"
   },
   {
     "method": "POST",
-    "name": "get_issue_types",
+    "name": "get_issues_for_model_categories",
     "namespace": "issues",
-    "operation_id": "Issue_GetIssueTypes",
-    "path": "/issues/types"
+    "operation_id": "getIssuesForModelCategories",
+    "path": "/api/v1.0/issues/for/model-categories"
   },
   {
     "method": "GET",
-    "name": "get_issue_types_simple",
+    "name": "get_issues_for_model_category",
     "namespace": "issues",
-    "operation_id": "Issue_GetIssueTypesSimple",
-    "path": "/issues/types"
+    "operation_id": "getIssuesForModelCategory",
+    "path": "/api/v1.0/issues/for/model-categories/{categoryId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_issues_for_models",
+    "namespace": "issues",
+    "operation_id": "getIssuesForModels",
+    "path": "/api/v1.0/issues/for/models"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_for_issue",
+    "namespace": "issues",
+    "operation_id": "getModelsForIssue",
+    "path": "/api/v1.0/issues/models/{issueId}"
+  },
+  {
+    "method": "POST",
+    "name": "link_issue_to_app",
+    "namespace": "issues",
+    "operation_id": "linkIssueToApp",
+    "path": "/api/v1.0/issues/{issueId}/link/app/{appId}"
+  },
+  {
+    "method": "POST",
+    "name": "link_model_issue_to_app",
+    "namespace": "issues",
+    "operation_id": "linkModelIssueToApp",
+    "path": "/api/v1.0/issues/for/models/{modelIssueId}/link/app/{appId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_global_issue_types",
+    "namespace": "issues",
+    "operation_id": "listGlobalIssueTypes",
+    "path": "/api/v1.0/issues/types/global"
+  },
+  {
+    "method": "GET",
+    "name": "list_issue_types",
+    "namespace": "issues",
+    "operation_id": "listIssueTypes",
+    "path": "/api/v1.0/issues/types"
+  },
+  {
+    "method": "GET",
+    "name": "list_issues",
+    "namespace": "issues",
+    "operation_id": "listIssues",
+    "path": "/api/v1.0/issues"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_issue_from_model",
+    "namespace": "issues",
+    "operation_id": "removeIssueFromModel",
+    "path": "/api/v1.0/issues/for/models/link/{modelIssueId}"
+  },
+  {
+    "method": "POST",
+    "name": "remove_issues_from_models",
+    "namespace": "issues",
+    "operation_id": "removeIssuesFromModels",
+    "path": "/api/v1.0/issues/for/models/link/remove"
+  },
+  {
+    "method": "POST",
+    "name": "save_issue_options_for_site",
+    "namespace": "issues",
+    "operation_id": "saveIssueOptionsForSite",
+    "path": "/api/v1.0/issues/{issueId}/site"
+  },
+  {
+    "method": "POST",
+    "name": "search_issue_types",
+    "namespace": "issues",
+    "operation_id": "searchIssueTypes",
+    "path": "/api/v1.0/issues/types"
+  },
+  {
+    "method": "POST",
+    "name": "search_issues",
+    "namespace": "issues",
+    "operation_id": "searchIssues",
+    "path": "/api/v1.0/issues"
+  },
+  {
+    "method": "POST",
+    "name": "search_model_issues",
+    "namespace": "issues",
+    "operation_id": "searchModelIssues",
+    "path": "/api/v1.0/issues/for/models/link"
+  },
+  {
+    "method": "POST",
+    "name": "set_app_model_issue_name_override",
+    "namespace": "issues",
+    "operation_id": "setAppModelIssueNameOverride",
+    "path": "/api/v1.0/issues/for/models/{modelIssueId}/link/app/{appId}/name"
+  },
+  {
+    "method": "POST",
+    "name": "set_issue_sort_order",
+    "namespace": "issues",
+    "operation_id": "setIssueSortOrder",
+    "path": "/api/v1.0/issues/{issueId}/sortorder/{sortOrder}"
+  },
+  {
+    "method": "DELETE",
+    "name": "unlink_issue_from_app",
+    "namespace": "issues",
+    "operation_id": "unlinkIssueFromApp",
+    "path": "/api/v1.0/issues/{issueId}/link/app/{appId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "unlink_model_issue_from_app",
+    "namespace": "issues",
+    "operation_id": "unlinkModelIssueFromApp",
+    "path": "/api/v1.0/issues/for/models/{modelIssueId}/link/app/{appId}"
   },
   {
     "method": "POST",
     "name": "update_issue",
     "namespace": "issues",
-    "operation_id": "Issue_UpdateIssue",
-    "path": "/issues/{IssueId}"
+    "operation_id": "updateIssue",
+    "path": "/api/v1.0/issues/{issueId}"
   },
   {
     "method": "POST",
     "name": "update_issue_type",
     "namespace": "issues",
-    "operation_id": "Issue_UpdateIssueType",
-    "path": "/issues/types/{IssueTypeId}"
+    "operation_id": "updateIssueType",
+    "path": "/api/v1.0/issues/types/{issueTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_model_issues_to_match_category",
+    "namespace": "issues",
+    "operation_id": "updateModelIssuesToMatchCategory",
+    "path": "/api/v1.0/issues/for/models/{modelId}/match/category"
+  },
+  {
+    "method": "POST",
+    "name": "create_labor_rate",
+    "namespace": "labor",
+    "operation_id": "createLaborRate",
+    "path": "/api/v1.0/labor/rates/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_labor_type",
+    "namespace": "labor",
+    "operation_id": "createLaborType",
+    "path": "/api/v1.0/labor/types/new"
   },
   {
     "method": "DELETE",
-    "name": "delete_location",
+    "name": "delete_labor_rate",
+    "namespace": "labor",
+    "operation_id": "deleteLaborRate",
+    "path": "/api/v1.0/labor/rates/{UserLaborRateId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_labor_type",
+    "namespace": "labor",
+    "operation_id": "deleteLaborType",
+    "path": "/api/v1.0/labor/types/{LaborTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_labor_activity_by_tickets",
+    "namespace": "labor",
+    "operation_id": "getLaborActivityByTickets",
+    "path": "/api/v1.0/labor/rates/tickets"
+  },
+  {
+    "method": "POST",
+    "name": "get_labor_activity_by_tickets_grouped_by_user",
+    "namespace": "labor",
+    "operation_id": "getLaborActivityByTicketsGroupedByUser",
+    "path": "/api/v1.0/labor/rates-by-user/tickets"
+  },
+  {
+    "method": "GET",
+    "name": "get_labor_rate",
+    "namespace": "labor",
+    "operation_id": "getLaborRate",
+    "path": "/api/v1.0/labor/rates/{UserLaborRateId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_labor_type",
+    "namespace": "labor",
+    "operation_id": "getLaborType",
+    "path": "/api/v1.0/labor/types/{LaborTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_labor_rates",
+    "namespace": "labor",
+    "operation_id": "getUserLaborRates",
+    "path": "/api/v1.0/labor/rates/user/{UserId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_users_labor_ticket_activity_actions",
+    "namespace": "labor",
+    "operation_id": "getUsersLaborTicketActivityActions",
+    "path": "/api/v1.0/labor/rates"
+  },
+  {
+    "method": "GET",
+    "name": "list_labor_types",
+    "namespace": "labor",
+    "operation_id": "listLaborTypes",
+    "path": "/api/v1.0/labor/types"
+  },
+  {
+    "method": "POST",
+    "name": "query_labor_types",
+    "namespace": "labor",
+    "operation_id": "queryLaborTypes",
+    "path": "/api/v1.0/labor/types"
+  },
+  {
+    "method": "POST",
+    "name": "update_labor_rate",
+    "namespace": "labor",
+    "operation_id": "updateLaborRate",
+    "path": "/api/v1.0/labor/rates/{UserLaborRateId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_labor_type",
+    "namespace": "labor",
+    "operation_id": "updateLaborType",
+    "path": "/api/v1.0/labor/types/{LaborTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "create_location_room",
     "namespace": "locations",
-    "operation_id": "Location_DeleteLocation",
-    "path": "/locations/{LocationId}"
+    "operation_id": "createLocationRoom",
+    "path": "/api/v2.0/locations/rooms"
+  },
+  {
+    "method": "POST",
+    "name": "create_location_rooms_batch",
+    "namespace": "locations",
+    "operation_id": "createLocationRoomsBatch",
+    "path": "/api/v2.0/locations/rooms/new/batch"
+  },
+  {
+    "method": "POST",
+    "name": "create_location_v2",
+    "namespace": "locations",
+    "operation_id": "createLocationV2",
+    "path": "/api/v2.0/locations/new"
   },
   {
     "method": "DELETE",
     "name": "delete_location_room",
     "namespace": "locations",
-    "operation_id": "Location_DeleteLocationRoom",
-    "path": "/locations/rooms/{LocationRoomId}"
+    "operation_id": "deleteLocationRoom",
+    "path": "/api/v2.0/locations/rooms/{roomId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_location_rooms_batch",
+    "namespace": "locations",
+    "operation_id": "deleteLocationRoomsBatch",
+    "path": "/api/v2.0/locations/rooms/delete/batch"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_location_v2",
+    "namespace": "locations",
+    "operation_id": "deleteLocationV2",
+    "path": "/api/v2.0/locations/{LocationId}/delete"
   },
   {
     "method": "GET",
-    "name": "get_all_location_rooms",
+    "name": "get_address_by_id_v2",
     "namespace": "locations",
-    "operation_id": "Location_GetAllLocationRooms",
-    "path": "/locations/rooms"
+    "operation_id": "getAddressByIdV2",
+    "path": "/api/v2.0/locations/address/{AddressId}"
   },
   {
     "method": "GET",
-    "name": "get_location",
+    "name": "get_all_location_room_status_types",
     "namespace": "locations",
-    "operation_id": "Location_GetLocation",
-    "path": "/locations/{LocationId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_location_room",
-    "namespace": "locations",
-    "operation_id": "Location_GetLocationRoom",
-    "path": "/locations/rooms/{LocationRoomId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_location_rooms",
-    "namespace": "locations",
-    "operation_id": "Location_GetLocationRooms",
-    "path": "/locations/{LocationId}/rooms"
-  },
-  {
-    "method": "GET",
-    "name": "get_location_type",
-    "namespace": "locations",
-    "operation_id": "Location_GetLocationType",
-    "path": "/locations/types/{LocationTypeId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_location_types",
-    "namespace": "locations",
-    "operation_id": "Location_GetLocationTypes",
-    "path": "/locations/types"
-  },
-  {
-    "method": "GET",
-    "name": "get_locations",
-    "namespace": "locations",
-    "operation_id": "Location_GetLocations",
-    "path": "/locations/all"
+    "operation_id": "getAllLocationRoomStatusTypes",
+    "path": "/api/v2.0/locations/rooms/status-types"
   },
   {
     "method": "POST",
-    "name": "update_location",
+    "name": "get_all_site_locations_filtered_v2",
     "namespace": "locations",
-    "operation_id": "Location_UpdateLocation",
-    "path": "/locations/{LocationId}"
+    "operation_id": "getAllSiteLocationsFilteredV2",
+    "path": "/api/v2.0/locations/all"
+  },
+  {
+    "method": "GET",
+    "name": "get_all_site_locations_v2",
+    "namespace": "locations",
+    "operation_id": "getAllSiteLocationsV2",
+    "path": "/api/v2.0/locations/all"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_address_v2",
+    "namespace": "locations",
+    "operation_id": "getLocationAddressV2",
+    "path": "/api/v2.0/locations/{LocationId}/address"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_by_id_v2",
+    "namespace": "locations",
+    "operation_id": "getLocationByIdV2",
+    "path": "/api/v2.0/locations/{LocationId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_floorplans_v2",
+    "namespace": "locations",
+    "operation_id": "getLocationFloorplansV2",
+    "path": "/api/v2.0/locations/{locationId}/floorplans"
+  },
+  {
+    "method": "POST",
+    "name": "get_location_ids_for_filter_sets_v2",
+    "namespace": "locations",
+    "operation_id": "getLocationIdsForFilterSetsV2",
+    "path": "/api/v2.0/locations/ids/for/filtersets"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_images_v2",
+    "namespace": "locations",
+    "operation_id": "getLocationImagesV2",
+    "path": "/api/v2.0/locations/{locationId}/images"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_room_available_times",
+    "namespace": "locations",
+    "operation_id": "getLocationRoomAvailableTimes",
+    "path": "/api/v2.0/locations/rooms/{locationRoomId}/available-times"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_room_by_id",
+    "namespace": "locations",
+    "operation_id": "getLocationRoomById",
+    "path": "/api/v2.0/locations/rooms/{roomId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_room_images",
+    "namespace": "locations",
+    "operation_id": "getLocationRoomImages",
+    "path": "/api/v2.0/locations/rooms/{locationRoomId}/images"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_room_layouts",
+    "namespace": "locations",
+    "operation_id": "getLocationRoomLayouts",
+    "path": "/api/v2.0/locations/rooms/{locationRoomId}/layouts"
+  },
+  {
+    "method": "GET",
+    "name": "get_location_room_status_type_by_id",
+    "namespace": "locations",
+    "operation_id": "getLocationRoomStatusTypeById",
+    "path": "/api/v2.0/locations/rooms/status-types/{statusTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_my_locations_filtered_v2",
+    "namespace": "locations",
+    "operation_id": "getMyLocationsFilteredV2",
+    "path": "/api/v2.0/locations"
+  },
+  {
+    "method": "POST",
+    "name": "get_my_locations_manage_filtered_v2",
+    "namespace": "locations",
+    "operation_id": "getMyLocationsManageFilteredV2",
+    "path": "/api/v2.0/locations/manage"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_locations_manage_v2",
+    "namespace": "locations",
+    "operation_id": "getMyLocationsManageV2",
+    "path": "/api/v2.0/locations/manage"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_locations_v2",
+    "namespace": "locations",
+    "operation_id": "getMyLocationsV2",
+    "path": "/api/v2.0/locations"
+  },
+  {
+    "method": "POST",
+    "name": "get_my_locations_view_filtered_v2",
+    "namespace": "locations",
+    "operation_id": "getMyLocationsViewFilteredV2",
+    "path": "/api/v2.0/locations/view"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_locations_view_v2",
+    "namespace": "locations",
+    "operation_id": "getMyLocationsViewV2",
+    "path": "/api/v2.0/locations/view"
+  },
+  {
+    "method": "POST",
+    "name": "get_site_locations_by_site_id_filtered_v2",
+    "namespace": "locations",
+    "operation_id": "getSiteLocationsBySiteIdFilteredV2",
+    "path": "/api/v2.0/locations/all/{siteId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_site_locations_by_site_id_v2",
+    "namespace": "locations",
+    "operation_id": "getSiteLocationsBySiteIdV2",
+    "path": "/api/v2.0/locations/all/{siteId}"
+  },
+  {
+    "method": "POST",
+    "name": "migrate_location_v2",
+    "namespace": "locations",
+    "operation_id": "migrateLocationV2",
+    "path": "/api/v2.0/locations/migrate"
+  },
+  {
+    "method": "POST",
+    "name": "query_location_rooms",
+    "namespace": "locations",
+    "operation_id": "queryLocationRooms",
+    "path": "/api/v2.0/locations/rooms/query"
+  },
+  {
+    "method": "POST",
+    "name": "query_location_rooms_by_location_id",
+    "namespace": "locations",
+    "operation_id": "queryLocationRoomsByLocationId",
+    "path": "/api/v2.0/locations/{locationId}/rooms"
+  },
+  {
+    "method": "POST",
+    "name": "query_location_rooms_for_user",
+    "namespace": "locations",
+    "operation_id": "queryLocationRoomsForUser",
+    "path": "/api/v2.0/locations/rooms/for/user"
+  },
+  {
+    "method": "POST",
+    "name": "undelete_location_room",
+    "namespace": "locations",
+    "operation_id": "undeleteLocationRoom",
+    "path": "/api/v2.0/locations/rooms/{roomId}/undelete"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_location_v2",
+    "namespace": "locations",
+    "operation_id": "undeleteLocationV2",
+    "path": "/api/v2.0/locations/{LocationId}/undelete"
+  },
+  {
+    "method": "POST",
+    "name": "update_location_floorplans_v2",
+    "namespace": "locations",
+    "operation_id": "updateLocationFloorplansV2",
+    "path": "/api/v2.0/locations/{locationId}/floorplans"
+  },
+  {
+    "method": "POST",
+    "name": "update_location_images_v2",
+    "namespace": "locations",
+    "operation_id": "updateLocationImagesV2",
+    "path": "/api/v2.0/locations/{locationId}/images"
   },
   {
     "method": "POST",
     "name": "update_location_room",
     "namespace": "locations",
-    "operation_id": "Location_UpdateLocationRoom",
-    "path": "/locations/rooms/{LocationRoomId}"
+    "operation_id": "updateLocationRoom",
+    "path": "/api/v2.0/locations/rooms/{roomId}"
   },
   {
     "method": "POST",
-    "name": "add_manufacturer_to_site3",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_AddManufacturerToSite3",
-    "path": "/manufacturers/{ManufacturerId}/site"
+    "name": "update_location_room_available_times",
+    "namespace": "locations",
+    "operation_id": "updateLocationRoomAvailableTimes",
+    "path": "/api/v2.0/locations/rooms/{locationRoomId}/available-times"
   },
   {
     "method": "POST",
-    "name": "add_manufacturer_to_site4",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_AddManufacturerToSite4",
-    "path": "/manufacturers/{ManufacturerId}/site/{IncludeAllModels}"
+    "name": "update_location_room_images",
+    "namespace": "locations",
+    "operation_id": "updateLocationRoomImages",
+    "path": "/api/v2.0/locations/rooms/{locationRoomId}/images"
+  },
+  {
+    "method": "POST",
+    "name": "update_location_room_layouts",
+    "namespace": "locations",
+    "operation_id": "updateLocationRoomLayouts",
+    "path": "/api/v2.0/locations/rooms/{locationRoomId}/layouts"
+  },
+  {
+    "method": "POST",
+    "name": "update_location_rooms_batch",
+    "namespace": "locations",
+    "operation_id": "updateLocationRoomsBatch",
+    "path": "/api/v2.0/locations/rooms/update/batch"
+  },
+  {
+    "method": "POST",
+    "name": "update_location_v2",
+    "namespace": "locations",
+    "operation_id": "updateLocationV2",
+    "path": "/api/v2.0/locations/{LocationId}/update"
+  },
+  {
+    "method": "POST",
+    "name": "create_metric",
+    "namespace": "metrics",
+    "operation_id": "createMetric",
+    "path": "/api/v1.0/metrics/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_metric_by_id",
+    "namespace": "metrics",
+    "operation_id": "createMetricById",
+    "path": "/api/v1.0/metrics/for/sla/{id}"
   },
   {
     "method": "DELETE",
-    "name": "delete_manufacturer2",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_DeleteManufacturer2",
-    "path": "/manufacturers/{ManufacturerId}"
+    "name": "delete_metric_metrics",
+    "namespace": "metrics",
+    "operation_id": "deleteMetricMetrics",
+    "path": "/api/v1.0/metrics/{id}"
   },
   {
     "method": "GET",
-    "name": "get_global_manufacturers3",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_GetGlobalManufacturers3",
-    "path": "/manufacturers/global"
+    "name": "get_metric_by_id",
+    "namespace": "metrics",
+    "operation_id": "getMetricById",
+    "path": "/api/v1.0/metrics/types/{typeId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_metric_metrics",
+    "namespace": "metrics",
+    "operation_id": "listMetricMetrics",
+    "path": "/api/v1.0/metrics"
+  },
+  {
+    "method": "GET",
+    "name": "list_metrics",
+    "namespace": "metrics",
+    "operation_id": "listMetrics",
+    "path": "/api/v1.0/metrics/types"
   },
   {
     "method": "POST",
-    "name": "get_global_manufacturers4",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_GetGlobalManufacturers4",
-    "path": "/manufacturers/global"
-  },
-  {
-    "method": "GET",
-    "name": "get_manufacturer2",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_GetManufacturer2",
-    "path": "/manufacturers/{ManufacturerId}"
+    "name": "create_model",
+    "namespace": "models",
+    "operation_id": "createModel",
+    "path": "/api/v1.0/models/new"
   },
   {
     "method": "DELETE",
-    "name": "remove_manufacturer_from_site2",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_RemoveManufacturerFromSite2",
-    "path": "/manufacturers/{ManufacturerId}/site"
+    "name": "delete_model",
+    "namespace": "models",
+    "operation_id": "deleteModel",
+    "path": "/api/v1.0/models/{ModelId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_app_model_details",
+    "namespace": "models",
+    "operation_id": "getAppModelDetails",
+    "path": "/api/v1.0/models/{ModelId}/link/app/{AppId}/details"
   },
   {
     "method": "POST",
-    "name": "update_manufacturer2",
-    "namespace": "manufacturers",
-    "operation_id": "Manufacturer_UpdateManufacturer2",
-    "path": "/manufacturers/{ManufacturerId}"
+    "name": "get_global_models_by_manufacturer",
+    "namespace": "models",
+    "operation_id": "getGlobalModelsByManufacturer",
+    "path": "/api/v1.0/models/global/for/manufacturer/{ManufacturerId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_global_models_by_manufacturer_get",
+    "namespace": "models",
+    "operation_id": "getGlobalModelsByManufacturerGet",
+    "path": "/api/v1.0/models/global/for/manufacturer/{ManufacturerId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_model_by_id",
+    "namespace": "models",
+    "operation_id": "getModelById",
+    "path": "/api/v1.0/models/{ModelId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_model_counts",
+    "namespace": "models",
+    "operation_id": "getModelCounts",
+    "path": "/api/v1.0/models/counts"
+  },
+  {
+    "method": "POST",
+    "name": "get_model_counts_by_category",
+    "namespace": "models",
+    "operation_id": "getModelCountsByCategory",
+    "path": "/api/v1.0/models/for/category/{CategoryId}/counts"
+  },
+  {
+    "method": "GET",
+    "name": "get_model_counts_by_category_get",
+    "namespace": "models",
+    "operation_id": "getModelCountsByCategoryGet",
+    "path": "/api/v1.0/models/for/category/{CategoryId}/counts"
+  },
+  {
+    "method": "POST",
+    "name": "get_model_mappings",
+    "namespace": "models",
+    "operation_id": "getModelMappings",
+    "path": "/api/v1.0/models/alias-mapping"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_available_to_site",
+    "namespace": "models",
+    "operation_id": "getModelsAvailableToSite",
+    "path": "/api/v1.0/models/available/to/site"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_available_to_site_v2",
+    "namespace": "models",
+    "operation_id": "getModelsAvailableToSiteV2",
+    "path": "/api/v1.0/models/available/to/siteV2"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_by_category",
+    "namespace": "models",
+    "operation_id": "getModelsByCategory",
+    "path": "/api/v1.0/models/for/category/{CategoryId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_by_category_for_my_role",
+    "namespace": "models",
+    "operation_id": "getModelsByCategoryForMyRole",
+    "path": "/api/v1.0/models/for/category/{CategoryId}/for/role"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_by_category_for_my_role_get",
+    "namespace": "models",
+    "operation_id": "getModelsByCategoryForMyRoleGet",
+    "path": "/api/v1.0/models/for/category/{CategoryId}/for/role"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_by_category_for_role",
+    "namespace": "models",
+    "operation_id": "getModelsByCategoryForRole",
+    "path": "/api/v1.0/models/for/category/{CategoryId}/for/role/{RoleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_by_category_for_role_get",
+    "namespace": "models",
+    "operation_id": "getModelsByCategoryForRoleGet",
+    "path": "/api/v1.0/models/for/category/{CategoryId}/for/role/{RoleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_by_category_get",
+    "namespace": "models",
+    "operation_id": "getModelsByCategoryGet",
+    "path": "/api/v1.0/models/for/category/{CategoryId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_by_manufacturer",
+    "namespace": "models",
+    "operation_id": "getModelsByManufacturer",
+    "path": "/api/v1.0/models/for/manufacturer/{ManufacturerId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_by_manufacturer_get",
+    "namespace": "models",
+    "operation_id": "getModelsByManufacturerGet",
+    "path": "/api/v1.0/models/for/manufacturer/{ManufacturerId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_for_app",
+    "namespace": "models",
+    "operation_id": "getModelsForApp",
+    "path": "/api/v1.0/models/apps/{AppId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_for_app_get",
+    "namespace": "models",
+    "operation_id": "getModelsForAppGet",
+    "path": "/api/v1.0/models/apps/{AppId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_for_my_role",
+    "namespace": "models",
+    "operation_id": "getModelsForMyRole",
+    "path": "/api/v1.0/models/for/role"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_for_my_role_get",
+    "namespace": "models",
+    "operation_id": "getModelsForMyRoleGet",
+    "path": "/api/v1.0/models/for/role"
+  },
+  {
+    "method": "POST",
+    "name": "get_models_for_role",
+    "namespace": "models",
+    "operation_id": "getModelsForRole",
+    "path": "/api/v1.0/models/for/role/{RoleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_models_for_role_get",
+    "namespace": "models",
+    "operation_id": "getModelsForRoleGet",
+    "path": "/api/v1.0/models/for/role/{RoleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_popular_models",
+    "namespace": "models",
+    "operation_id": "getPopularModels",
+    "path": "/api/v1.0/models/popular"
+  },
+  {
+    "method": "POST",
+    "name": "link_model_to_app",
+    "namespace": "models",
+    "operation_id": "linkModelToApp",
+    "path": "/api/v1.0/models/{ModelId}/link/app/{AppId}"
+  },
+  {
+    "method": "POST",
+    "name": "list_all_global_models",
+    "namespace": "models",
+    "operation_id": "listAllGlobalModels",
+    "path": "/api/v1.0/models/all/global"
+  },
+  {
+    "method": "GET",
+    "name": "list_all_global_models_get",
+    "namespace": "models",
+    "operation_id": "listAllGlobalModelsGet",
+    "path": "/api/v1.0/models/all/global"
+  },
+  {
+    "method": "POST",
+    "name": "list_all_models",
+    "namespace": "models",
+    "operation_id": "listAllModels",
+    "path": "/api/v1.0/models/all"
+  },
+  {
+    "method": "GET",
+    "name": "list_all_models_get",
+    "namespace": "models",
+    "operation_id": "listAllModelsGet",
+    "path": "/api/v1.0/models/all"
+  },
+  {
+    "method": "POST",
+    "name": "list_all_site_models",
+    "namespace": "models",
+    "operation_id": "listAllSiteModels",
+    "path": "/api/v1.0/models/all/sites"
+  },
+  {
+    "method": "GET",
+    "name": "list_all_site_models_get",
+    "namespace": "models",
+    "operation_id": "listAllSiteModelsGet",
+    "path": "/api/v1.0/models/all/sites"
+  },
+  {
+    "method": "GET",
+    "name": "list_models",
+    "namespace": "models",
+    "operation_id": "listModels",
+    "path": "/api/v1.0/models"
   },
   {
     "method": "DELETE",
-    "name": "delete_metric",
-    "namespace": "metrics",
-    "operation_id": "Sla_DeleteMetric",
-    "path": "/metrics/{MetricId}"
+    "name": "remove_model_from_site",
+    "namespace": "models",
+    "operation_id": "removeModelFromSite",
+    "path": "/api/v1.0/models/{ModelId}/site"
+  },
+  {
+    "method": "POST",
+    "name": "search_models",
+    "namespace": "models",
+    "operation_id": "searchModels",
+    "path": "/api/v1.0/models"
+  },
+  {
+    "method": "POST",
+    "name": "set_model_site_visibility",
+    "namespace": "models",
+    "operation_id": "setModelSiteVisibility",
+    "path": "/api/v1.0/models/{ModelId}/site"
   },
   {
     "method": "DELETE",
-    "name": "delete_metric_type",
-    "namespace": "metrics",
-    "operation_id": "Sla_DeleteMetricType",
-    "path": "/metrics/types/{MetricTypeId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_metric",
-    "namespace": "metrics",
-    "operation_id": "Sla_GetMetric",
-    "path": "/metrics/{MetricId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_metric_type",
-    "namespace": "metrics",
-    "operation_id": "Sla_GetMetricType",
-    "path": "/metrics/types/{MetricTypeId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_metric_types",
-    "namespace": "metrics",
-    "operation_id": "Sla_GetMetricTypes",
-    "path": "/metrics/types"
-  },
-  {
-    "method": "GET",
-    "name": "get_metrics",
-    "namespace": "metrics",
-    "operation_id": "Sla_GetMetrics",
-    "path": "/metrics"
-  },
-  {
-    "method": "GET",
-    "name": "get_metrics_for_sla",
-    "namespace": "metrics",
-    "operation_id": "Sla_GetMetricsForSla",
-    "path": "/metrics/for/sla/{SlaId}"
+    "name": "unlink_model_from_app",
+    "namespace": "models",
+    "operation_id": "unlinkModelFromApp",
+    "path": "/api/v1.0/models/{ModelId}/link/app/{AppId}"
   },
   {
     "method": "POST",
-    "name": "update_metric",
-    "namespace": "metrics",
-    "operation_id": "Sla_UpdateMetric",
-    "path": "/metrics/{MetricId}"
+    "name": "update_app_model_details",
+    "namespace": "models",
+    "operation_id": "updateAppModelDetails",
+    "path": "/api/v1.0/models/{ModelId}/link/app/{AppId}/details"
   },
   {
     "method": "POST",
-    "name": "update_metric_type",
-    "namespace": "metrics",
-    "operation_id": "Sla_UpdateMetricType",
-    "path": "/metrics/types/{MetricTypeId}"
+    "name": "update_model",
+    "namespace": "models",
+    "operation_id": "updateModel",
+    "path": "/api/v1.0/models/{ModelId}"
   },
   {
     "method": "POST",
-    "name": "update_metrics_for_sla",
-    "namespace": "metrics",
-    "operation_id": "Sla_UpdateMetricsForSla",
-    "path": "/metrics/for/sla/{SlaId}"
+    "name": "update_model_site_linking",
+    "namespace": "models",
+    "operation_id": "updateModelSiteLinking",
+    "path": "/api/v1.0/models/site"
   },
   {
     "method": "POST",
-    "name": "get_notifications",
-    "namespace": "notifications",
-    "operation_id": "Notification_GetNotifications",
-    "path": "/notifications"
-  },
-  {
-    "method": "GET",
-    "name": "get_ticket_emails",
-    "namespace": "notifications",
-    "operation_id": "Notification_GetTicketEmails",
-    "path": "/notifications/emails/for/ticket/{TicketId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_unarchived_notifications",
-    "namespace": "notifications",
-    "operation_id": "Notification_GetUnarchivedNotifications",
-    "path": "/notifications/unarchived"
-  },
-  {
-    "method": "GET",
-    "name": "get_unread_notifications",
-    "namespace": "notifications",
-    "operation_id": "Notification_GetUnreadNotifications",
-    "path": "/notifications/unread"
+    "name": "create_organization",
+    "namespace": "organizations",
+    "operation_id": "createOrganization",
+    "path": "/api/v1.0/organizations/new"
   },
   {
     "method": "POST",
-    "name": "mark_all_notifications_archived",
-    "namespace": "notifications",
-    "operation_id": "Notification_MarkAllNotificationsArchived",
-    "path": "/notifications/all-archive"
+    "name": "create_organization_type",
+    "namespace": "organizations",
+    "operation_id": "createOrganizationType",
+    "path": "/api/v1.0/organizations/types"
   },
   {
     "method": "POST",
-    "name": "mark_all_notifications_read",
-    "namespace": "notifications",
-    "operation_id": "Notification_MarkAllNotificationsRead",
-    "path": "/notifications/all-read"
+    "name": "create_organization_types",
+    "namespace": "organizations",
+    "operation_id": "createOrganizationTypes",
+    "path": "/api/v1.0/organizations/types/ids"
   },
   {
     "method": "POST",
-    "name": "mark_notification_archived",
-    "namespace": "notifications",
-    "operation_id": "Notification_MarkNotificationArchived",
-    "path": "/notifications/{NotificationId}/archive"
+    "name": "create_organization_user",
+    "namespace": "organizations",
+    "operation_id": "createOrganizationUser",
+    "path": "/api/v1.0/organizations/users"
   },
   {
     "method": "POST",
-    "name": "mark_notification_read",
-    "namespace": "notifications",
-    "operation_id": "Notification_MarkNotificationRead",
-    "path": "/notifications/{NotificationId}/read"
+    "name": "create_organization_users",
+    "namespace": "organizations",
+    "operation_id": "createOrganizationUsers",
+    "path": "/api/v1.0/organizations/users/ids"
+  },
+  {
+    "method": "POST",
+    "name": "create_organizations",
+    "namespace": "organizations",
+    "operation_id": "createOrganizations",
+    "path": "/api/v1.0/organizations/ids"
   },
   {
     "method": "DELETE",
-    "name": "delete_part",
-    "namespace": "parts",
-    "operation_id": "Part_DeletePart",
-    "path": "/parts/{PartId}"
+    "name": "delete_organization",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganization",
+    "path": "/api/v1.0/organizations/{OrganizationId}"
   },
   {
     "method": "DELETE",
-    "name": "delete_part_supplier",
-    "namespace": "parts",
-    "operation_id": "Part_DeletePartSupplier",
-    "path": "/parts/suppliers/{PartSupplierId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_part",
-    "namespace": "parts",
-    "operation_id": "Part_GetPart",
-    "path": "/parts/{PartId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_part_supplier",
-    "namespace": "parts",
-    "operation_id": "Part_GetPartSupplier",
-    "path": "/parts/suppliers/{PartSupplierId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_part_suppliers",
-    "namespace": "parts",
-    "operation_id": "Part_GetPartSuppliers",
-    "path": "/parts/suppliers"
-  },
-  {
-    "method": "GET",
-    "name": "get_parts",
-    "namespace": "parts",
-    "operation_id": "Part_GetParts",
-    "path": "/parts"
-  },
-  {
-    "method": "POST",
-    "name": "update_part",
-    "namespace": "parts",
-    "operation_id": "Part_UpdatePart",
-    "path": "/parts/{PartId}"
-  },
-  {
-    "method": "POST",
-    "name": "update_part_supplier",
-    "namespace": "parts",
-    "operation_id": "Part_UpdatePartSupplier",
-    "path": "/parts/suppliers/{PartSupplierId}"
+    "name": "delete_organization_type",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationType",
+    "path": "/api/v1.0/organizations/types/{OrganizationTypeId}"
   },
   {
     "method": "DELETE",
-    "name": "delete_purchase_order",
-    "namespace": "purchaseorders",
-    "operation_id": "Part_DeletePurchaseOrder",
-    "path": "/purchaseorders/{PurchaseOrderId}"
+    "name": "delete_organization_types_by_ids",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationTypesByIds",
+    "path": "/api/v1.0/organizations/types/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_organization_types_by_query",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationTypesByQuery",
+    "path": "/api/v1.0/organizations/types/query"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_organization_user",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationUser",
+    "path": "/api/v1.0/organizations/users/{OrganizationUserId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_organization_users_by_ids",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationUsersByIds",
+    "path": "/api/v1.0/organizations/users/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_organization_users_by_query",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationUsersByQuery",
+    "path": "/api/v1.0/organizations/users/query"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_organizations_by_ids",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationsByIds",
+    "path": "/api/v1.0/organizations/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_organizations_by_query",
+    "namespace": "organizations",
+    "operation_id": "deleteOrganizationsByQuery",
+    "path": "/api/v1.0/organizations/query"
   },
   {
     "method": "GET",
-    "name": "get_purchase_order",
-    "namespace": "purchaseorders",
-    "operation_id": "Part_GetPurchaseOrder",
-    "path": "/purchaseorders/{PurchaseOrderId}"
+    "name": "get_default_organization",
+    "namespace": "organizations",
+    "operation_id": "getDefaultOrganization",
+    "path": "/api/v1.0/organizations/default"
   },
   {
     "method": "GET",
-    "name": "get_purchase_orders",
-    "namespace": "purchaseorders",
-    "operation_id": "Part_GetPurchaseOrders",
-    "path": "/purchaseorders"
+    "name": "get_my_organizations_get",
+    "namespace": "organizations",
+    "operation_id": "getMyOrganizationsGet",
+    "path": "/api/v1.0/organizations/my"
   },
   {
     "method": "POST",
-    "name": "update_purchase_order",
-    "namespace": "purchaseorders",
-    "operation_id": "Part_UpdatePurchaseOrder",
-    "path": "/purchaseorders/{PurchaseOrderId}"
+    "name": "get_my_organizations_post",
+    "namespace": "organizations",
+    "operation_id": "getMyOrganizationsPost",
+    "path": "/api/v1.0/organizations/my"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization",
+    "namespace": "organizations",
+    "operation_id": "getOrganization",
+    "path": "/api/v1.0/organizations/{OrganizationId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization_attachments",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationAttachments",
+    "path": "/api/v1.0/organizations/{OrganizationId}/attachments"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization_type",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationType",
+    "path": "/api/v1.0/organizations/types/{OrganizationTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization_types_by_ids",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationTypesByIds",
+    "path": "/api/v1.0/organizations/types/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization_types_by_query_get",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationTypesByQueryGet",
+    "path": "/api/v1.0/organizations/types/query"
+  },
+  {
+    "method": "POST",
+    "name": "get_organization_types_by_query_post",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationTypesByQueryPost",
+    "path": "/api/v1.0/organizations/types/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization_user",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationUser",
+    "path": "/api/v1.0/organizations/users/{OrganizationUserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization_users_by_ids",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationUsersByIds",
+    "path": "/api/v1.0/organizations/users/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_organization_users_by_query_get",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationUsersByQueryGet",
+    "path": "/api/v1.0/organizations/users/query"
+  },
+  {
+    "method": "POST",
+    "name": "get_organization_users_by_query_post",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationUsersByQueryPost",
+    "path": "/api/v1.0/organizations/users/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_organizations_by_ids",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationsByIds",
+    "path": "/api/v1.0/organizations/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_organizations_by_query_get",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationsByQueryGet",
+    "path": "/api/v1.0/organizations/query"
+  },
+  {
+    "method": "POST",
+    "name": "get_organizations_by_query_post",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationsByQueryPost",
+    "path": "/api/v1.0/organizations/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_organizations_for_contact_email",
+    "namespace": "organizations",
+    "operation_id": "getOrganizationsForContactEmail",
+    "path": "/api/v1.0/organizations/for/contact"
+  },
+  {
+    "method": "POST",
+    "name": "save_organization_attachments",
+    "namespace": "organizations",
+    "operation_id": "saveOrganizationAttachments",
+    "path": "/api/v1.0/organizations/{OrganizationId}/attachments"
+  },
+  {
+    "method": "GET",
+    "name": "search_organizations",
+    "namespace": "organizations",
+    "operation_id": "searchOrganizations",
+    "path": "/api/v1.0/organizations/search"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organization",
+    "namespace": "organizations",
+    "operation_id": "updateOrganization",
+    "path": "/api/v1.0/organizations/{OrganizationId}/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organization_type",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationType",
+    "path": "/api/v1.0/organizations/types/{OrganizationTypeId}/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organization_types_by_ids",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationTypesByIds",
+    "path": "/api/v1.0/organizations/types/ids/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organization_types_by_query",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationTypesByQuery",
+    "path": "/api/v1.0/organizations/types/query/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organization_user",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationUser",
+    "path": "/api/v1.0/organizations/users/{OrganizationUserId}/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organization_users_by_ids",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationUsersByIds",
+    "path": "/api/v1.0/organizations/users/ids/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organization_users_by_query",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationUsersByQuery",
+    "path": "/api/v1.0/organizations/users/query/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organizations_by_ids",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationsByIds",
+    "path": "/api/v1.0/organizations/ids/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_organizations_by_query",
+    "namespace": "organizations",
+    "operation_id": "updateOrganizationsByQuery",
+    "path": "/api/v1.0/organizations/query/update"
+  },
+  {
+    "method": "GET",
+    "name": "list_products",
+    "namespace": "products",
+    "operation_id": "listProducts",
+    "path": "/api/v1.0/products/all"
+  },
+  {
+    "method": "POST",
+    "name": "search_spare_pool_assets",
+    "namespace": "pub",
+    "operation_id": "searchSparePoolAssets",
+    "path": "/pub/iq-modules-assets-search/v1/assets"
+  },
+  {
+    "method": "POST",
+    "name": "create_purchase_order_inventory",
+    "namespace": "purchase_orders",
+    "operation_id": "createPurchaseOrderInventory",
+    "path": "/api/v1.0/purchase-orders/new"
+  },
+  {
+    "method": "GET",
+    "name": "get_purchase_order_by_id_inventory",
+    "namespace": "purchase_orders",
+    "operation_id": "getPurchaseOrderByIdInventory",
+    "path": "/api/v1.0/purchase-orders/{PurchaseOrderId}"
+  },
+  {
+    "method": "POST",
+    "name": "query_purchase_orders",
+    "namespace": "purchase_orders",
+    "operation_id": "queryPurchaseOrders",
+    "path": "/api/v1.0/purchase-orders/query"
+  },
+  {
+    "method": "POST",
+    "name": "update_purchase_order_inventory",
+    "namespace": "purchase_orders",
+    "operation_id": "updatePurchaseOrderInventory",
+    "path": "/api/v1.0/purchase-orders/{PurchaseOrderId}/update"
+  },
+  {
+    "method": "GET",
+    "name": "get_close_reason_types",
+    "namespace": "resolutions",
+    "operation_id": "getCloseReasonTypes",
+    "path": "/api/v1.0/resolutions/close-reason-types"
+  },
+  {
+    "method": "GET",
+    "name": "get_resolution_action",
+    "namespace": "resolutions",
+    "operation_id": "getResolutionAction",
+    "path": "/api/v1.0/resolutions/actions/{actionId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_resolution_actions",
+    "namespace": "resolutions",
+    "operation_id": "listResolutionActions",
+    "path": "/api/v1.0/resolutions/actions"
+  },
+  {
+    "method": "GET",
+    "name": "get_shortcut",
+    "namespace": "shortcuts",
+    "operation_id": "getShortcut",
+    "path": "/api/v1.0/shortcuts/{ShortcutId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_site_settings",
+    "namespace": "sites",
+    "operation_id": "getMySiteSettings",
+    "path": "/api/v1.0/sites/my/settings"
+  },
+  {
+    "method": "GET",
+    "name": "get_role_by_id",
+    "namespace": "sites",
+    "operation_id": "getRoleById",
+    "path": "/api/v1.0/sites/roles/{RoleId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_site_by_url",
+    "namespace": "sites",
+    "operation_id": "getSiteByUrl",
+    "path": "/api/v1.0/sites/{siteUrl}"
+  },
+  {
+    "method": "GET",
+    "name": "get_site_settings_by_id",
+    "namespace": "sites",
+    "operation_id": "getSiteSettingsById",
+    "path": "/api/v1.0/sites/{SiteId}/settings"
+  },
+  {
+    "method": "GET",
+    "name": "list_roles",
+    "namespace": "sites",
+    "operation_id": "listRoles",
+    "path": "/api/v1.0/sites/roles"
+  },
+  {
+    "method": "POST",
+    "name": "list_roles_filtered",
+    "namespace": "sites",
+    "operation_id": "listRolesFiltered",
+    "path": "/api/v1.0/sites/roles"
+  },
+  {
+    "method": "GET",
+    "name": "list_roles_with_permission_policies",
+    "namespace": "sites",
+    "operation_id": "listRolesWithPermissionPolicies",
+    "path": "/api/v1.0/sites/roles/with-permission-policies"
+  },
+  {
+    "method": "GET",
+    "name": "list_sites",
+    "namespace": "sites",
+    "operation_id": "listSites",
+    "path": "/api/v1.0/sites"
   },
   {
     "method": "POST",
     "name": "activate_sla",
     "namespace": "slas",
-    "operation_id": "Sla_ActivateSla",
-    "path": "/slas/{SlaId}/activate"
+    "operation_id": "activateSla",
+    "path": "/api/v1.0/slas/{SlaId}/activate"
+  },
+  {
+    "method": "GET",
+    "name": "add_sla_days_to_date",
+    "namespace": "slas",
+    "operation_id": "addSlaDaysToDate",
+    "path": "/api/v1.0/slas/date/{date}/add-days/{days}"
+  },
+  {
+    "method": "POST",
+    "name": "create_sla",
+    "namespace": "slas",
+    "operation_id": "createSla",
+    "path": "/api/v1.0/slas/new"
   },
   {
     "method": "POST",
     "name": "deactivate_sla",
     "namespace": "slas",
-    "operation_id": "Sla_DeactivateSla",
-    "path": "/slas/{SlaId}/deactivate"
+    "operation_id": "deactivateSla",
+    "path": "/api/v1.0/slas/{SlaId}/deactivate"
   },
   {
     "method": "DELETE",
-    "name": "delete_sla",
+    "name": "delete_sla_by_id",
     "namespace": "slas",
-    "operation_id": "Sla_DeleteSla",
-    "path": "/slas/{SlaId}"
+    "operation_id": "deleteSlaById",
+    "path": "/api/v1.0/slas/{id}"
   },
   {
     "method": "GET",
-    "name": "get_sla",
+    "name": "list_slas",
     "namespace": "slas",
-    "operation_id": "Sla_GetSla",
-    "path": "/slas/{SlaId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_slas",
-    "namespace": "slas",
-    "operation_id": "Sla_GetSlas",
-    "path": "/slas"
+    "operation_id": "listSlas",
+    "path": "/api/v1.0/slas"
   },
   {
     "method": "POST",
-    "name": "update_sla",
-    "namespace": "slas",
-    "operation_id": "Sla_UpdateSla",
-    "path": "/slas/{SlaId}"
+    "name": "assign_subtask",
+    "namespace": "subtasks",
+    "operation_id": "assignSubtask",
+    "path": "/api/v1.0/subtasks/{subtaskId}/assign/{userId}"
+  },
+  {
+    "method": "POST",
+    "name": "assign_subtasks_to_group",
+    "namespace": "subtasks",
+    "operation_id": "assignSubtasksToGroup",
+    "path": "/api/v1.0/subtasks/group/assign"
+  },
+  {
+    "method": "POST",
+    "name": "complete_subtask",
+    "namespace": "subtasks",
+    "operation_id": "completeSubtask",
+    "path": "/api/v1.0/subtasks/{subtaskId}/complete"
+  },
+  {
+    "method": "POST",
+    "name": "convert_subtask_to_ticket",
+    "namespace": "subtasks",
+    "operation_id": "convertSubtaskToTicket",
+    "path": "/api/v1.0/subtasks/{ticketSubtaskId}/convert"
+  },
+  {
+    "method": "POST",
+    "name": "create_subtask",
+    "namespace": "subtasks",
+    "operation_id": "createSubtask",
+    "path": "/api/v1.0/subtasks/create"
+  },
+  {
+    "method": "POST",
+    "name": "create_subtask_group",
+    "namespace": "subtasks",
+    "operation_id": "createSubtaskGroup",
+    "path": "/api/v1.0/subtasks/group/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_subtask",
+    "namespace": "subtasks",
+    "operation_id": "deleteSubtask",
+    "path": "/api/v1.0/subtasks/{id}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_subtask_group",
+    "namespace": "subtasks",
+    "operation_id": "deleteSubtaskGroup",
+    "path": "/api/v1.0/subtasks/group/{subtaskGroupId}"
+  },
+  {
+    "method": "POST",
+    "name": "duplicate_subtask",
+    "namespace": "subtasks",
+    "operation_id": "duplicateSubtask",
+    "path": "/api/v1.0/subtasks/{ticketSubtaskId}/duplicate"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_subtask_groups",
+    "namespace": "subtasks",
+    "operation_id": "getMySubtaskGroups",
+    "path": "/api/v1.0/subtasks/my/groups"
+  },
+  {
+    "method": "GET",
+    "name": "get_subtask_source_ticket",
+    "namespace": "subtasks",
+    "operation_id": "getSubtaskSourceTicket",
+    "path": "/api/v1.0/subtasks/{ticketId}/sourceTicket"
+  },
+  {
+    "method": "GET",
+    "name": "get_subtasks_for_ticket",
+    "namespace": "subtasks",
+    "operation_id": "getSubtasksForTicket",
+    "path": "/api/v1.0/subtasks/{id}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_subtask_groups",
+    "namespace": "subtasks",
+    "operation_id": "getUserSubtaskGroups",
+    "path": "/api/v1.0/subtasks/{userId}/groups"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_subtasks",
+    "namespace": "subtasks",
+    "operation_id": "getUserSubtasks",
+    "path": "/api/v1.0/subtasks"
+  },
+  {
+    "method": "POST",
+    "name": "remove_subtask_group_from_ticket",
+    "namespace": "subtasks",
+    "operation_id": "removeSubtaskGroupFromTicket",
+    "path": "/api/v1.0/subtasks/group/remove/{subtaskGroupId}/{ticketId}"
+  },
+  {
+    "method": "POST",
+    "name": "revert_subtask_completion",
+    "namespace": "subtasks",
+    "operation_id": "revertSubtaskCompletion",
+    "path": "/api/v1.0/subtasks/{ticketSubtaskId}/revert"
+  },
+  {
+    "method": "POST",
+    "name": "unassign_subtask",
+    "namespace": "subtasks",
+    "operation_id": "unassignSubtask",
+    "path": "/api/v1.0/subtasks/{ticketSubtaskId}/unassign"
+  },
+  {
+    "method": "POST",
+    "name": "ungroup_subtask_group_from_ticket",
+    "namespace": "subtasks",
+    "operation_id": "ungroupSubtaskGroupFromTicket",
+    "path": "/api/v1.0/subtasks/group/ungroup/{subtaskGroupId}/{ticketId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_subtask_group",
+    "namespace": "subtasks",
+    "operation_id": "updateSubtaskGroup",
+    "path": "/api/v1.0/subtasks/group/{subtaskGroupId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_subtask_sort_order",
+    "namespace": "subtasks",
+    "operation_id": "updateSubtaskSortOrder",
+    "path": "/api/v1.0/subtasks/update-sort"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_subticket",
+    "namespace": "subtickets",
+    "operation_id": "deleteSubticket",
+    "path": "/api/v1.0/subtickets/{ticketId}"
+  },
+  {
+    "method": "POST",
+    "name": "create_supplier",
+    "namespace": "suppliers",
+    "operation_id": "createSupplier",
+    "path": "/api/v1.0/suppliers"
+  },
+  {
+    "method": "POST",
+    "name": "create_suppliers_batch",
+    "namespace": "suppliers",
+    "operation_id": "createSuppliersBatch",
+    "path": "/api/v1.0/suppliers/ids/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_supplier",
+    "namespace": "suppliers",
+    "operation_id": "deleteSupplier",
+    "path": "/api/v1.0/suppliers/{supplierId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_suppliers_by_query",
+    "namespace": "suppliers",
+    "operation_id": "deleteSuppliersByQuery",
+    "path": "/api/v1.0/suppliers/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_supplier_by_id",
+    "namespace": "suppliers",
+    "operation_id": "getSupplierById",
+    "path": "/api/v1.0/suppliers/{supplierId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_supplier_by_id_post",
+    "namespace": "suppliers",
+    "operation_id": "getSupplierByIdPost",
+    "path": "/api/v1.0/suppliers/{supplierId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_suppliers_by_query",
+    "namespace": "suppliers",
+    "operation_id": "getSuppliersByQuery",
+    "path": "/api/v1.0/suppliers/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_suppliers_by_query_legacy",
+    "namespace": "suppliers",
+    "operation_id": "getSuppliersByQueryLegacy",
+    "path": "/api/v1.0/suppliers/query"
+  },
+  {
+    "method": "POST",
+    "name": "update_supplier",
+    "namespace": "suppliers",
+    "operation_id": "updateSupplier",
+    "path": "/api/v1.0/suppliers/{supplierId}/update"
+  },
+  {
+    "method": "GET",
+    "name": "activate_survey",
+    "namespace": "surveys",
+    "operation_id": "activateSurvey",
+    "path": "/api/v1.0/surveys/{SurveyId}/activate"
+  },
+  {
+    "method": "POST",
+    "name": "create_survey",
+    "namespace": "surveys",
+    "operation_id": "createSurvey",
+    "path": "/api/v1.0/surveys/new"
+  },
+  {
+    "method": "GET",
+    "name": "deactivate_survey",
+    "namespace": "surveys",
+    "operation_id": "deactivateSurvey",
+    "path": "/api/v1.0/surveys/{SurveyId}/deactivate"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_survey",
+    "namespace": "surveys",
+    "operation_id": "deleteSurvey",
+    "path": "/api/v1.0/surveys/{SurveyId}"
+  },
+  {
+    "method": "POST",
+    "name": "dismiss_survey_for_ticket",
+    "namespace": "surveys",
+    "operation_id": "dismissSurveyForTicket",
+    "path": "/api/v1.0/surveys/{SurveyId}/dismiss/ticket/{TicketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_pending_surveys",
+    "namespace": "surveys",
+    "operation_id": "getMyPendingSurveys",
+    "path": "/api/v1.0/surveys/my/pending"
+  },
+  {
+    "method": "GET",
+    "name": "get_pending_surveys",
+    "namespace": "surveys",
+    "operation_id": "getPendingSurveys",
+    "path": "/api/v1.0/surveys/{UserId}/pending"
+  },
+  {
+    "method": "GET",
+    "name": "get_survey",
+    "namespace": "surveys",
+    "operation_id": "getSurvey",
+    "path": "/api/v1.0/surveys/{SurveyId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_survey_response_for_ticket",
+    "namespace": "surveys",
+    "operation_id": "getSurveyResponseForTicket",
+    "path": "/api/v1.0/surveys/responses/ticket/{TicketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_survey_responses",
+    "namespace": "surveys",
+    "operation_id": "getSurveyResponses",
+    "path": "/api/v1.0/surveys/responses/{SurveyId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_survey_rules",
+    "namespace": "surveys",
+    "operation_id": "getSurveyRules",
+    "path": "/api/v1.0/surveys/{SurveyId}/rules"
+  },
+  {
+    "method": "GET",
+    "name": "get_surveys",
+    "namespace": "surveys",
+    "operation_id": "getSurveys",
+    "path": "/api/v1.0/surveys"
+  },
+  {
+    "method": "POST",
+    "name": "save_survey_response_for_ticket",
+    "namespace": "surveys",
+    "operation_id": "saveSurveyResponseForTicket",
+    "path": "/api/v1.0/surveys/responses/ticket/{TicketId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_survey",
+    "namespace": "surveys",
+    "operation_id": "updateSurvey",
+    "path": "/api/v1.0/surveys/{SurveyId}"
+  },
+  {
+    "method": "POST",
+    "name": "create_tag",
+    "namespace": "tags",
+    "operation_id": "createTag",
+    "path": "/api/v1.0/tags"
+  },
+  {
+    "method": "POST",
+    "name": "create_tags",
+    "namespace": "tags",
+    "operation_id": "createTags",
+    "path": "/api/v1.0/tags/ids/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_tag",
+    "namespace": "tags",
+    "operation_id": "deleteTag",
+    "path": "/api/v1.0/tags/{TagId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_tags_by_ids",
+    "namespace": "tags",
+    "operation_id": "deleteTagsByIds",
+    "path": "/api/v1.0/tags/ids"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_tags_by_query",
+    "namespace": "tags",
+    "operation_id": "deleteTagsByQuery",
+    "path": "/api/v1.0/tags/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_tag",
+    "namespace": "tags",
+    "operation_id": "getTag",
+    "path": "/api/v1.0/tags/{TagId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_tags_by_ids",
+    "namespace": "tags",
+    "operation_id": "getTagsByIds",
+    "path": "/api/v1.0/tags/ids"
+  },
+  {
+    "method": "GET",
+    "name": "get_tags_by_query",
+    "namespace": "tags",
+    "operation_id": "getTagsByQuery",
+    "path": "/api/v1.0/tags/query"
+  },
+  {
+    "method": "GET",
+    "name": "get_tags_by_type",
+    "namespace": "tags",
+    "operation_id": "getTagsByType",
+    "path": "/api/v1.0/tags/of/type/{tagTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "search_tags_by_query",
+    "namespace": "tags",
+    "operation_id": "searchTagsByQuery",
+    "path": "/api/v1.0/tags/query"
+  },
+  {
+    "method": "POST",
+    "name": "search_tags_by_type",
+    "namespace": "tags",
+    "operation_id": "searchTagsByType",
+    "path": "/api/v1.0/tags/of/type/{tagTypeId}"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_tag",
+    "namespace": "tags",
+    "operation_id": "undeleteTag",
+    "path": "/api/v1.0/tags/{TagId}/undelete"
+  },
+  {
+    "method": "PUT",
+    "name": "update_tag",
+    "namespace": "tags",
+    "operation_id": "updateTag",
+    "path": "/api/v1.0/tags/{TagId}/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_tags_by_ids",
+    "namespace": "tags",
+    "operation_id": "updateTagsByIds",
+    "path": "/api/v1.0/tags/ids/update"
+  },
+  {
+    "method": "PUT",
+    "name": "update_tags_by_query",
+    "namespace": "tags",
+    "operation_id": "updateTagsByQuery",
+    "path": "/api/v1.0/tags/query/update"
+  },
+  {
+    "method": "POST",
+    "name": "add_team_member",
+    "namespace": "teams",
+    "operation_id": "addTeamMember",
+    "path": "/api/v1.0/teams/{teamId}/members/{userId}"
+  },
+  {
+    "method": "POST",
+    "name": "add_team_members",
+    "namespace": "teams",
+    "operation_id": "addTeamMembers",
+    "path": "/api/v1.0/teams/members"
+  },
+  {
+    "method": "POST",
+    "name": "clear_team_members",
+    "namespace": "teams",
+    "operation_id": "clearTeamMembers",
+    "path": "/api/v1.0/teams/{teamId}/clear-members"
+  },
+  {
+    "method": "POST",
+    "name": "create_team",
+    "namespace": "teams",
+    "operation_id": "createTeam",
+    "path": "/api/v1.0/teams/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_team",
+    "namespace": "teams",
+    "operation_id": "deleteTeam",
+    "path": "/api/v1.0/teams/{teamId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_team_members",
+    "namespace": "teams",
+    "operation_id": "deleteTeamMembers",
+    "path": "/api/v1.0/teams/members"
+  },
+  {
+    "method": "GET",
+    "name": "get_team",
+    "namespace": "teams",
+    "operation_id": "getTeam",
+    "path": "/api/v1.0/teams/{teamId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_all_teams",
+    "namespace": "teams",
+    "operation_id": "listAllTeams",
+    "path": "/api/v1.0/teams/all"
+  },
+  {
+    "method": "GET",
+    "name": "list_my_teams",
+    "namespace": "teams",
+    "operation_id": "listMyTeams",
+    "path": "/api/v1.0/teams/my"
+  },
+  {
+    "method": "GET",
+    "name": "list_paged_team_members",
+    "namespace": "teams",
+    "operation_id": "listPagedTeamMembers",
+    "path": "/api/v1.0/teams/{teamId}/paged-members"
+  },
+  {
+    "method": "GET",
+    "name": "list_team_members",
+    "namespace": "teams",
+    "operation_id": "listTeamMembers",
+    "path": "/api/v1.0/teams/{teamId}/members"
+  },
+  {
+    "method": "POST",
+    "name": "list_team_product_ids",
+    "namespace": "teams",
+    "operation_id": "listTeamProductIds",
+    "path": "/api/v1.0/teams/products/all/ids"
+  },
+  {
+    "method": "GET",
+    "name": "list_team_products",
+    "namespace": "teams",
+    "operation_id": "listTeamProducts",
+    "path": "/api/v1.0/teams/products/all"
+  },
+  {
+    "method": "GET",
+    "name": "list_teams",
+    "namespace": "teams",
+    "operation_id": "listTeams",
+    "path": "/api/v1.0/teams"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_team_member",
+    "namespace": "teams",
+    "operation_id": "removeTeamMember",
+    "path": "/api/v1.0/teams/{teamId}/members/{userId}"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_team",
+    "namespace": "teams",
+    "operation_id": "undeleteTeam",
+    "path": "/api/v1.0/teams/{teamId}/undelete"
+  },
+  {
+    "method": "POST",
+    "name": "update_team",
+    "namespace": "teams",
+    "operation_id": "updateTeam",
+    "path": "/api/v1.0/teams/{teamId}"
+  },
+  {
+    "method": "PUT",
+    "name": "update_team_members",
+    "namespace": "teams",
+    "operation_id": "updateTeamMembers",
+    "path": "/api/v1.0/teams/members"
+  },
+  {
+    "method": "POST",
+    "name": "add_ticket_follower_team",
+    "namespace": "tickets",
+    "operation_id": "addTicketFollowerTeam",
+    "path": "/api/v1.0/tickets/{ticketId}/followers/team/{teamId}"
+  },
+  {
+    "method": "POST",
+    "name": "add_ticket_follower_user",
+    "namespace": "tickets",
+    "operation_id": "addTicketFollowerUser",
+    "path": "/api/v1.0/tickets/{ticketId}/followers/user/{userId}"
+  },
+  {
+    "method": "POST",
+    "name": "add_ticket_tag",
+    "namespace": "tickets",
+    "operation_id": "addTicketTag",
+    "path": "/api/v1.0/tickets/{ticketId}/tags/{tagId}"
   },
   {
     "method": "POST",
     "name": "assign_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_AssignTicket",
-    "path": "/tickets/{TicketId}/sla"
+    "operation_id": "assignTicket",
+    "path": "/api/v1.0/tickets/{ticketId}/assign"
+  },
+  {
+    "method": "POST",
+    "name": "assign_ticket_sla",
+    "namespace": "tickets",
+    "operation_id": "assignTicketSla",
+    "path": "/api/v1.0/tickets/{ticketId}/sla"
   },
   {
     "method": "POST",
     "name": "cancel_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_CancelTicket",
-    "path": "/tickets/{TicketId}/cancel"
+    "operation_id": "cancelTicket",
+    "path": "/api/v1.0/tickets/{ticketId}/cancel"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_activity_visibility",
+    "namespace": "tickets",
+    "operation_id": "changeTicketActivityVisibility",
+    "path": "/api/v1.0/tickets/{ticketId}/activities/{ticketActivityId}/visibility"
+  },
+  {
+    "method": "POST",
+    "name": "change_ticket_approver",
+    "namespace": "tickets",
+    "operation_id": "changeTicketApprover",
+    "path": "/api/v1.0/tickets/{ticketId}/workflow/approval/change"
   },
   {
     "method": "POST",
     "name": "change_ticket_issue",
     "namespace": "tickets",
-    "operation_id": "Ticket_ChangeTicketIssue",
-    "path": "/tickets/{TicketId}/issue"
-  },
-  {
-    "method": "POST",
-    "name": "change_ticket_to_requestor_responded",
-    "namespace": "tickets",
-    "operation_id": "Ticket_ChangeTicketToRequestorResponded",
-    "path": "/tickets/{TicketId}/status/requestor-responded"
-  },
-  {
-    "method": "POST",
-    "name": "change_ticket_to_waiting_on_requestor",
-    "namespace": "tickets",
-    "operation_id": "Ticket_ChangeTicketToWaitingOnRequestor",
-    "path": "/tickets/{TicketId}/status/waiting-on-requestor"
+    "operation_id": "changeTicketIssue",
+    "path": "/api/v1.0/tickets/{ticketId}/issue"
   },
   {
     "method": "POST",
     "name": "close_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_CloseTicket",
-    "path": "/tickets/{TicketId}/close"
+    "operation_id": "closeTicket",
+    "path": "/api/v1.0/tickets/{ticketId}/close"
   },
   {
     "method": "POST",
     "name": "confirm_ticket_issue",
     "namespace": "tickets",
-    "operation_id": "Ticket_ConfirmTicketIssue",
-    "path": "/tickets/{TicketId}/confirm-issue"
+    "operation_id": "confirmTicketIssue",
+    "path": "/api/v1.0/tickets/{ticketId}/confirm-issue"
   },
   {
     "method": "POST",
     "name": "copy_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_CopyTicket",
-    "path": "/tickets/{TicketId}/copy"
+    "operation_id": "copyTicket",
+    "path": "/api/v1.0/tickets/{ticketId}/copy"
+  },
+  {
+    "method": "POST",
+    "name": "create_simple_ticket",
+    "namespace": "tickets",
+    "operation_id": "createSimpleTicket",
+    "path": "/api/v1.0/tickets/simple/new"
   },
   {
     "method": "POST",
     "name": "create_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_CreateTicket",
-    "path": "/tickets/new"
+    "operation_id": "createTicket",
+    "path": "/api/v1.0/tickets/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_ticket_activity",
+    "namespace": "tickets",
+    "operation_id": "createTicketActivity",
+    "path": "/api/v1.0/tickets/{ticketId}/activities/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_ticket_activity_batch",
+    "namespace": "tickets",
+    "operation_id": "createTicketActivityBatch",
+    "path": "/api/v1.0/tickets/{ticketId}/activities/new-batch"
+  },
+  {
+    "method": "POST",
+    "name": "create_ticket_next_step",
+    "namespace": "tickets",
+    "operation_id": "createTicketNextStep",
+    "path": "/api/v1.0/tickets/{ticketId}/next-steps/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_ticket_next_step_template",
+    "namespace": "tickets",
+    "operation_id": "createTicketNextStepTemplate",
+    "path": "/api/v1.0/tickets/next-step/templates/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_ticket_view",
+    "namespace": "tickets",
+    "operation_id": "createTicketView",
+    "path": "/api/v1.0/tickets/views/new"
   },
   {
     "method": "DELETE",
     "name": "delete_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_DeleteTicket",
-    "path": "/tickets/{TicketId}"
+    "operation_id": "deleteTicket",
+    "path": "/api/v1.0/tickets/{ticketId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_ticket_activity",
+    "namespace": "tickets",
+    "operation_id": "deleteTicketActivity",
+    "path": "/api/v1.0/tickets/activities/{ticketActivityId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_ticket_next_step_template",
+    "namespace": "tickets",
+    "operation_id": "deleteTicketNextStepTemplate",
+    "path": "/api/v1.0/tickets/next-step/templates/{TicketNextStepTemplateId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_ticket_view",
+    "namespace": "tickets",
+    "operation_id": "deleteTicketView",
+    "path": "/api/v1.0/tickets/views/{viewId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_activities_for_tickets",
+    "namespace": "tickets",
+    "operation_id": "getActivitiesForTickets",
+    "path": "/api/v1.0/tickets/activities"
+  },
+  {
+    "method": "GET",
+    "name": "get_all_workflow_statuses",
+    "namespace": "tickets",
+    "operation_id": "getAllWorkflowStatuses",
+    "path": "/api/v1.0/tickets/workflows/statuses"
+  },
+  {
+    "method": "GET",
+    "name": "get_related_tickets",
+    "namespace": "tickets",
+    "operation_id": "getRelatedTickets",
+    "path": "/api/v1.0/tickets/{ticketId}/related-tickets"
+  },
+  {
+    "method": "POST",
+    "name": "get_similar_tickets",
+    "namespace": "tickets",
+    "operation_id": "getSimilarTickets",
+    "path": "/api/v1.0/tickets/get-similar-tickets"
   },
   {
     "method": "GET",
     "name": "get_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_GetTicket",
-    "path": "/tickets/{TicketId}"
+    "operation_id": "getTicket",
+    "path": "/api/v1.0/tickets/{ticketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_activities",
+    "namespace": "tickets",
+    "operation_id": "getTicketActivities",
+    "path": "/api/v1.0/tickets/{ticketId}/activities"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_activity_by_id",
+    "namespace": "tickets",
+    "operation_id": "getTicketActivityById",
+    "path": "/api/v1.0/tickets/activities/{ticketActivityId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_approvals",
+    "namespace": "tickets",
+    "operation_id": "getTicketApprovals",
+    "path": "/api/v1.0/tickets/{ticketId}/approvals"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_asset_groups",
+    "namespace": "tickets",
+    "operation_id": "getTicketAssetGroups",
+    "path": "/api/v1.0/tickets/{ticketId}/assetgroups"
   },
   {
     "method": "GET",
     "name": "get_ticket_assets",
     "namespace": "tickets",
-    "operation_id": "Ticket_GetTicketAssets",
-    "path": "/tickets/{TicketId}/assets"
+    "operation_id": "getTicketAssets",
+    "path": "/api/v1.0/tickets/{ticketId}/assets"
+  },
+  {
+    "method": "POST",
+    "name": "get_ticket_assets_by_model",
+    "namespace": "tickets",
+    "operation_id": "getTicketAssetsByModel",
+    "path": "/api/v1.0/tickets/assets"
+  },
+  {
+    "method": "POST",
+    "name": "get_ticket_count",
+    "namespace": "tickets",
+    "operation_id": "getTicketCount",
+    "path": "/api/v1.0/tickets/count"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_due_date_reminders",
+    "namespace": "tickets",
+    "operation_id": "getTicketDueDateReminders",
+    "path": "/api/v1.0/tickets/due-dates/reminders/{ticketId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_fields",
+    "namespace": "tickets",
+    "operation_id": "getTicketFields",
+    "path": "/api/v1.0/tickets/fields"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_followers",
+    "namespace": "tickets",
+    "operation_id": "getTicketFollowers",
+    "path": "/api/v1.0/tickets/{ticketId}/followers"
+  },
+  {
+    "method": "POST",
+    "name": "get_ticket_ids_for_filter_sets",
+    "namespace": "tickets",
+    "operation_id": "getTicketIdsForFilterSets",
+    "path": "/api/v1.0/tickets/ids/for/filtersets"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_kb_articles",
+    "namespace": "tickets",
+    "operation_id": "getTicketKbArticles",
+    "path": "/api/v1.0/tickets/{ticketId}/kb-articles"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_location_types",
+    "namespace": "tickets",
+    "operation_id": "getTicketLocationTypes",
+    "path": "/api/v1.0/tickets/{ticketId}/locationtypes"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_locations",
+    "namespace": "tickets",
+    "operation_id": "getTicketLocations",
+    "path": "/api/v1.0/tickets/{ticketId}/locations"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_next_step",
+    "namespace": "tickets",
+    "operation_id": "getTicketNextStep",
+    "path": "/api/v1.0/tickets/{ticketId}/next-steps/{nextStepId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_next_step_template",
+    "namespace": "tickets",
+    "operation_id": "getTicketNextStepTemplate",
+    "path": "/api/v1.0/tickets/next-step/templates/{TicketNextStepTemplateId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_next_step_type",
+    "namespace": "tickets",
+    "operation_id": "getTicketNextStepType",
+    "path": "/api/v1.0/tickets/next-step/types/{ticketNextStepTypeId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_next_steps",
+    "namespace": "tickets",
+    "operation_id": "getTicketNextSteps",
+    "path": "/api/v1.0/tickets/{ticketId}/next-steps"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_roles",
+    "namespace": "tickets",
+    "operation_id": "getTicketRoles",
+    "path": "/api/v1.0/tickets/{ticketId}/roles"
   },
   {
     "method": "GET",
     "name": "get_ticket_sla",
     "namespace": "tickets",
-    "operation_id": "Ticket_GetTicketSla",
-    "path": "/tickets/{TicketId}/sla"
+    "operation_id": "getTicketSla",
+    "path": "/api/v1.0/tickets/{ticketId}/sla"
   },
   {
     "method": "GET",
-    "name": "get_ticket_statuses",
+    "name": "get_ticket_sources",
     "namespace": "tickets",
-    "operation_id": "Ticket_GetTicketStatuses",
-    "path": "/tickets/statuses"
+    "operation_id": "getTicketSources",
+    "path": "/api/v1.0/tickets/sources"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_status",
+    "namespace": "tickets",
+    "operation_id": "getTicketStatus",
+    "path": "/api/v1.0/tickets/{ticketId}/status"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_status_by_id",
+    "namespace": "tickets",
+    "operation_id": "getTicketStatusById",
+    "path": "/api/v1.0/tickets/statuses/{statusId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_teams",
+    "namespace": "tickets",
+    "operation_id": "getTicketTeams",
+    "path": "/api/v1.0/tickets/{ticketId}/teams"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_timeline",
+    "namespace": "tickets",
+    "operation_id": "getTicketTimeline",
+    "path": "/api/v1.0/tickets/{ticketId}/timeline"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_users",
+    "namespace": "tickets",
+    "operation_id": "getTicketUsers",
+    "path": "/api/v1.0/tickets/{ticketId}/users"
+  },
+  {
+    "method": "GET",
+    "name": "get_ticket_view",
+    "namespace": "tickets",
+    "operation_id": "getTicketView",
+    "path": "/api/v1.0/tickets/views/{viewId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_statuses",
+    "namespace": "tickets",
+    "operation_id": "getWorkflowStatuses",
+    "path": "/api/v1.0/tickets/{workflowId}/statuses"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_step_status",
+    "namespace": "tickets",
+    "operation_id": "getWorkflowStepStatus",
+    "path": "/api/v1.0/tickets/workflow/steps/{workflowStepId}"
+  },
+  {
+    "method": "GET",
+    "name": "has_active_events",
+    "namespace": "tickets",
+    "operation_id": "hasActiveEvents",
+    "path": "/api/v1.0/tickets/active-events/{ticketId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_ticket_next_step_templates",
+    "namespace": "tickets",
+    "operation_id": "listTicketNextStepTemplates",
+    "path": "/api/v1.0/tickets/next-step/templates"
+  },
+  {
+    "method": "GET",
+    "name": "list_ticket_next_step_types",
+    "namespace": "tickets",
+    "operation_id": "listTicketNextStepTypes",
+    "path": "/api/v1.0/tickets/next-step/types"
+  },
+  {
+    "method": "GET",
+    "name": "list_ticket_priority_levels",
+    "namespace": "tickets",
+    "operation_id": "listTicketPriorityLevels",
+    "path": "/api/v1.0/tickets/priorities"
+  },
+  {
+    "method": "POST",
+    "name": "list_ticket_slas",
+    "namespace": "tickets",
+    "operation_id": "listTicketSlas",
+    "path": "/api/v1.0/tickets/slas"
+  },
+  {
+    "method": "GET",
+    "name": "list_ticket_statuses",
+    "namespace": "tickets",
+    "operation_id": "listTicketStatuses",
+    "path": "/api/v1.0/tickets/statuses"
+  },
+  {
+    "method": "POST",
+    "name": "list_ticket_timeline",
+    "namespace": "tickets",
+    "operation_id": "listTicketTimeline",
+    "path": "/api/v1.0/tickets/{ticketId}/timeline"
+  },
+  {
+    "method": "GET",
+    "name": "list_ticket_views",
+    "namespace": "tickets",
+    "operation_id": "listTicketViews",
+    "path": "/api/v1.0/tickets/views"
+  },
+  {
+    "method": "GET",
+    "name": "list_wizard_categories",
+    "namespace": "tickets",
+    "operation_id": "listWizardCategories",
+    "path": "/api/v1.0/tickets/wizards/categories"
+  },
+  {
+    "method": "POST",
+    "name": "log_support_ticket",
+    "namespace": "tickets",
+    "operation_id": "logSupportTicket",
+    "path": "/api/v1.0/tickets/support/{ticketId}/{siteId}"
   },
   {
     "method": "POST",
     "name": "mark_ticket_as_duplicate",
     "namespace": "tickets",
-    "operation_id": "Ticket_MarkTicketAsDuplicate",
-    "path": "/tickets/{TicketId}/mark-as-duplicate/{OriginalTicketId}"
+    "operation_id": "markTicketAsDuplicate",
+    "path": "/api/v1.0/tickets/{ticketId}/mark-as-duplicate/{duplicateOfTicketId}"
   },
   {
     "method": "POST",
     "name": "mark_ticket_not_sensitive",
     "namespace": "tickets",
-    "operation_id": "Ticket_MarkTicketNotSensitive",
-    "path": "/tickets/{TicketId}/mark-not-sensitive"
+    "operation_id": "markTicketNotSensitive",
+    "path": "/api/v1.0/tickets/{ticketId}/mark-not-sensitive"
   },
   {
     "method": "POST",
     "name": "mark_ticket_not_urgent",
     "namespace": "tickets",
-    "operation_id": "Ticket_MarkTicketNotUrgent",
-    "path": "/tickets/{TicketId}/mark-not-urgent"
+    "operation_id": "markTicketNotUrgent",
+    "path": "/api/v1.0/tickets/{ticketId}/mark-not-urgent"
   },
   {
     "method": "POST",
     "name": "mark_ticket_sensitive",
     "namespace": "tickets",
-    "operation_id": "Ticket_MarkTicketSensitive",
-    "path": "/tickets/{TicketId}/mark-sensitive"
+    "operation_id": "markTicketSensitive",
+    "path": "/api/v1.0/tickets/{ticketId}/mark-sensitive"
   },
   {
     "method": "POST",
     "name": "mark_ticket_urgent",
     "namespace": "tickets",
-    "operation_id": "Ticket_MarkTicketUrgent",
-    "path": "/tickets/{TicketId}/mark-urgent"
+    "operation_id": "markTicketUrgent",
+    "path": "/api/v1.0/tickets/{ticketId}/mark-urgent"
   },
   {
     "method": "POST",
-    "name": "un_assign_ticket_from_team",
+    "name": "process_ticket_approval",
     "namespace": "tickets",
-    "operation_id": "Ticket_UnAssignTicketFromTeam",
-    "path": "/tickets/{TicketId}/unassign/team"
+    "operation_id": "processTicketApproval",
+    "path": "/api/v1.0/tickets/{ticketId}/workflow/approval/response"
   },
   {
     "method": "POST",
-    "name": "un_assign_ticket_from_user",
+    "name": "process_ticket_workflow_approval",
     "namespace": "tickets",
-    "operation_id": "Ticket_UnAssignTicketFromUser",
-    "path": "/tickets/{TicketId}/unassign/user"
+    "operation_id": "processTicketWorkflowApproval",
+    "path": "/api/v1.0/tickets/{ticketId}/workflow/approval/{workflowStepId}/{userId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_ticket_follower_team",
+    "namespace": "tickets",
+    "operation_id": "removeTicketFollowerTeam",
+    "path": "/api/v1.0/tickets/{ticketId}/followers/team/{teamId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_ticket_follower_user",
+    "namespace": "tickets",
+    "operation_id": "removeTicketFollowerUser",
+    "path": "/api/v1.0/tickets/{ticketId}/followers/user/{userId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_ticket_tag",
+    "namespace": "tickets",
+    "operation_id": "removeTicketTag",
+    "path": "/api/v1.0/tickets/{ticketId}/tags/{tagId}"
   },
   {
     "method": "POST",
-    "name": "un_assign_ticket_sla",
+    "name": "resolve_ticket_next_step",
     "namespace": "tickets",
-    "operation_id": "Ticket_UnAssignTicketSla",
-    "path": "/tickets/{TicketId}/unassign-sla"
+    "operation_id": "resolveTicketNextStep",
+    "path": "/api/v1.0/tickets/{ticketId}/next-steps/{ticketNextStepId}/resolve"
   },
   {
     "method": "POST",
-    "name": "un_confirm_ticket_issue",
+    "name": "save_ticket_due_date_reminders",
     "namespace": "tickets",
-    "operation_id": "Ticket_UnConfirmTicketIssue",
-    "path": "/tickets/{TicketId}/unconfirm-issue"
+    "operation_id": "saveTicketDueDateReminders",
+    "path": "/api/v1.0/tickets/due-dates/reminders"
+  },
+  {
+    "method": "POST",
+    "name": "search_ticket_next_steps",
+    "namespace": "tickets",
+    "operation_id": "searchTicketNextSteps",
+    "path": "/api/v1.0/tickets/next-steps"
+  },
+  {
+    "method": "POST",
+    "name": "search_tickets",
+    "namespace": "tickets",
+    "operation_id": "searchTickets",
+    "path": "/api/v1.0/tickets"
+  },
+  {
+    "method": "POST",
+    "name": "send_ticket_activity_notification",
+    "namespace": "tickets",
+    "operation_id": "sendTicketActivityNotification",
+    "path": "/api/v1.0/tickets/{ticketId}/activities/{activityId}/send-notification"
+  },
+  {
+    "method": "POST",
+    "name": "send_ticket_for_approval",
+    "namespace": "tickets",
+    "operation_id": "sendTicketForApproval",
+    "path": "/api/v1.0/tickets/{ticketId}/workflow/approval"
+  },
+  {
+    "method": "POST",
+    "name": "set_ticket_due_date",
+    "namespace": "tickets",
+    "operation_id": "setTicketDueDate",
+    "path": "/api/v1.0/tickets/{ticketId}/due-dates"
+  },
+  {
+    "method": "POST",
+    "name": "set_ticket_next_step_resolvable",
+    "namespace": "tickets",
+    "operation_id": "setTicketNextStepResolvable",
+    "path": "/api/v1.0/tickets/{ticketId}/next-steps/{ticketNextStepId}/resolvable/{userResolvable}"
+  },
+  {
+    "method": "POST",
+    "name": "set_ticket_owner_and_for",
+    "namespace": "tickets",
+    "operation_id": "setTicketOwnerAndFor",
+    "path": "/api/v1.0/tickets/{ticketId}/owner/{ownerUserId}/for/{forUserId}"
+  },
+  {
+    "method": "POST",
+    "name": "set_ticket_priority",
+    "namespace": "tickets",
+    "operation_id": "setTicketPriority",
+    "path": "/api/v1.0/tickets/{ticketId}/priority"
+  },
+  {
+    "method": "POST",
+    "name": "set_ticket_requestor_responded",
+    "namespace": "tickets",
+    "operation_id": "setTicketRequestorResponded",
+    "path": "/api/v1.0/tickets/{ticketId}/status/requestor-responded"
+  },
+  {
+    "method": "POST",
+    "name": "set_ticket_status",
+    "namespace": "tickets",
+    "operation_id": "setTicketStatus",
+    "path": "/api/v1.0/tickets/{ticketId}/status/{statusId}"
+  },
+  {
+    "method": "POST",
+    "name": "set_ticket_waiting_on_requestor",
+    "namespace": "tickets",
+    "operation_id": "setTicketWaitingOnRequestor",
+    "path": "/api/v1.0/tickets/{ticketId}/status/waiting-on-requestor"
+  },
+  {
+    "method": "POST",
+    "name": "start_ticket",
+    "namespace": "tickets",
+    "operation_id": "startTicket",
+    "path": "/api/v1.0/tickets/{ticketId}/start"
+  },
+  {
+    "method": "POST",
+    "name": "unassign_ticket_from_related",
+    "namespace": "tickets",
+    "operation_id": "unassignTicketFromRelated",
+    "path": "/api/v1.0/tickets/{ticketId}/unassign/related/{relatedTicketId}"
+  },
+  {
+    "method": "POST",
+    "name": "unassign_ticket_from_team",
+    "namespace": "tickets",
+    "operation_id": "unassignTicketFromTeam",
+    "path": "/api/v1.0/tickets/{ticketId}/unassign/team"
+  },
+  {
+    "method": "POST",
+    "name": "unassign_ticket_from_user",
+    "namespace": "tickets",
+    "operation_id": "unassignTicketFromUser",
+    "path": "/api/v1.0/tickets/{ticketId}/unassign/user"
+  },
+  {
+    "method": "POST",
+    "name": "unassign_ticket_sla",
+    "namespace": "tickets",
+    "operation_id": "unassignTicketSla",
+    "path": "/api/v1.0/tickets/{ticketId}/unassign-sla"
+  },
+  {
+    "method": "POST",
+    "name": "unconfirm_ticket_issue",
+    "namespace": "tickets",
+    "operation_id": "unconfirmTicketIssue",
+    "path": "/api/v1.0/tickets/{ticketId}/unconfirm-issue"
   },
   {
     "method": "PUT",
     "name": "undelete_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_UndeleteTicket",
-    "path": "/tickets/{TicketId}/undelete"
+    "operation_id": "undeleteTicket",
+    "path": "/api/v1.0/tickets/{ticketId}/undelete"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_ticket_activity",
+    "namespace": "tickets",
+    "operation_id": "undeleteTicketActivity",
+    "path": "/api/v1.0/tickets/activities/{ticketActivityId}/undelete"
   },
   {
     "method": "POST",
     "name": "update_ticket",
     "namespace": "tickets",
-    "operation_id": "Ticket_UpdateTicket",
-    "path": "/tickets/{TicketId}"
+    "operation_id": "updateTicket",
+    "path": "/api/v1.0/tickets/{ticketId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_activity",
+    "namespace": "tickets",
+    "operation_id": "updateTicketActivity",
+    "path": "/api/v1.0/tickets/{ticketId}/activities/{ticketActivityId}"
   },
   {
     "method": "POST",
     "name": "update_ticket_assets",
     "namespace": "tickets",
-    "operation_id": "Ticket_UpdateTicketAssets",
-    "path": "/tickets/{TicketId}/assets"
+    "operation_id": "updateTicketAssets",
+    "path": "/api/v1.0/tickets/{ticketId}/assets"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_assets_by_category",
+    "namespace": "tickets",
+    "operation_id": "updateTicketAssetsByCategory",
+    "path": "/api/v1.0/tickets/{ticketId}/assets/{wizardCategoryId}"
   },
   {
     "method": "POST",
     "name": "update_ticket_custom_fields",
     "namespace": "tickets",
-    "operation_id": "Ticket_UpdateTicketCustomFields",
-    "path": "/tickets/{TicketId}/custom-fields"
+    "operation_id": "updateTicketCustomFields",
+    "path": "/api/v1.0/tickets/{ticketId}/custom-fields"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_description",
+    "namespace": "tickets",
+    "operation_id": "updateTicketDescription",
+    "path": "/api/v1.0/tickets/{ticketId}/description"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_next_step",
+    "namespace": "tickets",
+    "operation_id": "updateTicketNextStep",
+    "path": "/api/v1.0/tickets/{ticketId}/next-steps/{nextStepId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_next_step_template",
+    "namespace": "tickets",
+    "operation_id": "updateTicketNextStepTemplate",
+    "path": "/api/v1.0/tickets/next-step/templates/{TicketNextStepTemplateId}"
   },
   {
     "method": "POST",
     "name": "update_ticket_subject",
     "namespace": "tickets",
-    "operation_id": "Ticket_UpdateTicketSubject",
-    "path": "/tickets/{TicketId}/subject"
+    "operation_id": "updateTicketSubject",
+    "path": "/api/v1.0/tickets/{ticketId}/subject"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_tags",
+    "namespace": "tickets",
+    "operation_id": "updateTicketTags",
+    "path": "/api/v1.0/tickets/{ticketId}/tags"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_view",
+    "namespace": "tickets",
+    "operation_id": "updateTicketView",
+    "path": "/api/v1.0/tickets/views/{viewId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_view_schedules",
+    "namespace": "tickets",
+    "operation_id": "updateTicketViewSchedules",
+    "path": "/api/v1.0/tickets/views/{viewId}/schedules"
+  },
+  {
+    "method": "POST",
+    "name": "update_ticket_view_sort",
+    "namespace": "tickets",
+    "operation_id": "updateTicketViewSort",
+    "path": "/api/v1.0/tickets/views/{viewId}/sort"
+  },
+  {
+    "method": "POST",
+    "name": "add_room_to_user",
+    "namespace": "users",
+    "operation_id": "addRoomToUser",
+    "path": "/api/v1.0/users/{UserId}/rooms/{LocationRoomId}"
+  },
+  {
+    "method": "POST",
+    "name": "award_achievement",
+    "namespace": "users",
+    "operation_id": "awardAchievement",
+    "path": "/api/v1.0/users/{UserId}/achievements/award/{AchievementId}"
+  },
+  {
+    "method": "POST",
+    "name": "bulk_set_user_rooms",
+    "namespace": "users",
+    "operation_id": "bulkSetUserRooms",
+    "path": "/api/v1.0/users/rooms/set"
+  },
+  {
+    "method": "POST",
+    "name": "change_user_password",
+    "namespace": "users",
+    "operation_id": "changeUserPassword",
+    "path": "/api/v1.0/users/{UserId}/change-password"
+  },
+  {
+    "method": "POST",
+    "name": "complete_external_user_registration",
+    "namespace": "users",
+    "operation_id": "completeExternalUserRegistration",
+    "path": "/api/v1.0/users/external/complete-registration"
+  },
+  {
+    "method": "POST",
+    "name": "convert_user_to_local",
+    "namespace": "users",
+    "operation_id": "convertUserToLocal",
+    "path": "/api/v1.0/users/convert/to/local/{UserId}"
+  },
+  {
+    "method": "POST",
+    "name": "count_users",
+    "namespace": "users",
+    "operation_id": "countUsers",
+    "path": "/api/v1.0/users/count"
   },
   {
     "method": "POST",
     "name": "create_local_user",
     "namespace": "users",
-    "operation_id": "User_CreateLocalUser",
-    "path": "/users/local/new"
+    "operation_id": "createLocalUser",
+    "path": "/api/v1.0/users/local/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_local_user_from_sis",
+    "namespace": "users",
+    "operation_id": "createLocalUserFromSis",
+    "path": "/api/v1.0/users/local/from/sis/{SisUserId}"
+  },
+  {
+    "method": "POST",
+    "name": "create_shell_user",
+    "namespace": "users",
+    "operation_id": "createShellUser",
+    "path": "/api/v1.0/users/shell/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_shortcut",
+    "namespace": "users",
+    "operation_id": "createShortcut",
+    "path": "/api/v1.0/users/shortcut/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_temp_user",
+    "namespace": "users",
+    "operation_id": "createTempUser",
+    "path": "/api/v1.0/users/local/temp"
+  },
+  {
+    "method": "POST",
+    "name": "create_user_view",
+    "namespace": "users",
+    "operation_id": "createUserView",
+    "path": "/api/v1.0/users/views/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_shortcut",
+    "namespace": "users",
+    "operation_id": "deleteShortcut",
+    "path": "/api/v1.0/users/shortcut/{ShortcutId}"
   },
   {
     "method": "DELETE",
     "name": "delete_user",
     "namespace": "users",
-    "operation_id": "User_DeleteUser",
-    "path": "/users/{UserId}"
+    "operation_id": "deleteUser",
+    "path": "/api/v1.0/users/{UserId}"
   },
   {
     "method": "DELETE",
-    "name": "delete_user_view",
+    "name": "delete_user_by_id",
     "namespace": "users",
-    "operation_id": "View_DeleteUserView",
-    "path": "/users/views/{ViewId}"
+    "operation_id": "deleteUserById",
+    "path": "/api/v1.0/users/views/{viewId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_user_v2",
+    "namespace": "users",
+    "operation_id": "deleteUserV2",
+    "path": "/api/v2.0/users/delete/{userId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_users_by_ids_v2",
+    "namespace": "users",
+    "operation_id": "deleteUsersByIdsV2",
+    "path": "/api/v2.0/users/delete"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_users_by_query_v2",
+    "namespace": "users",
+    "operation_id": "deleteUsersByQueryV2",
+    "path": "/api/v2.0/users/delete/list"
   },
   {
     "method": "POST",
-    "name": "get_agents",
+    "name": "get_all_users",
     "namespace": "users",
-    "operation_id": "User_GetAgents",
-    "path": "/users/agents"
+    "operation_id": "getAllUsers",
+    "path": "/api/v1.0/users/all"
   },
   {
     "method": "GET",
-    "name": "get_agents_legacy",
+    "name": "get_available_shortcuts",
     "namespace": "users",
-    "operation_id": "User_GetAgentsLegacy",
-    "path": "/users/agents"
+    "operation_id": "getAvailableShortcuts",
+    "path": "/api/v1.0/users/shortcuts/available"
+  },
+  {
+    "method": "POST",
+    "name": "get_current_user_locations_filtered_v2",
+    "namespace": "users",
+    "operation_id": "getCurrentUserLocationsFilteredV2",
+    "path": "/api/v2.0/users/my/locations"
   },
   {
     "method": "GET",
-    "name": "get_user",
+    "name": "get_current_user_locations_v2",
     "namespace": "users",
-    "operation_id": "User_GetUser",
-    "path": "/users/{UserId}"
+    "operation_id": "getCurrentUserLocationsV2",
+    "path": "/api/v2.0/users/my/locations"
+  },
+  {
+    "method": "POST",
+    "name": "get_current_user_locations_view_filtered_v2",
+    "namespace": "users",
+    "operation_id": "getCurrentUserLocationsViewFilteredV2",
+    "path": "/api/v2.0/users/my/locations/view"
+  },
+  {
+    "method": "GET",
+    "name": "get_current_user_locations_view_v2",
+    "namespace": "users",
+    "operation_id": "getCurrentUserLocationsViewV2",
+    "path": "/api/v2.0/users/my/locations/view"
+  },
+  {
+    "method": "GET",
+    "name": "get_intercom_jwt",
+    "namespace": "users",
+    "operation_id": "getIntercomJwt",
+    "path": "/api/v1.0/users/intercom/jwt"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_options",
+    "namespace": "users",
+    "operation_id": "getMyOptions",
+    "path": "/api/v1.0/users/my/options"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_shortcuts",
+    "namespace": "users",
+    "operation_id": "getMyShortcuts",
+    "path": "/api/v1.0/users/my/shortcuts"
+  },
+  {
+    "method": "GET",
+    "name": "get_my_students_with_tickets",
+    "namespace": "users",
+    "operation_id": "getMyStudentsWithTickets",
+    "path": "/api/v1.0/users/my/students/with/tickets"
+  },
+  {
+    "method": "GET",
+    "name": "get_simple_user",
+    "namespace": "users",
+    "operation_id": "getSimpleUser",
+    "path": "/api/v1.0/users/simple/{UserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_site_system_user_id",
+    "namespace": "users",
+    "operation_id": "getSiteSystemUserId",
+    "path": "/api/v1.0/users/system-user/{SiteId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_achievements",
+    "namespace": "users",
+    "operation_id": "getUserAchievements",
+    "path": "/api/v1.0/users/{UserId}/achievements"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_activities",
+    "namespace": "users",
+    "operation_id": "getUserActivities",
+    "path": "/api/v1.0/users/{UserId}/activities"
+  },
+  {
+    "method": "POST",
+    "name": "get_user_at_associated_site",
+    "namespace": "users",
+    "operation_id": "getUserAtAssociatedSite",
+    "path": "/api/v1.0/users/at-associated-site/{SiteId}/{EmailAddress}/{ExternalId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_by_email",
+    "namespace": "users",
+    "operation_id": "getUserByEmail",
+    "path": "/api/v1.0/users/by-email/{SiteId}/{EmailAddress}"
+  },
+  {
+    "method": "POST",
+    "name": "get_user_by_external_email",
+    "namespace": "users",
+    "operation_id": "getUserByExternalEmail",
+    "path": "/api/v1.0/users/external"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_by_id",
+    "namespace": "users",
+    "operation_id": "getUserById",
+    "path": "/api/v1.0/users/{UserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_by_username",
+    "namespace": "users",
+    "operation_id": "getUserByUsername",
+    "path": "/api/v1.0/users/by-username/{SiteId}/{Username}"
+  },
+  {
+    "method": "POST",
+    "name": "get_user_ids_for_filter_sets",
+    "namespace": "users",
+    "operation_id": "getUserIdsForFilterSets",
+    "path": "/api/v1.0/users/ids/for/filtersets"
+  },
+  {
+    "method": "POST",
+    "name": "get_user_locations_filtered_v2",
+    "namespace": "users",
+    "operation_id": "getUserLocationsFilteredV2",
+    "path": "/api/v2.0/users/{UserId}/locations"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_locations_v2",
+    "namespace": "users",
+    "operation_id": "getUserLocationsV2",
+    "path": "/api/v2.0/users/{UserId}/locations"
+  },
+  {
+    "method": "POST",
+    "name": "get_user_locations_view_filtered_v2",
+    "namespace": "users",
+    "operation_id": "getUserLocationsViewFilteredV2",
+    "path": "/api/v2.0/users/{UserId}/locations/view"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_locations_view_v2",
+    "namespace": "users",
+    "operation_id": "getUserLocationsViewV2",
+    "path": "/api/v2.0/users/{UserId}/locations/view"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_options",
+    "namespace": "users",
+    "operation_id": "getUserOptions",
+    "path": "/api/v1.0/users/{UserId}/options"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_relationships",
+    "namespace": "users",
+    "operation_id": "getUserRelationships",
+    "path": "/api/v1.0/users/{UserId}/relationships"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_rooms",
+    "namespace": "users",
+    "operation_id": "getUserRooms",
+    "path": "/api/v1.0/users/{UserId}/rooms"
+  },
+  {
+    "method": "POST",
+    "name": "get_user_rooms_bulk",
+    "namespace": "users",
+    "operation_id": "getUserRoomsBulk",
+    "path": "/api/v1.0/users/rooms/get"
+  },
+  {
+    "method": "GET",
+    "name": "get_user_shortcuts",
+    "namespace": "users",
+    "operation_id": "getUserShortcuts",
+    "path": "/api/v1.0/users/{UserId}/shortcuts"
   },
   {
     "method": "GET",
     "name": "get_user_view",
     "namespace": "users",
-    "operation_id": "View_GetUserView",
-    "path": "/users/views/{ViewId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_user_views",
-    "namespace": "users",
-    "operation_id": "View_GetUserViews",
-    "path": "/users/views"
+    "operation_id": "getUserView",
+    "path": "/api/v1.0/users/views/{viewId}"
   },
   {
     "method": "POST",
-    "name": "get_users",
+    "name": "get_users_for_my_classes",
     "namespace": "users",
-    "operation_id": "User_GetUsers",
-    "path": "/users"
+    "operation_id": "getUsersForMyClasses",
+    "path": "/api/v1.0/users/for/sisclass/{SisClassId}"
+  },
+  {
+    "method": "POST",
+    "name": "get_users_for_requestor_swap",
+    "namespace": "users",
+    "operation_id": "getUsersForRequestorSwap",
+    "path": "/api/v1.0/users/requestor/swap"
   },
   {
     "method": "POST",
     "name": "get_users_for_view",
     "namespace": "users",
-    "operation_id": "User_GetUsersForView",
-    "path": "/users/view/{ViewId}"
-  },
-  {
-    "method": "GET",
-    "name": "get_users_legacy",
-    "namespace": "users",
-    "operation_id": "User_GetUsersLegacy",
-    "path": "/users"
+    "operation_id": "getUsersForView",
+    "path": "/api/v1.0/users/view/{ViewId}"
   },
   {
     "method": "GET",
     "name": "get_users_per_grade",
     "namespace": "users",
-    "operation_id": "User_GetUsersPerGrade",
-    "path": "/users/stats/grades"
+    "operation_id": "getUsersPerGrade",
+    "path": "/api/v1.0/users/stats/grades"
   },
   {
     "method": "GET",
     "name": "get_users_per_location",
     "namespace": "users",
-    "operation_id": "User_GetUsersPerLocation",
-    "path": "/users/stats/locations"
+    "operation_id": "getUsersPerLocation",
+    "path": "/api/v1.0/users/stats/locations"
   },
   {
     "method": "GET",
     "name": "get_users_with_location_permission",
     "namespace": "users",
-    "operation_id": "User_GetUsersWithLocationPermission",
-    "path": "/users/location/{LocationId}"
+    "operation_id": "getUsersWithLocationPermission",
+    "path": "/api/v1.0/users/location/{LocationId}"
+  },
+  {
+    "method": "GET",
+    "name": "is_user_online_legacy",
+    "namespace": "users",
+    "operation_id": "isUserOnlineLegacy",
+    "path": "/api/v1.0/users/is-online/{Source}/{UserId}"
+  },
+  {
+    "method": "POST",
+    "name": "list_agents",
+    "namespace": "users",
+    "operation_id": "listAgents",
+    "path": "/api/v1.0/users/agents/list"
+  },
+  {
+    "method": "GET",
+    "name": "list_agents_legacy_get",
+    "namespace": "users",
+    "operation_id": "listAgentsLegacyGet",
+    "path": "/api/v1.0/users/agents/list"
+  },
+  {
+    "method": "GET",
+    "name": "list_user_views",
+    "namespace": "users",
+    "operation_id": "listUserViews",
+    "path": "/api/v1.0/users/views"
+  },
+  {
+    "method": "POST",
+    "name": "list_users_simple",
+    "namespace": "users",
+    "operation_id": "listUsersSimple",
+    "path": "/api/v1.0/users/list"
+  },
+  {
+    "method": "POST",
+    "name": "migrate_user",
+    "namespace": "users",
+    "operation_id": "migrateUser",
+    "path": "/api/v1.0/users/change"
+  },
+  {
+    "method": "POST",
+    "name": "register_external_user",
+    "namespace": "users",
+    "operation_id": "registerExternalUser",
+    "path": "/api/v1.0/users/external/register"
+  },
+  {
+    "method": "DELETE",
+    "name": "remove_room_from_user",
+    "namespace": "users",
+    "operation_id": "removeRoomFromUser",
+    "path": "/api/v1.0/users/{UserId}/rooms/{LocationRoomId}"
+  },
+  {
+    "method": "POST",
+    "name": "reset_user_password",
+    "namespace": "users",
+    "operation_id": "resetUserPassword",
+    "path": "/api/v1.0/users/{UserId}/reset-password"
+  },
+  {
+    "method": "POST",
+    "name": "restore_i_i_q_admin_accounts",
+    "namespace": "users",
+    "operation_id": "restoreIIQAdminAccounts",
+    "path": "/api/v1.0/users/restore-account"
+  },
+  {
+    "method": "POST",
+    "name": "search_agents",
+    "namespace": "users",
+    "operation_id": "searchAgents",
+    "path": "/api/v1.0/users/agents"
+  },
+  {
+    "method": "GET",
+    "name": "search_agents_legacy_get",
+    "namespace": "users",
+    "operation_id": "searchAgentsLegacyGet",
+    "path": "/api/v1.0/users/agents"
+  },
+  {
+    "method": "POST",
+    "name": "search_users",
+    "namespace": "users",
+    "operation_id": "searchUsers",
+    "path": "/api/v1.0/users"
+  },
+  {
+    "method": "GET",
+    "name": "search_users_by_keyword",
+    "namespace": "users",
+    "operation_id": "searchUsersByKeyword",
+    "path": "/api/v1.0/users/search/{Query}"
+  },
+  {
+    "method": "GET",
+    "name": "search_users_legacy_get",
+    "namespace": "users",
+    "operation_id": "searchUsersLegacyGet",
+    "path": "/api/v1.0/users"
+  },
+  {
+    "method": "POST",
+    "name": "send_user_heartbeat",
+    "namespace": "users",
+    "operation_id": "sendUserHeartbeat",
+    "path": "/api/v1.0/users/heartbeat"
+  },
+  {
+    "method": "POST",
+    "name": "send_welcome_package",
+    "namespace": "users",
+    "operation_id": "sendWelcomePackage",
+    "path": "/api/v1.0/users/{UserId}/send-welcome-package"
+  },
+  {
+    "method": "POST",
+    "name": "send_welcome_packages_to_enabled_roles",
+    "namespace": "users",
+    "operation_id": "sendWelcomePackagesToEnabledRoles",
+    "path": "/api/v1.0/users/send-welcome-packages-to-enabled-roles"
+  },
+  {
+    "method": "POST",
+    "name": "set_my_options",
+    "namespace": "users",
+    "operation_id": "setMyOptions",
+    "path": "/api/v1.0/users/my/options"
+  },
+  {
+    "method": "POST",
+    "name": "set_user_active",
+    "namespace": "users",
+    "operation_id": "setUserActive",
+    "path": "/api/v1.0/users/my/is-online/active"
+  },
+  {
+    "method": "POST",
+    "name": "set_user_away",
+    "namespace": "users",
+    "operation_id": "setUserAway",
+    "path": "/api/v1.0/users/my/is-online/away"
+  },
+  {
+    "method": "POST",
+    "name": "set_user_initial_product",
+    "namespace": "users",
+    "operation_id": "setUserInitialProduct",
+    "path": "/api/v1.0/users/set-initial-product"
+  },
+  {
+    "method": "POST",
+    "name": "set_user_options",
+    "namespace": "users",
+    "operation_id": "setUserOptions",
+    "path": "/api/v1.0/users/{UserId}/options"
+  },
+  {
+    "method": "POST",
+    "name": "set_user_role",
+    "namespace": "users",
+    "operation_id": "setUserRole",
+    "path": "/api/v1.0/users/{UserId}/role"
+  },
+  {
+    "method": "POST",
+    "name": "set_user_rooms",
+    "namespace": "users",
+    "operation_id": "setUserRooms",
+    "path": "/api/v1.0/users/{UserId}/rooms"
+  },
+  {
+    "method": "PUT",
+    "name": "undelete_user",
+    "namespace": "users",
+    "operation_id": "undeleteUser",
+    "path": "/api/v1.0/users/{UserId}/undelete"
+  },
+  {
+    "method": "GET",
+    "name": "update_all_users_out_of_office_status",
+    "namespace": "users",
+    "operation_id": "updateAllUsersOutOfOfficeStatus",
+    "path": "/api/v1.0/users/out-of-office/update-all"
+  },
+  {
+    "method": "POST",
+    "name": "update_shortcut",
+    "namespace": "users",
+    "operation_id": "updateShortcut",
+    "path": "/api/v1.0/users/shortcut/{ShortcutId}"
   },
   {
     "method": "POST",
     "name": "update_user",
     "namespace": "users",
-    "operation_id": "User_UpdateUser",
-    "path": "/users/{UserId}"
+    "operation_id": "updateUser",
+    "path": "/api/v1.0/users/{UserId}"
   },
   {
     "method": "POST",
-    "name": "update_user_view",
+    "name": "update_user_authentication_source",
     "namespace": "users",
-    "operation_id": "View_UpdateUserView",
-    "path": "/users/views/{ViewId}"
+    "operation_id": "updateUserAuthenticationSource",
+    "path": "/api/v1.0/users/{UserId}/authentication-source"
+  },
+  {
+    "method": "POST",
+    "name": "update_user_view_sort",
+    "namespace": "users",
+    "operation_id": "updateUserViewSort",
+    "path": "/api/v1.0/users/views/{viewId}/sort"
+  },
+  {
+    "method": "POST",
+    "name": "create_view",
+    "namespace": "views",
+    "operation_id": "createView",
+    "path": "/api/v1.0/views/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_view_team",
+    "namespace": "views",
+    "operation_id": "createViewTeam",
+    "path": "/api/v1.0/views/teams/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_view_user",
+    "namespace": "views",
+    "operation_id": "createViewUser",
+    "path": "/api/v1.0/views/users/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_view_team",
+    "namespace": "views",
+    "operation_id": "deleteViewTeam",
+    "path": "/api/v1.0/views/teams/{viewTeamId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_view_user",
+    "namespace": "views",
+    "operation_id": "deleteViewUser",
+    "path": "/api/v1.0/views/users/{viewUserId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_view_definition",
+    "namespace": "views",
+    "operation_id": "getViewDefinition",
+    "path": "/api/v1.0/views/{viewId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_view_filters",
+    "namespace": "views",
+    "operation_id": "getViewFilters",
+    "path": "/api/v1.0/views/{entityTypeId}/{viewId}/filters"
+  },
+  {
+    "method": "GET",
+    "name": "get_view_team",
+    "namespace": "views",
+    "operation_id": "getViewTeam",
+    "path": "/api/v1.0/views/teams/{viewTeamId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_view_user",
+    "namespace": "views",
+    "operation_id": "getViewUser",
+    "path": "/api/v1.0/views/users/{viewUserId}"
+  },
+  {
+    "method": "GET",
+    "name": "list_view_teams",
+    "namespace": "views",
+    "operation_id": "listViewTeams",
+    "path": "/api/v1.0/views/{viewId}/teams"
+  },
+  {
+    "method": "GET",
+    "name": "list_view_users",
+    "namespace": "views",
+    "operation_id": "listViewUsers",
+    "path": "/api/v1.0/views/{viewId}/users"
+  },
+  {
+    "method": "GET",
+    "name": "list_views_all_products",
+    "namespace": "views",
+    "operation_id": "listViewsAllProducts",
+    "path": "/api/v1.0/views/allproducts/{viewTypeId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_view_schedules",
+    "namespace": "views",
+    "operation_id": "updateViewSchedules",
+    "path": "/api/v1.0/views/{viewId}/schedules"
+  },
+  {
+    "method": "POST",
+    "name": "update_view_sort",
+    "namespace": "views",
+    "operation_id": "updateViewSort",
+    "path": "/api/v1.0/views/{viewId}/sort"
+  },
+  {
+    "method": "POST",
+    "name": "update_view_team",
+    "namespace": "views",
+    "operation_id": "updateViewTeam",
+    "path": "/api/v1.0/views/teams/{viewTeamId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_view_team_response",
+    "namespace": "views",
+    "operation_id": "updateViewTeamResponse",
+    "path": "/api/v1.0/views/teams/{viewTeamId}/users/{viewUserId}/response/{response}"
+  },
+  {
+    "method": "POST",
+    "name": "update_view_user",
+    "namespace": "views",
+    "operation_id": "updateViewUser",
+    "path": "/api/v1.0/views/users/{viewUserId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_view_user_response",
+    "namespace": "views",
+    "operation_id": "updateViewUserResponse",
+    "path": "/api/v1.0/views/users/{viewUserId}/response/{response}"
+  },
+  {
+    "method": "POST",
+    "name": "create_workflow",
+    "namespace": "workflows",
+    "operation_id": "createWorkflow",
+    "path": "/api/v1.0/workflows/new"
+  },
+  {
+    "method": "POST",
+    "name": "create_workflow_step",
+    "namespace": "workflows",
+    "operation_id": "createWorkflowStep",
+    "path": "/api/v1.0/workflows/steps/new"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_workflow",
+    "namespace": "workflows",
+    "operation_id": "deleteWorkflow",
+    "path": "/api/v1.0/workflows/{workflowId}"
+  },
+  {
+    "method": "DELETE",
+    "name": "delete_workflow_step",
+    "namespace": "workflows",
+    "operation_id": "deleteWorkflowStep",
+    "path": "/api/v1.0/workflows/steps/{workflowStepId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow",
+    "namespace": "workflows",
+    "operation_id": "getWorkflow",
+    "path": "/api/v1.0/workflows/{workflowId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_action_types",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowActionTypes",
+    "path": "/api/v1.0/workflows/actiontypes"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_actions",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowActions",
+    "path": "/api/v1.0/workflows/steps/{workflowStepId}/actions"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_approval_types",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowApprovalTypes",
+    "path": "/api/v1.0/workflows/approvaltypes"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_custom_fields",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowCustomFields",
+    "path": "/api/v1.0/workflows/{workflowId}/fields"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_linked_issues",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowLinkedIssues",
+    "path": "/api/v1.0/workflows/{workflowId}/issues"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_next_steps",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowNextSteps",
+    "path": "/api/v1.0/workflows/steps/{workflowStepId}/nextsteps"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_next_steps_as_steps",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowNextStepsAsSteps",
+    "path": "/api/v1.0/workflows/steps/{workflowStepId}/nextsteps/steps"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_step",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowStep",
+    "path": "/api/v1.0/workflows/steps/{workflowStepId}"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_steps",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowSteps",
+    "path": "/api/v1.0/workflows/steps"
+  },
+  {
+    "method": "GET",
+    "name": "get_workflow_steps_by_workflow",
+    "namespace": "workflows",
+    "operation_id": "getWorkflowStepsByWorkflow",
+    "path": "/api/v1.0/workflows/{workflowId}/steps"
+  },
+  {
+    "method": "GET",
+    "name": "list_workflows",
+    "namespace": "workflows",
+    "operation_id": "listWorkflows",
+    "path": "/api/v1.0/workflows"
+  },
+  {
+    "method": "GET",
+    "name": "list_workflows_all_products",
+    "namespace": "workflows",
+    "operation_id": "listWorkflowsAllProducts",
+    "path": "/api/v1.0/workflows/allproducts"
+  },
+  {
+    "method": "GET",
+    "name": "list_workflows_by_site_and_product",
+    "namespace": "workflows",
+    "operation_id": "listWorkflowsBySiteAndProduct",
+    "path": "/api/v1.0/workflows/site/{siteId}/product/{productId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_workflow",
+    "namespace": "workflows",
+    "operation_id": "updateWorkflow",
+    "path": "/api/v1.0/workflows/{workflowId}"
+  },
+  {
+    "method": "POST",
+    "name": "update_workflow_step",
+    "namespace": "workflows",
+    "operation_id": "updateWorkflowStep",
+    "path": "/api/v1.0/workflows/steps/{workflowStepId}"
   }
 ]

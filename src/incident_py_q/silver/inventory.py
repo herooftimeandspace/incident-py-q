@@ -271,42 +271,11 @@ def extract_silver_inventory(
         for aggregate in aggregates.values()
     ]
 
-    if not any(
-        endpoint.http_method == "GET" and endpoint.route == "/assets/serial/{serial}"
-        for endpoint in extracted
-    ):
-        extracted.append(
-            SilverMethodMetadata(
-                namespace_path=("assets",),
-                method_name="get_asset_by_serial",
-                http_method="GET",
-                route="/assets/serial/{serial}",
-                parameters=(
-                    SilverParameterMetadata(
-                        python_name="serial",
-                        api_name="serial",
-                        location="path",
-                        required=True,
-                        type_display="str",
-                        description=(
-                            "Serial number path segment. This Silver route is added explicitly "
-                            "because it is known to exist even when the HAR does not capture it."
-                        ),
-                    ),
-                ),
-                summary="Silver path for asset lookup by serial number.",
-                description=(
-                    "This route is treated as Silver because bundled Stoplight contracts do not "
-                    "define it. The SDK exposes it separately so Golden Stoplight methods remain "
-                    "the authoritative contract whenever they exist."
-                ),
-                typed_return="dict[str, Any] | list[Any] | None",
-                raw_return="dict[str, Any] | list[Any] | None",
-                sources=("synthetic_required_route",),
-                status_codes=(),
-                uses_app_headers=False,
-            )
-        )
+    # `GET /assets/serial/{serial}` used to be injected here as a synthetic Silver
+    # route, because the bundled Stoplight contracts did not define it and HAR
+    # captures did not always exercise it. The published Golden contract now
+    # documents it as `getAssetBySerial`, so the hand-built entry was removed;
+    # routes the contract documents belong to Golden alone.
 
     return tuple(sorted(_dedupe_method_names(extracted), key=lambda item: (item.namespace_path, item.method_name)))
 
@@ -412,7 +381,7 @@ def _load_observed_requests(
             normalized_path = _normalize_for_matching(raw_path)
             if (method.upper(), normalized_path) in _SUPPRESSED_SILVER_ROUTES:
                 continue
-            if registry.match_operation(method, normalized_path):
+            if _matches_golden_contract(registry, method, raw_path, normalized_path):
                 continue
             if _is_discarded_candidate(raw_path=raw_path, normalized_path=normalized_path):
                 continue
@@ -584,7 +553,7 @@ def _build_path_parameters(
                 type_display=_infer_type_display(values_by_name.get(parameter_name, []), prefer_string=True),
                 description=(
                     "Path parameter inferred from HAR observations. This route remains on the "
-                    "Silver surface because Stoplight does not publish a Golden contract for it."
+                    "Silver surface because the published contract does not document it."
                 ),
             )
         )
@@ -719,8 +688,8 @@ def _build_summary(aggregate: _Aggregate) -> str:
 
 def _build_description(aggregate: _Aggregate) -> str:
     return (
-        "This method is intentionally kept on the Silver surface because bundled Stoplight "
-        "controller contracts do not define this route. Golden Stoplight operations remain the "
+        "This method is intentionally kept on the Silver surface because the bundled Golden "
+        "contract does not define this route. Golden contract operations remain the "
         "preferred contract source whenever they exist, so Silver only supplements gaps "
         "observed in tenant HAR traffic."
     )
@@ -771,6 +740,27 @@ def _normalize_for_matching(path: str) -> str:
     if path != "/":
         path = path.rstrip("/") or "/"
     return path
+
+
+def _matches_golden_contract(registry: SchemaRegistry, method: str, *paths: str) -> bool:
+    """Report whether any spelling of an observed path is documented by Golden.
+
+    Silver's normalized form drops the `/api/v1.0` prefix so namespaces and
+    method names stay short, but Golden contract paths are tenant-absolute. Both
+    spellings are checked so a documented route is recognized either way.
+    """
+    seen: set[str] = set()
+    for path in paths:
+        if not path:
+            continue
+        candidate = path.rstrip("/") or "/"
+        for spelling in (candidate, f"/api/v1.0{candidate}" if candidate.startswith("/") else candidate):
+            if spelling in seen:
+                continue
+            seen.add(spelling)
+            if registry.match_operation(method, spelling) is not None:
+                return True
+    return False
 
 
 def _parse_request_body(request: Mapping[str, Any]) -> Any | None:

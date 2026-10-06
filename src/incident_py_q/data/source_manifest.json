@@ -1,18 +1,13 @@
 {
-  "generated_at": "2026-03-11T19:00:00.086690+00:00",
+  "generated_at": "2026-09-28T19:15:04.310962+00:00",
   "sources": {
-    "apihub_postman": {
-      "required": false,
-      "type": "http_json",
-      "url": "https://apihub.incidentiq.com/api/collections/113361/SVzuZgQd?environment=113361-6b078173-b028-454f-aacc-54ee069a6fa1&segregateAuth=true&versionTag=latest"
-    },
-    "stoplight": {
-      "controller_uri_regex": "^/controllers/[^/]+\\.json$",
-      "endpoint": "https://incidentiq.stoplight.io/graphql",
-      "project_slug": "v1",
+    "golden_openapi": {
+      "description": "Published Incident IQ Golden contract. The documentation site is rendered from this single OpenAPI 3.0 document, which replaces the former Stoplight GraphQL controller sync and the APIHub Postman collection sync.",
+      "documentation_url": "https://scopousiiq.github.io/iiq-docusaurus-docs/docs/api/",
       "required": true,
-      "type": "graphql",
-      "workspace_slug": "incidentiq"
+      "spec_url": "https://raw.githubusercontent.com/scopousiiq/iiq-docusaurus-docs/master/openapi-spec.json",
+      "timeout_seconds": 60.0,
+      "type": "openapi3_json"
     }
   }
 }

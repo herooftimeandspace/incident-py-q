@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import json
 from os import PathLike
 from pathlib import Path
@@ -43,17 +44,48 @@ from incident_py_q.silver.inventory import (
 )
 from incident_py_q.silver.runtime import (
     AsyncSilverAppsNamespace,
+    AsyncSilverManualMethod,
     AsyncSilverOperationMethod,
     SilverGenericNamespace,
+    SilverManualMethod,
     SilverNamespaceBase,
     SilverRootNamespace,
     _absolute_silver_url,
     _annotation_for_parameter,
+    _build_manual_silver_method,
     _ensure_namespace,
     _silver_headers,
     _split_request_arguments,
     _tenant_origin,
+    build_manual_silver_method_metadata,
 )
+
+
+def test_manual_helpers_share_metadata_driven_wrappers_and_signatures() -> None:
+    metadata = build_manual_silver_method_metadata()
+    sync_methods = [
+        _build_manual_silver_method(client=object(), metadata=method, async_mode=False)
+        for method in metadata
+    ]
+    async_methods = [
+        _build_manual_silver_method(client=object(), metadata=method, async_mode=True)
+        for method in metadata
+    ]
+
+    assert all(type(method) is SilverManualMethod for method in sync_methods)
+    assert all(type(method) is AsyncSilverManualMethod for method in async_methods)
+    for method_metadata, sync_method, async_method in zip(
+        metadata, sync_methods, async_methods, strict=True
+    ):
+        expected_defaults = {
+            parameter.python_name: parameter.default
+            for parameter in method_metadata.parameters
+        } | {"timeout": None}
+        assert {
+            name: parameter.default
+            for name, parameter in inspect.signature(sync_method).parameters.items()
+        } == expected_defaults
+        assert inspect.signature(async_method) == inspect.signature(sync_method)
 
 
 def test_inventory_loader_helpers_and_serializers(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:

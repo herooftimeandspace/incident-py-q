@@ -22,25 +22,90 @@ nav:
   - Home: index.md
   - Getting Started: getting-started.md
   - SDK Usage: sdk-usage.md
+  - Migration (OpenAPI): migration-openapi.md
   - SDK Reference:
       - Overview: sdk-reference/index.md
-      - Silver Overview: sdk-reference/silver.md
-      - Apps: sdk-reference/apps.md
-      - Alerts: sdk-reference/alerts.md
       - Analytics: sdk-reference/analytics.md
+      - Apps: sdk-reference/apps.md
       - Assets: sdk-reference/assets.md
+      - Audits: sdk-reference/audits.md
+      - Categories: sdk-reference/categories.md
       - Custom Fields: sdk-reference/custom_fields.md
-      - Forms: sdk-reference/forms.md
+      - Custom Fields (New): sdk-reference/custom_fields_new.md
+      - Events: sdk-reference/events.md
+      - Files: sdk-reference/files.md
+      - Filter: sdk-reference/filter.md
+      - Filters: sdk-reference/filters.md
+      - Funding Sources: sdk-reference/funding_sources.md
+      - Global: sdk-reference/global_.md
+      - Inventory: sdk-reference/inventory.md
+      - Invoicing: sdk-reference/invoicing.md
       - Issues: sdk-reference/issues.md
+      - Labor: sdk-reference/labor.md
       - Locations: sdk-reference/locations.md
-      - Manufacturers: sdk-reference/manufacturers.md
       - Metrics: sdk-reference/metrics.md
-      - Notifications: sdk-reference/notifications.md
-      - Parts: sdk-reference/parts.md
-      - Purchase Orders: sdk-reference/purchaseorders.md
+      - Models: sdk-reference/models.md
+      - Organizations: sdk-reference/organizations.md
+      - Products: sdk-reference/products.md
+      - Pub: sdk-reference/pub.md
+      - Purchase Orders: sdk-reference/purchase_orders.md
+      - Resolutions: sdk-reference/resolutions.md
+      - Shortcuts: sdk-reference/shortcuts.md
+      - Sites: sdk-reference/sites.md
       - SLAs: sdk-reference/slas.md
+      - Subtasks: sdk-reference/subtasks.md
+      - Subtickets: sdk-reference/subtickets.md
+      - Suppliers: sdk-reference/suppliers.md
+      - Surveys: sdk-reference/surveys.md
+      - Tags: sdk-reference/tags.md
+      - Teams: sdk-reference/teams.md
       - Tickets: sdk-reference/tickets.md
       - Users: sdk-reference/users.md
+      - Views: sdk-reference/views.md
+      - Workflows: sdk-reference/workflows.md
+  - Silver Reference:
+      - Overview: sdk-reference/silver.md
+      - Alerts: sdk-reference/silver-alerts.md
+      - Analytics: sdk-reference/silver-analytics.md
+      - API: sdk-reference/silver-api.md
+      - App Registry: sdk-reference/silver-app_registry.md
+      - Assets: sdk-reference/silver-assets.md
+      - Calendars: sdk-reference/silver-calendars.md
+      - Custom Fields: sdk-reference/silver-custom_fields.md
+      - Dev: sdk-reference/silver-dev.md
+      - Entities: sdk-reference/silver-entities.md
+      - Filters: sdk-reference/silver-filters.md
+      - Flow Procedures: sdk-reference/silver-flow_procedures.md
+      - Forms: sdk-reference/silver-forms.md
+      - Help: sdk-reference/silver-help.md
+      - Jobs: sdk-reference/silver-jobs.md
+      - Labor: sdk-reference/silver-labor.md
+      - Layouts: sdk-reference/silver-layouts.md
+      - Locations: sdk-reference/silver-locations.md
+      - Manufacturers: sdk-reference/silver-manufacturers.md
+      - Maps: sdk-reference/silver-maps.md
+      - Metrics: sdk-reference/silver-metrics.md
+      - Notifications: sdk-reference/silver-notifications.md
+      - Parts: sdk-reference/silver-parts.md
+      - Permissions: sdk-reference/silver-permissions.md
+      - Permissions (Next): sdk-reference/silver-permissions_next.md
+      - Products: sdk-reference/silver-products.md
+      - Profiles: sdk-reference/silver-profiles.md
+      - Purchase Orders: sdk-reference/silver-purchaseorders.md
+      - Resolutions: sdk-reference/silver-resolutions.md
+      - Rules: sdk-reference/silver-rules.md
+      - S: sdk-reference/silver-s.md
+      - Schedules: sdk-reference/silver-schedules.md
+      - Search: sdk-reference/silver-search.md
+      - Session: sdk-reference/silver-session.md
+      - Settings: sdk-reference/silver-settings.md
+      - SIS: sdk-reference/silver-sis.md
+      - SLAs: sdk-reference/silver-slas.md
+      - Tasks: sdk-reference/silver-tasks.md
+      - Teams: sdk-reference/silver-teams.md
+      - Tickets: sdk-reference/silver-tickets.md
+      - Ticket Templates: sdk-reference/silver-tickets_templates.md
+      - Users: sdk-reference/silver-users.md
   - Schema & Validation: schema-validation.md
   - Logging & Runtime: runtime-logging.md
   - API Reference: api-reference.md

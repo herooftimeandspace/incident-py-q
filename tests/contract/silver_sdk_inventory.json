@@ -1,5 +1,15 @@
 [
   {
+    "http_method": "POST",
+    "name": "queue_notification",
+    "namespace": "alerts",
+    "path": "/api/v1.0/alerts/new",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
     "http_method": "GET",
     "name": "get_agent_current_stats",
     "namespace": "analytics",
@@ -21,24 +31,42 @@
   },
   {
     "http_method": "GET",
-    "name": "get_asset_summary_stats",
+    "name": "get_report",
     "namespace": "analytics",
-    "path": "/api/v1.0/analytics/asset/{asset_id}/summary-stats",
+    "path": "/api/v1.0/analytics/reports/{report_id}",
     "provenance": "silver",
     "sources": [
-      "Chromebook-asset-actions.har",
-      "apple-asset-actions.har",
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "GET",
-    "name": "get_requestor_summary_stats",
+    "name": "get_report_elements",
     "namespace": "analytics",
-    "path": "/api/v1.0/analytics/requestor/{requestor_id}/summary-stats",
+    "path": "/api/v1.0/analytics/reports/elements/{report_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_report_queries",
+    "namespace": "analytics",
+    "path": "/api/v1.0/analytics/reports/queries/{report_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_reports",
+    "namespace": "analytics",
+    "path": "/api/v1.0/analytics/reports",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -996,74 +1024,143 @@
     ]
   },
   {
-    "http_method": "GET",
-    "name": "get_asset_by_serial",
+    "http_method": "POST",
+    "name": "add_manufacturer_to_site2",
     "namespace": "assets",
-    "path": "/assets/serial/{serial}",
+    "path": "/api/v1.0/assets/manufacturers/{manufacturer_id}/site/{include_all_models}",
     "provenance": "silver",
     "sources": [
-      "synthetic_required_route"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_asset_files",
-    "namespace": "assets",
-    "path": "/api/v1.0/assets/{asset_id}/files",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_asset_verifications",
-    "namespace": "assets",
-    "path": "/api/v1.0/assets/{asset_id}/verifications",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_stats_locations",
-    "namespace": "assets",
-    "path": "/api/v1.0/assets/stats/locations",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_type",
-    "namespace": "assets",
-    "path": "/api/v1.0/assets/types/{type_id}",
-    "provenance": "silver",
-    "sources": [
-      "apple-asset-actions.har",
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "POST",
-    "name": "post_checkouts_transactions_query_get",
+    "name": "create_asset_status_type",
     "namespace": "assets",
-    "path": "/api/v1.0/assets/checkouts/transactions/query/get",
+    "path": "/api/v1.0/assets/status/types/new",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "delete_asset_funding_type",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/funding/types/{asset_funding_type_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "delete_asset_status_type",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/status/types/{asset_status_type_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "GET",
-    "name": "get_policies_schedules_for_asset",
-    "namespace": "audits",
-    "path": "/api/v1.0/audits/policies/schedules/for-asset/{for_asset_id}",
+    "name": "get_asset_favorites2",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/favorites/{user_id}/{all}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_asset_funding_type",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/funding/types/{asset_funding_type_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "get_asset_funding_types2",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/funding/types",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_assets_by_asset_status_type",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/assetstatustype/{asset_status_type_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_assets_by_asset_tag",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/assettag/{asset_tag}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_spare_assets_by_asset_tag",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/spares/assettag/{asset_tag}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_user_assets2",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/for/{user_id}/{all}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "search_assets_by_asset_tag",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/assettag/search/{asset_tag}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "update_asset_funding_type",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/funding/types/{asset_funding_type_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "update_asset_status_type",
+    "namespace": "assets",
+    "path": "/api/v1.0/assets/status/types/{asset_status_type_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -1087,55 +1184,23 @@
     ]
   },
   {
+    "http_method": "DELETE",
+    "name": "delete_custom_fields",
+    "namespace": "custom_fields",
+    "path": "/api/v1.0/custom-fields",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
     "http_method": "GET",
-    "name": "get_of_filters",
-    "namespace": "categories",
-    "path": "/api/v1.0/categories/of/filters",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_of_models",
-    "namespace": "categories",
-    "path": "/api/v1.0/categories/of/models",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "POST",
-    "name": "post_for__asset",
+    "name": "get_custom_fields",
     "namespace": "custom_fields",
-    "path": "/api/v1.0/custom-fields/for/asset",
+    "path": "/api/v1.0/custom-fields",
     "provenance": "silver",
     "sources": [
-      "Chromebook-asset-actions.har",
-      "apple-asset-actions.har",
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "POST",
-    "name": "post_for__ticket",
-    "namespace": "custom_fields",
-    "path": "/api/v1.0/custom-fields/for/ticket",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "POST",
-    "name": "post_for__user",
-    "namespace": "custom_fields",
-    "path": "/api/v1.0/custom-fields/for/user",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -1161,36 +1226,6 @@
     ]
   },
   {
-    "http_method": "GET",
-    "name": "get_entity",
-    "namespace": "files",
-    "path": "/api/v1.0/files/entity/{entity_id}/{n_888891ac_91aa_e711_80c2_100dffa00004_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_for__entitytype",
-    "namespace": "filters",
-    "path": "/api/v1.0/filters/for/entitytype/{entitytype_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_set",
-    "namespace": "filters",
-    "path": "/api/v1.0/filters/sets/{set_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
     "http_method": "POST",
     "name": "post_endpoint",
     "namespace": "filters",
@@ -1208,6 +1243,16 @@
     "provenance": "silver",
     "sources": [
       "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "submit_form",
+    "namespace": "forms",
+    "path": "/api/v1.0/forms/submit",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -1244,32 +1289,152 @@
   },
   {
     "http_method": "GET",
-    "name": "get_rates_user_2",
-    "namespace": "labor",
-    "path": "/api/v1.0/labor/rates/user/{user_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "POST",
-    "name": "post_types",
-    "namespace": "labor",
-    "path": "/api/v1.0/labor/types",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
     "name": "get_my_dashboard",
     "namespace": "layouts",
     "path": "/api/v1.0/layouts/my/dashboard",
     "provenance": "silver",
     "sources": [
       "demo.incidentiq.com.har"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "delete_location",
+    "namespace": "locations",
+    "path": "/api/v1.0/locations/{location_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_all_location_rooms",
+    "namespace": "locations",
+    "path": "/api/v1.0/locations/rooms",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_location_rooms",
+    "namespace": "locations",
+    "path": "/api/v1.0/locations/{location_id}/rooms",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_location_type",
+    "namespace": "locations",
+    "path": "/api/v1.0/locations/types/{location_type_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_location_types",
+    "namespace": "locations",
+    "path": "/api/v1.0/locations/types",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "update_location",
+    "namespace": "locations",
+    "path": "/api/v1.0/locations/{location_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "add_manufacturer_to_site3",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/{manufacturer_id}/site",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "add_manufacturer_to_site4",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/{manufacturer_id}/site/{include_all_models}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "delete_manufacturer2",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/{manufacturer_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_global_manufacturers3",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/global",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "get_global_manufacturers4",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/global",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_manufacturer2",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/{manufacturer_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "remove_manufacturer_from_site2",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/{manufacturer_id}/site",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "update_manufacturer2",
+    "namespace": "manufacturers",
+    "path": "/api/v1.0/manufacturers/{manufacturer_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -1285,73 +1450,213 @@
     ]
   },
   {
-    "http_method": "GET",
-    "name": "get_all",
-    "namespace": "models",
-    "path": "/api/v1.0/models/all",
+    "http_method": "DELETE",
+    "name": "delete_metric_type",
+    "namespace": "metrics",
+    "path": "/api/v1.0/metrics/types/{metric_type_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "GET",
-    "name": "get_apps_aeries_sis",
-    "namespace": "models",
-    "path": "/api/v1.0/models/apps/aeriesSis",
+    "name": "get_metric",
+    "namespace": "metrics",
+    "path": "/api/v1.0/metrics/{metric_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "GET",
-    "name": "get_apps_google_device_data",
-    "namespace": "models",
-    "path": "/api/v1.0/models/apps/googleDeviceData",
+    "name": "get_metrics_for_sla",
+    "namespace": "metrics",
+    "path": "/api/v1.0/metrics/for/sla/{sla_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_apps_microsoft_intune",
-    "namespace": "models",
-    "path": "/api/v1.0/models/apps/microsoftIntune",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_apps_subtickets_for_i_t",
-    "namespace": "models",
-    "path": "/api/v1.0/models/apps/subticketsForIT",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "POST",
-    "name": "post_available_to_site",
-    "namespace": "models",
-    "path": "/api/v1.0/models/available/to/site",
+    "name": "update_metric",
+    "namespace": "metrics",
+    "path": "/api/v1.0/metrics/{metric_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "POST",
-    "name": "post_endpoint",
-    "namespace": "models",
-    "path": "/api/v1.0/models",
+    "name": "update_metric_type",
+    "namespace": "metrics",
+    "path": "/api/v1.0/metrics/types/{metric_type_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "get_notifications",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_ticket_emails",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications/emails/for/ticket/{ticket_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_unarchived_notifications",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications/unarchived",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_unread_notifications",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications/unread",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "mark_all_notifications_archived",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications/all-archive",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "mark_all_notifications_read",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications/all-read",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "mark_notification_archived",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications/{notification_id}/archive",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "mark_notification_read",
+    "namespace": "notifications",
+    "path": "/api/v1.0/notifications/{notification_id}/read",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "delete_part",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts/{part_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "delete_part_supplier",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts/suppliers/{part_supplier_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_part",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts/{part_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_part_supplier",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts/suppliers/{part_supplier_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_part_suppliers",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts/suppliers",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_parts",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "update_part",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts/{part_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "update_part_supplier",
+    "namespace": "parts",
+    "path": "/api/v1.0/parts/suppliers/{part_supplier_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -1402,6 +1707,46 @@
     "provenance": "silver",
     "sources": [
       "iiq-profile-picture.har"
+    ]
+  },
+  {
+    "http_method": "DELETE",
+    "name": "delete_purchase_order",
+    "namespace": "purchaseorders",
+    "path": "/api/v1.0/purchaseorders/{purchase_order_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_purchase_order",
+    "namespace": "purchaseorders",
+    "path": "/api/v1.0/purchaseorders/{purchase_order_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "GET",
+    "name": "get_purchase_orders",
+    "namespace": "purchaseorders",
+    "path": "/api/v1.0/purchaseorders",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
+    ]
+  },
+  {
+    "http_method": "POST",
+    "name": "update_purchase_order",
+    "namespace": "purchaseorders",
+    "path": "/api/v1.0/purchaseorders/{purchase_order_id}",
+    "provenance": "silver",
+    "sources": [
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -1610,45 +1955,22 @@
   },
   {
     "http_method": "GET",
-    "name": "get_deployments",
-    "namespace": "sites",
-    "path": "/api/v1.0/sites/deployments",
+    "name": "get_sla",
+    "namespace": "slas",
+    "path": "/api/v1.0/slas/{sla_id}",
     "provenance": "silver",
     "sources": [
-      "Chromebook-asset-actions.har",
-      "apple-asset-actions.har",
-      "demo.incidentiq.com.har",
-      "windows-asset-intune-actions.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
     "http_method": "POST",
-    "name": "post_roles",
-    "namespace": "sites",
-    "path": "/api/v1.0/sites/roles",
+    "name": "update_sla",
+    "namespace": "slas",
+    "path": "/api/v1.0/slas/{sla_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_subtask",
-    "namespace": "subtasks",
-    "path": "/api/v1.0/subtasks/{subtask_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_responses_ticket",
-    "namespace": "surveys",
-    "path": "/api/v1.0/surveys/responses/ticket/{ticket_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   },
   {
@@ -1663,59 +1985,9 @@
   },
   {
     "http_method": "GET",
-    "name": "get_endpoint",
-    "namespace": "teams",
-    "path": "/api/v1.0/teams",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
     "name": "get_for_",
     "namespace": "teams",
     "path": "/api/v1.0/teams/for/{for__id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_ticket_activities",
-    "namespace": "tickets",
-    "path": "/api/v1.0/tickets/{ticket_id}/activities",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_ticket_kb_articles",
-    "namespace": "tickets",
-    "path": "/api/v1.0/tickets/{ticket_id}/kb-articles",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_ticket_next_steps",
-    "namespace": "tickets",
-    "path": "/api/v1.0/tickets/{ticket_id}/next-steps",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_ticket_status",
-    "namespace": "tickets",
-    "path": "/api/v1.0/tickets/{ticket_id}/status",
     "provenance": "silver",
     "sources": [
       "demo.incidentiq.com.har"
@@ -1735,88 +2007,8 @@
   {
     "http_method": "POST",
     "name": "post_endpoint",
-    "namespace": "tickets",
-    "path": "/api/v1.0/tickets",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "POST",
-    "name": "post_ticket_timeline",
-    "namespace": "tickets",
-    "path": "/api/v1.0/tickets/{ticket_id}/timeline",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "POST",
-    "name": "post_endpoint",
     "namespace": "tickets_templates",
     "path": "/api/v1.0/tickets-templates",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_my_shortcuts",
-    "namespace": "users",
-    "path": "/api/v1.0/users/my/shortcuts",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_shortcuts_available",
-    "namespace": "users",
-    "path": "/api/v1.0/users/shortcuts/available",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_simple",
-    "namespace": "users",
-    "path": "/api/v1.0/users/simple/{simple_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_user_options",
-    "namespace": "users",
-    "path": "/api/v1.0/users/{user_id}/options",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_user_relationships",
-    "namespace": "users",
-    "path": "/api/v1.0/users/{user_id}/relationships",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_user_rooms",
-    "namespace": "users",
-    "path": "/api/v1.0/users/{user_id}/rooms",
     "provenance": "silver",
     "sources": [
       "demo.incidentiq.com.har"
@@ -1836,23 +2028,13 @@
     ]
   },
   {
-    "http_method": "GET",
-    "name": "get_view",
-    "namespace": "views",
-    "path": "/api/v1.0/views/{view_key}",
+    "http_method": "POST",
+    "name": "update_user_view",
+    "namespace": "users",
+    "path": "/api/v1.0/users/views/{view_id}",
     "provenance": "silver",
     "sources": [
-      "demo.incidentiq.com.har"
-    ]
-  },
-  {
-    "http_method": "GET",
-    "name": "get_view_2",
-    "namespace": "views",
-    "path": "/api/v1.0/views/{view_id}",
-    "provenance": "silver",
-    "sources": [
-      "demo.incidentiq.com.har"
+      "migrated_from_golden_stoplight"
     ]
   }
 ]

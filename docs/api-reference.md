@@ -5,7 +5,7 @@ Static package API pages are generated with `pdoc`.
 Runtime-generated namespace methods such as `client.tickets.get_ticket(...)` are
 documented separately under the generated SDK reference pages.
 
-Golden Stoplight methods are documented under the generated Golden namespace pages.
+Golden contract methods are documented under the generated Golden namespace pages.
 Silver HAR-derived methods are documented under the generated [`silver` overview](sdk-reference/silver.md).
 The legacy app alias under `client.apps.*` is documented on the generated
 [`apps` Silver namespace page](sdk-reference/apps.md).
