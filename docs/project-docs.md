@@ -31,7 +31,25 @@ branches that become promotion PR heads:
 | Promotion PR | Head branch | Checks come from |
 | --- | --- | --- |
 | `dev` → `staging` | `dev` | push to `dev` |
-| `staging` → `main` | `promote/staging-to-main` | push to that branch (including release-prep's version bump) |
+| `staging` → `main` | `promote/staging-to-main` | push to that branch (including the version bump) |
+
+### Where the promotion branch is prepared
+
+`promote/staging-to-main` must carry `main` plus `staging` plus the version bump
+before `release-prep` will pass. That preparation happens in `promotion.yml`, in
+the same `workflow_run` job that opens the PR.
+
+It used to happen in `prepare-release-promotion` (`release-prep.yml`), which is
+`pull_request_target`-triggered. A promotion PR opened or updated with
+`github.token` does not produce `pull_request_target` runs, so that workflow only
+ever fired when a **human** touched the PR. An unattended promotion therefore
+pushed the bare `staging` tip, and `release-prep` failed with
+`Expected prepared pyproject version X, found Y` while the PR sat `BEHIND` main.
+
+`prepare-release-promotion` is still in place for the case it does cover: a
+person changing the `semver:` label after the PR exists, which changes the target
+version and needs the branch rebuilt. Both paths produce the same commit shape,
+and `release-prep` verifies the result either way.
 
 ### Live integration tests are unchanged
 

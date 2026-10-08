@@ -553,7 +553,7 @@ def _build_path_parameters(
                 type_display=_infer_type_display(values_by_name.get(parameter_name, []), prefer_string=True),
                 description=(
                     "Path parameter inferred from HAR observations. This route remains on the "
-                    "Silver surface because the published contract does not document it."
+                    "Silver surface because the published OpenAPI contract does not document it."
                 ),
             )
         )
@@ -688,10 +688,10 @@ def _build_summary(aggregate: _Aggregate) -> str:
 
 def _build_description(aggregate: _Aggregate) -> str:
     return (
-        "This method is intentionally kept on the Silver surface because the bundled Golden "
-        "contract does not define this route. Golden contract operations remain the "
-        "preferred contract source whenever they exist, so Silver only supplements gaps "
-        "observed in tenant HAR traffic."
+        "This route is kept on the Silver surface because the published Incident IQ OpenAPI "
+        "contract does not document it. The Golden contract remains the preferred source "
+        "whenever it documents a route, so Silver only supplements gaps observed in tenant "
+        "HAR traffic."
     )
 
 
