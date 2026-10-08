@@ -55,7 +55,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.aeries_sis`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -81,7 +81,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.aeries_sis`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -107,7 +107,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.aeries_sis`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -133,7 +133,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.aeries_sis`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -159,7 +159,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.aeries_sis`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -185,7 +185,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.aeries_sis`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -211,7 +211,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.aeries_sis`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -245,14 +245,14 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.file_wave`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `usage_id` | `usage_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
-| `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `path` | `yes` | `int` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `usage_id` | `usage_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
+| `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `path` | `yes` | `int` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -274,7 +274,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.file_wave`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -472,14 +472,14 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `usage_id` | `usage_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
-| `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `path` | `yes` | `int` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `usage_id` | `usage_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
+| `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `path` | `yes` | `int` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -501,7 +501,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -527,7 +527,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -553,7 +553,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -579,13 +579,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `google_device_data_key` | `google_device_data_key` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `google_device_data_key` | `google_device_data_key` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -607,7 +607,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -633,13 +633,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `schedule_id` | `schedule_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `schedule_id` | `schedule_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -661,13 +661,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `job_id` | `job_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `job_id` | `job_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `limit` | `Limit` | `body` | `yes` | `int` | Body field inferred from HAR observations for this undocumented Silver route. |
 
 #### Returns
@@ -690,13 +690,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `json_body` | `json_body` | `body` | `yes` | `Mapping[str, Any]` | Request body observed in HAR traffic. The SDK uses a single `json_body` payload because the Silver route carries a complex undocumented schema. |
 
 #### Returns
@@ -719,13 +719,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -747,13 +747,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.google_device_data`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -779,7 +779,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.infinite_campus`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -809,7 +809,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.jamf`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -843,7 +843,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.jamf_school`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -876,7 +876,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.local_asset_manager`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -910,7 +910,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.lock_n_charge2`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -938,7 +938,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.lock_n_charge2`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -964,7 +964,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.lock_n_charge2`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -994,7 +994,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.meraki_mdm`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -1191,14 +1191,14 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `usage_id` | `usage_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
-| `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `path` | `yes` | `int` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `usage_id` | `usage_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
+| `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `n_883d10f1_e4a0_4268_a319_3d36d1948030_id` | `path` | `yes` | `int` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1220,7 +1220,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -1246,7 +1246,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -1272,7 +1272,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -1298,7 +1298,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -1324,13 +1324,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `job_id` | `job_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `job_id` | `job_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `limit` | `Limit` | `body` | `yes` | `int` | Body field inferred from HAR observations for this undocumented Silver route. |
 
 #### Returns
@@ -1353,13 +1353,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `keep_user_data` | `KeepUserData` | `body` | `yes` | `str` | Body field inferred from HAR observations for this undocumented Silver route. |
 
 #### Returns
@@ -1382,13 +1382,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `user_principal_name` | `UserPrincipalName` | `body` | `yes` | `str` | Body field inferred from HAR observations for this undocumented Silver route. |
 
 #### Returns
@@ -1411,13 +1411,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1439,13 +1439,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1467,13 +1467,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1495,13 +1495,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1523,13 +1523,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1551,13 +1551,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1579,13 +1579,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1607,13 +1607,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1635,13 +1635,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1663,13 +1663,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1691,13 +1691,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1719,13 +1719,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1747,13 +1747,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `quick_scan` | `QuickScan` | `body` | `yes` | `str` | Body field inferred from HAR observations for this undocumented Silver route. |
 
 #### Returns
@@ -1776,13 +1776,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -1804,13 +1804,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.microsoft_intune`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `execute_id` | `execute_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `keep_enrollment_data` | `KeepEnrollmentData` | `body` | `yes` | `str` | Body field inferred from HAR observations for this undocumented Silver route. |
 | `keep_user_data` | `KeepUserData` | `body` | `yes` | `str` | Body field inferred from HAR observations for this undocumented Silver route. |
 | `mac_os_unlock_code` | `MacOsUnlockCode` | `body` | `yes` | `int` | Body field inferred from HAR observations for this undocumented Silver route. |
@@ -1951,7 +1951,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.mosyle_manager`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -1977,7 +1977,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.mosyle_manager`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2003,7 +2003,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.mosyle_manager`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2029,7 +2029,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.mosyle_manager`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2061,13 +2061,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.password_reset`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `user_id` | `user_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `user_id` | `user_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -2093,7 +2093,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.payments_fee_tracker`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2119,7 +2119,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_fee_tracker`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2145,7 +2145,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_fee_tracker`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2177,7 +2177,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.payments_in_touch`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2203,7 +2203,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_in_touch`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2229,7 +2229,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_in_touch`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2261,7 +2261,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.payments_my_school_bucks`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2287,7 +2287,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_my_school_bucks`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2313,7 +2313,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_my_school_bucks`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2345,7 +2345,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.payments_square`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2371,7 +2371,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_square`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2397,7 +2397,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_square`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2429,7 +2429,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.payments_stripe`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2455,7 +2455,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_stripe`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2481,7 +2481,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_stripe`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2513,7 +2513,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.payments_vanco`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2539,7 +2539,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_vanco`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2565,7 +2565,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.payments_vanco`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2597,13 +2597,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.policy_agreements`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `user_id` | `user_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `user_id` | `user_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -2687,13 +2687,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.remote_beyond_trust`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -2719,13 +2719,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.remote_chrome`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -2751,13 +2751,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.remote_team_viewer`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `bb6cece8_e4f4_e511_a789_005056bb000e_statu_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -2783,7 +2783,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.spare_pool_management`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2809,14 +2809,14 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.spare_pool_management`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `ticket_id` | `ticket_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
-| `pool_id` | `pool_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `ticket_id` | `ticket_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
+| `pool_id` | `pool_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -2838,7 +2838,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.spare_pool_management`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2866,7 +2866,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.spare_pool_management`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2896,7 +2896,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.trafera`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2922,7 +2922,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.trafera`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
@@ -2952,13 +2952,13 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented GET route for `client.silver.apps.widgets`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `widget_id` | `widget_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `widget_id` | `widget_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 
 #### Returns
 
@@ -2984,7 +2984,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.apps.workspace_one`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.
 
 #### Parameters
 

@@ -30,7 +30,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. It accepts common local raster image formats including JPG/JPEG, PNG, GIF, WEBP, and BMP. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. It accepts common local raster image formats including JPG/JPEG, PNG, GIF, WEBP, and BMP. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "GET",
       "method_name": "get_agent_current_stats",
       "namespace_path": [
@@ -50,7 +50,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "GET",
       "method_name": "get_agent_location_stats",
       "namespace_path": [
@@ -177,7 +177,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_search_v2_expression",
       "namespace_path": [
@@ -207,7 +207,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_search_v2_recent_user",
       "namespace_path": [
@@ -269,7 +269,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_app",
       "namespace_path": [
@@ -278,7 +278,7 @@
       "parameters": [
         {
           "api_name": "app_key",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "app_key",
           "required": true,
@@ -298,7 +298,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_site_app",
       "namespace_path": [
@@ -307,7 +307,7 @@
       "parameters": [
         {
           "api_name": "site_app_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "site_app_id",
           "required": true,
@@ -327,7 +327,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_installed",
       "namespace_path": [
@@ -356,7 +356,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_auth_oneroster_validate",
       "namespace_path": [
@@ -377,7 +377,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_settings_options",
       "namespace_path": [
@@ -398,7 +398,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_settings_options_sync",
       "namespace_path": [
@@ -419,7 +419,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_history",
       "namespace_path": [
@@ -440,7 +440,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_locations",
       "namespace_path": [
@@ -461,7 +461,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_status_last",
       "namespace_path": [
@@ -482,7 +482,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_users_search",
       "namespace_path": [
@@ -528,7 +528,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_assets_usage",
       "namespace_path": [
@@ -538,7 +538,7 @@
       "parameters": [
         {
           "api_name": "usage_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "usage_id",
           "required": true,
@@ -546,7 +546,7 @@
         },
         {
           "api_name": "n_883d10f1_e4a0_4268_a319_3d36d1948030_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "n_883d10f1_e4a0_4268_a319_3d36d1948030_id",
           "required": true,
@@ -566,7 +566,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_assets_lookup",
       "namespace_path": [
@@ -612,7 +612,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_assets_usage",
       "namespace_path": [
@@ -622,7 +622,7 @@
       "parameters": [
         {
           "api_name": "usage_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "usage_id",
           "required": true,
@@ -630,7 +630,7 @@
         },
         {
           "api_name": "n_883d10f1_e4a0_4268_a319_3d36d1948030_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "n_883d10f1_e4a0_4268_a319_3d36d1948030_id",
           "required": true,
@@ -650,7 +650,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_assignment_suggestions",
       "namespace_path": [
@@ -671,7 +671,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_auth_token_check",
       "namespace_path": [
@@ -692,7 +692,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_models_distinct",
       "namespace_path": [
@@ -713,7 +713,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_status_last",
       "namespace_path": [
@@ -723,7 +723,7 @@
       "parameters": [
         {
           "api_name": "google_device_data_key",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "google_device_data_key",
           "required": true,
@@ -743,7 +743,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_history",
       "namespace_path": [
@@ -764,7 +764,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_device_sync_push_schedule",
       "namespace_path": [
@@ -774,7 +774,7 @@
       "parameters": [
         {
           "api_name": "schedule_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "schedule_id",
           "required": true,
@@ -795,7 +795,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_jobs_logs",
       "namespace_path": [
@@ -805,7 +805,7 @@
       "parameters": [
         {
           "api_name": "job_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "job_id",
           "required": true,
@@ -833,7 +833,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_deprovision_device_execute",
       "namespace_path": [
@@ -843,7 +843,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -872,7 +872,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_disable_device_execute",
       "namespace_path": [
@@ -882,7 +882,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -903,7 +903,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_wipe_device_execute",
       "namespace_path": [
@@ -913,7 +913,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -934,7 +934,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_settings_options_sync",
       "namespace_path": [
@@ -955,7 +955,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_assets_lookup",
       "namespace_path": [
@@ -1001,7 +1001,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_assets_lookup",
       "namespace_path": [
@@ -1039,7 +1039,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_microsoft_sccm_assets_lookup",
       "namespace_path": [
@@ -1085,7 +1085,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_bays",
       "namespace_path": [
@@ -1115,7 +1115,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_stations",
       "namespace_path": [
@@ -1136,7 +1136,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_stations_licensed",
       "namespace_path": [
@@ -1157,7 +1157,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_assets_lookup",
       "namespace_path": [
@@ -1203,7 +1203,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_assets_usage",
       "namespace_path": [
@@ -1213,7 +1213,7 @@
       "parameters": [
         {
           "api_name": "usage_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "usage_id",
           "required": true,
@@ -1221,7 +1221,7 @@
         },
         {
           "api_name": "n_883d10f1_e4a0_4268_a319_3d36d1948030_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "n_883d10f1_e4a0_4268_a319_3d36d1948030_id",
           "required": true,
@@ -1241,7 +1241,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_auth_token_check",
       "namespace_path": [
@@ -1262,7 +1262,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_history",
       "namespace_path": [
@@ -1283,7 +1283,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_options",
       "namespace_path": [
@@ -1304,7 +1304,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_status_last",
       "namespace_path": [
@@ -1325,7 +1325,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_jobs_logs",
       "namespace_path": [
@@ -1335,7 +1335,7 @@
       "parameters": [
         {
           "api_name": "job_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "job_id",
           "required": true,
@@ -1363,7 +1363,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_clean_windows_device_execute",
       "namespace_path": [
@@ -1373,7 +1373,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1403,7 +1403,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_delete_user_from_shared_apple_device_execute",
       "namespace_path": [
@@ -1413,7 +1413,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1443,7 +1443,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_disable_lost_mode_execute",
       "namespace_path": [
@@ -1453,7 +1453,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1475,7 +1475,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_locate_device_execute",
       "namespace_path": [
@@ -1485,7 +1485,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1507,7 +1507,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_logout_shared_apple_device_active_user_execute",
       "namespace_path": [
@@ -1517,7 +1517,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1539,7 +1539,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_reboot_device_execute",
       "namespace_path": [
@@ -1549,7 +1549,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1571,7 +1571,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_recover_passcode_execute",
       "namespace_path": [
@@ -1581,7 +1581,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1603,7 +1603,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_remote_lock_execute",
       "namespace_path": [
@@ -1613,7 +1613,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1635,7 +1635,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_request_remote_assistance_execute",
       "namespace_path": [
@@ -1645,7 +1645,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1667,7 +1667,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_reset_passcode_execute",
       "namespace_path": [
@@ -1677,7 +1677,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1699,7 +1699,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_retire_device_execute",
       "namespace_path": [
@@ -1709,7 +1709,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1731,7 +1731,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_shut_down_execute",
       "namespace_path": [
@@ -1741,7 +1741,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1763,7 +1763,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_sync_device_execute",
       "namespace_path": [
@@ -1773,7 +1773,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1795,7 +1795,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_update_windows_device_account_execute",
       "namespace_path": [
@@ -1805,7 +1805,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1827,7 +1827,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_windows_defender_scan_execute",
       "namespace_path": [
@@ -1837,7 +1837,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1867,7 +1867,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_windows_defender_update_signatures_execute",
       "namespace_path": [
@@ -1877,7 +1877,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1899,7 +1899,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_wipe_execute",
       "namespace_path": [
@@ -1909,7 +1909,7 @@
       "parameters": [
         {
           "api_name": "execute_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "execute_id",
           "required": true,
@@ -1955,7 +1955,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_clear_commands_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
       "namespace_path": [
@@ -1976,7 +1976,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_restart_device_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
       "namespace_path": [
@@ -1997,7 +1997,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_shutdown_device_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
       "namespace_path": [
@@ -2018,7 +2018,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_remoteactions_wipe_device_execute_mac268d3c3f_7745_5eb1_9299_a92e984d642d",
       "namespace_path": [
@@ -2048,7 +2048,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_user_setup",
       "namespace_path": [
@@ -2058,7 +2058,7 @@
       "parameters": [
         {
           "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "user_id",
           "required": true,
@@ -2078,7 +2078,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_options",
       "namespace_path": [
@@ -2101,7 +2101,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_item_types_search",
       "namespace_path": [
@@ -2122,7 +2122,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_items_search",
       "namespace_path": [
@@ -2154,7 +2154,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_options",
       "namespace_path": [
@@ -2175,7 +2175,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_item_types_search",
       "namespace_path": [
@@ -2196,7 +2196,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_items_search",
       "namespace_path": [
@@ -2226,7 +2226,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_options",
       "namespace_path": [
@@ -2247,7 +2247,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_item_types_search",
       "namespace_path": [
@@ -2268,7 +2268,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_items_search",
       "namespace_path": [
@@ -2298,7 +2298,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_options",
       "namespace_path": [
@@ -2319,7 +2319,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_item_types_search",
       "namespace_path": [
@@ -2340,7 +2340,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_items_search",
       "namespace_path": [
@@ -2370,7 +2370,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_options",
       "namespace_path": [
@@ -2391,7 +2391,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_item_types_search",
       "namespace_path": [
@@ -2412,7 +2412,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_items_search",
       "namespace_path": [
@@ -2442,7 +2442,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_sync_options",
       "namespace_path": [
@@ -2463,7 +2463,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_item_types_search",
       "namespace_path": [
@@ -2484,7 +2484,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_line_items_search",
       "namespace_path": [
@@ -2514,7 +2514,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_users_acceptances_including_cleared",
       "namespace_path": [
@@ -2524,7 +2524,7 @@
       "parameters": [
         {
           "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "user_id",
           "required": true,
@@ -2544,7 +2544,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_db_bb6cece8_e4f4_e511_a789_005056bb000e_statu",
       "namespace_path": [
@@ -2554,7 +2554,7 @@
       "parameters": [
         {
           "api_name": "bb6cece8_e4f4_e511_a789_005056bb000e_statu_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "bb6cece8_e4f4_e511_a789_005056bb000e_statu_id",
           "required": true,
@@ -2574,7 +2574,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_db_bb6cece8_e4f4_e511_a789_005056bb000e_statu",
       "namespace_path": [
@@ -2584,7 +2584,7 @@
       "parameters": [
         {
           "api_name": "bb6cece8_e4f4_e511_a789_005056bb000e_statu_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "bb6cece8_e4f4_e511_a789_005056bb000e_statu_id",
           "required": true,
@@ -2604,7 +2604,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_db_bb6cece8_e4f4_e511_a789_005056bb000e_statu",
       "namespace_path": [
@@ -2614,7 +2614,7 @@
       "parameters": [
         {
           "api_name": "bb6cece8_e4f4_e511_a789_005056bb000e_statu_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "bb6cece8_e4f4_e511_a789_005056bb000e_statu_id",
           "required": true,
@@ -2634,7 +2634,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_pool_stats_today",
       "namespace_path": [
@@ -2655,7 +2655,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_ticket_pool",
       "namespace_path": [
@@ -2665,7 +2665,7 @@
       "parameters": [
         {
           "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "ticket_id",
           "required": true,
@@ -2673,7 +2673,7 @@
         },
         {
           "api_name": "pool_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "pool_id",
           "required": true,
@@ -2693,7 +2693,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_assets_deployments",
       "namespace_path": [
@@ -2723,7 +2723,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_groups",
       "namespace_path": [
@@ -2744,7 +2744,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_parts",
       "namespace_path": [
@@ -2765,7 +2765,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_settings_options",
       "namespace_path": [
@@ -2786,7 +2786,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_endpoint",
       "namespace_path": [
@@ -2796,7 +2796,7 @@
       "parameters": [
         {
           "api_name": "widget_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "widget_id",
           "required": true,
@@ -2816,7 +2816,7 @@
       "uses_app_headers": true
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_assets_lookup",
       "namespace_path": [
@@ -3316,7 +3316,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_events_key",
       "namespace_path": [
@@ -3336,7 +3336,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_events",
       "namespace_path": [
@@ -3423,7 +3423,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_test_url",
       "namespace_path": [
@@ -3460,7 +3460,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_types_fields_withoptions",
       "namespace_path": [
@@ -3469,7 +3469,7 @@
       "parameters": [
         {
           "api_name": "type_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "type_id",
           "required": true,
@@ -3491,7 +3491,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_endpoint",
       "namespace_path": [
@@ -3520,7 +3520,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_available_cards",
       "namespace_path": [
@@ -3578,7 +3578,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_intros_key",
       "namespace_path": [
@@ -3587,7 +3587,7 @@
       "parameters": [
         {
           "api_name": "key_key",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "key_key",
           "required": true,
@@ -3609,7 +3609,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_job",
       "namespace_path": [
@@ -3618,7 +3618,7 @@
       "parameters": [
         {
           "api_name": "job_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "job_id",
           "required": true,
@@ -3638,7 +3638,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_rates_user",
       "namespace_path": [
@@ -3647,7 +3647,7 @@
       "parameters": [
         {
           "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "user_id",
           "required": true,
@@ -3655,7 +3655,7 @@
         },
         {
           "api_name": "n_61757b5f_dd31_f111_8ef2_000d3a7cb1a2_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "n_61757b5f_dd31_f111_8ef2_000d3a7cb1a2_id",
           "required": true,
@@ -3663,7 +3663,7 @@
         },
         {
           "api_name": "n_88df910c_91aa_e711_80c2_0004ffa00010_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "n_88df910c_91aa_e711_80c2_0004ffa00010_id",
           "required": true,
@@ -3683,7 +3683,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_my_dashboard",
       "namespace_path": [
@@ -4131,7 +4131,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_assets_all",
       "namespace_path": [
@@ -4765,7 +4765,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_ticket",
       "namespace_path": [
@@ -4774,7 +4774,7 @@
       "parameters": [
         {
           "api_name": "ticket_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "ticket_id",
           "required": true,
@@ -4794,7 +4794,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_users_user_preview_applied_policies",
       "namespace_path": [
@@ -4803,7 +4803,7 @@
       "parameters": [
         {
           "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "user_id",
           "required": true,
@@ -4823,7 +4823,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_check_permission",
       "namespace_path": [
@@ -4852,7 +4852,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_available_features",
       "namespace_path": [
@@ -4872,7 +4872,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "POST",
       "method_name": "post_profile_picture",
       "namespace_path": [
@@ -4881,7 +4881,7 @@
       "parameters": [
         {
           "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "user_id",
           "required": true,
@@ -5024,7 +5024,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The SDK normalizes the supplied image to PNG and downscales it as needed so the uploaded PNG payload stays at or below 1 MB.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic. The SDK normalizes the supplied image to PNG and downscales it as needed so the uploaded PNG payload stays at or below 1 MB.",
       "http_method": "POST",
       "method_name": "post_actions",
       "namespace_path": [
@@ -5061,7 +5061,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_actions_for__issue_link",
       "namespace_path": [
@@ -5098,7 +5098,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_log",
       "namespace_path": [
@@ -5107,7 +5107,7 @@
       "parameters": [
         {
           "api_name": "log_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "log_id",
           "required": true,
@@ -5115,7 +5115,7 @@
         },
         {
           "api_name": "n_888891ac_91aa_e711_80c2_100dffa00003_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "n_888891ac_91aa_e711_80c2_100dffa00003_id",
           "required": true,
@@ -5143,7 +5143,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_ids",
       "namespace_path": [
@@ -5172,7 +5172,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_opensans_v44_memsyags126mizpba_uvwbx2vvnxbbobj2ovzyoosr4dvjwugsjz0b4gaviuwaeqbja_woff2",
       "namespace_path": [
@@ -5192,7 +5192,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_recurring",
       "namespace_path": [
@@ -5221,7 +5221,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_scan",
       "namespace_path": [
@@ -5259,7 +5259,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_state",
       "namespace_path": [
@@ -5296,7 +5296,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_apps__remote_beyond_trust__remote_connection_url",
       "namespace_path": [
@@ -5316,7 +5316,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_apps__remote_team_viewer__api_token",
       "namespace_path": [
@@ -5336,7 +5336,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_apps__remote_team_viewer__download_link",
       "namespace_path": [
@@ -5356,7 +5356,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_apps__remote_team_viewer__primary_group_id",
       "namespace_path": [
@@ -5376,7 +5376,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_apps__sis__custom_field_mapping__enabled",
       "namespace_path": [
@@ -5396,7 +5396,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_grids__user_options",
       "namespace_path": [
@@ -5418,7 +5418,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_preferred_mappings",
       "namespace_path": [
@@ -5438,7 +5438,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_shortcuts__recent_ids",
       "namespace_path": [
@@ -5458,7 +5458,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_tickets__status_lock",
       "namespace_path": [
@@ -5478,7 +5478,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_undefined",
       "namespace_path": [
@@ -5498,7 +5498,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_search__recent_user_searches",
       "namespace_path": [
@@ -5568,7 +5568,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_classes_for__user",
       "namespace_path": [
@@ -5577,7 +5577,7 @@
       "parameters": [
         {
           "api_name": "user_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "user_id",
           "required": true,
@@ -5679,7 +5679,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_endpoint",
       "namespace_path": [
@@ -5708,7 +5708,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_for_",
       "namespace_path": [
@@ -5717,7 +5717,7 @@
       "parameters": [
         {
           "api_name": "for__id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "for__id",
           "required": true,
@@ -5737,7 +5737,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "GET",
       "method_name": "get_wizards_site",
       "namespace_path": [
@@ -5746,7 +5746,7 @@
       "parameters": [
         {
           "api_name": "site_id",
-          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it.",
+          "description": "Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it.",
           "location": "path",
           "python_name": "site_id",
           "required": true,
@@ -5775,7 +5775,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_endpoint",
       "namespace_path": [
@@ -5820,7 +5820,7 @@
       "uses_app_headers": false
     },
     {
-      "description": "This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic.",
+      "description": "This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic.",
       "http_method": "POST",
       "method_name": "post_is_online_list",
       "namespace_path": [
