@@ -87,6 +87,7 @@ jobs:
         uses: actions/checkout@v7  # TODO: pin to specific SHA for reproducibility
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v7  # TODO: pin to specific SHA for reproducibility
@@ -137,15 +138,60 @@ jobs:
           fi
 
           # main has no direct-push bypass, so promotion happens through a disposable branch
-          # that can carry the release-prep version bump before the PR is merged.
-          # Updating the promotion ref with github.token suppresses the downstream
-          # pull_request/pull_request_target workflows that prepare and verify the
-          # release branch. Use the same secret-backed Git push path as
-          # release-prep: the promotion token can push refs over Git even when the
-          # REST Git refs API rejects the token with HTTP 403.
-          git push "https://x-access-token:${GH_API_TOKEN}@github.com/${GH_REPO}.git" \
-            "${GH_SHA}:refs/heads/${GH_PROMOTION_REF}" \
-            --force
+          # that carries the release version bump before the PR is merged.
+          #
+          # The branch is prepared HERE rather than by prepare-release-promotion.
+          # That workflow runs on pull_request_target, and a PR opened or updated
+          # with github.token does not create pull_request_target runs, so it only
+          # ever fired when a human touched the promotion PR. Preparing in this
+          # workflow_run job - which is triggered by the quality run, not by a
+          # token-authored PR event - makes an unattended promotion produce a
+          # branch that release-prep can verify. prepare-release-promotion is kept
+          # for the case it still covers: a human changing the semver label after
+          # the PR exists, which changes the target version.
+          #
+          # Push over Git with the token in the URL: the token can push refs over
+          # Git even when the REST Git refs API rejects it with HTTP 403.
+          part="${resolved_label#semver:}"
+          git fetch origin main staging
+          # The promotion ref may not exist yet on a first promotion.
+          git fetch origin "${GH_PROMOTION_REF}:refs/remotes/origin/${GH_PROMOTION_REF}" || true
+          current_version="$(python -c 'import subprocess, tomllib; print(tomllib.loads(subprocess.check_output(["git", "show", "origin/main:pyproject.toml"], text=True))["project"]["version"])')"
+          desired_version="$(python scripts/bump_version.py --part "${part}" --current-version "${current_version}")"
+
+          if git rev-parse --verify --quiet "origin/${GH_PROMOTION_REF}" >/dev/null; then
+            prepared_version="$(python -c 'import subprocess, sys, tomllib; print(tomllib.loads(subprocess.check_output(["git", "show", sys.argv[1] + ":pyproject.toml"], text=True))["project"]["version"])' "origin/${GH_PROMOTION_REF}")"
+            if [ "${prepared_version}" = "${desired_version}" ] \
+              && git merge-base --is-ancestor origin/staging "origin/${GH_PROMOTION_REF}" \
+              && git merge-base --is-ancestor origin/main "origin/${GH_PROMOTION_REF}"; then
+              echo "Promotion branch already prepared for v${desired_version}; leaving it alone."
+              prepared_ref_is_current=1
+            fi
+          fi
+
+          if [ "${prepared_ref_is_current:-0}" != "1" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git checkout --detach origin/main
+            if ! git merge --no-commit --no-ff "${GH_SHA}"; then
+              unresolved_conflicts="$(git diff --name-only --diff-filter=U)"
+              echo "Merge from staging into the promotion branch has unresolved conflicts:"
+              printf '%s\n' "${unresolved_conflicts}"
+              exit 1
+            fi
+
+            new_version="$(python scripts/bump_version.py --part "${part}" --write)"
+            if [ "${new_version}" != "${desired_version}" ]; then
+              echo "Prepared version ${new_version} did not match expected ${desired_version}."
+              exit 1
+            fi
+
+            git add pyproject.toml src/incident_py_q/version.py
+            git commit -m "Prepare release v${new_version} [skip prepare-release-promotion]"
+            git push "https://x-access-token:${GH_API_TOKEN}@github.com/${GH_REPO}.git" \
+              HEAD:"refs/heads/${GH_PROMOTION_REF}" \
+              --force
+          fi
 
           existing_pr="$(gh pr list --repo "${GH_REPO}" --base main --head "${GH_PROMOTION_REF}" --state open --json number --jq '.[0].number')"
           title="Promote staging to main"

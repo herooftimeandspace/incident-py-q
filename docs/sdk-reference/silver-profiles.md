@@ -20,7 +20,7 @@ Provenance: Silver (HAR-derived undocumented route)
 
 HAR-derived undocumented POST route for `client.silver.profiles`.
 
-This method is intentionally kept on the Silver surface because bundled Stoplight controller contracts do not define this route. Golden Stoplight operations remain the preferred contract source whenever they exist, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.
+This route is kept on the Silver surface because the published Incident IQ OpenAPI contract does not document it. The Golden contract remains the preferred source whenever it documents a route, so Silver only supplements gaps observed in tenant HAR traffic. The April 22, 2026 resize HAR showed the upload plus a later `GET /img/...?...w=150&h=150`, but no separate persisted crop endpoint, so the SDK applies the avatar framing locally. For non-square inputs it uses the largest centered square crop, then converts the result inside `client.silver.profiles.post_profile_picture(...)` to PNG and downscales it until the uploaded PNG payload stays at or below 1 MB.
 
 The SDK prepares the avatar locally before upload because the HAR showed the file upload and a later rendered image fetch, but not a separate persisted crop API. That is why `post_profile_picture(...)` center-crops non-square images, converts the image to PNG inside the method, and enforces the 1 MB size cap before any bytes are sent.
 
@@ -30,7 +30,7 @@ The upload call can optionally validate tenant readback with `wait_for_consisten
 
 | Python Arg | API Name | In | Required | Type | Description |
 | --- | --- | --- | --- | --- | --- |
-| `user_id` | `user_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because Stoplight does not publish a Golden contract for it. |
+| `user_id` | `user_id` | `path` | `yes` | `str` | Path parameter inferred from HAR observations. This route remains on the Silver surface because the published OpenAPI contract does not document it. |
 | `file` | `File` | `file` | `yes` | `str | PathLike[str]` | Multipart image field inferred from HAR observations for this undocumented Silver route. Pass a local image path in a common raster format such as JPG/JPEG, PNG, GIF, WEBP, or BMP and the SDK uses the largest centered square crop for non-square inputs, converts it inside `client.silver.profiles.post_profile_picture(...)` to PNG, downscales it if needed, and uploads a PNG no larger than 1 MB. |
 
 #### Examples
